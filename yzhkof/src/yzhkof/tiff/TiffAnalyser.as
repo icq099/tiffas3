@@ -23,6 +23,7 @@ package yzhkof.tiff
 			_ver=tiff.readShort();
 			//读取IFD的偏移量
 			ifd_offset=tiff.readUnsignedInt();		
+			
 		}
 		public function getIFDContextByTag(tag:int):*{
 			
