@@ -131,6 +131,11 @@ package yzhkof.tiff
 			return re_array;
 		
 		}
+		public function get IFDOffset():int{
+			
+			return ifd_offset;
+		
+		}
 		
 /*
  *                             图片属性 
