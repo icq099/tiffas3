@@ -65,7 +65,7 @@ package yzhkof.tiff
 				var pos:int = image_offset + lineWidth * j; 
 				for( var x:int = 0; x<lineWidth; x+=3) {
 					tiff.position=pos+x;
-					clr=uint(tiff.readShort())<<8
+					clr=uint(tiff.readShort())<<8;
 					clr+=uint(tiff[pos+x+2]);
 					bitmapData.setPixel(x/3,y, clr);
 				}
