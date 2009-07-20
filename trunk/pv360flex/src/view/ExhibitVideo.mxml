@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" label="演示动画" implements="lsd.IPlayerBasic" xmlns:player="view.player.*">
+<player:FlvPlayerUICom id="player"/>
+<mx:Script>
+	<![CDATA[
+		 public function loadflv(video_url:String):void{
+        	
+        	  player.api.loadFlv(video_url);
+        	
+        }
+        public function stopAll():void{
+        	
+        	player.api.stopAll();
+        
+        }
+        private function init():void{
+        	
+        	player.api.width=380;
+        	player.api.height=350;
+        	
+        	player.setStyle("horizontalCenter",-player.api.width/2);
+        	player.setStyle("verticalCenter",-player.api.height/2);
+        
+        }
+	]]>
+</mx:Script>
+	
+</mx:Canvas>

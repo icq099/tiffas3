@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>pv360flex</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.adobe.flexbuilder.project.flexbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.adobe.flexbuilder.project.flexnature</nature>
+		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>[source path] greensock-tweening-platform-as3</name>
+			<type>2</type>
+			<location>G:/study/Source/greensock-tweening-platform-as3</location>
+		</link>
+		<link>
+			<name>[source path] Pv3d</name>
+			<type>2</type>
+			<location>G:/study/Source/Pv3d</location>
+		</link>
+		<link>
+			<name>[source path] yzhkof</name>
+			<type>2</type>
+			<location>G:/study/Source/yzhkof</location>
+		</link>
+		<link>
+			<name>[source path] pyro-player-src</name>
+			<type>2</type>
+			<location>G:/study/Source/pyro-player/src</location>
+		</link>
+		<link>
+			<name>[source path] BulkLoader-rev239-src</name>
+			<type>2</type>
+			<location>G:/study/Source/BulkLoader-rev239/src</location>
+		</link>
+		<link>
+			<name>[source path] PureMVC_AS3_2_0_4-src</name>
+			<type>2</type>
+			<location>G:/study/Source/PureMVC_AS3_2_0_4/src</location>
+		</link>
+	</linkedResources>
+</projectDescription>

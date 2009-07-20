@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" label="演示动画" creationComplete="playinit()" implements="lsd.IPlayerBasic">
+<mx:Script>
+	<![CDATA[
+	   import mx.events.SliderEvent;
+       import mx.events.VideoEvent;
+       import mx.collections.ArrayCollection;
+       import mx.rpc.events.ResultEvent;
+       import flash.display.Stage;
+        
+        private var _video:ArrayCollection;   
+        private var isplaying:Boolean=true;            
+        private var playPosition:Number;      
+        //private var soundPosition:Number;
+        
+        public function loadflv(video_url:String):void{
+        	
+        	  flv_video.source=video_url;
+        	  hs.enabled=true;
+        	  flv_video.addEventListener(VideoEvent.PLAYHEAD_UPDATE, progressHandler);
+        	  flv_video.addEventListener(VideoEvent.COMPLETE,videoCompleteHandler);
+        	  play_btn.addEventListener(MouseEvent.CLICK,flvplay);
+        	  stop_btn.addEventListener(MouseEvent.CLICK,stop);  
+        	
+        }
+        public function stopAll():void{
+        	
+        	flv_video.stop();
+        	flv_video.close();
+        
+        }
+        private function playinit():void{
+              
+             play_btn.label="播放"
+            
+       }
+		private function flvplay(event:MouseEvent):void{
+			
+		        if(isplaying){
+		         flv_video.play();
+		         play_btn.label="暂停"
+		        }else {
+		         flv_video.pause();
+		         play_btn.label="播放"
+		        }
+		        isplaying = !isplaying;       
+		       }      
+
+
+
+
+		 private function thumbPress(event:SliderEvent):void{
+		          
+		          flv_video.pause();
+		       }
+		  
+		  
+	 	 private function thumbChanges(event:SliderEvent):void{
+		        
+		     if(flv_video.playheadTime == -1){
+		          
+		           hs.value = 0;
+		           return;
+		     }
+		          playPosition = hs.value;
+		  }   
+		        
+		          
+		 private function thumbRelease(event:SliderEvent):void{
+		     	
+		        flv_video.playheadTime = playPosition;
+		        if(isplaying==false){
+		        	
+		            flv_video.play();
+		            
+		        } 
+		          else{
+		               flv_video.pause();
+		       }
+		     }      
+		     
+		 private function progressHandler(event:VideoEvent):void{
+                
+                hs.value=flv_video.playheadTime;
+       }       
+       
+       
+        private function formatTimes(value:int):String{
+        	
+            var result:String = (value % 60).toString();
+       
+          if (result.length == 1){
+              result = Math.floor(value / 60).toString() + ":0" + result;
+          } else {
+              result = Math.floor(value / 60).toString() + ":" + result;
+          }
+          return result;
+       }        																				
+
+
+
+       private function soundStop():void{
+       	  
+       	  if(flv_video.volume!=0){
+       	  	 
+       	  	  flv_video.volume=0 
+       	  }
+       	  else{
+       	  	
+       	  	flv_video.volume=5;
+       	  }
+       	
+       }
+       
+      private function stop(event:MouseEvent):void{
+      	
+      	  flv_video.stop();
+      	  hs.enabled=true;
+      	  isplaying=true;
+          flv_video.addEventListener(VideoEvent.PLAYHEAD_UPDATE, progressHandler);
+      	
+      }
+      private function videoCompleteHandler(e:Event):void{
+      	
+      	isplaying=true;
+      	play_btn.label="播放";
+      
+      }
+		
+	]]>
+</mx:Script>
+
+    <mx:Fade id="fadeOut" duration="1000" alphaFrom="1.0" alphaTo="0.0"/>
+    <mx:Fade id="fadeIn" duration="1000" alphaFrom="0.0" alphaTo="1.0"/>
+
+
+   <mx:VideoDisplay   
+			id="flv_video"
+			autoPlay="false"
+			verticalCenter="0" 
+			 horizontalCenter="0"/>
+	<mx:VBox height="90" width="380" 
+		rollOutEffect="fadeOut"
+		rollOverEffect="fadeIn"
+		 horizontalCenter="0" bottom="0">
+		<mx:ApplicationControlBar height="25" width="100%" horizontalAlign="center">
+		<mx:HSlider id="hs" 
+			fillColors="#000099,, #0000ff, #ffffff, #eeeeee" 
+			showTrackHighlight="true" 
+			minimum="0" 
+			maximum="{flv_video.totalTime}" 
+			thumbPress="thumbPress(event)" 
+			thumbRelease="thumbRelease(event)" 
+			change="thumbChanges(event)" 
+			width="90%" 
+			horizontalCenter="0"
+			showDataTip="false"/>
+		</mx:ApplicationControlBar>
+		<mx:ApplicationControlBar width="100%" height="49" horizontalAlign="center">
+		   <mx:ApplicationControlBar width="123" cornerRadius="15">
+		    <mx:Button id="play_btn" label="播放" cornerRadius="13"/>
+		    <mx:Button id="stop_btn" 
+		    	label="停止" 
+		    	cornerRadius="13" click="flv_video.stop();play_btn.label='播放';hs.enabled=false;" />
+		   </mx:ApplicationControlBar>
+		   <mx:ApplicationControlBar width="94" cornerRadius="15">
+		    <mx:Label id="playtime" text="{formatTimes(flv_video.playheadTime)} : {formatTimes(flv_video.totalTime)}" color="#050505" width="77"/>
+		   </mx:ApplicationControlBar>
+		   <mx:ApplicationControlBar cornerRadius="15" width="62">
+		      <mx:Button id="sound_btn" label="声音" cornerRadius="13" click="soundStop()"/>
+		   </mx:ApplicationControlBar>
+		</mx:ApplicationControlBar>
+	</mx:VBox>
+</mx:Canvas>

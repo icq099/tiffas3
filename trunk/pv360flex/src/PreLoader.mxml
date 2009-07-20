@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="init()" width="800" height="600" frameRate="30" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:Script>
+		<![CDATA[
+			import yzhkof.AddToStageSetter;
+			import yzhkof.Toolyzhkof;
+			import yzhkof.debug.debugTrace;
+			import yzhkof.debug.TextTrace;
+			import mx.core.UIComponent;
+			import mx.utils.URLUtil;
+			import mx.managers.BrowserManager;
+			import gs.TweenLite;
+			import mx.skins.halo.BusyCursor;
+			import mx.controls.SWFLoader;
+			private var _loader:Array=new Array();
+			private var loader_effect:UIComponent=Toolyzhkof.mcToUI(new LoadingSimpleRota());
+			
+			private function init():void{
+				
+				AddToStageSetter.setObjToMiddleOfStage(loader_effect,loader_effect.width/2,loader_effect.height/2);
+				addChild(loader_effect);
+				
+				_loader.push(new SWFLoader());
+				_loader.push(new SWFLoader());
+				
+				//addChild(TextTrace.init(new UIComponent()));
+				BrowserManager.getInstance().init();
+				
+				if(!URLUtil.stringToObject(BrowserManager.getInstance().fragment,"&").hasOwnProperty("scene")){
+					
+					loader(0).load("opening.swf");
+					loader(0).addEventListener(Event.COMPLETE,function(e:Event):void{
+						
+						loader(0).content.addEventListener("next_step",doNext);
+						removeChild(loader_effect);
+					
+					});
+					addChild(loader(0));
+					
+				}else{
+					
+					doNext(new Event("next"));
+				
+				}
+			
+			}
+			private function doNext(e:Event):void{
+				
+				try{
+					
+					loader(0).content.removeEventListener("next_step",doNext);
+					
+				}catch(e:Error){
+				
+				}
+				
+				loader(1).load("pv360flex.swf");
+				loader(1).addEventListener(Event.INIT,function(e:Event):void{
+					loader(1).content.addEventListener("display_show",function(e:Event):void{
+						
+						TweenLite.delayedCall(2.5,function():void{
+							
+							try{
+								loader(1).visible=true;
+								removeChild(loader(0));
+								loader(0).unloadAndStop();
+								_loader[0]=null;
+								
+							}catch(e:Error){
+							
+							}
+							try{
+								
+								removeChild(loader_effect);
+							
+							}catch(e:Error){
+							
+							}
+						
+						})					
+					});
+				});
+				addChild(loader(1));
+				loader(1).visible=false;				
+			
+			}
+			private function loader(value:int):SWFLoader{
+				
+				return _loader[value] as SWFLoader;
+			
+			}
+			
+		]]>
+	</mx:Script>
+</mx:Application>

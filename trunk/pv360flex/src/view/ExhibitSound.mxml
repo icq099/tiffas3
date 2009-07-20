@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" implements="lsd.IPlayerBasic">
+
+
+   <mx:Script>
+   	<![CDATA[
+   		import yzhkof.Toolyzhkof;
+   		import mx.core.UIComponent;
+   	
+   	
+   	   import flash.display.SimpleButton;
+	   import flash.display.Sprite;
+	   import flash.events.Event;
+	   import flash.events.MouseEvent;
+	   import flash.media.Sound;
+	   import flash.media.SoundChannel;
+	   import flash.net.URLRequest;
+   		
+   		[Embed (source="asset/Map.swf",symbol="Play")]
+		private var Play:Class;
+		[Embed (source="asset/Map.swf",symbol="Pause")]
+		private var Pause:Class;
+   		
+		private var _url:String;
+		private var soundReq:URLRequest;
+		private var sound:Sound ;
+		private var soundControl:SoundChannel;
+		private var resumeTime:Number = 0;
+		private var play_btn:UIComponent=Toolyzhkof.mcToUI(new Play());
+		private var pause_btn:UIComponent=Toolyzhkof.mcToUI(new Pause());
+		
+		private var _allowRepeat:Boolean=false;
+	    
+	    public function changeSound(url:String):void{
+			
+			if(play_btn.stage==null){
+				
+				addChild(play_btn);
+			
+			}
+			if(pause_btn.stage==null){
+				
+				addChild(pause_btn);
+			
+			}
+			
+			play_btn.visible=false;
+			if(soundControl!=null){
+				
+				 soundControl.stop();
+			
+			 }
+			this._url=url;
+		    soundReq = new URLRequest(_url);
+		    sound=new Sound();
+		    soundControl=new SoundChannel();
+		    sound.load(soundReq);
+		    if(play_btn.visible==true){
+				
+				soundControl.stop();
+			
+			}
+			else{
+				
+				soundControl = sound.play(resumeTime);
+				soundControl.addEventListener(Event.SOUND_COMPLETE,soundCompleteHandler);
+				
+			}
+		    sound.addEventListener(Event.COMPLETE, onComplete);
+		}
+		public function set allowRepeat(value:Boolean):void{
+			
+			_allowRepeat=value;
+		
+		}
+		public function get allowRepeat():Boolean{
+			
+			return _allowRepeat;
+		
+		}
+		public function stopAll():void{
+			
+			try{
+				
+				soundControl.stop();
+				sound.close();
+				
+			}catch(e:Error){
+			
+			
+			}
+		
+		}
+		private function soundCompleteHandler(e:Event):void{
+			
+			if(_allowRepeat){
+				
+				soundControl=sound.play(0);
+				soundControl.addEventListener(Event.SOUND_COMPLETE,soundCompleteHandler);
+				
+			}
+		
+		}
+	    private function onComplete(event:Event):void{
+			
+				pause_btn.addEventListener(MouseEvent.CLICK, pauseSound);
+				
+		}
+			
+		private  function playSound(event:MouseEvent):void{
+			  
+			    if(soundControl!=null){
+				
+				    soundControl.stop();
+			
+			   }
+	            soundControl = sound.play(resumeTime);
+	            if(_allowRepeat){
+	            	
+	            	soundControl.addEventListener(Event.SOUND_COMPLETE,soundCompleteHandler);
+	            	
+	            }
+		        pause_btn.visible=true;
+                pause_btn.addEventListener(MouseEvent.CLICK, pauseSound);
+                play_btn.visible=false;
+				play_btn.removeEventListener(MouseEvent.CLICK, playSound);
+				
+			}
+			
+		  private function pauseSound(event:MouseEvent):void{
+		  	
+			    resumeTime = soundControl.position;
+				soundControl.stop();
+				play_btn.visible=true;
+				play_btn.addEventListener(MouseEvent.CLICK, playSound);
+				pause_btn.visible=false;
+				pause_btn.removeEventListener(MouseEvent.CLICK, pauseSound);
+				
+			}
+			
+		    private function stopSound(event:MouseEvent):void{
+			
+				soundControl.stop();
+				resumeTime = 0;
+				play_btn.visible = true;
+				play_btn.addEventListener(MouseEvent.CLICK, playSound);
+				pause_btn.visible = false;
+				pause_btn.removeEventListener(MouseEvent.CLICK, pauseSound);
+				
+			}
+   		
+   	]]>
+   </mx:Script>
+
+</mx:Canvas>

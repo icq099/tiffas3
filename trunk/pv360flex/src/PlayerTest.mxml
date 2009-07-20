@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application applicationComplete="init()" width="800" height="600" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:player="view.player.*" xmlns:view="view.*">
+<mx:XML id="xml" xmlns="">
+<HotPoint id="3" texturl="points/text/1-3.html" name="贵州柳江畜禽有限公司贵州柳江畜禽有限公司贵州柳江畜禽有限公司贵州柳江畜禽有限公司贵州柳江畜禽有限公司贵州柳江畜禽有限公司" swfWidth="700" swfHeight="500">
+		<ExhibitInstruction>
+			<Img url="points/img/1-3-1-lxh.jpg"/>
+			<Img url="points/img/1-3-2-lxh.jpg"/>
+			<Img url="points/img/1-3-3-lxh.jpg"/>
+			<Img url="points/img/1-3-4-lxh.jpg"/>
+			<Img url="points/img/1-3-5-lxh.jpg"/>
+		</ExhibitInstruction>
+		<ExhibitVideo url="zx24.flv"/>
+</HotPoint>
+	
+</mx:XML>
+<mx:Script>
+	<![CDATA[
+		import yzhkof.AddToStageSetter;
+		import mx.containers.Canvas;
+		import view.PopMenusFlex;
+		import gs.TweenLite;
+		import view.player.FlvPlayerUICom;
+		import view.player.FlvPlayer;
+		import view.player.PlayerBottomControler;
+		import yzhkof.Toolyzhkof;
+		private function init():void{
+			/* TweenLite.delayedCall(2,function():void{
+			var a:FlvPlayerUICom=new FlvPlayerUICom();
+			a.api.loadFlv("zx24.flv");
+			addChild(a);
+			a.removeChild(a.api);
+			a.addChild(a.api);
+			a.validateNow();
+			a.validateDisplayList()
+			a.validateProperties();
+			})		 */
+			var a:Sprite=new LoadingSimpleRota();
+			addChild(Toolyzhkof.mcToUI(a));
+			AddToStageSetter.setObjToMiddleOfStage(a,a.width/2,a.height/2);
+		
+		}
+	]]>
+</mx:Script>
+	
+</mx:Application>
