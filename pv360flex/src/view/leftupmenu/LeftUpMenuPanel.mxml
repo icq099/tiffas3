@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TitleWindowCustom xmlns="view.*" title="展项浏览" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="540" height="400" showCloseButton="true" initialize="init()" add="addHandler()" close="closeHandler()" addedEffect="{fadeIn}" removedEffect="{fadeOut}">
+	<mx:TileList id="photo_list" rowCount="3" rowHeight="150" columnWidth="150" itemRenderer="view.leftupmenu.LeftUpItemRender" left="10" right="10" top="10" bottom="10" rollOverColor="#E8E5E5" selectionColor="#CECECE"></mx:TileList>
+	<mx:Script>
+		<![CDATA[
+			import gs.TweenLite;
+			import mx.collections.ArrayCollection;
+			
+			private function init():void{
+				
+			
+			}
+			public function updateList(i_array:Array):void{
+				
+				var arrayCollection:ArrayCollection=new ArrayCollection(i_array);
+				photo_list.dataProvider=arrayCollection;
+			
+			}
+			private function addHandler():void{
+				
+				//TweenLite.from(this,1,{x:String(this.width/2),y:String(this.height/2),width:0,height:0})
+			
+			}
+			private function closeHandler():void{
+				
+				TweenLite.to(this,0.3,{z:50,rotationY:-10,onComplete:function():void{
+					
+					z=0;
+					rotationY=0;
+				
+				}})
+				this.parent.removeChild(this);
+			
+			}
+		]]>
+	</mx:Script>
+	<mx:Fade id="fadeIn" alphaFrom="0" alphaTo="1"/>
+	<mx:Fade id="fadeOut" alphaFrom="1" alphaTo="0" duration="250"/>
+</TitleWindowCustom>

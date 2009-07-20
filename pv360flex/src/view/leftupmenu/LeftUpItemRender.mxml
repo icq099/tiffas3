@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300" horizontalScrollPolicy="off" verticalScrollPolicy="off" dataChange="init()" initialize="init()">
+	<mx:Image id="image_c" left="10" right="10" top="10" bottom="36" toolTip="点击打开"/>
+	<mx:Label id="label_c" horizontalCenter="0" bottom="10"/>
+	<mx:Script>
+		<![CDATA[
+		
+		private function init():void{
+			
+			if(this.initialized){
+				
+				image_c.source=data.icon;
+				label_c.text=data.label;
+			}
+		
+		}
+			
+		]]>
+	</mx:Script>
+	
+</mx:Canvas>

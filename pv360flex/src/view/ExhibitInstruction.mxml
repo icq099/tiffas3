@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" label="展项说明" xmlns:view="view.*" implements="lsd.IPlayerBasic" >
+	<mx:Script>
+		<![CDATA[
+			import mx.core.UIComponent;
+			import yzhkof.Toolyzhkof;
+		
+		private var xml:String;
+		private var picture_viewer:SerialPictureView=new SerialPictureView();
+		
+		public function loadImage(xml:String):void{
+			
+			var ui:UIComponent=Toolyzhkof.mcToUI(picture_viewer);
+			ui.setStyle("verticalCenter",-picture_viewer.PICTURE_HEIGHT/2);
+			ui.setStyle("horizontalCenter",-picture_viewer.PICTURE_WIDTH/2);
+			
+			addChild(ui);
+			
+			for each(var i:XML in XMLList(XML(xml).Img)){
+				
+				picture_viewer.add(i.@url);
+			
+			}
+			picture_viewer.loadPictures();
+		
+		}
+		public function stopAll():void{
+			
+			picture_viewer.stopAll();
+		
+		}
+		]]>
+	</mx:Script>
+</mx:Canvas>
