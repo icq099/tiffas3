@@ -20,7 +20,7 @@ package yzhkof
 			re_obj.graphics.endFill();
 			
 			return re_obj;
-		
+			
 		}
 
 	}
