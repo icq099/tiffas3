@@ -15,7 +15,7 @@
 	 * @version		1.0.1
 	 * @private
 	 */
-
+ 
 	public class SpecialPropertiesDefault {
 	
 		/**
