@@ -9,6 +9,7 @@
 		<mx:Fade id="fadeout" alphaFrom="1" alphaTo="0"/>
 	<mx:Script>
 		<![CDATA[
+			import view.Event.ExhitbitSoundEvent;
 			import gs.TweenLite;
 			import lsd.IPlayerBasic;
 			import mx.core.UIComponent;
