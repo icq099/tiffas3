@@ -11,6 +11,7 @@ package mediators
 		public static const NAME:String="AnimatePlayerMediator";
 		public static const CHANGE_SWF:String="CHANGE_SWF";
 		public static const SHOW_ANIMATE:String="SHOW_ANIMATE";
+		public static const HIDE_ANIMATE:String="HIDE_ANIMATE";
 		
 		public function AnimatePlayerMediator(viewComponent:Object=null)
 		{
@@ -21,7 +22,8 @@ package mediators
 			return [
 			
 				AnimatePlayerMediator.CHANGE_SWF,
-				AnimatePlayerMediator.SHOW_ANIMATE
+				AnimatePlayerMediator.SHOW_ANIMATE,
+				AnimatePlayerMediator.HIDE_ANIMATE
 			
 			];
 		
@@ -44,6 +46,11 @@ package mediators
 				case AnimatePlayerMediator.SHOW_ANIMATE:
 				
 					animate_player.openAnimate();
+				
+				break;
+				case AnimatePlayerMediator.HIDE_ANIMATE:
+				
+					animate_player.closeAnimate();
 				
 				break;
 			

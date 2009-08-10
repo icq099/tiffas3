@@ -18,6 +18,7 @@ package mediators
 	import proxys.PTravel;
 	import proxys.PXml;
 	
+	import view.Event.ExhitbitSoundEvent;
 	import view.PopMenusFlex;
 	
 	import yzhkof.Toolyzhkof;
@@ -88,6 +89,11 @@ package mediators
 			p_travel.menu_count++;
 			
 			var menu:PopMenusFlex=new PopMenusFlex();
+			
+			menu.addEventListener(ExhitbitSoundEvent.PLAY,soundPlayHandler);
+			menu.addEventListener(ExhitbitSoundEvent.PAUSE_OR_STOP,soundPauseHandler);
+			menu.addEventListener(CloseEvent.CLOSE,windowCloseHandler);
+			
 			pop_menus.addChild(menu);
 			menu.validateNow();
 			menu.constructByXml(i_xml);
@@ -96,10 +102,19 @@ package mediators
 			menu.x=(pop_menus.stage.stageWidth-menu.width)/2;
 			menu.y=(pop_menus.stage.stageHeight-menu.height)/2;
 			
-			menu.addEventListener(CloseEvent.CLOSE,windowCloseHandler);
 			
 			
+		
+		}
+		private function soundPlayHandler(e:Event):void{
 			
+			facade.sendNotification(SoundPlayerMediator.PAUSE_SOUND);
+			facade.sendNotification(AnimatePlayerMediator.HIDE_ANIMATE);
+		
+		}
+		private function soundPauseHandler(e:Event):void{
+			
+			facade.sendNotification(SoundPlayerMediator.RESUME_SOUND);
 		
 		}
 		private function getClickXml(point_num:int):XML{

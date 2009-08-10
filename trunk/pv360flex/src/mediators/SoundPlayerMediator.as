@@ -11,11 +11,12 @@ package mediators
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
 	import view.ExhibitSound;
-	import view.PlayerBar;
 
 	public class SoundPlayerMediator extends Mediator
 	{
 		public static const NAME:String="SoundPlayerMediator";
+		public static const PAUSE_SOUND:String="PAUSE_SOUND";
+		public static const RESUME_SOUND:String="RESUME_SOUND";
 		
 		public function SoundPlayerMediator(viewComponent:Object=null)
 		{
@@ -25,7 +26,9 @@ package mediators
 			
 			return [
 			
-				FacadePv.LOAD_XML_COMPLETE
+				FacadePv.LOAD_XML_COMPLETE,
+				SoundPlayerMediator.PAUSE_SOUND,
+				SoundPlayerMediator.RESUME_SOUND
 			
 				];
 		
@@ -41,6 +44,16 @@ package mediators
 					loadSound(xml.Travel.@music);
 					playerBar.allowRepeat=true;
 				
+				break;
+				case SoundPlayerMediator.PAUSE_SOUND:
+				
+					playerBar.pause();
+				
+				break;
+				case SoundPlayerMediator.RESUME_SOUND:
+				
+					playerBar.resume();
+					
 				break;
 			
 			}
