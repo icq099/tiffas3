@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+<includeClasses>
+<classEntry path="tiff.UnisysIXPS_IFD"/>
+<classEntry path="tiff.RawImage"/>
+<classEntry path="tiff.Header"/>
+<classEntry path="tiff.Tiff"/>
+<classEntry path="tiff.CompressionType"/>
+<classEntry path="tiff.Tag"/>
+<classEntry path="tiff.IFD"/>
+<classEntry path="tiff.CodedImage"/>
+<classEntry path="tiff.DataType"/>
+<classEntry path="tiff.CCITTG3Image"/>
+<classEntry path="tiff.IFDEntry"/>
+<classEntry path="tiff.UnisysISIS_IFD"/>
+<classEntry path="tiff.util.ByteUtil"/>
+<classEntry path="tiff.Weird_IFD"/>
+</includeClasses>
+<includeResources/>
+<namespaceManifests/>
+</flexLibProperties>
