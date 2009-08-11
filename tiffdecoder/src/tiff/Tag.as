@@ -274,6 +274,7 @@ public class Tag
 	/********************** METHODS ***********************/
 	public function Tag(n:int=0) {
 		id = n;
+		if(n!=0)
 		if (!IsStandard()) {
 			trace("WARNING: Non-Standard Tag "+n );
 		}
