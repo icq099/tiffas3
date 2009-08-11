@@ -1,7 +1,8 @@
 package tiff
 {
-	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
+	
+	import tiff.tag.PhotometricType;
 	
 
 public class CodedImage {
@@ -246,7 +247,7 @@ public class CodedImage {
 				return (false);
 	  }
 	  return (true);
-	} */
+	}  */
 
 }
 }
