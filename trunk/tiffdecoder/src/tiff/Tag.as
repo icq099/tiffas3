@@ -313,10 +313,140 @@ package tiff
 	}
 
 		public function equals(n:int):Boolean{
-			
 			return id==n;
-		
 		}
+	
+//	public function write( MotorolaIntelInputFilter out ) throws IOException {
+//		out.writeShort(	id ); 
+//	}
 
+//	public void read( MemoryFileInputFilter in ) {
+//		id = in.readUnsignedShort(); 
+//	}
+
+	public function toString():String {
+		//return Integer.toString(id); //toHexString(id);
+		var sz:String=""; 
+	    switch (id) {
+	        case SUBFILETYPE               : sz = "SUBFILETYPE      "; break; 
+	        case OSUBFILETYPE              : sz = "OSUBFILETYPE     "; break;
+	        case IMAGEWIDTH                : sz = "IMAGEWIDTH       "; break;   
+	        case IMAGELENGTH               : sz = "IMAGELENGTH      "; break;
+	        case BITSPERSAMPLE             : sz = "BITSPERSAMPLE    "; break;   
+	        case COMPRESSION               : sz = "COMPRESSION      "; break;
+	        case PHOTOMETRIC               : sz = "PHOTOMETRIC      "; break;
+	        case THRESHHOLDING             : sz = "THRESHHOLDING    "; break;   
+	        case CELLWIDTH                 : sz = "CELLWIDTH        "; break;   
+	        case CELLLENGTH                : sz = "CELLLENGTH       "; break;   
+	        case FILLORDER                 : sz = "FILLORDER        "; break;
+	        case DOCUMENTNAME              : sz = "DOCUMENTNAME     "; break;
+	        case IMAGEDESCRIPTION          : sz = "IMAGEDESCRIPTION "; break;
+	        case MAKE                      : sz = "MAKE             "; break;
+	        case MODEL                     : sz = "MODEL            "; break;   
+	        case STRIPOFFSETS              : sz = "STRIPOFFSETS     "; break;
+	        case ORIENTATION               : sz = "ORIENTATION      "; break;
+	        case SAMPLESPERPIXEL           : sz = "SAMPLESPERPIXEL  "; break;
+	        case ROWSPERSTRIP              : sz = "ROWSPERSTRIP     "; break;
+	        case STRIPBYTECOUNTS           : sz = "STRIPBYTECOUNTS  "; break;
+	        case MINSAMPLEVALUE            : sz = "MINSAMPLEVALUE   "; break;   
+	        case MAXSAMPLEVALUE            : sz = "MAXSAMPLEVALUE   "; break;   
+	        case XRESOLUTION               : sz = "XRESOLUTION      "; break;
+	        case YRESOLUTION               : sz = "YRESOLUTION      "; break;
+	        case PLANARCONFIG              : sz = "PLANARCONFIG     "; break;
+	        case PAGENAME                  : sz = "PAGENAME         "; break;
+	        case XPOSITION                 : sz = "XPOSITION        "; break;   
+	        case YPOSITION                 : sz = "YPOSITION        "; break;   
+	        case FREEOFFSETS               : sz = "FREEOFFSETS      "; break;
+	        case FREEBYTECOUNTS            : sz = "FREEBYTECOUNTS   "; break;   
+	        case GRAYRESPONSEUNIT          : sz = "GRAYRESPONSEUNIT "; break;
+	        case GRAYRESPONSECURVE         : sz = "GRAYRESPONSECURVE "; break;   
+	        case GROUP3OPTIONS             : sz = "GROUP3OPTIONS    "; break;   
+	        case GROUP4OPTIONS             : sz = "GROUP4OPTIONS    "; break;   
+	        case RESOLUTIONUNIT            : sz = "RESOLUTIONUNIT   "; break;   
+	        case PAGENUMBER                : sz = "PAGENUMBER       "; break;   
+	        case COLORRESPONSEUNIT         : sz = "COLORRESPONSEUNIT "; break;   
+	        case TRANSFERFUNCTION          : sz = "TRANSFERFUNCTION "; break;
+	        case SOFTWARE                  : sz = "SOFTWARE         "; break;
+	        case DATETIME                  : sz = "DATETIME         "; break;
+	        case ARTIST                    : sz = "ARTIST           "; break;   
+	        case HOSTCOMPUTER              : sz = "HOSTCOMPUTER     "; break;
+	        case PREDICTOR                 : sz = "PREDICTOR        "; break;   
+	        case WHITEPOINT                : sz = "WHITEPOINT       "; break;   
+	        case PRIMARYCHROMATICITIES     : sz = "PRIMARYCHROMATICITIES "; break; 
+	        case COLORMAP                  : sz = "COLORMAP         "; break;
+	        case HALFTONEHINTS             : sz = "HALFTONEHINTS    "; break;   
+	        case TILEWIDTH                 : sz = "TILEWIDTH        "; break;   
+	        case TILELENGTH                : sz = "TILELENGTH       "; break;   
+	        case TILEOFFSETS               : sz = "TILEOFFSETS      "; break;
+	        case TILEBYTECOUNTS            : sz = "TILEBYTECOUNTS   "; break;   
+	        case BADFAXLINES               : sz = "BADFAXLINES      "; break;
+	        case CLEANFAXDATA              : sz = "CLEANFAXDATA     "; break;
+	        case CONSECUTIVEBADFAXLINES    : sz = "CONSECUTIVEBADFAXLINES "; break;
+	        case INKSET                    : sz = "INKSET           "; break;   
+	        case INKNAMES                  : sz = "INKNAMES         "; break;
+	        case DOTRANGE                  : sz = "DOTRANGE         "; break;
+	        case TARGETPRINTER             : sz = "TARGETPRINTER    "; break;   
+	        case EXTRASAMPLES              : sz = "EXTRASAMPLES     "; break;
+	        case SAMPLEFORMAT              : sz = "SAMPLEFORMAT     "; break;
+	        case SMINSAMPLEVALUE           : sz = "SMINSAMPLEVALUE  "; break;
+	        case SMAXSAMPLEVALUE           : sz = "SMAXSAMPLEVALUE  "; break;
+	        case JPEGPROC                  : sz = "JPEGPROC         "; break;
+	        case JPEGIFOFFSET              : sz = "JPEGIFOFFSET     "; break;
+	        case JPEGIFBYTECOUNT           : sz = "JPEGIFBYTECOUNT  "; break;
+	        case JPEGRESTARTINTERVAL       : sz = "JPEGRESTARTINTERVAL "; break;
+	        case JPEGLOSSLESSPREDICTORS    : sz = "JPEGLOSSLESSPREDICTORS "; break;
+	        case JPEGPOINTTRANSFORM        : sz = "JPEGPOINTTRANSFORM "; break;   
+	        case JPEGQTABLES               : sz = "JPEGQTABLES      "; break;
+	        case JPEGDCTABLES              : sz = "JPEGDCTABLES     "; break;
+	        case JPEGACTABLES              : sz = "JPEGACTABLES     "; break;
+	        case YCBCRCOEFFICIENTS         : sz = "YCBCRCOEFFICIENTS "; break;       
+	        case YCBCRSUBSAMPLING          : sz = "YCBCRSUBSAMPLING "; break;
+	        case YCBCRPOSITIONING          : sz = "YCBCRPOSITIONING "; break;
+	        case REFERENCEBLACKWHITE       : sz = "REFERENCEBLACKWHITE "; break;    
+	        case REFPTS               : sz = "REFPTS      		"; break; 
+	        case REGIONTACKPOINT      : sz = "REGIONTACKPOINT   "; break; 
+	        case REGIONWARPCORNERS    : sz = "REGIONWARPCORNERS "; break; 
+	        case REGIONAFFINE         : sz = "REGIONAFFINE      "; break; 
+	        case MATTEING             : sz = "MATTEING      	"; break; 
+	        case DATATYPE             : sz = "DATATYPE      	"; break; 
+	        case IMAGEDEPTH           : sz = "IMAGEDEPTH      	"; break; 
+	        case TILEDEPTH            : sz = "TILEDEPTH      	"; break; 
+	        case PIXAR_IMAGEFULLWIDTH : sz = "PIXAR_IMAGEFULLWIDTH "; break; 
+	        case PIXAR_IMAGEFULLLENGTH: sz = "PIXAR_IMAGEFULLLENGTH "; break; 
+	        case WRITERSERIALNUMBER   : sz = "WRITERSERIALNUMBER "; break; 
+	        case COPYRIGHT            : sz = "COPYRIGHT      	"; break; 
+	        case IT8SITE              : sz = "IT8SITE      		"; break; 
+	        case IT8COLORSEQUENCE     : sz = "IT8COLORSEQUENCE  "; break; 
+	        case IT8HEADER            : sz = "IT8HEADER      	"; break; 
+	        case IT8RASTERPADDING     : sz = "IT8RASTERPADDING  "; break; 
+	        case IT8BITSPERRUNLENGTH  : sz = "IT8BITSPERRUNLENGTH "; break; 
+	        case IT8BITSPEREXTENDEDRUNLENGTH: sz = "IT8BITSPEREXTENDEDRUNLENGTH "; break; 
+	        case IT8COLORTABLE        : sz = "IT8COLORTABLE     "; break; 
+	        case IT8IMAGECOLORINDICATOR: sz = "IT8IMAGECOLORINDICATOR "; break; 
+	        case IT8BKGCOLORINDICATOR : sz = "IT8BKGCOLORINDICATOR "; break; 
+	        case IT8IMAGECOLORVALUE   : sz = "IT8IMAGECOLORVALUE "; break; 
+	        case IT8BKGCOLORVALUE     : sz = "IT8BKGCOLORVALUE  "; break; 
+	        case IT8PIXELINTENSITYRANGE: sz = "IT8PIXELINTENSITYRANGE "; break; 
+	        case IT8TRANSPARENCYINDICATOR: sz = "IT8TRANSPARENCYINDICATOR "; break; 
+	        case IT8COLORCHARACTERIZATION: sz = "IT8COLORCHARACTERIZATION "; break; 
+	        case FRAMECOUNT           : sz = "FRAMECOUNT      	"; break; 
+	        case ICCPROFILE           : sz = "ICCPROFILE      	"; break; 
+	        case JBIGOPTIONS          : sz = "JBIGOPTIONS      	"; break; 
+	        case FAXRECVPARAMS        : sz = "FAXRECVPARAMS     "; break; 
+	        case FAXSUBADDRESS        : sz = "FAXSUBADDRESS     "; break; 
+	        case FAXRECVTIME          : sz = "FAXRECVTIME      	"; break; 
+	        case DCSHUESHIFTVALUES    : sz = "DCSHUESHIFTVALUES "; break; 
+
+	        case UNISYS_ISIS_IFD: sz = "UNISYS_ISIS_IFD"; break;
+	        case UNISYS_SIDE: sz = "UNISYS_SIDE"; break; 
+	        case UNISYS_IXPS_IFD: sz = "UNISYS_IXPS_IFD"; break;
+	        case WEIRD: sz = "BANCTEC_IFD"; break; 
+			
+			default : 
+				sz="Unknown Tag #" + id + " "; 
+				break; 
+        }                                                                  
+		return sz;		
+	}
 	}
 }
