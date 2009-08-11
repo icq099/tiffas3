@@ -281,7 +281,9 @@ public class Tag
 	public function Value():int {
 		return id;
 	}
-		
+	public function read(inb:ByteArray):void {
+		id = inb.readUnsignedShort(); 
+	}
 	public function IsStandard():Boolean {
 
 		var isValid:Boolean = (id >= MINIMUM && id <= MAXIMUM_STANDARD );
