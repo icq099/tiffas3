@@ -91,6 +91,13 @@ package tiff.util
         return b;
     }
     		/** 
+     * Set the current position in the byte array.
+          * @param	isIntel    true if intel (hi to lo), false if motorola (lo to hi).
+     */
+    public function seek(pos:uint):void {
+    	currentPos = uint(pos); 
+    }
+    		/** 
      * Returns the length in the byte array.
           * @return    the length of the byte array.
      */
