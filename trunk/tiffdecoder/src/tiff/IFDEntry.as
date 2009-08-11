@@ -30,7 +30,7 @@ package tiff
 		}
 		public function read(inb:ByteArray,ifdOffset:int=0):void{
 			
-			tag.read(inb);
+//			tag.read(inb);//这个暂时没写好
 			type.read(inb);
 			count=inb.readInt();
 			value=inb.readInt();
