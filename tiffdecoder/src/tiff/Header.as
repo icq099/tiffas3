@@ -25,6 +25,13 @@ package tiff
 			offset=10;
 		
 		}
+
+//	public function write( MotorolaIntelInputFilter out ):void {
+//		out.writeShort(byteOrder);
+//		out.writeShort(id);
+//		out.writeInt( (int) offset);
+//	} 
+	
 		public function read(inb:ByteArray):void{
 			
 			byteOrder=inb.readUnsignedShort();
@@ -34,6 +41,15 @@ package tiff
 		
 		}
 		
-
+	public function toString():String {
+		var s:String = "Byte Order: ";
+		if (byteOrder == TIFF_BIGENDIAN)
+			s += "Motorola";
+		else
+			s += "Intel";
+		
+		s += ", Version: " + id + ", Offset: " + offset.toString(16); 
+		return s; 
+	}
 	}
 }
