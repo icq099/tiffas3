@@ -5,7 +5,7 @@ package tiff
 	
 	import tiff.util.ByteUtil;
 	
-	import yzhkof.TimeCounter;
+
 	
 
 
