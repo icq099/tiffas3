@@ -5,6 +5,8 @@ package tiff
 	
 	import tiff.util.ByteUtil;
 	
+	import yzhkof.TimeCounter;
+	
 
 
 /* CCITT Group 3 fax encoding */
@@ -113,7 +115,12 @@ public class CCITTG3Image extends RawImage {
 		} */
 		if (bitsPerSample==8&& imageBytes!=null) {
 		  img = new BitmapData(imageWidth, imageHeight);
-		  trace(imageBytes)
+		  for(i=0;i<imageWidth;i++){
+		  	for(var j:int=0;j<imageHeight;j++){
+		  		img.setPixel(i,j,imageBytes[i+j*imageWidth]==0?0:0xffffff);  	
+		  	}
+		  }
+		  
 		  //img.setPixels(new Rectangle(0,0,imageWidth,imageHeight),imageBytes);
 		}
 
@@ -162,8 +169,7 @@ public class CCITTG3Image extends RawImage {
 	public function DecodeImageStrip(imageStrip:ByteArray,maxLines:int,firstStrip:Boolean):ByteArray
 	{
 		trace("CCITTG3Image::DecodeImageStrip( strip, " +maxLines+" )");
-
-
+		
 
 		var i:int, j:int, shift:int, count:int;
 		var bytesArray:ByteArray = imageStrip;
@@ -246,14 +252,17 @@ public class CCITTG3Image extends RawImage {
 			//set the image bytes based on the code's runlength
 				if (code.runLength>0) {
 
-					if (nPixels>=rawImage.length || nPixels+code.runLength>=rawImage.length || code.runLength>=WhiteRun.length || code.runLength>=BlackRun.length) {
+					/* if (nPixels>=rawImage.length || nPixels+code.runLength>=rawImage.length || code.runLength>=WhiteRun.length || code.runLength>=BlackRun.length) {
 						trace("nPixels="+nPixels+", code.runLength="+code.runLength
 							+", rawImage.length="+rawImage.length+", WhiteRun.length="
 							+WhiteRun.length+", BlackRun.length="+BlackRun.length);
 						//System.out.flush();
-					}
+					} */
+					
 					ByteUtil.arraycopy( (whiteRun ? WhiteRun : BlackRun), 0, rawImage, nPixels, code.runLength );
 					nPixels += code.runLength;
+					//TimeCounter.add(code.runLength);
+					
 				}
 
 			//increment our bit index
@@ -284,7 +293,7 @@ public class CCITTG3Image extends RawImage {
 		}
 
 //DEBUG		trace("nPixels = "+nPixels+", rawImage.length="+rawImage.length+", lines="+lines+", maxLines="+maxLines+", imageWidth="+imageWidth);
-
+		//TimeCounter.traceResult()
 		bitsPerSample=8;
 		return (rawImage);
 	}
