@@ -22,13 +22,30 @@ package tiff.util
 		}
 		public static function readFullyB(src:ByteArray,des:ByteArray,offset:int,length:int):void{
 			
-			src.readBytes(des,offset,length);
+			src.position=offset;
+			src.readBytes(des,0,length);
 		
 		}
 		public static function isInter(inb:ByteArray):Boolean{
 			
 			return inb.endian==Endian.LITTLE_ENDIAN;
 			
+		}
+		public static function arraycopy(src:ByteArray,srcPos:int,dest:ByteArray,desPos:int,length:int):void{
+			
+			dest.position=desPos;
+			dest.writeBytes(src,srcPos,length);
+		
+		}
+		public static function toSign(num:int):int{
+			
+			return num<256?(num>127?num-256:num):num;
+					
+		}
+		public static function setLength(src:ByteArray,length:int):void{
+			
+			//src
+		
 		}
 		public static function readProperly(src:ByteArray,bytes:ByteArray, typeSize:int, len:int ):void {
 			if (!isInter(src) || typeSize<2)

@@ -86,7 +86,7 @@ package tiff.util
  	   * </pre></blockquote>
  	   */
     public function readByte():int {//原文是:byte
-        var b:int = bytesArray[currentPos];
+        var b:int = ByteUtil.toSign(bytesArray[currentPos]);
         currentPos += BYTE_SIZE;
         return b;
     }

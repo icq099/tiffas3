@@ -1,6 +1,9 @@
 package tiff
 {
+	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
+	
+	import tiff.util.ByteUtil;
 	
 	public class IFD
 	{
@@ -34,7 +37,12 @@ package tiff
 			return null;
 		
 		}
-		private function GetFieldValue(id:int):int{
+		public function getImage():BitmapData{
+			
+			return cImg.getImage();
+		
+		}
+		public function GetFieldValue(id:int):int{
 			
 			for (var i:int=0; i<count; i++) {
 				if (IFDEntry(entries[i]).tag.equals(id)) return int(IFDEntry(entries[i]).value);
@@ -154,7 +162,7 @@ package tiff
 				len = (nCounts>0 ? entries[nCounts].value : inb.length-offset );
 				cImg.imageBytes = new ByteArray;
 				inb.position=offset;
-				inb.readBytes(cImg.imageBytes,inb.position,len);
+				ByteUtil.readFully(inb,cImg.imageBytes,len);
 				
 			}
 		
