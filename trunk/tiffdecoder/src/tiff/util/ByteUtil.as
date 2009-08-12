@@ -3,6 +3,8 @@ package tiff.util
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 	
+
+	
 	public class ByteUtil
 	{
 		public static const BYTE_SIZE:int = 1;
@@ -26,7 +28,7 @@ package tiff.util
 		public static function isInter(inb:ByteArray):Boolean{
 			
 			return inb.endian==Endian.LITTLE_ENDIAN;
-		
+			
 		}
 		public static function readProperly(src:ByteArray,bytes:ByteArray, typeSize:int, len:int ):void {
 			if (!isInter(src) || typeSize<2)
