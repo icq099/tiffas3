@@ -17,7 +17,7 @@ package tiff.tag
     public static const USER:int			= 32000; /*IXPS User Area*/
 
 
-    var id:int;
+    internal var id:int;
 
     public function UnisysIXPSTags( i:int ) {
     	id = i;

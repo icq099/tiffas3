@@ -47,8 +47,7 @@ package tiff
 					if(ByteUtil.isInter(inb)){
 						ByteUtil.readProperly(inb,dataArray,t.size(),4);
 						ByteUtil.readProperly(inb,b,t.size(),4);
-						dataArray.position=4;
-						dataArray.writeBytes(b,0,4);
+						ByteUtil.arraycopy(b,0,dataArray,4,4);
 					}else{
 						ByteUtil.readFully(inb,dataArray,len);
 					}

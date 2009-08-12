@@ -1,13 +1,12 @@
 package tiff
 {
+	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
-	
-	import tiff.tag.PhotometricType;
 	
 
 public class CodedImage {
 
-	public var imageBytes:ByteArray;
+	private var _imageBytes:ByteArray;
 	public var imageStrips:Array;
 	public var compType:Number;
 	public var bitsPerSample:int, samplesPerPixel:int, extraSamples:int, photometric:int;
@@ -141,14 +140,9 @@ public class CodedImage {
 	public function GetA( abgr:int):int{	return ((abgr>> 24) & 0xff); }
 
 
-	/* public function getImage():BitmapData{
-		var img:Image= null;
-		var ip:ImageProducer= ImageProducer(getImageProducer());
-		if (ip != null) {
-		  img = Toolkit.getDefaultToolkit().createImage( ip );
-		}
-		return img;
-	} */
+	public function getImage():BitmapData{
+		return null;
+	} 
 
 
 	/* public function getImageProducer():Object{
@@ -248,6 +242,16 @@ public class CodedImage {
 	  }
 	  return (true);
 	}  */
+	public function set imageBytes(value:ByteArray):void{
+		
+		_imageBytes=value;
+	
+	}
+	public function get imageBytes():ByteArray{
+		
+		return _imageBytes;
+	
+	}
 
 }
 }

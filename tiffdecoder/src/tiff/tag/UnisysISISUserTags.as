@@ -15,7 +15,7 @@ package tiff.tag
     public static const ZONELIST:int	=  10; /*Zone List*/
     public static const NEXTIFD:int 	=  11; /*Next Level 1 IFD offset*/
     
-    var id:int;
+    internal var id:int;
     
     public function UnisysISISUserTags( i :int) {
     	id = i; 
