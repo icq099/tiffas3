@@ -39,10 +39,14 @@ package {
 			var t:Tiff=new Tiff;
 			t.read(byte);
 			//trace(t.getImage(0));
-			var d:DisplayObject=new Bitmap(t.getImage(1));//获得第二分页的图片
+			var d:DisplayObject
+			EfficiencyTestor.efficiencyOfFunctionTraceFormat(function():void{
+				
+				d=new Bitmap(t.getImage(1));//获得第二分页的图片
+			
+			});
 			//d.scaleX=d.scaleY=0.2
 			addChild(d);
-		
 		}
 		private function onComplete(e:Event):void{
 			
