@@ -7,6 +7,7 @@ package tiff
 public class CodedImage {
 
 	private var _imageBytes:ByteArray;
+	protected var img:BitmapData;
 	public var imageStrips:Array;
 	public var compType:Number;
 	public var bitsPerSample:int, samplesPerPixel:int, extraSamples:int, photometric:int;
@@ -78,6 +79,10 @@ public class CodedImage {
 	public function isJPEG():Boolean{
 		return (compType == CompressionType.JPEG || compType == CompressionType.OJPEG);
 	}
+	/* public function isDecoded():Boolean{
+		
+		return img!=null?true:false;	
+	} */
 
 	public function isCCITT():Boolean{
     return (compType == CompressionType.CCITTFAX3 ||
@@ -143,7 +148,7 @@ public class CodedImage {
 	public function getImage():BitmapData{
 		return null;
 	} 
-
+	
 
 	/* public function getImageProducer():Object{
 
