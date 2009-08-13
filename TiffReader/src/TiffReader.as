@@ -1,6 +1,7 @@
 package {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import flash.net.URLLoader;
@@ -25,7 +26,7 @@ package {
 			//loader=new URLLoader(new URLRequest("photo.tif"));
 			//loader=new URLLoader(new URLRequest("test.tif"));
 			//loader=new URLLoader(new URLRequest("testTXD.tif"));
-			loader=new URLLoader(new URLRequest("cenfax_1245134002_519_0.tiff"));
+			loader=new URLLoader(new URLRequest("cenfax_1245134002_519_0.tiff"));//读取图片
 			//loader=new URLLoader(new URLRequest("g3.tif"));
 			loader.dataFormat=URLLoaderDataFormat.BINARY;
 			//loader.load();
@@ -38,8 +39,9 @@ package {
 			var t:Tiff=new Tiff;
 			t.read(byte);
 			//trace(t.getImage(0));
-			trace(t.getPageCount())
-			addChild(new Bitmap(t.getImage(1)));
+			var d:DisplayObject=new Bitmap(t.getImage(1));//获得第二分页的图片
+			//d.scaleX=d.scaleY=0.2
+			addChild(d);
 		
 		}
 		private function onComplete(e:Event):void{
