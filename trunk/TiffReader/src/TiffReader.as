@@ -26,7 +26,7 @@ package {
 			//loader=new URLLoader(new URLRequest("photo.tif"));
 			//loader=new URLLoader(new URLRequest("test.tif"));
 			//loader=new URLLoader(new URLRequest("testTXD.tif"));
-			loader=new URLLoader(new URLRequest("cenfax_1245134002_519_0.tiff"));//读取图片
+			loader=new URLLoader(new URLRequest("g:\aa.tiff"));//读取图片
 			//loader=new URLLoader(new URLRequest("g3.tif"));
 			loader.dataFormat=URLLoaderDataFormat.BINARY;
 			//loader.load();
