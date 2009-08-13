@@ -25,7 +25,6 @@
 <sourceAttachmentPath/>
 </compiler>
 <applications>
-<application path="byte.as"/>
 <application path="TiffReader.as"/>
 </applications>
 <modules/>
