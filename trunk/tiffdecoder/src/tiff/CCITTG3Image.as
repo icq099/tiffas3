@@ -28,11 +28,11 @@ public class CCITTG3Image extends RawImage {
 		WhiteRun = new ByteArray;
 		BlackRun = new ByteArray;
 
-		for (i=0; i<2560*4; i++) {
-			WhiteRun[i]=0xff;
-			i%4==0?BlackRun[i]=0xff:BlackRun[i]=0;
-			//WhiteRun.writeUnsignedInt(0xffffffff);
-			//BlackRun.writeUnsignedInt(0xff000000);
+		for (i=0; i<2560; i++) {
+			//WhiteRun[i]=0xff;
+			//i%4==0?BlackRun[i]=0xff:BlackRun[i]=0;
+			WhiteRun.writeUnsignedInt(0xffffffff);
+			BlackRun.writeUnsignedInt(0xff000000);
 		}
 
 		hiloBitOrder = (ifd.GetFieldValue( Tag.FILLORDER ) == 2);
