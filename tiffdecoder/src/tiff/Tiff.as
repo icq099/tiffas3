@@ -1,6 +1,7 @@
 package tiff
 {
 	import flash.display.BitmapData;
+	import flash.events.Event;
 	import flash.utils.ByteArray;
 		
 	public class Tiff
