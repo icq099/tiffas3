@@ -2,12 +2,6 @@ package tiff
 {
 	import flash.utils.ByteArray;
 	
-/**
- * Converter does all kinds of neat conversion that java forgot.
- * Copyright 1997 By BancTec. GNU Public license Applys.
- * @version 1.0, Aug 21, 1997
- * @author	Liz Marks
- */
 
 public final class Converter {
 
@@ -137,11 +131,11 @@ public final class Converter {
 		switch (len) {
 			case 1: case 2:	case 3: case 4: case 5: case 6: case 7: 
 				bits = int((octet[0] & 0xff) )>>> (8-len);
-//				System.out.println("\t"+byteToBinaryString(octet[0])+" >>> " + (8-len) + " = " + byteToBinaryString(bits,len)+"\n");
+//				trace("\t"+byteToBinaryString(octet[0])+" >>> " + (8-len) + " = " + byteToBinaryString(bits,len)+"\n");
 				break; 
 			case 8:
 				bits = octet[0];
-//				System.out.println("\t"+byteToBinaryString(octet[0])+ " = " + byteToBinaryString(bits,len)+"\n");
+//				trace("\t"+byteToBinaryString(octet[0])+ " = " + byteToBinaryString(bits,len)+"\n");
 				break; 			
 			case 9: case 10: case 11: case 12: case 13: case 14: case 15:
 				var shift:int= (8-(len-8));
@@ -149,19 +143,19 @@ public final class Converter {
 				lo = int((octet[1] & 0xff));
 				bits = (hi + lo) >>> shift;
 				
-//				System.out.println("\t "+ intToBinaryString(hi,16)); 
-//				System.out.println("\t+"+ intToBinaryString(lo,16));
-//				System.out.println("\t="+ intToBinaryString(hi+lo,16) );
-//				System.out.println("\t >>> " + shift); 
-//				System.out.println("\t\t==>" + intToBinaryString(bits,len)+"\n");
+//				trace("\t "+ intToBinaryString(hi,16)); 
+//				trace("\t+"+ intToBinaryString(lo,16));
+//				trace("\t="+ intToBinaryString(hi+lo,16) );
+//				trace("\t >>> " + shift); 
+//				trace("\t\t==>" + intToBinaryString(bits,len)+"\n");
 				break; 
 			case 16:
 				hi = (int((octet[0] & 0xff) )<< 8);
 				lo = int((octet[1] & 0xff));
 				bits = (hi + lo);
-//				System.out.println("\t "+ intToBinaryString(hi,16)); 
-//				System.out.println("\t+"+ intToBinaryString(lo,16));
-//				System.out.println("\t="+ intToBinaryString(hi+lo,16) );
+//				trace("\t "+ intToBinaryString(hi,16)); 
+//				trace("\t+"+ intToBinaryString(lo,16));
+//				trace("\t="+ intToBinaryString(hi+lo,16) );
 				break; 				
 		}
 		return bits;
