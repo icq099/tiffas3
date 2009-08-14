@@ -3,7 +3,11 @@ package tiff
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	
-
+	/**
+	 *抽象tiff图像的基类
+	 * @author Administrator
+	 * 
+	 */	
 public class CodedImage {
 
 	private var _imageBytes:ByteArray;
