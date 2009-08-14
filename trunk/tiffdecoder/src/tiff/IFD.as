@@ -109,12 +109,12 @@ package tiff
 				//case CompressionType.JPEG:				cImg = new JPEGImage(this); break;
 				//case CompressionType.PACKBITS:		cImg = new PackbitsImage(this); break;
 	
-				/*don't do these types yet*
+				/*
 				case CompressionType.CCITTRLEW:		cImg = new CCITTImage(this); break;
 				case CompressionType.LZW:	 				cImg = new LZWImage(this); break;
 				case CompressionType.NEXT:				cImg = new NeXTImage(this); break;
 				case CompressionType.THUNDERSCAN:	cImg = new ThunderScanImage(this); break;
-	 			*don't do these types yet*/
+	 			*/
 	
 		  		default:				cImg = new CodedImage(this); break;
 			}
