@@ -281,7 +281,7 @@ public class CCITTG3Image extends RawImage {
 			}
 
 
-//DEBUG			System.out.print((whiteRun ? " W" : " B") + code.runLength);
+//DEBUG			trace((whiteRun ? " W" : " B") + code.runLength);
 //DEBUG			if (code.runLength<0)
 //DEBUG				trace(code);
 
