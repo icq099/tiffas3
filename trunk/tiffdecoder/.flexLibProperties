@@ -2,37 +2,27 @@
 <flexLibProperties version="1">
 <includeClasses>
 <classEntry path="tiff.UnisysIXPS_IFD"/>
-<classEntry path="tiff.tag.UnisysISISUserTags"/>
+<classEntry path="tiff.RawImage"/>
 <classEntry path="tiff.Header"/>
 <classEntry path="tiff.Tiff"/>
 <classEntry path="tiff.Converter"/>
-<classEntry path="tiff.tag.Group3OptionType"/>
-<classEntry path="tiff.tag.SampleFormatType"/>
+<classEntry path="tiff.T4Node"/>
 <classEntry path="tiff.CompressionType"/>
+<classEntry path="tiff.Tag"/>
 <classEntry path="tiff.IFD"/>
 <classEntry path="tiff.T4Code"/>
 <classEntry path="tiff.CodedImage"/>
 <classEntry path="tiff.tag.UnisysISISTags"/>
 <classEntry path="tiff.tag.ResolutionUnitType"/>
 <classEntry path="tiff.DataType"/>
-<classEntry path="tiff.tag.JPEGTablesModeType"/>
+<classEntry path="tiff.IFDEntry"/>
+<classEntry path="tiff.tag.YCBCRPositionType"/>
 <classEntry path="tiff.tag.GrayResponseUnitType"/>
 <classEntry path="tiff.UnisysISIS_IFD"/>
 <classEntry path="tiff.T4Tables"/>
+<classEntry path="tiff.tag.PhotometricType"/>
 <classEntry path="tiff.util.ByteUtil"/>
 <classEntry path="tiff.Weird_IFD"/>
-<classEntry path="tiff.RawImage"/>
-<classEntry path="tiff.tag.PlanarConfigType"/>
-<classEntry path="tiff.T4Node"/>
-<classEntry path="tiff.Tag"/>
-<classEntry path="tiff.tag.DCSInterpModeType"/>
-<classEntry path="tiff.tag.OFileType"/>
-<classEntry path="tiff.tag.FillOrderType"/>
-<classEntry path="tiff.tag.InksetType"/>
-<classEntry path="tiff.IFDEntry"/>
-<classEntry path="tiff.tag.YCBCRPositionType"/>
-<classEntry path="tiff.tag.UnisysIXPSTags"/>
-<classEntry path="tiff.tag.PhotometricType"/>
 </includeClasses>
 <includeResources/>
 <namespaceManifests/>
