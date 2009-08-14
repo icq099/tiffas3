@@ -93,7 +93,7 @@ public class T4Code {
 				bits = Converter.getBits( octet, len );
 			}
 
-//			System.out.println("test " + c 
+//			trace("test " + c 
 //							+ " --- bits = " + Converter.intToBinaryString(bits,len));
 
 			if (bits == ca[1]) {
@@ -105,8 +105,8 @@ public class T4Code {
 		}
 		
 //		if (found) {
-//			System.out.println();
-//			System.out.println("found: " + c); 
+//			trace();
+//			trace("found: " + c); 
 //		}
 		return c;
 	}

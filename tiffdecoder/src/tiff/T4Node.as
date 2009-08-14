@@ -42,29 +42,29 @@ public class T4Node {
 	public function Add( d:int, c:T4Code):void{
 		if (d == c.bitLength) { //end of the line
 			code = c;
-//			System.out.println("Added T4Node for "+c);
+//			trace("Added T4Node for "+c);
 		}
 		else {
 			d++;
 			if (mask == NOMASK) {
 				mask = 1<<( 16-d ); 
-//				System.out.print("Added ");
+//				trace("Added ");
 			}
 
 			var bits:int= c.codeWord << (16-c.bitLength); 
 
-//			System.out.print("mask (" 
+//			trace("mask (" 
 //				+ Converter.intToBinaryString(mask,16) + ") T4Node for "
 //				+ Converter.intToBinaryString(bits,16));
 				
 			if ((bits & mask) == 0) {
-//				System.out.println(" --> add to zero side");
+//				trace(" --> add to zero side");
 				if (zero == null)
 					zero = new T4Node(); 
 				zero.Add( d, c );
 			}
 			else {
-//				System.out.println(" --> add to ones side");
+//				trace(" --> add to ones side");
 				if (one == null)
 					one = new T4Node(); 
 				one.Add( d, c );
@@ -76,30 +76,30 @@ public class T4Node {
 	public function ReversedAdd( d:int, c:T4Code):void{
 		if (d == c.bitLength) { //end of the line
 			code = c;
-//DEBUG			System.out.println("Added T4Node for "+c);
+//DEBUG			trace("Added T4Node for "+c);
 		}
 		else {
 			if (mask == NOMASK) {
 				mask = 1<<d; 
-//DEBUG				System.out.print("MASK ");
+//DEBUG				trace("MASK ");
 			}
-//DEBUG			else System.out.print("mask "); 
+//DEBUG			else trace("mask "); 
 			d++;
 
 			var bits:int= c.codeWord;
 			
-//DEBUG			System.out.print("(" 
+//DEBUG			trace("(" 
 //DEBUG				+ Converter.intToBinaryString(mask,16) + ") T4Node for "
 //DEBUG				+ Converter.intToBinaryString(bits,16));
 				
 			if ((bits & mask) == 0) {
-//DEBUG				System.out.println(" --> add to zero side");
+//DEBUG				trace(" --> add to zero side");
 				if (zero == null)
 					zero = new T4Node(); 
 				zero.ReversedAdd( d, c );
 			}
 			else {
-//DEBUG				System.out.println(" --> add to ones side");
+//DEBUG				trace(" --> add to ones side");
 				if (one == null)
 					one = new T4Node(); 
 				one.ReversedAdd( d, c );
@@ -110,16 +110,16 @@ public class T4Node {
 	
 	public function Find( i:int):T4Node{
 		if (code != null) {
-//DEBUG			System.out.println( "found it: "+code );
+//DEBUG			trace( "found it: "+code );
 			return this;
 		}
 		else if (mask != NOMASK) {
 			if ((mask & i)==0) {
-//DEBUG				System.out.println( "look on zero side");
+//DEBUG				trace( "look on zero side");
 				return (zero!=null ? zero.Find( i ) : null);
 			}
 			else {
-//DEBUG				System.out.println( "look on ones side");
+//DEBUG				trace( "look on ones side");
 				return (one!=null ? one.Find( i ) : null);
 			}
 		}
