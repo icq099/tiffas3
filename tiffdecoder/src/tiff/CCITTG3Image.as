@@ -203,7 +203,7 @@ public class CCITTG3Image extends RawImage {
 		if (firstStrip) {
 
 //			for (i=0; i<8; i++)
-//				System.out.print( " " + Converter.byteToBinaryString( ByteUtil.toSign(bytesArray[*]) ) );
+//				trace( " " + Converter.byteToBinaryString( ByteUtil.toSign(bytesArray[*]) ) );
 //			trace();
 
 			//skip over first eol which starts the encoded image
