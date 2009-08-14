@@ -57,14 +57,14 @@ package tiff
 			var inb:ByteArray=bytesArray;
 			pageCount=0;
 			pages=new Array();
-			header.read(inb);//读取头部信息
+			header.read(inb);
 			var offset:uint=header.offset;
 			
 			while(offset!=0){
 				
 				inb.position=offset;
 				pages.push(new IFD());
-				IFD(pages[pageCount]).read(inb);//读取IFD信息
+				IFD(pages[pageCount]).read(inb);
 				
 				offset=IFD(pages[pageCount]).offset;
 				pageCount++;
