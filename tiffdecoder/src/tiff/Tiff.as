@@ -45,29 +45,6 @@ package tiff
 			return pages[page].getImage();
 		
 		}
-		/* public function getImageProducer(page:int):Object{
-			
-			if (pageCount==0 || page > pageCount) return null;
-			return pages[page].getImageProducer();
-		
-		} */
-		/* public function readInputStream(input:ByteArray):void{
-			
-			var CHUNK:int = 10240;
-			var i:int,count:int,max:int=10 * CHUNK;
-			var tmp:ByteArray=new ByteArray(),bytesArray:ByteArray=new ByteArray();
-			
-			for (i=0,count=0; (count = input[tmp]) != -1; i+=count){
-				
-				if (i+count > max) {
-					var ba:ByteArray = new ByteArray;
-		    		//System.arraycopy( bytesArray, 0, ba, 0, i );
-		    		max = i + count + CHUNK;
-		    		bytesArray = ba;
-				}
-			}
-		
-		}	 */	
 		/**
 		 *传入装载tiff数据的byteArray，并进行基本属性的分析。
 		 * @param bytesArray
@@ -89,10 +66,6 @@ package tiff
 				
 				offset=IFD(pages[pageCount]).offset;
 				pageCount++;
-				if (pageCount>=10 && offset!=0) {
-					trace("Oop, I was cheating and only allowed for 10 pages in a tif file");
-					break; 
-				}
 			
 			}			
 		}
