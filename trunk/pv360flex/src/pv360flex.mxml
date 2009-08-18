@@ -11,6 +11,7 @@
 				
 				addChild(new pv360project());
 				//FPSfromA3d.init(UIComponent(addChild(new UIComponent())));
+				
 			}
 		]]>
 	</mx:Script>
