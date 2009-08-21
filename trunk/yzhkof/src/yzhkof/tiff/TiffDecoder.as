@@ -100,30 +100,6 @@ package yzhkof.tiff
 				}
 			
 			}
-			/* var lineByteWidth:int = (image_width%8)?image_width/8+1:image_width/8;
-			var offset:int;
-			var mask:int;
-			var y:int=0;
-			var pal:Array=defaultGrayMap(1);
-			
-			tiff.endian=Endian.BIG_ENDIAN;
-			for(var j:int = 0; j<image_height; j++) {
-				var pos:uint = image_offset + lineByteWidth*j; 
-				offset = 0;
-				mask = 0x80;
-				for( var x:int = 0; x<image_width; x++) {
-					var pixel:uint = tiff[pos+offset];
-					var palIndex:int = (pixel&mask)?1:0;
-					clr  = pal[palIndex+4]&0xFF;
-					clr += pal[palIndex+2]&0xFF00;
-					clr += (pal[palIndex]&0xFF00)<<8;
-					bitmapData.setPixel(x,y, clr);
-					
-					offset += (mask>1)?0:1;					// shift to next byte
-					mask = (mask>1)? mask>>1:0x80;			// shift mask for next pixel
-				}
-				y ++;
-			} */
 			
 			tiff.endian=Endian.LITTLE_ENDIAN;
 		
