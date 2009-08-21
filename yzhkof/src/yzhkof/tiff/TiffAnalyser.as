@@ -137,9 +137,11 @@ package yzhkof.tiff
 		
 		}
 		
-/*
- *                             图片属性 
- */
+		/**
+		 * 图片属性  
+		 *  ///////////////////////////////
+		 * 
+		 */
 		public function get width():int{
 			
 			return getIFDContextByTag(256) as int;
@@ -149,8 +151,7 @@ package yzhkof.tiff
 			
 			return getIFDContextByTag(257) as int;
 		
-		}
-		//压缩方式
+		}	
 		public function get compress():int{
 			
 			return getIFDContextByTag(259) as int;
