@@ -2,13 +2,31 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" label="展项说明" xmlns:view="view.*" implements="lsd.IPlayerBasic" >
 	<mx:Script>
 		<![CDATA[
+			import gs.TweenLite;
 			import mx.core.UIComponent;
 			import yzhkof.Toolyzhkof;
 		
 		private var xml:String;
+		private var loading:UIComponent;
 		private var picture_viewer:SerialPictureView=new SerialPictureView();
 		
+		private function loadCompleteHandler(e:Event):void{
+			
+			removeChild(loading);
+		
+		}
 		public function loadImage(xml:String):void{
+			
+			loading=Toolyzhkof.mcToUI(new LoadingSimpleRota());
+			
+			addChild(loading);
+			
+			TweenLite.from(loading,2,{alpha:0});
+			
+			loading.setStyle("horizontalCenter",0)
+			loading.setStyle("verticalCenter",0)
+			
+			picture_viewer.addEventListener(Event.COMPLETE,loadCompleteHandler);
 			
 			var ui:UIComponent=Toolyzhkof.mcToUI(picture_viewer);
 			ui.setStyle("verticalCenter",-picture_viewer.PICTURE_HEIGHT/2);

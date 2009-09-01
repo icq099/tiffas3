@@ -11,6 +11,8 @@ package view
 	import gs.TweenLite;
 	
 	import lsd.IPlayerBasic;
+	
+	[Event(name="complete", type="flash.events.Event")]
 
 	public class SerialPictureView extends Sprite implements IPlayerBasic
 	{
@@ -77,6 +79,7 @@ package view
 			
 			stopAll();
 			init();
+			dispatchEvent(new Event(Event.COMPLETE));
 					
 		}
 		private function init():void{

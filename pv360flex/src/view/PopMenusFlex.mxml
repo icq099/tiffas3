@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TitleWindowCustom xmlns="view.*" title="展项浏览" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" showCloseButton="true" close="closeHandler()" addedEffect="{fadein}" removedEffect="{fadeout}" xmlns:ns1="view.*">
-		<mx:TextArea id="instruction" top="40" bottom="10" right="10" width="230"/>
+		<mx:TextArea id="instruction" top="40" bottom="10" right="10" width="230" text="文本载入中...."/>
 		<mx:TabNavigator historyManagementEnabled="false" id="tabNavigator" top="10" bottom="10" left="10" right="248">
 		</mx:TabNavigator>
 		<ns1:ExhibitSound id="soundPlayer" top="10" right="32">
