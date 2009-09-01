@@ -6,7 +6,7 @@ package view
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.media.Video;
+	import flash.geom.Point;
 	import flash.net.URLRequest;
 	
 	import gs.TweenLite;
@@ -44,7 +44,7 @@ package view
 		private const MAP_SHOW:String="MAP_SHOW";
 		
 		private var _look_point_position:int;
-		private var exhibit_points_text:Object=new Object();
+		private var tool_tip_text:Object=new Object();
 		public var click_points:Array=new Array();
 		
 		public function MapDirector()
@@ -103,13 +103,16 @@ package view
 			}) */
 		
 		}
-		public function addClickPoint(x:Number,y:Number):Sprite{
+		public function addClickPoint(x:Number,y:Number,tool_tip_text:String=""):Sprite{
 			
 			var point:Sprite=new ClickPoint();
 			click_points.push(point);
 			point.x=x;
 			point.y=y;
 			clickpoint_sprit.addChild(point);
+			this.tool_tip_text[point.name]=tool_tip_text;
+			point.addEventListener(MouseEvent.ROLL_OVER,exhibitPointMouseOverHandler);
+			point.addEventListener(MouseEvent.ROLL_OUT,exhibitPointMouseOutHandler);
 			
 			return point;
 			
@@ -152,7 +155,7 @@ package view
 			point.x=x;
 			point.y=y;
 			exhibitpoint_sprite.addChild(point);
-			exhibit_points_text[point.name]=tool_tip_text;
+			this.tool_tip_text[point.name]=tool_tip_text;
 			point.mouseChildren=false;
 			point.addEventListener(MouseEvent.ROLL_OVER,exhibitPointMouseOverHandler);
 			point.addEventListener(MouseEvent.ROLL_OUT,exhibitPointMouseOutHandler);
@@ -167,13 +170,15 @@ package view
 		}
 		private function exhibitPointMouseOverHandler(e:Event):void{
 			
-			addChild(tool_tip);
-			tool_tip.alpha=0;
-			tool_tip.x=mouseX-20;
-			tool_tip.y=mouseY;
-			tool_tip.text=exhibit_points_text[e.currentTarget.name];
-		
-			TweenLite.to(tool_tip,0.4,{alpha:1,x:mouseX});
+			if(tool_tip_text[e.currentTarget.name]?tool_tip_text[e.currentTarget.name].length>0:false){
+				addChild(tool_tip);
+				tool_tip.alpha=0;
+				tool_tip.x=mouseX-20;
+				tool_tip.y=mouseY;
+				tool_tip.text=tool_tip_text[e.currentTarget.name];
+				
+				TweenLite.to(tool_tip,0.4,{alpha:1,x:(stage.mouseX+tool_tip.width/2)>stage.stageWidth?globalToLocal(new Point(stage.stageWidth-tool_tip.width/2)).x:mouseX});
+			}
 		
 		}
 		private function exhibitPointMouseOutHandler(e:Event):void{

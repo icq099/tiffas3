@@ -71,7 +71,7 @@ package view.player
 			controler.progressbar.position_btn.addEventListener(MouseEvent.MOUSE_DOWN,dragDownHandler);
 			controler.addEventListener(FlashEvent.PROGRESS_DRAG,progressDragHandler);
 			
-			player.addEventListener(PyroEvent.BUFFER_FLUSH,bufferHandler);
+			player.addEventListener(Event.ENTER_FRAME,bufferHandler);
 			player.addEventListener(PyroEvent.COMPLETED,complaeteHandler);
 			
 			addEventListener(Event.ENTER_FRAME,progressHandler);
@@ -98,6 +98,9 @@ package view.player
 		private function bufferHandler(e:Event):void{
 			
 			controler.progressbar.progress_mc.scaleX=player.bytesLoaded/player.bytesTotal;
+			if(player.bytesLoaded>=player.bytesTotal){
+				player.removeEventListener(Event.ENTER_FRAME,bufferHandler);			
+			}
 		
 		}
 		private function progressHandler(e:Event):void{

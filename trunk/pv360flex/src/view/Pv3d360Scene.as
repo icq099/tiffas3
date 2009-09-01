@@ -391,8 +391,6 @@
 					material.bitmap.dispose();
 				
 				}catch(e:Error){
-					
-					trace(e);
 				
 				}
 				material.destroy();
