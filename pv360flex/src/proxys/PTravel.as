@@ -14,6 +14,9 @@ package proxys
 	{
 		
 		public static const NAME:String="PTravel"
+		
+		private var _position_changing:Boolean=false;
+		
 		public function PTravel()
 		{
 			data=new Travel();
@@ -54,13 +57,24 @@ package proxys
 		}
 		public function changePosition(postition:int):void{
 			
-			if((travel.current_scene!=postition)&&(travel.menu_count<=0)){
+			if((travel.current_scene!=postition)&&(travel.menu_count<=0)&&(!_position_changing)){
 				
+				_position_changing=true;
 				facade.sendNotification(FacadePv.POSITION_CHANGE_COMMAND,postition);
 				travel.current_scene=postition;
 				BrowserManager.getInstance().setFragment("scene="+postition);
 				
 			}
+		
+		}
+		public function set position_changing(value:Boolean):void{
+			
+			_position_changing=value;
+		
+		}
+		public function get position_changing():Boolean{
+			
+			return _position_changing;
 		
 		}
 		public function get travel():Travel{
