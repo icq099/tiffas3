@@ -58,7 +58,7 @@ package mediators
 				//设定点击
 				for(var i:int=0;i<xml_map.clickpoints.length();i++){
 					
-					click_point_map[xml_map.clickpoints.@destination[i]]=viewer.addClickPoint(xml_map.clickpoints.@x[i],xml_map.clickpoints.@y[i]);
+					click_point_map[xml_map.clickpoints.@destination[i]]=viewer.addClickPoint(xml_map.clickpoints.@x[i],xml_map.clickpoints.@y[i],xml_map.clickpoints[i].@tooltip);
 					
 					//设定点击监听
 					if(xml_map.clickpoints[i].@url.length()>0){
