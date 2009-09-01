@@ -83,9 +83,14 @@ package commands
 		}
 		private function onCameraUpdataed(e:Event):void{
 			
+			sendNotificationCommand();
+			e.currentTarget.removeEventListener(CamereaControlerEvent.UPDATAED,onCameraUpdataed);
+		
+		}
+		private function sendNotificationCommand():void{
+			
 			facade.sendNotification(FacadePv.LOAD_MOVIE,{url:movie,goto:goto,stop_rotationX:stop_rotationX,stop_rotationY:stop_rotationY});
 			facade.sendNotification(FacadePv.STOP_RENDER);
-			e.currentTarget.removeEventListener(CamereaControlerEvent.UPDATAED,onCameraUpdataed);
 		
 		}
 		

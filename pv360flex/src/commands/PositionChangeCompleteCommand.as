@@ -13,6 +13,7 @@ package commands
 			
 			addSubCommand(AnimatePlayerChangeCommand);
 			addSubCommand(SubTitleChangeCommand);
+			addSubCommand(SetProxyChangeComplete);
 		
 		}
 		
