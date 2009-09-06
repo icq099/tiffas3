@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties version="1">
 <includeClasses>
-<classEntry path="yzhkof.ToolBitmapData"/>
 <classEntry path="yzhkof.debug.TextTrace"/>
 <classEntry path="yzhkof.EfficiencyTestor"/>
-<classEntry path="yzhkof.tiff.TiffAnalyser"/>
 <classEntry path="yzhkof.CamereaControlerEvent"/>
-<classEntry path="yzhkof.BasicCameraContrler"/>
 <classEntry path="yzhkof.AddToStageSetter"/>
 <classEntry path="yzhkof.tiff.TiffDecoder"/>
 <classEntry path="yzhkof.FPSfromA3d"/>
 <classEntry path="yzhkof.loadings.IYzhkofProgressLoading"/>
+<classEntry path="yzhkof.file.SimpleEncoder"/>
 <classEntry path="yzhkof.TimeCounter"/>
 <classEntry path="yzhkof.MyGraphy"/>
+<classEntry path="yzhkof.loadings.IYzhkofLoading"/>
+<classEntry path="yzhkof.BytesUtil"/>
+<classEntry path="yzhkof.file.SimpleDecoder"/>
+<classEntry path="yzhkof.loadings.LoadingWaveRota"/>
+<classEntry path="yzhkof.ToolBitmapData"/>
+<classEntry path="yzhkof.tiff.TiffAnalyser"/>
+<classEntry path="yzhkof.BasicCameraContrler"/>
 <classEntry path="yzhkof.KeyMy"/>
 <classEntry path="yzhkof.CameraRotationControler"/>
 <classEntry path="yzhkof.MyGC"/>
 <classEntry path="yzhkof.BasicAsProject"/>
-<classEntry path="yzhkof.loadings.IYzhkofLoading"/>
 <classEntry path="yzhkof.Toolyzhkof"/>
 <classEntry path="yzhkof.PositionSeter"/>
 <classEntry path="yzhkof.debug.debugTrace"/>
-<classEntry path="yzhkof.BytesUtil"/>
 <classEntry path="yzhkof.loadings.LoadingSimpleProgressBar"/>
-<classEntry path="yzhkof.loadings.LoadingWaveRota"/>
 </includeClasses>
 <includeResources>
 <resourceEntry destPath="yzhkof/loadings/asset/myloadings.swf" sourcePath="yzhkof/loadings/asset/myloadings.swf"/>
