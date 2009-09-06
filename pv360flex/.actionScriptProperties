@@ -5,8 +5,6 @@
 <libraryPath defaultLinkType="1">
 <libraryPathEntry kind="4" path=""/>
 <libraryPathEntry kind="1" linkType="1" path="libs"/>
-<libraryPathEntry kind="3" linkType="1" path="G:/study/components/loadings/LoadingLine.swc" useDefaultLinkType="false"/>
-<libraryPathEntry kind="1" linkType="1" path="G:/study/components/new360"/>
 <libraryPathEntry kind="3" linkType="1" path="/yzhkof/bin/yzhkof.swc" useDefaultLinkType="false"/>
 <libraryPathEntry kind="3" linkType="1" path="/pv360flexllib/bin/pv360flexllib.swc" useDefaultLinkType="false"/>
 </libraryPath>
