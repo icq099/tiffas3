@@ -62,7 +62,7 @@ package  yzhkof
 			if (Math.abs(goto_rotaX)>90) {
 				goto_rotaX=goto_rotaX>0?90:- 90;
 			}
-			
+			dispatched=false;
 		
 		}
 		//直接设置相机rotation，无缓动
