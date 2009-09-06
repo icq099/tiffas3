@@ -28,7 +28,6 @@ package commands
 	import view.MovieViewer;
 	import view.Pv3d360Scene;
 	import view.SubTitle;
-	import view.debug.Pv3d360SceneMovie;
 	import view.leftupmenu.LeftUpMenuContainer;
 	
 	import yzhkof.PositionSeter;
@@ -49,7 +48,7 @@ package commands
 			
 			}
 			//debug设置
-			var main_scene:Pv3d360Scene=new Pv3d360SceneMovie();
+			var main_scene:Pv3d360Scene=new Pv3d360Scene();
 			//
 			var main_map:MapDirector=new MapDirector();
 			var main_animate_player:AnimatePlayer=new AnimatePlayer();
