@@ -10,7 +10,11 @@ package view
 	import flash.net.URLRequest;
 	
 	import gs.TweenLite;
-
+	/**
+	 *	此类实现地图功能 
+	 * @author Administrator
+	 * 
+	 */
 	public class MapDirector extends Sprite
 	{
 		[Embed(source="asset/MapBack.png",scaleGridTop="40",scaleGridBottom="310",scaleGridLeft="13",scaleGridRight="277")]
@@ -39,6 +43,7 @@ package view
 		
 		private var m_loader:Loader;
 		private var state:String=MAP_HIDE;
+		private var offset_look_point:Number=0;//地图视点偏移量
 		
 		private const MAP_HIDE:String="MAP_HIDE";
 		private const MAP_SHOW:String="MAP_SHOW";
@@ -117,6 +122,16 @@ package view
 			return point;
 			
 		}
+		/**
+		 *	设置地图视点偏移量 
+		 * @param offset
+		 * 
+		 */		
+		public function setLookOffset(offset:Number):void{
+			
+			offset_look_point=offset;
+		
+		}
 		public function setLookPosition(goto:int):void{
 			
 			if(click_points[goto]==null){
@@ -140,7 +155,7 @@ package view
 		}
 		public function set look_rotationY(value:Number):void{
 			
-			look_point.rotation=value;
+			look_point.rotation=value+offset_look_point;
 			look_point.rotation-=180;
 		
 		}

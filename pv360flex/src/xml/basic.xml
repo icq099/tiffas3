@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- edited with XMLSPY v5 U (http://www.xmlspy.com) by et8 (et8) -->
 <Basic>
-	<Map picture="img\map\map.swf">
+	<Map picture="img\map\map.swf" offset="0">
 		<clickpoints x="120" y="264" destination="1"/>
 		<clickpoints x="120" y="240" destination="2" tooltip="2"/>
 		<clickpoints x="58" y="240" destination="3" tooltip="3"/>
