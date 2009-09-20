@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Basic>
+	<Compass rotation="50"/>
+	<Map picture="img\map\Top.jpg">
+		<clickpoints x="350" y="130" destination="11"/>
+		<clickpoints x="150" y="130" destination="10"/>
+		<clickpoints x="250" y="130" destination="9"/>
+		<clickpoints x="315" y="130" destination="8"/>
+		<clickpoints x="185" y="130" destination="7"/>
+		<clickpoints x="185" y="170" destination="6"/>
+		<clickpoints x="250" y="300" destination="0"/>
+		<clickpoints x="185" y="280" destination="1"/>
+		<clickpoints x="315" y="280" destination="2"/>
+		<clickpoints x="315" y="220" destination="3"/>
+		<clickpoints x="185" y="220" destination="4"/>
+		<clickpoints x="315" y="170" destination="5"/>
+		<exhibitpoints x="160" y="85" scene="1" point="0"/>
+		<exhibitpoints x="250" y="85" scene="1" point="0"/>
+		<exhibitpoints x="350" y="85" scene="1" point="0"/>
+		<exhibitpoints x="150" y="175" scene="1" point="0"/>
+		<exhibitpoints x="150" y="280" scene="1" point="0"/>
+		<exhibitpoints x="165" y="225" scene="1" point="0"/>
+		<exhibitpoints x="250" y="200" scene="1" point="0"/>
+		<exhibitpoints x="350" y="280" scene="1" point="0"/>
+		<exhibitpoints x="350" y="175" scene="1" point="0"/>
+		<exhibitpoints x="335" y="225" scene="1" point="0"/>
+		<exhibitpoints x="200" y="210" scene="1" point="0"/>
+		<exhibitpoints x="300" y="210" scene="1" point="0"/>
+		<exhibitpoints x="250" y="160" scene="1" point="0"/>
+	</Map>
+	<Travel start_scene="0" animate="movie/jinling.swf" music="music.mp3">
+		<!--场景1-->
+		<Scene picture="img/pano 01.jpg">
+			<Compass>
+				<Arrow rotation="-7" destination="1"/>
+				<Arrow rotation="173" destination="2"/>
+			</Compass>
+			<Animate url="animate/B.swf" cache="0" x="4957" y="-80" z="550" width="1600" height="1500" rotationX="0" rotationY="85" rotationZ="0" segmentsW="2" segmentsH="2"/>
+			<Movie url="movie/Pano1~Pano2.swf" destination="1" start_rotationX="0" start_rotationY="6" stop_rotationX="0" stop_rotationY="6"/>
+			<Movie url="movie/Pano1~Pano3.swf" destination="2" start_rotationX="0" start_rotationY="160" stop_rotationX="0" stop_rotationY="160"/>
+		</Scene>
+		<!--场景2-->
+		<Scene picture="img/pano 02.jpg">
+			<Compass>
+				<Arrow rotation="173" destination="0"/>
+				<Arrow rotation="83" destination="4"/>
+			</Compass>
+			<Animate url="animate/A.swf" cache="0" x="4688" y="1980" z="280" width="1550" height="920" rotationX="0" rotationY="83" rotationZ="0" segmentsW="2" segmentsH="2"/>
+			<Movie url="movie/Pano2~Pano1.swf" destination="0" start_rotationX="0" start_rotationY="186" stop_rotationX="0" stop_rotationY="186"/>
+			<Movie url="movie/Pano2~Pano5.swf" destination="4" start_rotationX="0" start_rotationY="83" stop_rotationX="0" stop_rotationY="83"/>
+			<Animate url="animate/A.swf" cache="0" x="4900" y="820" z="480" width="630" height="375" rotationX="0" rotationY="83" rotationZ="0" segmentsW="2" segmentsH="2"/>
+			<HotPoint texturl="points/text/text39.txt" name="坭兴陶" smallPicture="points/img/zx34.jpg" x="-220" y="-446" z="4964" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitSwf url="points/swf/zxv34.swf" save="1" swfWidth="400" swfHeight="400"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text39.txt" name="坭兴陶" smallPicture="points/img/zx32.jpg" x="-787" y="-1049" z="4813" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitSwf url="points/swf/zxv32.swf" save="1" swfWidth="400" swfHeight="400"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text39.txt" name="坭兴陶" smallPicture="points/img/zx33.jpg" x="784" y="-823" z="4856" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitSwf url="points/swf/zxv33.swf" save="1" swfWidth="400" swfHeight="400"/>
+			</HotPoint>
+		</Scene>
+		<!--场景3-->
+		<Scene picture="img/pano 03.jpg">
+			<Compass>
+				<Arrow rotation="-7" destination="0"/>
+				<Arrow rotation="83" destination="3"/>
+			</Compass>
+			<Animate url="animate/A.swf" cache="0" x="4525" y="1948" z="630" width="1490" height="880" rotationX="0" rotationY="84" rotationZ="0" segmentsW="2" segmentsH="2"/>
+			<Animate url="animate/A.swf" cache="0" x="4878" y="815" z="640" width="610" height="360" rotationX="0" rotationY="84" rotationZ="0" segmentsW="2" segmentsH="2"/>
+			<Movie url="movie/Pano3~Pano1.swf" destination="0" start_rotationX="0" start_rotationY="-21" stop_rotationX="0" stop_rotationY="-21"/>
+			<Movie url="movie/Pano3~Pano4.swf" destination="3" start_rotationX="0" start_rotationY="83" stop_rotationX="0" stop_rotationY="83"/>
+			<HotPoint texturl="points/text/text02.txt" sound="points/sound/02.mp3" name="柳州华航倒车雷达系统" smallPicture="points/img/zx0201.jpg" x="1500" y="-700" z="-5000" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx0201.jpg"/>
+				<ExhibitVideo url="points/flv/zxv02.flv"/>
+			</HotPoint>
+		</Scene>
+		<!--场景4-->
+		<Scene picture="img/pano 04.jpg">
+			<Compass>
+				<Arrow rotation="83" destination="5"/>
+				<Arrow rotation="-97" destination="2"/>
+			</Compass>
+			<Animate url="animate/A.swf" cache="0" x="4397" y="2300" z="630" width="1780" height="1050" rotationX="0" rotationY="83" rotationZ="0" segmentsW="2" segmentsH="2"/>
+			<Movie url="movie/Pano4~Pano3.swf" destination="2" start_rotationX="0" start_rotationY="-97.5" stop_rotationX="0" stop_rotationY="-97.5"/>
+			<Movie url="movie/Pano4~Pano6.swf" destination="5" start_rotationX="0" start_rotationY="83" stop_rotationX="0" stop_rotationY="83"/>
+			<HotPoint texturl="points/text/text23.txt" sound="points/sound/23.mp3" name="海南立昇净水" smallPicture="points/img/zx2301.jpg" x="-173" y="-759" z="-4924" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx2301.jpg"/>
+				<ExhibitSwf url="points/swf/zxv23.swf" save="1"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text12.txt" sound="points/sound/12.mp3" name="福建飞通通讯" smallPicture="points/img/zx1201.jpg" x="3981" y="-924" z="2878" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx1201.jpg"/>
+				<ExhibitSwf url="points/swf/zxv12.swf" save="0" label="动画演示" swfWidth="350" swfHeight="350"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text03.txt" sound="points/sound/03.mp3" name="广西地凯避雷器" smallPicture="points/img/zx0301.jpg" x="505" y="-2164" z="4468" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="800" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx0301.jpg"/>
+				<ExhibitVideo url="points/flv/zxv03.flv"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text05.txt" sound="points/sound/05.mp3" name="广西威利方舟" smallPicture="points/img/zx0501.jpg" x="2279" y="-548" z="4397" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx0501.jpg"/>
+				<ExhibitSwf url="points/swf/zxv05.swf" save="0" label="动画演示" swfWidth="350" swfHeight="350"/>
+			</HotPoint>
+		</Scene>
+		<!--场景5-->
+		<Scene picture="img/pano 05.jpg">
+			<Compass>
+				<Arrow rotation="83" destination="6"/>
+				<Arrow rotation="-97" destination="1"/>
+			</Compass>
+			<Animate url="animate/A.swf" cache="0" x="4397" y="2277" z="200" width="1740" height="1080" rotationX="0" rotationY="83" rotationZ="0" segmentsW="2" segmentsH="2"/>
+			<Movie url="movie/Pano5~Pano2.swf" destination="1" start_rotationX="0" start_rotationY="-96.5" stop_rotationX="0" stop_rotationY="-96.5"/>
+			<Movie url="movie/Pano5~Pano7.swf" destination="6" start_rotationX="0" start_rotationY="83" stop_rotationX="0" stop_rotationY="83"/>
+			<HotPoint texturl="points/text/text10.txt" sound="points/sound/10.mp3" name="天地人微生物细菌鉴定仪" smallPicture="points/img/zx1001.jpg" x="-1055" y="262" z="4871" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx1001.jpg"/>
+				<Exhibit360 url="img360/zx10/天地人" v_count="5" h_count="25" offset_v="0" type="jpg" unit_size="10000" scale="1"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text08.txt" sound="points/sound/08.mp3" name="北京清华同方长风电脑" smallPicture="points/img/zx0801.jpg" x="1436" y="-1764" z="-4442" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx0801.jpg"/>
+				<ExhibitSwf url="points/swf/zxv08.swf" save="1"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text04.txt" sound="points/sound/04.mp3" name="南宁桂能软件天一设计软件" smallPicture="points/img/zx0401.jpg" x="4412" y="-653" z="-2219" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="750" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx0401.jpg"/>
+				<ExhibitVideo url="points/flv/zxv04.flv"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text06.txt" sound="points/sound/06.mp3" name="广西网博科技" smallPicture="points/img/zx0601.jpg" x="3198" y="-480" z="-3800" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx0601.jpg"/>
+				<ExhibitSwf url="points/swf/zxv06.swf" save="0" label="动画演示"/>
+			</HotPoint>
+		</Scene>
+		<!--场景6-->
+		<Scene picture="img/pano 06.jpg">
+			<Compass>
+				<Arrow rotation="83" destination="8"/>
+				<Arrow rotation="-97" destination="3"/>
+			</Compass>
+			<Movie url="movie/Pano6~Pano9.swf" destination="8" start_rotationX="0" start_rotationY="83" stop_rotationX="0" stop_rotationY="83"/>
+			<Movie url="movie/Pano6~Pano4.swf" destination="3" start_rotationX="0" start_rotationY="-97.5" stop_rotationX="0" stop_rotationY="-97.5"/>
+			<HotPoint texturl="points/text/text15.txt" sound="points/sound/15.mp3" name="差高式多功能山地拖拉机" smallPicture="points/img/zx1501.jpg" x="504" y="-669" z="-4911" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx1501.jpg"/>
+				<ExhibitSwf url="points/swf/zxv15.swf" save="1"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text01.txt" sound="points/sound/01.mp3" name="桂林航龙千里眼无人机" smallPicture="points/img/zx0101.jpg" x="-2725" y="-193" z="4176" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx0101.jpg"/>
+				<ExhibitVideo url="points/flv/zxv01.flv"/>
+			</HotPoint>
+		</Scene>
+		<!--场景7-->
+		<Scene picture="img/pano 07.jpg">
+			<Compass>
+				<Arrow rotation="83" destination="7"/>
+				<Arrow rotation="-97" destination="4"/>
+			</Compass>
+			<Movie url="movie/Pano7~Pano8.swf" destination="7" start_rotationX="0" start_rotationY="83" stop_rotationX="0" stop_rotationY="83"/>
+			<Movie url="movie/Pano7~Pano5.swf" destination="4" start_rotationX="0" start_rotationY="-97.5" stop_rotationX="0" stop_rotationY="-97.5"/>
+			<HotPoint texturl="points/text/text18.txt" sound="points/sound/18.mp3" name="甘肃武威兴东机械深松整地联合作业机" smallPicture="points/img/zx1801.jpg" x="-916" y="-86" z="4904" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx1801.jpg"/>
+				<ExhibitSwf url="points/swf/zxv18.swf" save="1"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text01.txt" sound="points/sound/01.mp3" name="北京农林科学院北京新三号" smallPicture="points/img/zx0101.jpg" x="-1601" y="-169" z="-4723" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx0101.jpg"/>
+				<ExhibitVideo url="points/flv/zxv01.flv"/>
+			</HotPoint>
+		</Scene>
+		<!--场景8-->
+		<Scene picture="img/pano 08.jpg">
+			<Compass>
+				<Arrow rotation="-7" destination="10"/>
+				<Arrow rotation="173" destination="9"/>
+				<Arrow rotation="-97" destination="6"/>
+			</Compass>
+			<Movie url="movie/Pano8~Pano7.swf" destination="6" start_rotationX="0" start_rotationY="-97.5" stop_rotationX="0" stop_rotationY="-97.5"/>
+			<Movie url="movie/Pano8~Pano10.swf" destination="9" start_rotationX="0" start_rotationY="173" stop_rotationX="0" stop_rotationY="173"/>
+			<Movie url="movie/Pano8~Pano11.swf" destination="10" start_rotationX="0" start_rotationY="-7" stop_rotationX="0" stop_rotationY="-7"/>
+			<HotPoint texturl="points/text/text29.txt" sound="points/sound/29.mp3" name="九江柳林联合收割机" smallPicture="points/img/zx2901.jpg" x="4261" y="-348" z="2573" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx2901.jpg"/>
+				<ExhibitVideo url="points/flv/zxv29.flv"/>
+			</HotPoint>
+		</Scene>
+		<!--场景9-->
+		<Scene picture="img/pano 09.jpg">
+			<Compass>
+				<Arrow rotation="-7" destination="9"/>
+				<Arrow rotation="-97" destination="5"/>
+				<Arrow rotation="173" destination="11"/>
+			</Compass>
+			<Movie url="movie/Pano9~Pano6.swf" destination="5" start_rotationX="0" start_rotationY="-97.5" stop_rotationX="0" stop_rotationY="-97.5"/>
+			<Movie url="movie/Pano9~Pano10.swf" destination="9" start_rotationX="0" start_rotationY="-7" stop_rotationX="0" stop_rotationY="-7"/>
+			<Movie url="movie/Pano9~Pano12.swf" destination="11" start_rotationX="0" start_rotationY="173" stop_rotationX="0" stop_rotationY="173"/>
+			<HotPoint texturl="points/text/text27.txt" sound="points/sound/27.mp3" name="80吨运煤专用敞车" smallPicture="points/img/zx2701.jpg" x="4591" y="-611" z="-1853" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx2701.jpg"/>
+				<ExhibitSwf url="points/swf/zxv27.swf" save="1"/>
+			</HotPoint>
+		</Scene>
+		<!--场景10-->
+		<Scene picture="img/pano 10.jpg">
+			<Compass>
+				<Arrow rotation="-7" destination="7"/>
+				<Arrow rotation="173" destination="8"/>
+			</Compass>
+			<Movie url="movie/Pano10~Pano8.swf" destination="7" start_rotationX="0" start_rotationY="-7" stop_rotationX="0" stop_rotationY="-7"/>
+			<Movie url="movie/Pano10~Pano9.swf" destination="8" start_rotationX="0" start_rotationY="173" stop_rotationX="0" stop_rotationY="173"/>
+			<HotPoint texturl="points/text/text24.txt" sound="points/sound/24.mp3" name="海南金鹿农机" smallPicture="points/img/zx2401.jpg" x="4917" y="688" z="-406" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx2401.jpg"/>
+				<ExhibitVideo url="points/flv/zxv24.flv"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text16.txt" sound="points/sound/16.mp3" name="省特色经济林栽培及加工技术" smallPicture="points/img/zx1601.jpg" x="-3682" y="-1153" z="-3152" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx1601.jpg"/>
+				<ExhibitVideo url="points/flv/zxv16.flv"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text09.txt" sound="points/sound/09.mp3" name="北京农林科学院北京新三号" smallPicture="points/img/zx0901.jpg" x="-4875" y="-546" z="-869" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx0901.jpg"/>
+				<ExhibitSwf url="points/swf/zxv09.swf" label="演示动画" save="0" swfWidth="350" swfHeight="350"/>
+			</HotPoint>
+			<HotPoint texturl="points/text/text07.txt" sound="points/sound/07.mp3" name="北海夏氏土壤调理" smallPicture="points/img/zx0701.jpg" x="-4516" y="-1621" z="1361" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+				<ExhibitInstruction url="points/img/zx0701.jpg"/>
+				<ExhibitVideo url="points/flv/zxv07.flv"/>
+			</HotPoint>
+		</Scene>
+		<!--场景11-->
+		<Scene picture="img/pano 11.jpg">
+			<Compass>
+				<Arrow rotation="173" destination="7"/>
+			</Compass>
+			<Movie url="movie/Pano11~Pano8.swf" destination="7" start_rotationX="0" start_rotationY="173" stop_rotationX="0" stop_rotationY="173"/>
+			<HotPoint texturl="points/text/pano11.html" x="-450" y="-431" z="4948" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+			</HotPoint>
+		</Scene>
+		<!--场景12-->
+		<Scene picture="img/pano 12.jpg">
+			<Compass>
+				<Arrow rotation="-7" destination="8"/>
+			</Compass>
+			<Movie url="movie/Pano12~Pano9.swf" destination="8" start_rotationX="0" start_rotationY="-7" stop_rotationX="0" stop_rotationY="-7"/>
+			<HotPoint texturl="points/text/pano12.html" x="727" y="-353" z="-4923" width="500" height="500" segmentsW="0" segmentsH="0" swfWidth="700" swfHeight="500">
+			</HotPoint>
+		</Scene>
+	</Travel>
+	
+</Basic>

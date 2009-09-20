@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v5 U (http://www.xmlspy.com) by et8 (et8) -->
+<Basic>
+	<Map picture="img\map\45 nk ok.png">
+		<clickpoints x="120" y="264" destination="1"/>
+		<clickpoints x="120" y="240" destination="2" tooltip="2"/>
+		<clickpoints x="58" y="240" destination="3" tooltip="3"/>
+		<clickpoints x="58" y="178" destination="4" tooltip="4"/>
+	</Map>
+	<Travel start_scene="0" music="music.mp3" stop_rotationX="0" stop_rotationY="81.90">
+		<!--场景1-->
+		<Scene picture="img/pano_01.jpg" guideText="您所处的位置是： 3号展厅的入口广场 	再前进为：展厅入口处">
+			<Compass>
+				<Arrow rotation="80" destination="1" tip="前进"/>
+			</Compass>
+			<Movie url="movie/move01-move02.swf" destination="1" start_rotationX="0" start_rotationY="36.9" stop_rotationX="-0.3" stop_rotationY="87.6"/>
+		</Scene>
+		<!--场景2-->
+		<Scene picture="img/pano_02.jpg" guideText="您所处的位置是： 3号展厅的入口广场 	再前进为：展厅入口处">
+			<Compass>
+				<Arrow rotation="-95" destination="0"/>
+				<Arrow rotation="85" destination="2"/>
+			</Compass>
+      <Movie url="movie/move02-move01.swf" destination="0" start_rotationX="0" start_rotationY="267.9" stop_rotationX="0" stop_rotationY="217.7"/>
+			<Movie url="movie/move02-move03.swf" destination="2" start_rotationX="0" start_rotationY="87.6" stop_rotationX="0" stop_rotationY="18.6"/>
+		</Scene>
+		<!--场景3-->
+		<Scene picture="img/pano_03.jpg">
+			<Compass>
+				<Arrow rotation="-5" destination="3"/>
+				<Arrow rotation="-100" destination="1"/>
+			</Compass>
+			<Movie url="movie/move03-move02.swf" destination="1" start_rotationX="0" start_rotationY="198.6" stop_rotationX="-1.1" stop_rotationY="-92.4"/>
+			<Movie url="movie/move03-move04.swf" destination="3" start_rotationX="-0.1" start_rotationY="13.8" stop_rotationX="-0.3" stop_rotationY="-54.3"/>
+		</Scene>
+		<!--场景4-->
+		<Scene picture="img/pano_04.jpg">
+			<Compass>
+				<Arrow rotation="-90" destination="4"/>
+				<Arrow rotation="180" destination="2"/>
+			</Compass>
+			<Movie url="movie/move04-move03.swf" destination="2" start_rotationX="0" start_rotationY="125.7" stop_rotationX="0.3" stop_rotationY="-166.5"/>
+			<Movie url="movie/move04-move05.swf" destination="4" start_rotationX="0" start_rotationY="-57.08" stop_rotationX="0.3" stop_rotationY="-96"/>
+		</Scene>
+		<!--场景5-->
+		<Scene picture="img/pano_05.jpg">
+			<Compass>
+				<Arrow rotation="90" destination="3"/>
+			</Compass>
+			<Movie url="movie/move05-move04.swf" destination="3" start_rotationX="0" start_rotationY="85.5" stop_rotationX="0" stop_rotationY="-236.4"/>
+		</Scene>
+	</Travel>
+</Basic>
