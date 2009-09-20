@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TitleWindowCustom xmlns="view.*" title="展项浏览" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" showCloseButton="true" close="closeHandler()" addedEffect="{fadein}" removedEffect="{fadeout}" xmlns:ns1="view.*">
-		<mx:TextArea id="instruction" top="40" bottom="10" right="10" width="230" text="文本载入中...."/>
-		<mx:TabNavigator historyManagementEnabled="false" id="tabNavigator" top="10" bottom="10" left="10" right="248">
+		<mx:TabNavigator historyManagementEnabled="false" id="tabNavigator" top="10" bottom="10" left="10" right="10">
 		</mx:TabNavigator>
-		<ns1:ExhibitSound id="soundPlayer" top="10" right="32">
-		</ns1:ExhibitSound>
 		<mx:Fade id="fadein" alphaFrom="0" alphaTo="1"/>
 		<mx:Fade id="fadeout" alphaFrom="1" alphaTo="0"/>
 	<mx:Script>
@@ -22,36 +19,11 @@
 				this.isPopUp=true;
 				this.width=xml.@swfWidth;
 				this.height=xml.@swfHeight;
-				initTabNavigator();
-				initText();
-				initSound();
-			
-			}
-			private function initText():void{
-				
-				var url:String=xml.@texturl;
-				if(url.length>0){
-					loadText(url);
-				}
-				
-			}
-			private function loadText(url:String):void{
-				
-				
-				var loader:URLLoader=new URLLoader(new URLRequest(url));
-				
-				var onComplete:Function=function(e:Event):void{
-					
-					instruction.htmlText=loader.data as String;
-				
-				}
-				
-				loader.addEventListener(Event.COMPLETE,onComplete);
-			
+				initTabNavigator();			
 			}
 			private function initTabNavigator():void{
 				
-				if(xml.ExhibitInstruction.length()>0){
+				/* if(xml.ExhibitInstruction.length()>0){
 					
 					var instruction:ExhibitInstruction=new ExhibitInstruction();
 					instruction.initialize();
@@ -82,7 +54,7 @@
 					items.push(video);
 					tabNavigator.addChild(video);
 				
-				}
+				} */
 				if(xml.ExhibitSwf.length()>0){
 					
 					var viewswf:ExhibitSwf=new ExhibitSwf();
@@ -98,7 +70,7 @@
 					tabNavigator.addChild(viewswf);
 					
 				}
-				if(xml.Exhibit360.length()>0){
+				/* if(xml.Exhibit360.length()>0){
 					
 					var view360:Exhibit360=new Exhibit360();
 					view360.initialize();
@@ -112,23 +84,10 @@
 					view360.setSize(xml.Exhibit360.@scale);
 					tabNavigator.addChild(view360);
 					
-				}
+				} */
 			
 			}
-			private function initSound():void{
-				
-				if(xml.@sound.length()>0){
-					
-					soundPlayer.changeSound(xml.@sound);
-					items.push(soundPlayer);
-					
-				}else{
-					
-					removeChild(soundPlayer);
-				
-				}
 			
-			}
 			private function closeHandler():void{
 			
 				TweenLite.to(this,0.3,{z:50,rotationY:-10})
