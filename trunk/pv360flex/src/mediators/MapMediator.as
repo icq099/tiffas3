@@ -104,6 +104,8 @@ package mediators
 					facade.sendNotification(MapMediator.HELP_CLICK);
 				
 				})
+				//设置视点偏移量
+				viewer.setLookOffset(xml_map.@offset.length()>0?xml_map.@offset:0);
 				
 				PTravel(facade.retrieveProxy(PTravel.NAME)).getCamera().addEventListener(CameraEvent.CAMERA_ROTATION_CHANGE,cameraUpdateHandler);
 				
