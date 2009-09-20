@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TitleWindowCustom xmlns="view.*" title="展项浏览" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" showCloseButton="true" close="closeHandler()" addedEffect="{fadein}" removedEffect="{fadeout}" xmlns:ns1="view.*">
+		<mx:TextArea id="instruction" top="40" bottom="10" right="10" width="230" text="文本载入中...."/>
+		<mx:TabNavigator historyManagementEnabled="false" id="tabNavigator" top="10" bottom="10" left="10" right="248">
+		</mx:TabNavigator>
+		<ns1:ExhibitSound id="soundPlayer" top="10" right="32">
+		</ns1:ExhibitSound>
+		<mx:Fade id="fadein" alphaFrom="0" alphaTo="1"/>
+		<mx:Fade id="fadeout" alphaFrom="1" alphaTo="0"/>
+	<mx:Script>
+		<![CDATA[
+			import view.Event.ExhitbitSoundEvent;
+			import gs.TweenLite;
+			import lsd.IPlayerBasic;
+			import mx.core.UIComponent;
+			private var xml:XML;
+			private var items:Array=new Array();
+		
+			public function constructByXml(xml:XML):void{
+				
+				this.xml=xml;
+				this.isPopUp=true;
+				this.width=xml.@swfWidth;
+				this.height=xml.@swfHeight;
+				initTabNavigator();
+				initText();
+				initSound();
+			
+			}
+			private function initText():void{
+				
+				var url:String=xml.@texturl;
+				if(url.length>0){
+					loadText(url);
+				}
+				
+			}
+			private function loadText(url:String):void{
+				
+				
+				var loader:URLLoader=new URLLoader(new URLRequest(url));
+				
+				var onComplete:Function=function(e:Event):void{
+					
+					instruction.htmlText=loader.data as String;
+				
+				}
+				
+				loader.addEventListener(Event.COMPLETE,onComplete);
+			
+			}
+			private function initTabNavigator():void{
+				
+				if(xml.ExhibitInstruction.length()>0){
+					
+					var instruction:ExhibitInstruction=new ExhibitInstruction();
+					instruction.initialize();
+					
+					if(xml.ExhibitInstruction.@label.length()>0){
+						
+						instruction.label=xml.ExhibitInstruction.@label;
+					
+					}
+					
+					instruction.loadImage(xml.ExhibitInstruction);
+					items.push(instruction);
+					tabNavigator.addChild(instruction);
+				
+				}
+				if(xml.ExhibitVideo.length()>0){
+					
+					var video:ExhibitVideo=new ExhibitVideo();
+					video.initialize();
+					
+					if(xml.ExhibitVideo.@label.length()>0){
+						
+						video.label=xml.ExhibitVideo.@label;
+					
+					}
+					
+					video.loadflv(xml.ExhibitVideo.@url);
+					items.push(video);
+					tabNavigator.addChild(video);
+				
+				}
+				if(xml.ExhibitSwf.length()>0){
+					
+					var viewswf:ExhibitSwf=new ExhibitSwf();
+					var save:Boolean=xml.ExhibitSwf.@save==1?true:false;
+					viewswf.initialize();
+					
+					if(xml.ExhibitSwf.@label.length()>0){
+						
+						viewswf.label=xml.ExhibitSwf.@label;
+					
+					}
+					viewswf.loadSwf(xml.ExhibitSwf.@url,save,xml.ExhibitSwf.@swfWidth,xml.ExhibitSwf.@swfHeight);
+					tabNavigator.addChild(viewswf);
+					
+				}
+				if(xml.Exhibit360.length()>0){
+					
+					var view360:Exhibit360=new Exhibit360();
+					view360.initialize();
+					
+					if(xml.Exhibit360.@label.length()>0){
+						
+						view360.label=xml.Exhibit360.@label;
+					
+					}
+					view360.load(xml.Exhibit360.@url,xml.Exhibit360.@v_count,xml.Exhibit360.@h_count,xml.Exhibit360.@type,xml.Exhibit360.@unit_size,xml.Exhibit360.@offset_v);
+					view360.setSize(xml.Exhibit360.@scale);
+					tabNavigator.addChild(view360);
+					
+				}
+			
+			}
+			private function initSound():void{
+				
+				if(xml.@sound.length()>0){
+					
+					soundPlayer.changeSound(xml.@sound);
+					items.push(soundPlayer);
+					
+				}else{
+					
+					removeChild(soundPlayer);
+				
+				}
+			
+			}
+			private function closeHandler():void{
+			
+				TweenLite.to(this,0.3,{z:50,rotationY:-10})
+				this.parent.removeChild(this);
+				
+				for(var i:int=0;i<items.length;i++){
+					
+					IPlayerBasic(items[i]).stopAll();
+				
+				}
+			}
+		]]>
+	</mx:Script>
+</TitleWindowCustom>

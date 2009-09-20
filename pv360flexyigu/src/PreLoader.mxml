@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="init()" width="800" height="600" frameRate="30" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:Script>
+		<![CDATA[
+			import yzhkof.MyGC;
+			import yzhkof.file.SimpleDecoder;
+			import yzhkof.AddToStageSetter;
+			import yzhkof.Toolyzhkof;
+			import yzhkof.debug.debugTrace;
+			import yzhkof.debug.TextTrace;
+			import mx.core.UIComponent;
+			import mx.utils.URLUtil;
+			import mx.managers.BrowserManager;
+			import gs.TweenLite;
+			import mx.skins.halo.BusyCursor;
+			import mx.controls.SWFLoader;
+			private var loader:Loader;
+			private var uicom:UIComponent=new UIComponent();
+			private var loader_effect:UIComponent=Toolyzhkof.mcToUI(new LoadingSimpleRota());
+			
+			private function init():void{
+				
+				AddToStageSetter.setObjToMiddleOfStage(loader_effect,loader_effect.width/2,loader_effect.height/2);
+				addChild(loader_effect);
+				
+				//addChild(TextTrace.init(new UIComponent()));
+				BrowserManager.getInstance().init();
+				
+				if(!URLUtil.stringToObject(BrowserManager.getInstance().fragment,"&").hasOwnProperty("scene")){
+					
+					loader=new Loader();
+					loader.load(new URLRequest("opening.swf"));
+					loader.contentLoaderInfo.addEventListener(Event.INIT,onOpeningComplete);
+					uicom.addChild(loader)
+					addChild(uicom);
+					
+					
+					
+				}else{
+					
+					doNext(new Event("next"));
+				
+				}
+			
+			}
+			private function doNext(e:Event):void{
+				
+				try{
+					
+					loader.content.removeEventListener("next_step",doNext);
+					loader.close();
+					
+				}catch(e:Error){
+				
+				}
+				
+				var urloader:URLLoader=new URLLoader(new URLRequest("pv360flex.swf")); 
+				urloader.dataFormat=URLLoaderDataFormat.BINARY;
+				loader!=null?urloader.addEventListener(ProgressEvent.PROGRESS,dispatchToOpening):null;
+				var bloader:Loader=new Loader();
+				urloader.addEventListener(Event.COMPLETE,function(e:Event):void{
+					
+					urloader.removeEventListener(ProgressEvent.PROGRESS,dispatchToOpening);
+					
+					bloader.loadBytes(SimpleDecoder.decode(urloader.data));
+					bloader.contentLoaderInfo.addEventListener(Event.INIT,function(e:Event):void{
+						bloader.content.addEventListener("display_show",function(e:Event):void{
+							
+							TweenLite.delayedCall(2.5,function():void{
+								
+								try{
+									
+									bloader.visible=true;
+									uicom.removeChild(loader);
+									removeChild(uicom);
+									loader.unloadAndStop();
+									
+								}catch(e:Error){
+								
+								}
+								
+								loader=null;
+								MyGC.gc();
+								try{
+									
+									removeChild(loader_effect);
+								
+								}catch(e:Error){
+								
+								}
+							
+							})					
+						});
+					});
+				});
+				addChild(Toolyzhkof.mcToUI(bloader));
+				bloader.visible=false;				
+			
+			}
+			private function onOpeningComplete(e:Event):void{
+				
+				loader.content.addEventListener("next_step",doNext);
+				removeChild(loader_effect);
+			
+			}
+			private function dispatchToOpening(e:ProgressEvent):void{
+				
+					loader.content.dispatchEvent(e);
+			
+			}
+			
+		]]>
+	</mx:Script>
+</mx:Application>

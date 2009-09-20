@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application clipContent="false" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="800" height="600" frameRate="30" applicationComplete="init()">
+<mx:Style source="css/TabNavigatorCSS.css"/>
+	<mx:Script>
+		<![CDATA[
+			import yzhkof.FPSfromA3d;
+			import yzhkof.debug.debugTrace;
+			import mx.core.UIComponent;
+			import yzhkof.debug.TextTrace;
+			import yzhkof.Toolyzhkof;
+			private function init():void{
+				
+				addChild(new pv360project());
+				addChild(TextTrace.init(new UIComponent()));
+				FPSfromA3d.init(UIComponent(addChild(new UIComponent())));
+			
+			}
+		]]>
+	</mx:Script>
+</mx:Application>
