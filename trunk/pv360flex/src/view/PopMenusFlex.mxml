@@ -30,6 +30,14 @@
 			private function initText():void{
 				
 				var url:String=xml.@texturl;
+				if(url.length>0){
+					loadText(url);
+				}
+				
+			}
+			private function loadText(url:String):void{
+				
+				
 				var loader:URLLoader=new URLLoader(new URLRequest(url));
 				
 				var onComplete:Function=function(e:Event):void{
@@ -39,7 +47,7 @@
 				}
 				
 				loader.addEventListener(Event.COMPLETE,onComplete);
-				
+			
 			}
 			private function initTabNavigator():void{
 				
