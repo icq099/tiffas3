@@ -55,7 +55,7 @@ package commands
 			var main_control_bar:CameraControlBar=new CameraControlBar();
 			var main_left_up_menu:LeftUpMenuContainer=new LeftUpMenuContainer();
 			var main_sound_player:ExhibitSound=new ExhibitSound();
-			var main_sub_title:SubTitle=new SubTitle();
+			//var main_sub_title:SubTitle=new SubTitle();
 			var main_popup_menu:Canvas=new Canvas();
 			var main_movie:MovieViewer=new MovieViewer();
 			
@@ -64,7 +64,7 @@ package commands
 			app.addChild(Toolyzhkof.mcToUI(main_map));
 			app.addChild(Toolyzhkof.mcToUI(main_control_bar));
 			app.addChild(Toolyzhkof.mcToUI(main_sound_player));
-			app.addChild(Toolyzhkof.mcToUI(main_sub_title));
+			//app.addChild(Toolyzhkof.mcToUI(main_sub_title));
 			app.addChild(main_left_up_menu);
 			app.addChild(main_popup_menu);
 			app.addChild(Toolyzhkof.mcToUI(main_movie)); 
@@ -76,7 +76,7 @@ package commands
 			facade.registerMediator(new ControlBarMediator(main_control_bar));
 			facade.registerMediator(new LeftUpMenuMediator(main_left_up_menu));
 			facade.registerMediator(new SoundPlayerMediator(main_sound_player));
-			facade.registerMediator(new SubTitleMediator(main_sub_title));
+			//facade.registerMediator(new SubTitleMediator(main_sub_title));
 			facade.registerMediator(new PopUpMenusMediator(main_popup_menu));
 			facade.registerMediator(new MovieMediator(main_movie));
 			
@@ -84,8 +84,8 @@ package commands
 			new PositionSeter(main_control_bar,{left:0,bottom:100});
 			new PositionSeter(main_sound_player,{right:50,top:30});
 			new PositionSeter(main_animate_player,{right:30,bottom:300});
-			main_sub_title.x=10;
-			main_sub_title.y=50;			
+			//main_sub_title.x=10;
+			//main_sub_title.y=50;			
 			
 			var scene:Pv3d360Scene=facade.retrieveMediator(PvSceneMediator.NAME).getViewComponent() as Pv3d360Scene;
 			scene.camera=PTravel(facade.retrieveProxy(PTravel.NAME)).getCamera();

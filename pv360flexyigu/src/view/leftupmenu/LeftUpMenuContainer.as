@@ -6,6 +6,8 @@ package view.leftupmenu
 	import gs.TweenLite;
 	
 	import mx.containers.Canvas;
+	
+	import view.leftupmenu.Event.LeftUpMenuEvent;
 
 	public class LeftUpMenuContainer extends Canvas
 	{
@@ -61,7 +63,7 @@ package view.leftupmenu
 		private function initListener():void{
 			
 			menu_button.addEventListener(FlashEvent.DISPATCH,buttonBarClickHandler);
-			menu_button.addEventListener("hide_btn_click",hideButtonClickHandler);
+			//menu_button.addEventListener("hide_btn_click",hideButtonClickHandler);
 		
 		}
 		private function onSubMenuRollOutHandler(e:Event):void{
@@ -75,7 +77,7 @@ package view.leftupmenu
 		}
 		private function buttonBarClickHandler(e:FlashEvent):void{
 			
-			var is_same:Boolean=false;
+			/* var is_same:Boolean=false;
 			
 			if(pop_up_sub_menu==menu_panel_array[int(e.obj)]){
 				
@@ -99,7 +101,8 @@ package view.leftupmenu
 				
 				enablePopUpMenu(int(e.obj));
 							
-			}
+			} */
+			dispatchEvent(new LeftUpMenuEvent(LeftUpMenuEvent.ITEM_CLICK,String(e.obj)));
 			
 		}
 		private function hideButtonClickHandler(e:Event):void{

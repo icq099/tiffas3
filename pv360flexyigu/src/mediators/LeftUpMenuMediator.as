@@ -40,7 +40,7 @@ package mediators
 				
 				case FacadePv.LOAD_XML_COMPLETE:
 				
-					initXml();
+					//initXml();
 					initListener();
 				
 				break;
@@ -56,7 +56,7 @@ package mediators
 		private function initListener():void{
 			
 			menuView.addEventListener(LeftUpMenuEvent.ITEM_CLICK,onItemClikHandler);
-			menuView.addEventListener(LeftUpMenuEvent.GO_CLICK,onGoClickHandler);
+			//menuView.addEventListener(LeftUpMenuEvent.GO_CLICK,onGoClickHandler);
 			//menuView.clickButton.addEventListener(MouseEvent.CLICK,onButtonClickHandler);
 			//menuView.updateList(hot_points_array);
 			//menuView.list.addEventListener(ListEvent.ITEM_CLICK,onItemClikHandler)
@@ -68,11 +68,11 @@ package mediators
 			//facade.sendNotification(FacadePv.POPUP_MENU_DIRECT,{num:e.rowIndex*menuView.list.columnCount+e.columnIndex,array:hot_points_array})
 		
 		}
-		private function onGoClickHandler(e:LeftUpMenuEvent):void{
+		/* private function onGoClickHandler(e:LeftUpMenuEvent):void{
 			
 			facade.sendNotification(FacadePv.GO_POSITION,e.go);			
 		
-		}
+		} */
 		private function onButtonClickHandler(e:Event):void{
 			
 		//	menuView.popUpMenu();

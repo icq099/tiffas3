@@ -2,193 +2,193 @@
 <menu>
 	<menu>
 		<submenu label="农业种养殖技术展区（一）">
-			<item id="3" hot="1" go="10"/>
-			<item id="4"/>
-			<item id="5"/>
-			<item id="14"/>
-			<item id="16"/>
+			<item id="3" go="8"/>
+			<item id="4" go="3"/>
+			<item id="5" go="8"/>
+			<item id="14" go="3"/>
+			<item id="16" hot="1" go="6"/>
 			<item id="17"/>
 			<item id="18"/>
-			<item id="165"/>
-			<item id="26"/>
+			<item id="165" go="6"/>
+			<item id="26" go="8"/>
 			<item id="28"/>
-			<item id="29"/>
-			<item id="167"/>
-			<item id="34"/>
-			<item id="70"/>
-			<item id="78"/>
-			<item id="82"/>
+			<item id="29" go="3"/>
+			<item id="167" go="4"/>
+			<item id="34" hot="1" go="6"/>
+			<item id="70" go="6" />
+			<item id="78" go="3"/>
+			<item id="82" go="4"/>
 		</submenu>
 		<submenu label="农业种养殖技术展区（二）">
-			<item id="118"/>
-			<item id="119"/>
-			<item id="125"/>
-			<item id="138"/>
-			<item id="139"/>
-			<item id="147"/>
-			<item id="149"/>
-			<item id="189"/>
-			<item id="207"/>
-			<item id="222"/>
-			<item id="228"/>
-			<item id="231"/>
-			<item id="260"/>
+			<item id="118" go="7"/>
+			<item id="119" go="5"/>
+			<item id="125" go="6"/>
+			<item id="138" hot="1"go="4"/>
+			<item id="139" go="4"/>
+			<item id="147" go="4"/>
+			<item id="149" go="4"/>
+			<item id="189" hot="1"/>
+			<item id="207" go="4"/>
+			<item id="222" go="4" />
+			<item id="228" go="6"/>
+			<item id="231" go="4"/>
+			<item id="260" go="5"/>
 			<item id="263"/>
-			<item id="293"/>
-			<item id="299"/>
+			<item id="293" go="5"/>
+			<item id="299" go="5"/>
 		</submenu>
 		<submenu label="农业种养殖技术展区（三）">
 			<item id="303"/>
-			<item id="305"/>
-			<item id="309"/>
-			<item id="314"/>
+			<item id="305" go="5"/>
+			<item id="309" go="5"/>
+			<item id="314" go="6"/>
 			<item id="315"/>
 			<item id="318"/>
 			<item id="325"/>
 			<item id="329"/>
-			<item id="346"/>
-			<item id="351"/>
-			<item id="354"/>
-			<item id="355"/>
-			<item id="356"/>
+			<item id="346" />
+			<item id="351" go="7"/>
+			<item id="354" go="6"/>
+			<item id="355" go="6"/>
+			<item id="356" go="7"/>
 			<item id="126"/>
 			<item id="155"/>
-			<item id="157"/>
+			<item id="157" go="4"/>
 		</submenu>
 		<submenu label="农业种养殖技术展区（四）">
-			<item id="175"/>
-			<item id="187"/>
-			<item id="310"/>
-			<item id="49"/>
-			<item id="50"/>
-			<item id="51"/>
-			<item id="52"/>
-			<item id="53"/>
-			<item id="54"/>
-			<item id="55"/>
-			<item id="56"/>
-			<item id="57"/>
-			<item id="58"/>
-			<item id="59"/>
-			<item id="60"/>
+			<item id="175" go="5"/>
+			<item id="187" />
+			<item id="310" go="5"/>
+			<item id="49" go="15"/>
+			<item id="50" go="4"/>
+			<item id="51" go="4"/>
+			<item id="52" go="4"/>
+			<item id="53" go="4"/>
+			<item id="54" go="4"/>
+			<item id="55" go="4"/>
+			<item id="56" go="4"/>
+			<item id="57" go="4"/>
+			<item id="58" go="4"/>
+			<item id="59" go="4"/>
+			<item id="60" go="4"/>
 			<item id="61"/>
 		</submenu>
 		<submenu label="农业种养殖技术展区（五）">
 			<item id="83"/>
-			<item id="88"/>
-			<item id="300"/>
-			<item id="302"/>
+			<item id="88"  go="7"/>
+			<item id="300"  go="5" />
+			<item id="302" go="5"/>
 			<item id="159"/>
 			<item id="163"/>
-			<item id="31"/>
-			<item id="32"/>
+			<item id="31" go="4"/>
+			<item id="32" go="4"/>
 			<item id="33"/>
-			<item id="22"/>
-			<item id="23"/>
+			<item id="22" hot="1" go="3"/>
+			<item id="23" hot="1" go="3"/>
 		</submenu>
 	</menu>
 	<menu>
 		<submenu label="电子信息展区（一）">
-			<item id="43"/>
-			<item id="47"/>
-			<item id="66"/>
-			<item id="67"/>
-			<item id="90"/>
-			<item id="91"/>
-			<item id="93"/>
-			<item id="94"/>
+			<item id="43" go="7"/>
+			<item id="47" hot="1" go="8"/>
+			<item id="66" hot="1" go="8"/>
+			<item id="67" go="7"/>
+			<item id="90" hot="1" go="10"/>
+			<item id="91" hot="1" go="7"/>
+			<item id="93" go="7"/>
+			<item id="94" go="10"/>
 			<item id="95"/>
-			<item id="96"/>
+			<item id="96" go="8"/>
 			<item id="102"/>
-			<item id="105"/>
-			<item id="106"/>
-			<item id="107"/>
-			<item id="108"/>
-			<item id="109"/>
-			<item id="110"/>
-			<item id="112"/>
-			<item id="114"/>
-			<item id="115"/>
-			<item id="184"/>
-			<item id="199"/>
-			<item id="200"/>
-			<item id="274"/>
+			<item id="105" go="12"/>
+			<item id="106" hot="1" go="8"/>
+			<item id="107" go="11"/>
+			<item id="108" hot="1"/>
+			<item id="109" go="10"/>
+			<item id="110" go="10"/>
+			<item id="112" hot="1" go="10"/>
+			<item id="114" go="10"/>
+			<item id="115" go="10"/>
+			<item id="184" hot="1" go="10"/>
+			<item id="199" go="10"/>
+			<item id="200" go="8"/>
+			<item id="274" go="8"/>
 		</submenu>
 		<submenu label="电子信息展区（二）">
-			<item id="278"/>
-			<item id="280"/>
-			<item id="281"/>
+			<item id="278" go="11"/>
+			<item id="280" go="11"/>
+			<item id="281" go="11"/>
 			<item id="283"/>
 			<item id="285"/>
-			<item id="333"/>
-			<item id="334"/>
-			<item id="335"/>
-			<item id="337"/>
-			<item id="342"/>
-			<item id="343"/>
+			<item id="333" go="10"/>
+			<item id="334" go="8"/>
+			<item id="335" go="12"/>
+			<item id="337" go="11"/>
+			<item id="342" go="11"/>
+			<item id="343" go="7"/>
 			<item id="344"/>
 			<item id="367"/>
 			<item id="368"/>
-			<item id="921"/>
+			<item id="921" hot="1" go="12"/>
 		</submenu>
 	</menu>
 	<menu>
 		<submenu label="机电一体化（一）">
-			<item id="39"/>
-			<item id="40"/>
-			<item id="42"/>
-			<item id="44"/>
-			<item id="92"/>
-			<item id="97"/>
-			<item id="98"/>
-			<item id="103"/>
-			<item id="113"/>
-			<item id="185"/>
-			<item id="186"/>
-			<item id="116"/>
-			<item id="133"/>
-			<item id="201"/>
-			<item id="202"/>
-			<item id="269"/>
+			<item id="39" go="13"/>
+			<item id="40" go="13"/>
+			<item id="42" go="13"/>
+			<item id="44" go="13"/>
+			<item id="92" go="13"/>
+			<item id="97" go="13"/>
+			<item id="98" go="13"/>
+			<item id="103" go="13"/>
+			<item id="113" hot="1" go="13"/>
+			<item id="185" go="12"/>
+			<item id="186" hot="1" go="19"/>
+			<item id="116" go="13"/>
+			<item id="133" go="13"/>
+			<item id="201" hot="1" go="13"/>
+			<item id="202" go="13"/>
+			<item id="269" go="13"/>
 			<item id="272"/>
 			<item id="277"/>
 			<item id="279"/>
 			<item id="286"/>
 			<item id="296"/>
-			<item id="359"/>
-			<item id="377"/>
+			<item id="359" hot="1"/>
+			<item id="377" hot="1" go="8"/>
 		</submenu>
 	</menu>
 	<menu>
 		<submenu label="节能减排">
-			<item id="164"/>
-			<item id="198"/>
-			<item id="203"/>
-			<item id="271"/>
-			<item id="297"/>
+			<item id="164" go="13"/>
+			<item id="198" go="15"/>
+			<item id="203" hot="1" go="13"/>
+			<item id="271" go="14"/>
+			<item id="297" hot="1"/>
 		</submenu>
 		<submenu label="生物医药">
-			<item id="104"/>
+			<item id="104" go="14"/>
 			<item id="273"/>
 		</submenu>
 		<submenu label="新材料">
 			<item id="38"/>
 			<item id="41"/>
-			<item id="45"/>
-			<item id="46"/>
+			<item id="45" go="13"/>
+			<item id="46" hot="1"/>
 			<item id="48"/>
 			<item id="276"/>
 		</submenu>
 	</menu>
 	<menu>
 		<submenu label="农产品加工技术展区（一）">
-			<item id="1"/>
-			<item id="6"/>
-			<item id="7"/>
-			<item id="8"/>
-			<item id="9"/>
-			<item id="10"/>
-			<item id="11"/>
+			<item id="1" go="14"/>
+			<item id="6" go="14"/>
+			<item id="7" go="15"/>
+			<item id="8" go="15"/>
+			<item id="9" go="17"/>
+			<item id="10" go="17"/>
+			<item id="11" go="17"/>
 			<item id="12"/>
 			<item id="19"/>
 			<item id="21"/>
@@ -202,26 +202,26 @@
 			<item id="73"/>
 			<item id="74"/>
 			<item id="84"/>
-			<item id="85"/>
-			<item id="86"/>
-			<item id="87"/>
-			<item id="122"/>
-			<item id="129"/>
-			<item id="130"/>
-			<item id="136"/>
-			<item id="137"/>
-			<item id="142"/>
-			<item id="145"/>
+			<item id="85" go="17"/>
+			<item id="86" go="17"/>
+			<item id="87" go="18"/>
+			<item id="122" go="17"/>
+			<item id="129" go="18"/>
+			<item id="130" go="19"/>
+			<item id="136" go="17"/>
+			<item id="137" go="18"/>
+			<item id="142" go="18"/>
+			<item id="145" go="18"/>
 		</submenu>
 		<submenu label="农产品加工技术展区（三）">
 			<item id="151"/>
 			<item id="153"/>
-			<item id="173"/>
-			<item id="176"/>
-			<item id="177"/>
-			<item id="178"/>
-			<item id="179"/>
-			<item id="181"/>
+			<item id="173"  go="20"/>
+			<item id="176"  go="20"/>
+			<item id="177"  go="19"/>
+			<item id="178"  go="19"/>
+			<item id="179"  go="19"/>
+			<item id="181"  go="20"/>
 			<item id="182"/>
 			<item id="183"/>
 			<item id="191"/>
@@ -232,14 +232,14 @@
 		<submenu label="农产品加工技术展区（四）">
 			<item id="219"/>
 			<item id="226"/>
-			<item id="227"/>
-			<item id="229"/>
+			<item id="227" go="20"/>
+			<item id="229"  go="20"/>
 			<item id="230"/>
-			<item id="236"/>
-			<item id="252"/>
-			<item id="254"/>
-			<item id="255"/>
-			<item id="256"/>
+			<item id="236"  go="17"/>
+			<item id="252"  go="17"/>
+			<item id="254"  go="19"/>
+			<item id="255"  go="18"/>
+			<item id="256" />
 			<item id="262"/>
 			<item id="266"/>
 			<item id="216"/>
@@ -249,7 +249,7 @@
 			<item id="319"/>
 			<item id="320"/>
 			<item id="321"/>
-			<item id="222"/>
+			<item id="222"  go="4"/>
 			<item id="324"/>
 			<item id="326"/>
 			<item id="328"/>
@@ -270,56 +270,56 @@
 			<item id="371"/>
 			<item id="372"/>
 			<item id="374"/>
-			<item id="146"/>
-			<item id="147"/>
-			<item id="148"/>
-			<item id="150"/>
+			<item id="146" go="18"/>
+			<item id="147" go="18"/>
+			<item id="148" go="18"/>
+			<item id="150" go="18"/>
 		</submenu>
 	</menu>
 	<menu>
 		<submenu label="农业装备技术展区（一）">
 			<item id="13"/>
-			<item id="20"/>
-			<item id="24"/>
-			<item id="25"/>
-			<item id="76"/>
-			<item id="79"/>
-			<item id="81"/>
-			<item id="117"/>
-			<item id="124"/>
-			<item id="127"/>
-			<item id="156"/>
-			<item id="162"/>
-			<item id="180"/>
-			<item id="190"/>
-			<item id="193"/>
-			<item id="196"/>
-			<item id="197"/>
-			<item id="205"/>
+			<item id="20" go="19"/>
+			<item id="24" go="12"/>
+			<item id="25" go="18"/>
+			<item id="76" go="18"/>
+			<item id="79" go="18"/>
+			<item id="81" go="4"/>
+			<item id="117" go="4"/>
+			<item id="124" go="4"/>
+			<item id="127" go="4"/>
+			<item id="156" go="4"/>
+			<item id="162" go="4"/>
+			<item id="180" go="17"/>
+			<item id="190" go="17"/>
+			<item id="193" hot="1"  go="17"/>
+			<item id="196" hot="1" go="17"/>
+			<item id="197" go="17"/>
+			<item id="205" go="17"/>
 			<item id="208"/>
-			<item id="961"/>
+			<item id="961" hot="1" go="12"/>
 		</submenu>
 		<submenu label="农业装备技术展区（二）">
-			<item id="962"/>
-			<item id="209"/>
-			<item id="215"/>
+			<item id="962" hot="1"/>
+			<item id="209" go="15"/>
+			<item id="215" go="15"/>
 			<item id="223"/>
 			<item id="224"/>
-			<item id="225"/>
-			<item id="238"/>
+			<item id="225" go="16"/>
+			<item id="238" go="15"/>
 			<item id="243"/>
-			<item id="258"/>
-			<item id="287"/>
+			<item id="258" go="16"/>
+			<item id="287" go="16"/>
 			<item id="291"/>
 			<item id="295"/>
-			<item id="298"/>
-			<item id="327"/>
-			<item id="331"/>
+			<item id="298"go="16"/>
+			<item id="327" go="16"/>
+			<item id="331" hot="1" go="2"/>
 			<item id="349"/>
-			<item id="352"/>
-			<item id="358"/>
-			<item id="360"/>
-			<item id="375"/>
+			<item id="352" go="16"/>
+			<item id="358" go="16"/>
+			<item id="360" go="16"/>
+			<item id="375" hot="1" go="20"/>
 		</submenu>
 		<submenu label="农业装备技术展区（三）">
 			<item id="169"/>

@@ -17,7 +17,13 @@ package commands
 		override public function execute(notification:INotification):void{
 			
 			p_xml=facade.retrieveProxy(PXml.NAME) as PXml;
-			facade.sendNotification(AnimatePlayerMediator.CHANGE_SWF,p_xml.getGuideSwf(String(notification.getBody())));
+			var animate_url:String=p_xml.getGuideSwf(String(notification.getBody()));
+			
+			if(animate_url!=null){
+				facade.sendNotification(AnimatePlayerMediator.CHANGE_SWF,animate_url);
+			}else{
+				facade.sendNotification(AnimatePlayerMediator.HIDE_ANIMATE);
+			}
 		
 		}
 		
