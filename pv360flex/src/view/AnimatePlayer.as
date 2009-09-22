@@ -6,7 +6,6 @@ package view
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.media.Sound;
 	import flash.net.URLRequest;
 	
 	import gs.TweenLite;
@@ -34,24 +33,32 @@ package view
 		
 		private var is_open:Boolean=false;
 		
+		private var load_is_null:Boolean=true;
+		
 		public function AnimatePlayer()
 		{
 			
-			addChild(closeButton);
+			//addChild(closeButton);
 			closeButton.y=25;
 			openButton.visible=false;
 			
 		}
 		public function animateLoad(url_swf:String,offsetWidth:Number=150):void{
 			
-			if(url_swf!=this._urlanimte){
-				
-				this._urlanimte=url_swf;
-				this.offsetWidth=offsetWidth;
-				
-				loadAnimate();
-				
-			}		
+			if(url_swf!=null){
+				if(url_swf!=this._urlanimte){
+					
+					this._urlanimte=url_swf;
+					this.offsetWidth=offsetWidth;
+					load_is_null=false;
+					
+					loadAnimate();
+					
+				}
+			}else{
+				//设置空	
+				load_is_null=true;		
+			}
             
 	    }
 	    private function loadAnimate():void{
@@ -99,9 +106,9 @@ package view
 				
 				try{
 					
-					MovieClip(loader.content).stop();
 					removeChild(closeButton);
 	           	 	removeChild(loader);
+					MovieClip(loader.content).stop();
 					
 				}catch(e:Error){
 					
@@ -120,7 +127,7 @@ package view
 		
 		public function openAnimate(e:MouseEvent=null):void{
 			
-			if(!is_open){
+			if((!is_open)&&(load_is_null=false)){
 				
 				addChild(closeButton);
 				TweenLite.from(closeButton,0.5,{alpha:0,x:20});
