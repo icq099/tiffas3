@@ -34,13 +34,7 @@ package mediators
 				
 				case AnimatePlayerMediator.CHANGE_SWF:
 				
-					if(notification.getBody()!==null){
-						
-						animate_player.animateLoad(String(notification.getBody()));
-						
-					}else{
-					
-					}
+					animate_player.animateLoad(String(notification.getBody()));
 				
 				break;
 				case AnimatePlayerMediator.SHOW_ANIMATE:
