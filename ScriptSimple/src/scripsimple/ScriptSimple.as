@@ -19,22 +19,28 @@ package scripsimple
 		}
 		private function excute():*{
 			
-			var sentence_array:Array=ScriptUntil.getSentence(script);
+			var sentence_array:Array=ScriptUtil.getSentence(script);
 			var k:int=0
 			for each(var i:String in sentence_array){
 			
-				ScriptUntil.isFunction(i)?excuteFunction(i):executeError(0,sentence_array.indexOf(i)+1);
+				ScriptUtil.isFunction(i)?excuteFunction(i):executeError(0,sentence_array.indexOf(i)+1);
 				k++
 			
 			}
 			return 0;
 		}
+		/**
+		 *	执行ScriptSimple方法 
+		 * @param str
+		 * @return 
+		 * 
+		 */		
 		private function excuteFunction(str:String):*{
 			
-			var fun_name:String=ScriptUntil.getFunctionName(str);
-			var param_array:Array=ScriptUntil.getFunParam(str);
+			var fun_name:String=ScriptUtil.getFunctionName(str);
+			var param_array:Array=ScriptUtil.getFunParam(str);
 			for(var i:int=0;i<param_array.length;i++){
-				if(ScriptUntil.isFunction(param_array[i])){
+				if(ScriptUtil.isFunction(param_array[i])){
 					param_array[i]=excuteFunction(param_array[i]);				
 				}			
 			}

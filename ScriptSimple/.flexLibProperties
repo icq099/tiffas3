@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties version="1">
 <includeClasses>
-<classEntry path="scripsimple.ScriptUntil"/>
+<classEntry path="scripsimple.ScriptUtil"/>
 <classEntry path="scripsimple.ScripSimpleAPI"/>
 <classEntry path="scripsimple.ScriptSimple"/>
 </includeClasses>
