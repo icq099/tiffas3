@@ -15,11 +15,8 @@ package scripsimple
 		
 		}
 		internal function excuteFunctionByName(function_name:String,param:Array):*{
-			
 			var fun:Function=out_fun[fun_stirng.indexOf(function_name)];
-			return fun.apply(NaN,param);		
-		
+			return fun.apply(NaN,param);
 		}
-
 	}
 }

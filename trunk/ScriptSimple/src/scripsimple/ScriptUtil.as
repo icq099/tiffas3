@@ -1,9 +1,9 @@
 package scripsimple
 {	
 	
-	public class ScriptUntil
+	public class ScriptUtil
 	{
-		public function ScriptUntil()
+		public function ScriptUtil()
 		{
 		}
 		public static function isFunction(str:String):Boolean{
@@ -26,15 +26,25 @@ package scripsimple
 			return fun_name=str.match(reg)[0];
 		
 		}
+		/**
+		 *	获得字符串方法参数 
+		 * @param str
+		 * @return 参数数组
+		 * 
+		 */		
 		public static function getFunParam(str:String):Array{
 			
-			var reg:RegExp=/(?<=\().*(?=\))/;
+			var reg:RegExp=/(?<=\().*(?=\))/;//去括号
 			var re_array:Array=String(str.match(reg)[0]).split(",");
+			//trace(str.match(reg)[0]);
 			if((re_array.length==1)&&(re_array[0]=="")){
 				return [];
 			}
 			return re_array;
 		
+		} 
+		public static function isNum(str:String):Boolean{
+			return true;
 		}
 
 	}
