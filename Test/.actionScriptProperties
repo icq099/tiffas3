@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<actionScriptProperties mainApplicationPath="ScriptSimpleTest.as" version="3">
+<actionScriptProperties mainApplicationPath="ZTest.as" version="3">
 <compiler additionalCompilerArguments="-define=yzhkof::debug,false" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="9.0.124" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
 <compilerSourcePath/>
 <libraryPath defaultLinkType="1">
@@ -18,7 +18,6 @@
 <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/framework.swc" useDefaultLinkType="false"/>
 </excludedEntries>
 </libraryPathEntry>
-<libraryPathEntry kind="3" linkType="1" path="G:/study/components/new360/new360swc.swc" useDefaultLinkType="false"/>
 <libraryPathEntry kind="3" linkType="1" path="/ScriptSimple/bin/ScriptSimple.swc" useDefaultLinkType="false"/>
 <libraryPathEntry kind="3" linkType="1" path="/pv360flexllib/bin/pv360flexllib.swc" useDefaultLinkType="false"/>
 <libraryPathEntry kind="3" linkType="1" path="/yzhkof/bin/yzhkof.swc" useDefaultLinkType="false"/>
@@ -26,6 +25,7 @@
 <sourceAttachmentPath/>
 </compiler>
 <applications>
+<application path="ZTest.as"/>
 <application path="ScriptSimpleTest.as"/>
 <application path="DebugTest.as"/>
 <application path="EventTest.as"/>
