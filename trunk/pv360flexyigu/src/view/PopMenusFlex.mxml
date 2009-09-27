@@ -67,6 +67,7 @@
 					
 					}
 					viewswf.loadSwf(xml.ExhibitSwf.@url,save,xml.ExhibitSwf.@swfWidth,xml.ExhibitSwf.@swfHeight);
+					items.push(viewswf);
 					tabNavigator.addChild(viewswf);
 					
 				}

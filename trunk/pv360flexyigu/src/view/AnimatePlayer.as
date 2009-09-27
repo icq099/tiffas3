@@ -127,7 +127,7 @@ package view
 		
 		public function openAnimate(e:MouseEvent=null):void{
 			
-			if((!is_open)&&(load_is_null=false)){
+			if((!is_open)&&(load_is_null==false)){
 				
 				addChild(closeButton);
 				TweenLite.from(closeButton,0.5,{alpha:0,x:20});

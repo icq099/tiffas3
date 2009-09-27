@@ -86,25 +86,23 @@ package mediators
 			var xml_hot_point:XMLList=xml.Travel.Scene[position].HotPoint; */
 			
 			//菜单计数器加1
-			p_travel.menu_count++;
-			
-			var menu:PopMenusFlex=new PopMenusFlex();
-			
-			menu.addEventListener(ExhitbitSoundEvent.PLAY,soundPlayHandler);
-			menu.addEventListener(ExhitbitSoundEvent.PAUSE_OR_STOP,soundPauseHandler);
-			menu.addEventListener(CloseEvent.CLOSE,windowCloseHandler);
-			
-			pop_menus.addChild(menu);
-			menu.validateNow();
-			menu.constructByXml(i_xml);
-			//menu.width=i_xml.@swfWidth;
-			//menu.height=i_xml.@swfHeight;
-			menu.x=(pop_menus.stage.stageWidth-menu.width)/2;
-			menu.y=(pop_menus.stage.stageHeight-menu.height)/2;
-			
-			
-			
-		
+			if(!p_travel.menu_count>0){
+				p_travel.menu_count++;
+				
+				var menu:PopMenusFlex=new PopMenusFlex();
+				
+				menu.addEventListener(ExhitbitSoundEvent.PLAY,soundPlayHandler);
+				menu.addEventListener(ExhitbitSoundEvent.PAUSE_OR_STOP,soundPauseHandler);
+				menu.addEventListener(CloseEvent.CLOSE,windowCloseHandler);
+				
+				pop_menus.addChild(menu);
+				menu.validateNow();
+				menu.constructByXml(i_xml);
+				//menu.width=i_xml.@swfWidth;
+				//menu.height=i_xml.@swfHeight;
+				menu.x=(pop_menus.stage.stageWidth-menu.width)/2;
+				menu.y=(pop_menus.stage.stageHeight-menu.height)/2;
+			}		
 		}
 		private function soundPlayHandler(e:Event):void{
 			

@@ -182,7 +182,7 @@ package mediators
 		    }
 			else{
 		        
-		           travel.cameraFocus=62.2;
+		        travel.cameraFocus=62.2;
 						 
 			}
         }
