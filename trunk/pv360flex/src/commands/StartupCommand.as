@@ -15,6 +15,7 @@ package commands
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
+	import proxys.PScriptRuner;
 	import proxys.PTravel;
 	import proxys.PXml;
 	
@@ -42,6 +43,7 @@ package commands
 			
 			facade.registerProxy(new PTravel());
 			facade.registerProxy(new PXml());
+			facade.registerProxy(new PScriptRuner());
 			
 			facade.registerCommand(FacadePv.INIT_DISPLAY,InitDisplayCommand);
 			facade.registerCommand(FacadePv.POSITION_CHANGE_COMMAND,PositionChangeCommand);
