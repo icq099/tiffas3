@@ -36,16 +36,25 @@ package scripsimple
 			
 			var reg:RegExp=/(?<=\().*(?=\))/;//去括号
 			var re_array:Array=String(str.match(reg)[0]).split(",");
-			//trace(str.match(reg)[0]);
+			
+			/* var reg_f:RegExp=/\w*\([^\(\)]*(((?'open'\()\([^\(\)]*)+((?'-open'\))\([^\(\)]*)+)*(?(open)(?!))\)/;
+			var str2:String=str.match(reg)[0];
+			trace(str2.match(reg_f),str2.match(reg_f).length); */
 			if((re_array.length==1)&&(re_array[0]=="")){
 				return [];
 			}
 			return re_array;
 		
 		} 
-		public static function isNum(str:String):Boolean{
-			return true;
+		public static function test(str:String):Array{
+			//var reg:RegExp=new RegExp("<[^<>]*(((?'Open'<)[^<>]*)+((?'-Open'>)[^<>]*)+)*(?(Open)(?!))>");
+			var reg:RegExp=new RegExp("<[^<>]*(((?'Open'<)[^<>]*)+((?'-Open'>)[^<>]*)+)*(?(Open)(?!))>");
+			return str.match(reg);
+			
 		}
+		/* public static function isNum(str:String):Boolean{
+			return true;
+		} */
 
 	}
 }
