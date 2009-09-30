@@ -21,6 +21,7 @@ package proxys
 		protected var data_hotpoints:XML;
 		protected var data_icon:XML;
 		protected var data_menu:XML;
+		protected var data_plugin:XML;
 		
 		private var xml_loader:BulkLoader;
 		
@@ -37,6 +38,7 @@ package proxys
 			xml_loader.add("xml/hotpoints.xml");
 			xml_loader.add("xml/icon.xml");
 			xml_loader.add("xml/menu.xml");
+			xml_loader.add("xml/plugin.xml");
 			xml_loader.start();
 			xml_loader.addEventListener(BulkProgressEvent.COMPLETE,loadCompleteHandler);
 		
@@ -133,6 +135,7 @@ package proxys
 			data_hotpoints=xml_loader.getXML("xml/hotpoints.xml");
 			data_icon=xml_loader.getXML("xml/icon.xml");
 			data_menu=xml_loader.getXML("xml/menu.xml");
+			data_plugin=xml_loader.getXML("xml/plugin.xml");
 			xml_loader.clear();
 			xml_loader=null;
 			

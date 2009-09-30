@@ -9,7 +9,9 @@ package proxys
 			super();
 		}
 		protected override function init():void{
-			addAPI("gotoScene",gotoScene);		
+			super.init();
+			addAPI("gotoScene",gotoScene);
+			addAPI("popUpHotPoint",popUpHotPoint);		
 		} 
 		private function gotoScene(scene:int):void{
 			facade.sendNotification(FacadePv.GO_POSITION,scene);

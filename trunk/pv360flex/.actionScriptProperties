@@ -8,6 +8,7 @@
 <libraryPathEntry kind="3" linkType="1" path="/yzhkof/bin/yzhkof.swc" useDefaultLinkType="false"/>
 <libraryPathEntry kind="3" linkType="1" path="/pv360flexllib/bin/pv360flexllib.swc" useDefaultLinkType="false"/>
 <libraryPathEntry kind="3" linkType="1" path="/ScriptSimple/bin/ScriptSimple.swc" useDefaultLinkType="false"/>
+<libraryPathEntry kind="3" linkType="1" path="/pv360flexpluginframework/bin/pv360flexpluginframework.swc" useDefaultLinkType="false"/>
 </libraryPath>
 <sourceAttachmentPath/>
 </compiler>
