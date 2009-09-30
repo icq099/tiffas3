@@ -6,6 +6,7 @@ package proxys
 	import facades.FacadePv;
 	
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
 	import mx.managers.BrowserManager;
@@ -26,6 +27,7 @@ package proxys
 		private var xml_loader:BulkLoader;
 		
 		private var icon_bitmapdata:Array=new Array();
+		private var plugin:Array=new Array();
 		
 		public function PXml()
 		{
@@ -119,6 +121,9 @@ package proxys
 			return icon_bitmapdata[id];
 		
 		}
+		public function getPluginById(id:int):DisplayObject{
+			return plugin[id];
+		}
 		public function getMenuXml():XML{
 			
 			return XML(data_menu);
@@ -139,30 +144,37 @@ package proxys
 			xml_loader.clear();
 			xml_loader=null;
 			
-			loadIcons();
+			loadExternal();
 			
 		}
-		private function loadIcons():void{
+		private function loadExternal():void{
 			
-			var icon_loader:BulkLoader=new BulkLoader("icon");
-			
+			var external_loader:BulkLoader=new BulkLoader("icon");
+			//载入图标
 			for each(var i:XML in data_icon.icon){
-				
-				icon_loader.add(String(i.@url));
-			
+				external_loader.add(String(i.@url))
+			}
+			//载入外部插件
+			for each(var i:XML in data_plugin.plugin){
+				external_loader.add(String(i.@url));			
 			}
 			
-			icon_loader.addEventListener(BulkProgressEvent.COMPLETE,loadIconsComplete);
-			icon_loader.start();
+			external_loader.addEventListener(BulkProgressEvent.COMPLETE,loadExternalComplete);
+			external_loader.start();
 		
 		}
-		private function loadIconsComplete(e:BulkProgressEvent):void{
+		private function loadExternalComplete(e:BulkProgressEvent):void{
 			
 			BrowserManager.getInstance().init();
 			
 			for each(var i:XML in data_icon.icon){
 				
 				icon_bitmapdata.push(BulkLoader(e.currentTarget).getBitmap(String(i.@url)).bitmapData);
+				
+			}
+			for each(var i:XML in data_plugin.plugin){
+				
+				plugin.push(BulkLoader(e.currentTarget).getDisplayObjectLoader(String(i.@url)).content);
 				
 			}
 			BulkLoader(e.currentTarget).clear();
