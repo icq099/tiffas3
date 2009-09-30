@@ -1,5 +1,8 @@
 package proxys
 {
+	import communication.Event.ScriptEvent;
+	import communication.MainSystem;
+	
 	import model.ScriptRuner;
 	
 	import org.puremvc.as3.patterns.proxy.Proxy;
@@ -15,6 +18,10 @@ package proxys
 			init();
 		}
 		protected function init():void{
+			MainSystem.getInstance().addEventListener(ScriptEvent.RUN,onPluginScriptRun);
+		}
+		protected function onPluginScriptRun(e:ScriptEvent):void{
+			runScript(e.script);
 		}
 		public function addAPI(fun_name:String,fun:Function):void{
 			runer.addAPI(fun_name,fun);		

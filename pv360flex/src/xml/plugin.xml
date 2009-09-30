@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin>
+	<plugin url="icon/Hotpoint.png" preLoad="0"/>
+	<plugin url="icon/Arrow.png" preLoad="1"/>
+</plugin>
