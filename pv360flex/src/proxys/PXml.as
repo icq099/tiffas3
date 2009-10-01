@@ -6,7 +6,6 @@ package proxys
 	import facades.FacadePv;
 	
 	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
 	import mx.managers.BrowserManager;
@@ -121,8 +120,11 @@ package proxys
 			return icon_bitmapdata[id];
 		
 		}
-		public function getPluginById(id:int):DisplayObject{
-			return plugin[id];
+		public function getPluginXmlById(id:int):XML{
+			return data_plugin.plugin[id];
+		}
+		public function getPluginXml():XML{
+			return data_plugin;
 		}
 		public function getMenuXml():XML{
 			
@@ -155,8 +157,10 @@ package proxys
 				external_loader.add(String(i.@url))
 			}
 			//载入外部插件
-			for each(var i:XML in data_plugin.plugin){
-				external_loader.add(String(i.@url));			
+			for each(i in data_plugin.plugin){
+				if(i.@preLoad==1){
+					external_loader.add(String(i.@url));
+				}
 			}
 			
 			external_loader.addEventListener(BulkProgressEvent.COMPLETE,loadExternalComplete);
@@ -172,11 +176,15 @@ package proxys
 				icon_bitmapdata.push(BulkLoader(e.currentTarget).getBitmap(String(i.@url)).bitmapData);
 				
 			}
-			for each(var i:XML in data_plugin.plugin){
+			/* var obj:Object;
+			var b_loader:BulkLoader;
+			for each(i in data_plugin.plugin){
 				
-				plugin.push(BulkLoader(e.currentTarget).getDisplayObjectLoader(String(i.@url)).content);
+				b_loader=BulkLoader(e.currentTarget);
+				obj=b_loader.hasItem(String(i.@url))?b_loader.getContent(String(i.@url)):null
+				plugin.push(obj);
 				
-			}
+			} */
 			BulkLoader(e.currentTarget).clear();
 			
 			var pre_array:Array=new Array();

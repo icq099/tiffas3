@@ -10,6 +10,7 @@ package commands
 	import mediators.LeftUpMenuMediator;
 	import mediators.MapMediator;
 	import mediators.MovieMediator;
+	import mediators.PluginMediator;
 	import mediators.PopUpMenusMediator;
 	import mediators.PvSceneMediator;
 	import mediators.SoundPlayerMediator;
@@ -21,6 +22,7 @@ package commands
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
 	import proxys.PTravel;
+	import proxys.PXml;
 	
 	import view.AnimatePlayer;
 	import view.ExhibitSound;
@@ -42,6 +44,7 @@ package commands
 		override public function execute(notification:INotification):void{
 			
 			var app:Sprite=AppMediator(facade.retrieveMediator(AppMediator.NAME)).getViewComponent() as Sprite;
+			var p_xml:PXml=facade.retrieveProxy(PXml.NAME) as PXml;
 			while(app.numChildren>0){
 				
 				app.removeChildAt(0);
@@ -58,6 +61,7 @@ package commands
 			var main_sub_title:SubTitle=new SubTitle();
 			var main_popup_menu:Canvas=new Canvas();
 			var main_movie:MovieViewer=new MovieViewer();
+			var main_plugin:Canvas=new Canvas();
 			
 			app.addChild(Toolyzhkof.mcToUI(main_scene));
 			app.addChild(Toolyzhkof.mcToUI(main_animate_player));
@@ -67,7 +71,8 @@ package commands
 			app.addChild(Toolyzhkof.mcToUI(main_sub_title));
 			app.addChild(main_left_up_menu);
 			app.addChild(main_popup_menu);
-			app.addChild(Toolyzhkof.mcToUI(main_movie)); 
+			app.addChild(Toolyzhkof.mcToUI(main_movie));
+			app.addChild(main_plugin);
 			
 			//facade.registerCommand(FacadePv.LOAD_XML_COMPLETE,InitDisplayObjectCommand);
 			facade.registerMediator(new PvSceneMediator(main_scene));
@@ -79,13 +84,21 @@ package commands
 			facade.registerMediator(new SubTitleMediator(main_sub_title));
 			facade.registerMediator(new PopUpMenusMediator(main_popup_menu));
 			facade.registerMediator(new MovieMediator(main_movie));
+			facade.registerMediator(new PluginMediator(main_plugin));
 			
 			new PositionSeter(main_map,{right:130,bottom:100});
 			new PositionSeter(main_control_bar,{left:0,bottom:100});
 			new PositionSeter(main_sound_player,{right:50,top:30});
 			new PositionSeter(main_animate_player,{right:30,bottom:300});
 			main_sub_title.x=10;
-			main_sub_title.y=50;			
+			main_sub_title.y=50;
+			
+			//显示plugin
+			for each(var i:XML in p_xml.getPluginXml().plugin){
+				if(i.@visible==1){
+					facade.sendNotification(PluginMediator.SHOW_PLUGIN,i);
+				}
+			}
 			
 			var scene:Pv3d360Scene=facade.retrieveMediator(PvSceneMediator.NAME).getViewComponent() as Pv3d360Scene;
 			scene.camera=PTravel(facade.retrieveProxy(PTravel.NAME)).getCamera();
