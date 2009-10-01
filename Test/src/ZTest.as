@@ -8,8 +8,7 @@ package
 	{
 		public function ZTest()
 		{
-			trace(ScriptUtil.test("xx <aa <bbb> <bbb> aa> yy"));
+			//trace(ScriptUtil.test("xx <aa <bbb> <bbb> aa> yy"));
 		}
-		
 	}
 }
