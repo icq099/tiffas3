@@ -4,6 +4,7 @@
 <compilerSourcePath/>
 <libraryPath defaultLinkType="1">
 <libraryPathEntry kind="4" path=""/>
+<libraryPathEntry kind="3" linkType="2" path="/pv360flexllib/bin/pv360flexllib.swc" useDefaultLinkType="false"/>
 </libraryPath>
 <sourceAttachmentPath/>
 </compiler>
