@@ -21,6 +21,7 @@ package mediators
 		public static const REMOVE_PLUGIN:String="PluginMediator.REMOVE_PLUGIN";
 		
 		protected var plugin_obj:Object=new Object;
+		protected var position_setters:Object=new Object;
 		public function PluginMediator(viewComponent:Object=null)
 		{
 			super(NAME, viewComponent);
@@ -46,7 +47,6 @@ package mediators
 			loader.load(new URLRequest(xml.@url));
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onPluginLoadComplete);
 			
-			plugin_container.addChild(plugin_obj[xml.@url]=Toolyzhkof.mcToUI(loader));
 			var position_obj:Object=new Object();
 			position_obj["left"]=xml.@left;
 			position_obj["top"]=xml.@top;
@@ -54,11 +54,14 @@ package mediators
 			position_obj["bottom"]=xml.@bottom;
 			position_obj["x"]=xml.@x;
 			position_obj["y"]=xml.@y;
-			new PositionSeter(loader,position_obj,false,true);
+			
+			plugin_container.addChild(plugin_obj[xml.@url]=Toolyzhkof.mcToUI(loader));
+			position_setters[xml.@url]=new PositionSeter(loader,position_obj,false,true);
 		}
 		protected function removePlugin(xml:XML):void{
 			plugin_container.removeChild(plugin_obj[xml.@url]);
 			delete plugin_obj[xml.@url];
+			delete position_setters[xml.@url]
 		}
 		protected function onPluginLoadComplete(e:Event):void{
 			
