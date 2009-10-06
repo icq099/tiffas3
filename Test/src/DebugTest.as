@@ -1,5 +1,6 @@
 package
 {
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	
 	import yzhkof.MyGraphy;
@@ -12,6 +13,8 @@ package
 			super();
 			addChild(MyGraphy.drawRectangle());
 			//trace(yzhkof::debug)
+			var a:MovieClip
+			a.addFrameScript();
 
 		}
 		
