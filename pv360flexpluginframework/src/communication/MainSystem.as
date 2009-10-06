@@ -25,5 +25,8 @@ package communication
 		public function runScript(script:String):void{
 			dispatchEvent(new ScriptEvent(ScriptEvent.RUN,script));
 		}
+		public function gotoScene(scene_id:int):void{
+			runScript("gotoScene("+scene_id+");");
+		}
 	}
 }
