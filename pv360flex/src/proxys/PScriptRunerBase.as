@@ -1,5 +1,6 @@
 package proxys
 {
+	import communication.Event.ScriptAPIAddEvent;
 	import communication.Event.ScriptEvent;
 	import communication.MainSystem;
 	
@@ -18,10 +19,14 @@ package proxys
 			init();
 		}
 		protected function init():void{
-			MainSystem.getInstance().addEventListener(ScriptEvent.RUN,onPluginScriptRun);
+			MainSystem.getInstance().addEventListener(ScriptEvent.RUN,onPluginScriptRun);		
+			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,onAPIAdd);
 		}
 		protected function onPluginScriptRun(e:ScriptEvent):void{
 			runScript(e.script);
+		}
+		protected function onAPIAdd(e:ScriptAPIAddEvent):void{
+			addAPI(e.fun_name,e.fun);
 		}
 		public function addAPI(fun_name:String,fun:Function):void{
 			runer.addAPI(fun_name,fun);		
