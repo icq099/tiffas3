@@ -1,6 +1,7 @@
 package proxys
 {
 	import communication.MainSystem;
+	import communication.camera.CameraProxy;
 	
 	import facades.FacadePv;
 	
@@ -18,7 +19,7 @@ package proxys
 		}
 		protected override function init():void{
 			super.init();
-			MainSystem.getInstance().setCamera(p_travel.getCamera());
+			MainSystem.getInstance().camera=new CameraProxy(p_travel.getCamera());
 			addAPI("gotoScene",gotoScene);
 			addAPI("popUpHotPoint",popUpHotPoint);
 			addAPI("showPluginById",showPluginById);
