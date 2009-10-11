@@ -13,8 +13,7 @@ package communication.Event
 			this.script=script;
 		}
 		public override function clone():Event{
-			return new ScriptEvent(type,script,bubbles,cancelable);		
+			return new ScriptEvent(type,script,bubbles,cancelable);
 		}
-		
 	}
 }

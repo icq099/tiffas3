@@ -2,6 +2,7 @@
 <flexLibProperties version="1">
 <includeClasses>
 <classEntry path="communication.Event.ScriptEvent"/>
+<classEntry path="communication.camera.CameraProxy"/>
 <classEntry path="communication.MainSystem"/>
 <classEntry path="communication.Event.ScriptAPIAddEvent"/>
 </includeClasses>
