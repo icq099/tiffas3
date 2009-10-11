@@ -14,7 +14,7 @@ package communication
 	public class MainSystem extends EventDispatcher
 	{
 		private static var instance:MainSystem;
-		private var _camera:CameraProxy;
+		public var camera:CameraProxy;
 		public function MainSystem()
 		{
 			if(instance==null){
@@ -39,12 +39,6 @@ package communication
 		}
 		public function gotoScene(scene_id:int):void{
 			runScript("gotoScene("+scene_id+");");
-		}
-		public function setCamera(value:FreeCamera3D):void{
-			_camera=new CameraProxy(value);
-		}
-		public function get camera():CameraProxy{
-			return _camera;
 		}
 	}
 }
