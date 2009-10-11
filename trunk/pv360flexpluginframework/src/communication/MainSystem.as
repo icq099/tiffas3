@@ -3,7 +3,8 @@ package communication
 	import communication.Event.ScriptEvent;
 	
 	import flash.events.EventDispatcher;
-
+	
+	[Event(name="add_api", type="communication.Event.ScriptAPIAddEvent")]
 	[Event(name="run", type="communication.Event.ScriptEvent")]
 	
 	public class MainSystem extends EventDispatcher
