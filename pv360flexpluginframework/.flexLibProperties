@@ -3,6 +3,7 @@
 <includeClasses>
 <classEntry path="communication.Event.ScriptEvent"/>
 <classEntry path="communication.MainSystem"/>
+<classEntry path="communication.Event.ScriptAPIAddEvent"/>
 </includeClasses>
 <includeResources/>
 <namespaceManifests/>
