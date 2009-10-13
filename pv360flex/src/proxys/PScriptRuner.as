@@ -16,10 +16,10 @@ package proxys
 			super();
 			p_xml=facade.retrieveProxy(PXml.NAME) as PXml;
 			p_travel=facade.retrieveProxy(PTravel.NAME) as PTravel;
+			MainSystem.getInstance().camera=new CameraProxy(p_travel.getCamera());
 		}
 		protected override function init():void{
 			super.init();
-			MainSystem.getInstance().camera=new CameraProxy(p_travel.getCamera());
 			addAPI("gotoScene",gotoScene);
 			addAPI("popUpHotPoint",popUpHotPoint);
 			addAPI("showPluginById",showPluginById);
