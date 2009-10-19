@@ -10,6 +10,7 @@ package communication
 	
 	[Event(name="add_api", type="communication.Event.ScriptAPIAddEvent")]
 	[Event(name="run", type="communication.Event.ScriptEvent")]
+	[Event(name="change", type="communication.Event.SceneChangeEvent")]
 	
 	public class MainSystem extends EventDispatcher
 	{
