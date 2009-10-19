@@ -41,5 +41,11 @@ package communication
 		public function gotoScene(scene_id:int):void{
 			runScript("gotoScene("+scene_id+");");
 		}
+		public function showPluginById(id:int):void{
+			runScript("showPluginById("+id+");");
+		}
+		public function removePluginById(id:int):void{
+			runScript("removePluginById("+id+");");
+		}
 	}
 }
