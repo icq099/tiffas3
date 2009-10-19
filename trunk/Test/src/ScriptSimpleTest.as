@@ -9,12 +9,16 @@ package
 	{
 		public function ScriptSimpleTest()
 		{
+			trace(false);
+			Math.abs(1);
+			
 			var api:ScripSimpleAPI=new ScripSimpleAPI();
 			var runer:ScriptSimple=new ScriptSimple(api);
-			api.addAPI("aa",aa);
-			api.addAPI("trace",bb);
-			api.addAPI("plus",cc);
-			runer.run("trace(aa(1,aa(1,1)),aa(2,1),3,yzhkof);trace(fuck,shit);trace(yzhkof);");
+			//api.addAPI("aa",aa);
+			//api.addAPI("trace",bb);
+			//api.addAPI("plus",cc);
+			api.addAPI("cc",setCameraRotaion);
+			runer.run("cc(10,10,0);");
 		} 
 		private function cc(num:Number):Number{
 			
@@ -27,6 +31,9 @@ package
 		}
 		private function bb(...content):void{
 			trace(content);		
+		}
+		private function setCameraRotaion(rotaX:Number=0,rotaY:Number=0,tween:Boolean=true):void{
+			trace(rotaX,rotaY,tween);
 		}
 		
 	}
