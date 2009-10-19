@@ -1,5 +1,6 @@
 package proxys
 {
+	import communication.Event.SceneChangeEvent;
 	import communication.MainSystem;
 	import communication.camera.CameraProxy;
 	
@@ -25,6 +26,9 @@ package proxys
 			addAPI("showPluginById",showPluginById);
 			addAPI("removePluginById",removePluginById);
 			addAPI("setCameraRotaion",setCameraRotaion);
+		}
+		public function onSceneChangeComplete(scene_id:int):void{
+			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGE,scene_id));
 		}
 		private function gotoScene(scene:int):void{
 			facade.sendNotification(FacadePv.GO_POSITION,scene);

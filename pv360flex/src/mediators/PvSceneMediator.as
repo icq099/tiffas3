@@ -18,6 +18,7 @@ package mediators
 	import proxys.PXml;
 	
 	import view.Pv3d360Scene;
+	import view.Pv3d360SceneCompass;
 	import view.SceneClickPoint;
 	
 	import yzhkof.CameraRotationControler;
@@ -30,7 +31,7 @@ package mediators
 		public static const NAME:String = "PvSceneMediator"
 		public static const PICTURE_LOAD_COMPLETE:String="PICTURE_LOAD_COMPLETE";
 		
-		public var viewer:Pv3d360Scene;
+		public var viewer:Pv3d360SceneCompass;
 		public var controler:CameraRotationControler;
 		
 		private var xml:XML;
@@ -40,7 +41,7 @@ package mediators
 		public function PvSceneMediator(viewComponent:Object=null)
 		{
 			super(NAME, viewComponent);
-			viewer=viewComponent as Pv3d360Scene;
+			viewer=viewComponent as Pv3d360SceneCompass;
 		}
 		override public function listNotificationInterests():Array{
 			
@@ -75,7 +76,7 @@ package mediators
 					controler.addEventListener(CamereaControlerEvent.UPDATAED,onCameraUpdataed);
 					
 					viewer.stage.addEventListener(Event.RESIZE,resizeHandler,false,0,true);
-					
+					//viewer.compass_visible=false;
 					//travel.changePosition(current_scene);
 					
 				break;

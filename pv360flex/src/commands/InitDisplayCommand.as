@@ -29,6 +29,7 @@ package commands
 	import view.MapDirector;
 	import view.MovieViewer;
 	import view.Pv3d360Scene;
+	import view.Pv3d360SceneCompass;
 	import view.SubTitle;
 	import view.leftupmenu.LeftUpMenuContainer;
 	
@@ -51,7 +52,7 @@ package commands
 			
 			}
 			//debug设置
-			var main_scene:Pv3d360Scene=new Pv3d360Scene();
+			var main_scene:Pv3d360Scene=new Pv3d360SceneCompass();
 			//
 			var main_map:MapDirector=new MapDirector();
 			var main_animate_player:AnimatePlayer=new AnimatePlayer();
@@ -71,8 +72,8 @@ package commands
 			app.addChild(Toolyzhkof.mcToUI(main_sub_title));
 			app.addChild(main_left_up_menu);
 			app.addChild(main_popup_menu);
-			app.addChild(Toolyzhkof.mcToUI(main_movie));
 			app.addChild(main_plugin);
+			app.addChild(Toolyzhkof.mcToUI(main_movie));
 			
 			//facade.registerCommand(FacadePv.LOAD_XML_COMPLETE,InitDisplayObjectCommand);
 			facade.registerMediator(new PvSceneMediator(main_scene));
