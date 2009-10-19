@@ -32,7 +32,6 @@ package
 		}
 		private function onDownClick(e:Event):void{
 			camera.rotationX-=10;
-			MainSystem.getInstance().gotoScene(10);
 		}
 		
 	}
