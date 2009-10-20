@@ -1,9 +1,6 @@
 package
 {
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
-	
-	import yzhkof.MyGraphy;
 
 	public class DebugTest extends Sprite
 	{
@@ -11,10 +8,9 @@ package
 		public function DebugTest()
 		{
 			super();
-			addChild(MyGraphy.drawRectangle());
-			//trace(yzhkof::debug)
-			var a:MovieClip
-			a.addFrameScript();
+			var a:Object=new Object
+			
+			trace(Number(a.a))
 
 		}
 		
