@@ -136,10 +136,12 @@ package mediators
 			
 			viewer.changeBitmap(xml.Travel.Scene.@picture[goto],function():void{
 				
-				updataArrows(goto);
-				updataHotPoints(goto);
+				//updataArrows(goto);
+				//updataHotPoints(goto);
 				updataAnimates(goto);
 				updataControler(goto);
+				
+				viewer.draw();
 				
 				facade.sendNotification(PvSceneMediator.PICTURE_LOAD_COMPLETE,goto);
 				facade.sendNotification(FacadePv.COVER_DISABLE);
