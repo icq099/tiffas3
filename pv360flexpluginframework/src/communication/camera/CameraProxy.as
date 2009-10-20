@@ -22,12 +22,12 @@ package communication.camera
 		 * 相机的焦距(表现为放大缩小)
 		 * @param value
 		 * 
-		 */		
-		public function set focus(value:Number):void{
-			MainSystem.getInstance().setCameraFocus(value);
-		}
+		 */	
 		public function get focus():Number{
 			return camera.focus;
+		}
+		public function set focus(value:Number):void{
+			MainSystem.getInstance().setCameraFocus(value);
 		}
 		/* public function set zoom(value:Number):void{
 			camera.zoom=value;
@@ -39,23 +39,23 @@ package communication.camera
 		 * 全景主系统里视角的垂直转动
 		 * @param value 转动角度
 		 * 
-		 */		
-		public function set rotationX(value:Number):void{
-			MainSystem.getInstance().setCameraRotaion(value-camera.rotationX);
-		}
+		 */	
 		public function get rotationX():Number{
 			return camera.rotationX;
+		}
+		public function set rotationX(value:Number):void{
+			MainSystem.getInstance().setCameraRotaion(value-camera.rotationX);
 		}
 		/**
 		 * 全景主系统里视角的水平转动 
 		 * @param value 转动角度
 		 * 
-		 */		
-		public function set rotationY(value:Number):void{
-			MainSystem.getInstance().setCameraRotaion(0,value-camera.rotationY);
-		}
+		 */	
 		public function get rotationY():Number{
 			return camera.rotationY;
+		}
+		public function set rotationY(value:Number):void{
+			MainSystem.getInstance().setCameraRotaion(0,value-camera.rotationY);
 		}
 	}
 }
