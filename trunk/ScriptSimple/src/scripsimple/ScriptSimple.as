@@ -17,6 +17,9 @@ package scripsimple
 			return excute();
 		
 		}
+		public function runFunctionDirect(function_name:String,param:Array=null):*{
+			return _api.excuteFunctionByName(function_name,param);
+		}
 		private function excute():*{
 			
 			var sentence_array:Array=ScriptUtil.getSentence(script);
