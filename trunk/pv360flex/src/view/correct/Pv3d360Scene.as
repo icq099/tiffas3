@@ -238,7 +238,6 @@
 			plane.y=-30
 			scene.addChild(plane);
 			layer_arrows.addDisplayObject3D(plane);
-			draw();
 			return plane;
 		
 		}
