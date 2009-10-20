@@ -76,7 +76,7 @@ package mediators
 					controler.addEventListener(CamereaControlerEvent.UPDATAED,onCameraUpdataed);
 					
 					viewer.stage.addEventListener(Event.RESIZE,resizeHandler,false,0,true);
-					//viewer.compass_visible=false;
+					viewer.compass_visible=false;
 					//travel.changePosition(current_scene);
 					
 				break;
@@ -229,7 +229,7 @@ package mediators
 				plane.extra.url=plugins_position[i].@url;
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK,function(e:InteractiveScene3DEvent):void{
 					
-					facade.sendNotification(PopUpMenusMediator.ADD_PLUGIN,Plane(e.currentTarget).extra.url);
+					//facade.sendNotification(PopUpMenusMediator.ADD_PLUGIN,Plane(e.currentTarget).extra.url);
 				
 				});
 			

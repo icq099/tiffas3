@@ -11,8 +11,8 @@ package commands
 		}
 		override protected function initializeMacroCommand():void{
 			
-			addSubCommand(AnimatePlayerChangeCommand);
-			addSubCommand(SubTitleChangeCommand);
+			//addSubCommand(AnimatePlayerChangeCommand);
+			//addSubCommand(SubTitleChangeCommand);
 			addSubCommand(SetProxyChangeComplete);
 		
 		}

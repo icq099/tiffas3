@@ -5,8 +5,7 @@ package commands
 	
 	import flash.display.Sprite;
 	
-	import mediators.AppMediator;
-	import mediators.MapMediator;
+	import mediators.AppMediator
 	import mediators.PvSceneMediator;
 	
 	import mx.core.UIComponent;
@@ -49,8 +48,8 @@ package commands
 			facade.registerCommand(FacadePv.POSITION_CHANGE_COMMAND,PositionChangeCommand);
 			facade.registerCommand(FacadePv.GO_POSITION,GoPositionCommand);
 			facade.registerCommand(PvSceneMediator.PICTURE_LOAD_COMPLETE,PositionChangeCompleteCommand);
-			facade.registerCommand(MapMediator.HELP_CLICK,AnimatePlayerShowAnimateCommand);
-			facade.registerCommand(FacadePv.LOAD_XML_COMPLETE,AnimatePlayerShowAnimateCommand);
+			//facade.registerCommand(MapMediator.HELP_CLICK,AnimatePlayerShowAnimateCommand);
+			//facade.registerCommand(FacadePv.LOAD_XML_COMPLETE,AnimatePlayerShowAnimateCommand);
 			facade.registerCommand(FacadePv.PRE_INIT_LOAD,PreInitLoadCommand);
 			
 			facade.registerMediator(new AppMediator(app));
