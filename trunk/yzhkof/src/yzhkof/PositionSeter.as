@@ -11,6 +11,8 @@ package yzhkof
 		private var right:Number;
 		private var top:Number;
 		private var bottom:Number;
+		private var horizontalCenter:Number;
+		private var verticalCenter:Number;
 		private var obj:InteractiveObject;
 		
 		public function PositionSeter(obj:InteractiveObject,position_obj:Object,use_basiceasproject:Boolean=false,weak_reference:Boolean=false){
@@ -19,12 +21,14 @@ package yzhkof
 				
 				this.obj=obj;
 				
-				left=String(position_obj["x"]).length>0?position_obj["x"]:NaN;
-				top=String(position_obj["y"]).length>0?position_obj["y"]:NaN;
-				left=String(position_obj["left"]).length>0?position_obj["left"]:isNaN(left)?NaN:left;
-				right=String(position_obj["right"]).length>0?position_obj["right"]:NaN;
-				top=String(position_obj["top"]).length>0?position_obj["top"]:isNaN(top)?NaN:top;
-				bottom=String(position_obj["bottom"]).length>0?position_obj["bottom"]:NaN;
+				left=position_obj["x"];
+				top=position_obj["y"];
+				left=!isNaN(position_obj["left"])?position_obj["left"]:isNaN(left)?NaN:left;
+				right=position_obj["right"];
+				top=!isNaN(position_obj["top"])?position_obj["top"]:isNaN(top)?NaN:top;
+				bottom=position_obj["bottom"];
+				horizontalCenter=position_obj["horizontalCenter"];
+				verticalCenter=position_obj["verticalCenter"];
 				
 				onReSize();
 				
@@ -62,6 +66,12 @@ package yzhkof
 				point=obj.parent.globalToLocal(new Point(0,obj.stage.stageHeight-bottom));
 				obj.y=point.y;
 			
+			}
+			if(!isNaN(verticalCenter)){
+				obj.y=obj.stage.stageHeight/2+verticalCenter;
+			}
+			if(!isNaN(horizontalCenter)){
+				obj.x=obj.stage.stageWidth/2+horizontalCenter;
 			}
 		}
 
