@@ -38,7 +38,7 @@ package proxys
 			xml_loader.add("xml/basic.xml");
 			xml_loader.add("xml/hotpoints.xml");
 			xml_loader.add("xml/icon.xml");
-			xml_loader.add("xml/menu.xml");
+			//xml_loader.add("xml/menu.xml");
 			xml_loader.add("xml/plugin.xml");
 			xml_loader.start();
 			xml_loader.addEventListener(BulkProgressEvent.COMPLETE,loadCompleteHandler);
@@ -141,7 +141,7 @@ package proxys
 			data=xml_loader.getXML("xml/basic.xml");
 			data_hotpoints=xml_loader.getXML("xml/hotpoints.xml");
 			data_icon=xml_loader.getXML("xml/icon.xml");
-			data_menu=xml_loader.getXML("xml/menu.xml");
+			//data_menu=xml_loader.getXML("xml/menu.xml");
 			data_plugin=xml_loader.getXML("xml/plugin.xml");
 			xml_loader.clear();
 			xml_loader=null;

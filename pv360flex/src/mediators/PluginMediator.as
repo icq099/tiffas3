@@ -48,12 +48,14 @@ package mediators
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onPluginLoadComplete);
 			
 			var position_obj:Object=new Object();
-			position_obj["left"]=xml.@left;
-			position_obj["top"]=xml.@top;
-			position_obj["right"]=xml.@right;
-			position_obj["bottom"]=xml.@bottom;
-			position_obj["x"]=xml.@x;
-			position_obj["y"]=xml.@y;
+			position_obj["left"]=xml.@left.length()>0?xml.@left:undefined;
+			position_obj["top"]=xml.@top.length()>0?xml.@top:undefined;
+			position_obj["right"]=xml.@right.length()>0?xml.@right:undefined;
+			position_obj["bottom"]=xml.@bottom.length()>0?xml.@bottom:undefined;
+			position_obj["x"]=xml.@x.length()>0?xml.@x:undefined;
+			position_obj["y"]=xml.@y.length()>0?xml.@y:undefined;
+			position_obj["horizontalCenter"]=xml.@horizontalCenter.length()>0?xml.@horizontalCenter:undefined;
+			position_obj["verticalCenter"]=xml.@verticalCenter.length()>0?xml.@verticalCenter:undefined;
 			
 			plugin_container.addChild(plugin_obj[xml.@url]=Toolyzhkof.mcToUI(loader));
 			position_setters[xml.@url]=new PositionSeter(loader,position_obj,false,true);
