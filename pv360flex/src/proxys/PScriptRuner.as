@@ -23,11 +23,12 @@ package proxys
 		protected override function init():void{
 			super.init();
 			addAPI("gotoScene",gotoScene);
-			addAPI("popUpHotPoint",popUpHotPoint);
 			addAPI("showPluginById",showPluginById);
 			addAPI("removePluginById",removePluginById);
 			addAPI("setCameraRotaion",setCameraRotaion);
 			addAPI("fullScreen",fullScreen);
+			addAPI("normalScreen",normalScreen);
+			addAPI("setCameraFocus",setCameraFocus);
 		}
 		public function onSceneChangeComplete(scene_id:int):void{
 			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGE,scene_id));
@@ -41,14 +42,14 @@ package proxys
 		private function gotoScene(scene:int):void{
 			facade.sendNotification(FacadePv.GO_POSITION,scene);
 		}
-		private function popUpHotPoint(id:int):void{
-			facade.sendNotification(FacadePv.POPUP_MENU_DIRECT,id);
-		}
 		private function showPluginById(id:int):void{
 			facade.sendNotification(PluginMediator.SHOW_PLUGIN,p_xml.getPluginXmlById(id));
 		}
 		private function removePluginById(id:int):void{
 			facade.sendNotification(PluginMediator.REMOVE_PLUGIN,p_xml.getPluginXmlById(id));
+		}
+		private function setCameraFocus(value:Number):void{
+			p_travel.cameraFocus=value;
 		}
 		private function setCameraRotaion(rotaX:Number=0,rotaY:Number=0):void{
 			var s_obj:Object={x:rotaX,y:rotaY,tween:true};
