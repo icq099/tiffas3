@@ -4,9 +4,12 @@ package communication.camera
 	
 	import flash.events.EventDispatcher;
 	
-	import org.papervision3d.cameras.Camera3D;
 	import org.papervision3d.cameras.FreeCamera3D;
-
+	/**
+	 * 此类可操作全景主系统里的相机
+	 * @author yzhkof
+	 * 
+	 */
 	public class CameraProxy extends EventDispatcher
 	{
 		private var camera:FreeCamera3D;
@@ -15,24 +18,39 @@ package communication.camera
 			super(this);
 			this.camera=camera;
 		}
+		/**
+		 * 相机的焦距(表现为放大缩小)
+		 * @param value
+		 * 
+		 */		
 		public function set focus(value:Number):void{
-			camera.focus=value;
+			MainSystem.getInstance().setCameraFocus(value);
 		}
 		public function get focus():Number{
 			return camera.focus;
 		}
-		public function set zoom(value:Number):void{
+		/* public function set zoom(value:Number):void{
 			camera.zoom=value;
 		}
 		public function get zoom():Number{
 			return camera.zoom;
-		}
+		} */
+		/**
+		 * 全景主系统里视角的垂直转动
+		 * @param value 转动角度
+		 * 
+		 */		
 		public function set rotationX(value:Number):void{
 			MainSystem.getInstance().setCameraRotaion(value-camera.rotationX);
 		}
 		public function get rotationX():Number{
 			return camera.rotationX;
 		}
+		/**
+		 * 全景主系统里视角的水平转动 
+		 * @param value 转动角度
+		 * 
+		 */		
 		public function set rotationY(value:Number):void{
 			MainSystem.getInstance().setCameraRotaion(0,value-camera.rotationY);
 		}

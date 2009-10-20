@@ -8,9 +8,16 @@ package communication
 	
 	[Event(name="add_api", type="communication.Event.ScriptAPIAddEvent")]
 	[Event(name="run", type="communication.Event.ScriptEvent")]
+/**
+* 当场景切换完毕时发送此事件
+*/	
 	[Event(name="change", type="communication.Event.SceneChangeEvent")]
 	[Event(name="run_by_function", type="communication.Event.ScriptEvent")]
-	
+	/**
+	 * 此类封装对全景主系统的所有操作
+	 * @author yzhkof
+	 * 
+	 */	
 	public class MainSystem extends EventDispatcher
 	{
 		private static var instance:MainSystem;
@@ -41,6 +48,14 @@ package communication
 		 */		
 		public function setCameraRotaion(rotaX:Number=0,rotaY:Number=0):void{
 			runAPIDirect("setCameraRotaion",[rotaX,rotaY]);
+		}
+		/**
+		 * 设置相机focus（不推荐使用，应该使用camera属性）
+		 * @param value
+		 * 
+		 */		
+		public function setCameraFocus(value:Number):void{
+			runAPIDirect("setCameraFocus",[value]);
 		}
 		/**
 		 * 添加应用接口 
