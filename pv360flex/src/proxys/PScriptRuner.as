@@ -6,6 +6,7 @@ package proxys
 	
 	import facades.FacadePv;
 	
+	import mediators.AppMediator;
 	import mediators.PluginMediator;
 	
 	public class PScriptRuner extends PScriptRunerBase
@@ -26,9 +27,16 @@ package proxys
 			addAPI("showPluginById",showPluginById);
 			addAPI("removePluginById",removePluginById);
 			addAPI("setCameraRotaion",setCameraRotaion);
+			addAPI("fullScreen",fullScreen);
 		}
 		public function onSceneChangeComplete(scene_id:int):void{
 			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGE,scene_id));
+		}
+		private function fullScreen():void{
+			facade.sendNotification(AppMediator.FULL_SCREEM);
+		}
+		private function normalScreen():void{
+			facade.sendNotification(AppMediator.NORMAL_SCREEM);
 		}
 		private function gotoScene(scene:int):void{
 			facade.sendNotification(FacadePv.GO_POSITION,scene);

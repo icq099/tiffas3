@@ -21,12 +21,16 @@ package proxys
 		protected function init():void{
 			MainSystem.getInstance().addEventListener(ScriptEvent.RUN,onPluginScriptRun);		
 			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,onAPIAdd);
+			MainSystem.getInstance().addEventListener(ScriptEvent.RUN_BY_FUNCTION,onScriptRunDirect);
 		}
 		protected function onPluginScriptRun(e:ScriptEvent):void{
 			runScript(e.script);
 		}
 		protected function onAPIAdd(e:ScriptAPIAddEvent):void{
 			addAPI(e.fun_name,e.fun);
+		}
+		protected function onScriptRunDirect(e:ScriptEvent):void{
+			runer.runFunctionDirect(e.function_name,e.param);
 		}
 		public function addAPI(fun_name:String,fun:Function):void{
 			runer.addAPI(fun_name,fun);		

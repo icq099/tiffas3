@@ -2,6 +2,7 @@ package mediators
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -13,6 +14,8 @@ package mediators
 		
 		public static const ADD_CHILD:String="AppMediator_ADD_CHILD";
 		public static const DISPATCH_EVENT:String="AppMediator_DISPATCH_EVENT";
+		public static const FULL_SCREEM:String="AppMediator_FULL_SCREEM";
+		public static const NORMAL_SCREEM:String="AppMediator_NORMAL_SCREEM";
 		
 		public function AppMediator(viewComponent:Object=null)
 		{
@@ -23,7 +26,9 @@ package mediators
 			return[
 			
 				AppMediator.ADD_CHILD,
-				AppMediator.DISPATCH_EVENT
+				AppMediator.DISPATCH_EVENT,
+				AppMediator.FULL_SCREEM,
+				AppMediator.NORMAL_SCREEM
 			
 			];
 		
@@ -41,7 +46,17 @@ package mediators
 				
 					app.dispatchEvent(Event(notification.getBody()));
 				
-				break;				
+				break;
+				case AppMediator.FULL_SCREEM:
+				
+					app.stage.displayState=StageDisplayState.FULL_SCREEN;
+				
+				break;	
+				case AppMediator.NORMAL_SCREEM:
+				
+					app.stage.displayState=StageDisplayState.NORMAL;
+				
+				break;
 			}
 			
 		}
