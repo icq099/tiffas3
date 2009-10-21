@@ -131,6 +131,9 @@ package proxys
 			return XML(data_menu);
 		
 		}
+		public function getSceneXmlById():XML{
+			return XML(String(data.Travel.Scene.(@id==id)));
+		}
 		public function getUrlObject():Object{
 			
 			return URLUtil.stringToObject(BrowserManager.getInstance().fragment,"&");
