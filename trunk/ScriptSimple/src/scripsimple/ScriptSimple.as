@@ -13,8 +13,11 @@ package scripsimple
 		}
 		public function run(script:String):*{
 			
-			this.script=script;
-			return excute();
+			if(script!=null){
+				this.script=script;
+				return excute();
+			}
+			return null;
 		
 		}
 		public function runFunctionDirect(function_name:String,param:Array=null):*{
