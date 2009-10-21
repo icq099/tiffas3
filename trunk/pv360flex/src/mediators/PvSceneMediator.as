@@ -14,17 +14,17 @@ package mediators
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
+	import proxys.PScriptRuner;
+	import proxys.PScriptRunerBase;
 	import proxys.PTravel;
 	import proxys.PXml;
 	
 	import view.Pv3d360Scene;
 	import view.Pv3d360SceneCompass;
-	import view.SceneClickPoint;
 	
 	import yzhkof.CameraRotationControler;
 	import yzhkof.CamereaControlerEvent;
 	import yzhkof.MyGC;
-	import yzhkof.ToolBitmapData;
 
 	public class PvSceneMediator extends Mediator implements IMediator
 	{
@@ -136,8 +136,8 @@ package mediators
 			
 			viewer.changeBitmap(xml.Travel.Scene.@picture[goto],function():void{
 				
-				//updataArrows(goto);
-				//updataHotPoints(goto);
+				updataArrows(goto);
+				updataHotPoints(goto);
 				updataAnimates(goto);
 				updataControler(goto);
 				
@@ -204,10 +204,11 @@ package mediators
 			//var xml_hot_point:XMLList=xml.Travel.Scene[position].HotPoint;
 			viewer.cleanAllHotPoints();
 			var hot_points_position:XMLList=pxml.getSceneHotPointsPositionXml(position);
-			var plugins_position:XMLList=pxml.getScenePluginPositionXml(position);
+			//var plugins_position:XMLList=pxml.getScenePluginPositionXml(position);
 			var tip_text:String;
 			var icon:BitmapData;
 			var plane:Plane
+			/* 
 			//解析HotPoint标签
 			for(var i:int=0;i<hot_points_position.length();i++){
 				
@@ -221,17 +222,19 @@ package mediators
 				
 				});
 			
-			}
-			//解析Plugin标签
-			for(i=0;i<plugins_position.length();i++){
+			} */
+			var p_runer:PScriptRuner=facade.retrieveProxy(PScriptRunerBase.NAME) as PScriptRuner;
+			var onClickMap:Object=new Object();
+			//解析HotPoint标签
+			for(var i:int=0;i<hot_points_position.length();i++){
 				
-				tip_text=plugins_position[i].@tip;
-				icon=pxml.getIconBitmapdataById(plugins_position.@icon[i]);
-				plane=viewer.addHotPoint({x:plugins_position.@x[i],y:plugins_position.@y[i],z:plugins_position.@z[i],width:plugins_position.@width[i],height:plugins_position.@height[i],segmentsW:plugins_position.@segmentsW[i],segmentsH:plugins_position.@segmentsH[i]},tip_text,icon);
-				plane.extra.url=plugins_position[i].@url;
+				tip_text=hot_points_position[i].@tip;
+				icon=pxml.getIconBitmapdataById(hot_points_position.@icon[i]);
+				plane=viewer.addHotPoint({x:hot_points_position.@x[i],y:hot_points_position.@y[i],z:hot_points_position.@z[i],width:hot_points_position.@width[i],height:hot_points_position.@height[i],segmentsW:hot_points_position.@segmentsW[i],segmentsH:hot_points_position.@segmentsH[i]},tip_text,icon);
+				onClickMap[plane]=hot_points_position[i].@onClick;
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK,function(e:InteractiveScene3DEvent):void{
 					
-					//facade.sendNotification(PopUpMenusMediator.ADD_PLUGIN,Plane(e.currentTarget).extra.url);
+					p_runer.runScript(onClickMap[Plane(e.currentTarget)]);
 				
 				});
 			

@@ -8,8 +8,8 @@
 				<Arrow rotation="80" destination="1" tip="前进"/>
 			</Compass>
 			<Movie url="movie/Move01_Move02.swf" destination="1" start_rotationX="-0.3" start_rotationY="85.49" stop_rotationX="-0.3" stop_rotationY="81.90"/>
-			<Plugin url="sdyuan.swf" tip="test" icon="1" x="2435" y="475" z="4321" width="350" height="500" segmentsW="0" segmentsH="0"/>
-			<Plugin url="找茬.swf" tip="找茬游戏" icon="0" x="2435" y="800" z="-4321" width="350" height="500" segmentsW="0" segmentsH="0"/>
+			<HotPoint tip="test" icon="1" x="2435" y="475" z="4321" width="350" height="500" segmentsW="0" segmentsH="0" onClick="gotoScene(1);"/>
+			<HotPoint tip="找茬游戏" icon="0" x="2435" y="800" z="-4321" width="350" height="500" segmentsW="0" segmentsH="0" onClick="gotoScene(2);"/>
 		</Scene>
 		<!--场景2-->
 		<Scene picture="img/pano-02.jpg" guideSwf="points\swf\jl_03.swf" guideText="您所处的位置是： 3号展厅的入口广场 	再前进为：展厅入口处">
