@@ -20,7 +20,7 @@
 <application path="PreLoader.mxml"/>
 </applications>
 <modules>
-<module application="src/pv360flex.mxml" destPath="CenterPanel.swf" optimize="true" sourcePath="src/lyf/CenterPanel.as"/>
+<module application="src/pv360flex.mxml" destPath="CenterPanel.swf" optimize="true" sourcePath="src/lxf/CenterPanel.as"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>
