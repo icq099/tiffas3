@@ -1,16 +1,15 @@
 package mediators
 {
-	import flash.display.Loader;
 	import flash.events.Event;
-	import flash.net.URLRequest;
 	
 	import mx.containers.Canvas;
+	import mx.events.ModuleEvent;
+	import mx.modules.ModuleLoader;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
 	import yzhkof.PositionSeter;
-	import yzhkof.Toolyzhkof;
 
 	public class PluginMediator extends Mediator
 	{
@@ -43,9 +42,9 @@ package mediators
 			}			
 		}
 		protected function showPlugin(xml:XML):void{
-			var loader:Loader=new Loader();
-			loader.load(new URLRequest(xml.@url));
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onPluginLoadComplete);
+			var loader:ModuleLoader=new ModuleLoader();
+			loader.url=xml.@url;
+			loader.addEventListener(ModuleEvent.READY,onPluginLoadComplete);
 			
 			var position_obj:Object=new Object();
 			position_obj["left"]=xml.@left.length()>0?xml.@left:undefined;
@@ -57,7 +56,7 @@ package mediators
 			position_obj["horizontalCenter"]=xml.@horizontalCenter.length()>0?xml.@horizontalCenter:undefined;
 			position_obj["verticalCenter"]=xml.@verticalCenter.length()>0?xml.@verticalCenter:undefined;
 			
-			plugin_container.addChild(plugin_obj[xml.@url]=Toolyzhkof.mcToUI(loader));
+			plugin_container.addChild(plugin_obj[xml.@url]=loader);
 			position_setters[xml.@url]=new PositionSeter(loader,position_obj,false,true);
 		}
 		protected function removePlugin(xml:XML):void{

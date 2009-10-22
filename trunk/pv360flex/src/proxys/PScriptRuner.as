@@ -18,6 +18,7 @@ package proxys
 			super();
 			p_xml=facade.retrieveProxy(PXml.NAME) as PXml;
 			p_travel=facade.retrieveProxy(PTravel.NAME) as PTravel;
+			MainSystem.getInstance().camera=new CameraProxy(p_travel.getCamera());
 		}
 		protected override function init():void{
 			super.init();
@@ -30,10 +31,6 @@ package proxys
 			addAPI("setCameraFocus",setCameraFocus);
 			addAPI("startRender",startRender);
 			addAPI("stopRender",stopRender);
-			mainSystemInit();
-		}
-		protected function mainSystemInit():void{
-			MainSystem.getInstance().camera=new CameraProxy(p_travel.getCamera());
 		}
 		public function onSceneChangeComplete(scene_id:int):void{
 			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGE,scene_id));
