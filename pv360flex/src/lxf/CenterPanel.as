@@ -1,11 +1,10 @@
 package lxf{ 
 	import communication.MainSystem;
 	
+	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	
-	import mx.modules.Module;
 
-	public class CenterPanel extends Module
+	public class CenterPanel extends Sprite
 	{
 		private var cpp:CenterPanelPlugin=null;
 		private var defaultAplha:Number=0.4;
