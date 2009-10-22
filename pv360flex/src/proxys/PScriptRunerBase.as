@@ -33,7 +33,7 @@ package proxys
 			runer.runFunctionDirect(e.function_name,e.param);
 		}
 		public function addAPI(fun_name:String,fun:Function):void{
-			runer.addAPI(fun_name,fun);		
+			runer.addAPI(fun_name,fun);	
 		}
 		public function runScript(script:String):void{
 			runer.run(script);
