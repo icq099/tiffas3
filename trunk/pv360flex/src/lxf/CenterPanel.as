@@ -1,4 +1,4 @@
-package lyf{ 
+package lxf{ 
 	import communication.MainSystem;
 	
 	import flash.events.MouseEvent;

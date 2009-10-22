@@ -1,4 +1,4 @@
-package lyf
+package lxf
 {
 	import flash.accessibility.AccessibilityProperties;
 	import flash.display.Sprite;
