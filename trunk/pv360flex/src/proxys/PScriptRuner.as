@@ -18,7 +18,6 @@ package proxys
 			super();
 			p_xml=facade.retrieveProxy(PXml.NAME) as PXml;
 			p_travel=facade.retrieveProxy(PTravel.NAME) as PTravel;
-			MainSystem.getInstance().camera=new CameraProxy(p_travel.getCamera());
 		}
 		protected override function init():void{
 			super.init();
@@ -29,6 +28,12 @@ package proxys
 			addAPI("fullScreen",fullScreen);
 			addAPI("normalScreen",normalScreen);
 			addAPI("setCameraFocus",setCameraFocus);
+			addAPI("startRender",startRender);
+			addAPI("stopRender",stopRender);
+			mainSystemInit();
+		}
+		protected function mainSystemInit():void{
+			MainSystem.getInstance().camera=new CameraProxy(p_travel.getCamera());
 		}
 		public function onSceneChangeComplete(scene_id:int):void{
 			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGE,scene_id));
@@ -54,6 +59,15 @@ package proxys
 		private function setCameraRotaion(rotaX:Number=0,rotaY:Number=0):void{
 			var s_obj:Object={x:rotaX,y:rotaY,tween:true};
 			facade.sendNotification(FacadePv.CAMERA_ROTA_DIRECT,s_obj);
+		}
+		private function startRender():void{
+			facade.sendNotification(FacadePv.START_RENDER);
+		}
+		private function stopRender():void{
+			facade.sendNotification(FacadePv.STOP_RENDER);
+		}
+		private function updataScene():void{
+			facade.sendNotification(FacadePv.UPDATA_SCENE);
 		}
 	}
 }

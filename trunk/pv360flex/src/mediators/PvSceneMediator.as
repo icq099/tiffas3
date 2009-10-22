@@ -54,7 +54,6 @@ package mediators
 			FacadePv.START_RENDER,
 			FacadePv.STOP_RENDER
 			
-			
 			]; 
 		
 		}
