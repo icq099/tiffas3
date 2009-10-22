@@ -19,6 +19,8 @@
 <application path="PlayerTest.mxml"/>
 <application path="PreLoader.mxml"/>
 </applications>
-<modules/>
+<modules>
+<module application="src/pv360flex.mxml" destPath="CenterPanel.swf" optimize="true" sourcePath="src/lyf/CenterPanel.as"/>
+</modules>
 <buildCSSFiles/>
 </actionScriptProperties>
