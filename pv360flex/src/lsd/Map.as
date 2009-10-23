@@ -19,7 +19,7 @@ package lsd
 			MainSystem.getInstance().addAPI("removeMap",removeMap);
 			a.addEventListener(Event.CLOSE,onClose);
 		}
-		private function showMap(){
+		private function showMap():void{
 			addChild(a);
 			TweenLite.from(a, 1, {alpha: 0});
 		}
