@@ -1,4 +1,5 @@
 package lxf.CenterPanel{ 
+	import communication.Event.MainSystemEvent;
 	import communication.MainSystem;
 	
 	import flash.display.Sprite;
@@ -15,7 +16,6 @@ package lxf.CenterPanel{
 		private const focusMinRange:int=60;
 		public function CenterPanel()
 		{
-			MainSystem.getInstance().camera.focus=95;
 			cpp=new CenterPanelPlugin();
 			addCppButtonClickEvent();
 			addCppButtonLeaveEvent();
@@ -23,7 +23,6 @@ package lxf.CenterPanel{
 			setCppButtonAlpha();
 			addCppButtonTooltip();
 			this.addChild(cpp);
-			
 		}
 		//----------------给所有按钮添加tooltip------------------
 		private function addCppButtonTooltip():void

@@ -13,34 +13,32 @@ package lxf.FishPanel{
 		public function FishPanel()
 		{
 			fpp=new FishPanelPlugin();
-			addFppButtonClickEvent();
-			this.addChild(fpp);
+			fpp.close.addEventListener(MouseEvent.CLICK,fppCloseClickEvent);
 			//载入XML
 			test=new SampleList();
 			test.addEventListener(SampleLoadedEvent.sampleLoaded,traceStr);
-			//添加主系统API
+			//添加API
 			MainSystem.getInstance().addAPI("showFishPanel",showFishPanel);
-			MainSystem.getInstance().addAPI("removeFishPanel",removeFishPanel);
+			MainSystem.getInstance().addAPI("removeFishPanel",removeishPanel);
 		}
+		//API函数
 		private function showFishPanel():void
 		{
-			this.visible=true;
+			addChild(fpp);
 		}
-		private function removeFishPanel():void
+		private function removeishPanel():void
 		{
-			this.visible=false;
+			removeChild(fpp);
 		}
+		//////////////
 		private function traceStr(e:SampleLoadedEvent):void
 		{
 			addButtons();
 		}
-		private function addFppButtonClickEvent():void
-		{
-			fpp.close.addEventListener(MouseEvent.CLICK,fppCloseClickEvent);
-		}
 		private function fppCloseClickEvent(e:MouseEvent):void
 		{
-
+			trace("fuck");
+			MainSystem.getInstance().runAPIDirect("removeFishPanel");
 		}
 		///添加和删除按钮
 		private function addButtons():void

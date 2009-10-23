@@ -1,5 +1,8 @@
 package lxf.FishPanel
 {
+	import communication.Event.MainSystemEvent;
+	import communication.MainSystem;
+	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
