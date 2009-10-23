@@ -45,10 +45,10 @@ package proxys
 		private function gotoScene(scene:int):void{
 			facade.sendNotification(FacadePv.GO_POSITION,scene);
 		}
-		private function showPluginById(id:int):void{
+		private function showPluginById(id:String):void{
 			facade.sendNotification(PluginMediator.SHOW_PLUGIN,p_xml.getPluginXmlById(id));
 		}
-		private function removePluginById(id:int):void{
+		private function removePluginById(id:String):void{
 			facade.sendNotification(PluginMediator.REMOVE_PLUGIN,p_xml.getPluginXmlById(id));
 		}
 		private function setCameraFocus(value:Number):void{

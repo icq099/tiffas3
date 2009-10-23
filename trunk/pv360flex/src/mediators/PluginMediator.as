@@ -1,5 +1,8 @@
 package mediators
 {
+	import communication.Event.MainSystemEvent;
+	import communication.MainSystem;
+	
 	import flash.events.Event;
 	
 	import mx.containers.Canvas;
@@ -44,8 +47,11 @@ package mediators
 		protected function showPlugin(xml:XML):void{
 			var loader:ModuleLoader=new ModuleLoader();
 			loader.url=xml.@url;
-			loader.addEventListener(ModuleEvent.READY,onPluginLoadComplete);
-			
+			loader.addEventListener(ModuleEvent.READY,function(e:Event):void{
+				var event:MainSystemEvent=new MainSystemEvent(MainSystemEvent.ON_PLUGIN_READY);
+				event.paramOnPluginReady(xml.@id);
+				MainSystem.getInstance().dispatchEvent(event);				
+			});
 			var position_obj:Object=new Object();
 			position_obj["left"]=xml.@left.length()>0?xml.@left:undefined;
 			position_obj["top"]=xml.@top.length()>0?xml.@top:undefined;
@@ -62,11 +68,7 @@ package mediators
 		protected function removePlugin(xml:XML):void{
 			plugin_container.removeChild(plugin_obj[xml.@url]);
 			delete plugin_obj[xml.@url];
-			delete position_setters[xml.@url]
-		}
-		protected function onPluginLoadComplete(e:Event):void{
-			
-			
+			delete position_setters[xml.@url];
 		}
 		protected function get plugin_container():Canvas{
 			return viewComponent as Canvas;
