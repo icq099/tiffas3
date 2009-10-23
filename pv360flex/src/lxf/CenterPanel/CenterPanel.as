@@ -182,11 +182,11 @@ package lxf.CenterPanel{
 		}
 		private function shapeClickEvent(e:MouseEvent):void
 		{
-			trace("all");
+			MainSystem.getInstance().runAPIDirect("showMap");
 		}
 		private function fishClickEvent(e:MouseEvent):void
 		{
-			trace(MainSystem.getInstance().runAPIDirect("showMap"));
+			
 		}
 		private function upClickEvent(e:MouseEvent):void
 		{
