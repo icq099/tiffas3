@@ -1,4 +1,6 @@
 package lxf.FishPanel{
+	import communication.MainSystem;
+	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 
@@ -16,6 +18,17 @@ package lxf.FishPanel{
 			//载入XML
 			test=new SampleList();
 			test.addEventListener(SampleLoadedEvent.sampleLoaded,traceStr);
+			//添加主系统API
+			MainSystem.getInstance().addAPI("showFishPanel",showFishPanel);
+			MainSystem.getInstance().addAPI("removeFishPanel",removeFishPanel);
+		}
+		private function showFishPanel():void
+		{
+			this.visible=true;
+		}
+		private function removeFishPanel():void
+		{
+			this.visible=false;
 		}
 		private function traceStr(e:SampleLoadedEvent):void
 		{

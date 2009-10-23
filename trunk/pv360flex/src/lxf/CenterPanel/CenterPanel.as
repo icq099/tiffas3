@@ -186,7 +186,7 @@ package lxf.CenterPanel{
 		}
 		private function fishClickEvent(e:MouseEvent):void
 		{
-			
+			MainSystem.getInstance().runAPIDirect("showFishPanel");
 		}
 		private function upClickEvent(e:MouseEvent):void
 		{
