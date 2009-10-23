@@ -17,7 +17,7 @@ package lsd
 			a=new NewMap();
 			MainSystem.getInstance().addAPI("showMap",showMap);
 			MainSystem.getInstance().addAPI("removeMap",removeMap);
-			a.addEventListener(Event.CLOSE,removeMap);
+			a.addEventListener(Event.CLOSE,onClose);
 		}
 		private function showMap(){
 			addChild(a);
