@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin>
 	<plugin id="0" url="lxf\CenterPanel\CenterPanelModule.swf" preLoad="0" visible="1" bottom="100" horizontalCenter="0"/>
-	<plugin id="1" url="lsd\MapModule.swf" preLoad="0" visible="1" right="500" top="0"/>
+	<plugin id="3" url="lxf\FishPanel\FishPanelModule.swf" preLoad="0" visible="1" bottom="500" horizontalCenter="-200"/>
+	<plugin id="map" url="lsd\MapModule.swf" preLoad="0" visible="1" right="500" top="0"/>
 </plugin>
