@@ -28,10 +28,8 @@ package scripsimple
 			var sentence_array:Array=ScriptUtil.getSentence(script);
 			var k:int=0
 			for each(var i:String in sentence_array){
-			
 				ScriptUtil.isFunction(i)?excuteFunction(i):executeError(0,sentence_array.indexOf(i)+1);
-				k++
-			
+				k++;
 			}
 			return 0;
 		}
@@ -40,7 +38,7 @@ package scripsimple
 		 * @param str
 		 * @return 
 		 * 
-		 */		
+		 */	
 		private function excuteFunction(str:String):*{
 			
 			var fun_name:String=ScriptUtil.getFunctionName(str);
