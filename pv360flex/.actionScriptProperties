@@ -22,6 +22,7 @@
 <modules>
 <module application="src/pv360flex.mxml" destPath="MapModule.swf" optimize="true" sourcePath="src/lsd/MapModule.as"/>
 <module application="src/pv360flex.mxml" destPath="CenterPanelModule.swf" optimize="true" sourcePath="src/lxf/CenterPanel/CenterPanelModule.as"/>
+<module application="src/pv360flex.mxml" destPath="FishPanel.swf" optimize="true" sourcePath="src/lxf/FishPanel/FishPanel.as"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>
