@@ -120,8 +120,8 @@ package proxys
 			return icon_bitmapdata[id];
 		
 		}
-		public function getPluginXmlById(id:int):XML{
-			return data_plugin.plugin[id];
+		public function getPluginXmlById(id:String):XML{
+			return XML(String(data_plugin.plugin.(@id==id)));
 		}
 		public function getPluginXml():XML{
 			return data_plugin;
@@ -170,10 +170,9 @@ package proxys
 			external_loader.start();
 		
 		}
-		private function loadExternalComplete(e:BulkProgressEvent):void{
+		private function loadExternalComplete(e:Event):void{
 			
 			BrowserManager.getInstance().init();
-			
 			for each(var i:XML in data_icon.icon){
 				
 				icon_bitmapdata.push(BulkLoader(e.currentTarget).getBitmap(String(i.@url)).bitmapData);
