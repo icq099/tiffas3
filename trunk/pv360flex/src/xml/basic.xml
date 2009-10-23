@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v5 U (http://www.xmlspy.com) by et8 (et8) -->
+<Basic>
+	<Travel start_scene="0">
+		<!--场景1-->
+		<Scene picture="img/pano-01.jpg">
+			<Compass>
+				<Arrow rotation="80" destination="1" tip="前进"/>
+			</Compass>
+		</Scene>
+	</Travel>
+</Basic>

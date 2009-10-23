@@ -1,5 +1,6 @@
 package proxys
 {
+	import communication.Event.MainSystemEvent;
 	import communication.Event.SceneChangeEvent;
 	import communication.MainSystem;
 	import communication.camera.CameraProxy;
@@ -18,7 +19,7 @@ package proxys
 			super();
 			p_xml=facade.retrieveProxy(PXml.NAME) as PXml;
 			p_travel=facade.retrieveProxy(PTravel.NAME) as PTravel;
-			MainSystem.getInstance().camera=new CameraProxy(p_travel.getCamera());
+			MainSystem.getInstance().dispatchEvent(new MainSystemEvent(MainSystemEvent.INIT,new CameraProxy(p_travel.getCamera()),runer));
 		}
 		protected override function init():void{
 			super.init();
