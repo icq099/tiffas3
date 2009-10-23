@@ -121,7 +121,7 @@ package proxys
 		
 		}
 		public function getPluginXmlById(id:String):XML{
-			return XML(String(data_plugin.plugin.(@id==id)));
+			return new XML(data_plugin.plugin.(@id==id).toXMLString());
 		}
 		public function getPluginXml():XML{
 			return data_plugin;
@@ -160,7 +160,7 @@ package proxys
 				external_loader.add(String(i.@url))
 			}
 			//载入外部插件
-			for each(i in data_plugin.plugin){
+			for each(i in data_plugin.Plugin){
 				if(i.@preLoad==1){
 					external_loader.add(String(i.@url));
 				}
