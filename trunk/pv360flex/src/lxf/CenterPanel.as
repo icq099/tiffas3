@@ -186,7 +186,7 @@ package lxf{
 		}
 		private function fishClickEvent(e:MouseEvent):void
 		{
-			trace("all");
+			trace(MainSystem.getInstance().runAPIDirect("showMap"));
 		}
 		private function upClickEvent(e:MouseEvent):void
 		{
