@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300">
+	<mx:Button x="165" y="122" label="Button" click="click()"/>
+	<mx:Script>
+		<![CDATA[
+			import communication.Event.MainSystemEvent;
+			import communication.MainSystem;
+			private function init():void{
+				
+				MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,onPR);
+			}
+			private function onPR(e:MainSystemEvent):void{
+				trace(e.id);
+			}
+			private function click():void{
+				MainSystem.getInstance().showPluginById("a");
+			}
+		]]>
+	</mx:Script>
+</mx:Module>

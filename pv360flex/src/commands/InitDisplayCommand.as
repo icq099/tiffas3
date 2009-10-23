@@ -93,7 +93,6 @@ package commands
 					facade.sendNotification(PluginMediator.SHOW_PLUGIN,i);
 				}
 			}
-			
 			var scene:Pv3d360Scene=facade.retrieveMediator(PvSceneMediator.NAME).getViewComponent() as Pv3d360Scene;
 			scene.camera=PTravel(facade.retrieveProxy(PTravel.NAME)).getCamera();
 			facade.sendNotification(FacadePv.COVER_ENABLE);
