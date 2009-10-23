@@ -3,6 +3,7 @@ package lsd
 	import communication.MainSystem;
 	
 	import flash.display.Sprite;
+	import flash.events.Event;
 	
 	import gs.TweenLite;
 	
@@ -10,13 +11,13 @@ package lsd
 
 	public class Map extends Sprite
 	{
-		var a:NewMap;
+		private var a:NewMap;
 		public function Map()
 		{
 			a=new NewMap();
-			//addChild(a);
 			MainSystem.getInstance().addAPI("showMap",showMap);
-			MainSystem.getInstance().addAPI("removeMap",removeMap);
+			//MainSystem.getInstance().addAPI("removeMap",removeMap);
+			a.addEventListener(Event.CLOSE,removeMap);
 			
 		}
 		private function showMap():Boolean{
@@ -24,9 +25,17 @@ package lsd
 			TweenLite.from(a, 1, {alpha: 0});
 			return true;
 		}
-		private function removeMap():void{
-			removeChild(a);
-			TweenLite.to(a, 1, {alpha: 0});
+		private function removeMap(e:Event):void{
+			
+			TweenLite.to(a,0.5,{alpha:0,onComplete:remove});
+		}
+		
+		
+		private function remove():void{
+                
+               removeChild(a);
+
+		   
 		}
 	}
 }

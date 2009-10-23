@@ -68,21 +68,12 @@ package lsd.myview
 		
 		private function closeMap(e:MouseEvent):void{
 			
-			TweenLite.to(this,0.5,{alpha:0,onComplete:remove});
+			dispatchEvent(new Event(Event.CLOSE));
 		}
 		
 		
 		
-		private function remove():void{
-			
-			if(parent!=null){
-                
-                parent.removeChild(this);
-
-		   }
-		    dispatchEvent(new Event(Event.CLOSE));
-		}
-
+		
 
 
 
