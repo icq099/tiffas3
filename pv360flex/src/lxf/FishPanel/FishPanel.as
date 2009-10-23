@@ -37,7 +37,6 @@ package lxf.FishPanel{
 		}
 		private function fppCloseClickEvent(e:MouseEvent):void
 		{
-			trace("fuck");
 			MainSystem.getInstance().runAPIDirect("removeFishPanel");
 		}
 		///添加和删除按钮
