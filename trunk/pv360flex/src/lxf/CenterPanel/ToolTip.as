@@ -1,4 +1,4 @@
-package lxf
+package lxf.CenterPanel
 {
 	import flash.accessibility.AccessibilityProperties;
 	import flash.display.Sprite;

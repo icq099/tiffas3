@@ -20,10 +20,9 @@ package lsd
 			a.addEventListener(Event.CLOSE,removeMap);
 			
 		}
-		private function showMap():Boolean{
+		private function showMap(){
 			addChild(a);
 			TweenLite.from(a, 1, {alpha: 0});
-			return true;
 		}
 		private function removeMap(e:Event):void{
 			

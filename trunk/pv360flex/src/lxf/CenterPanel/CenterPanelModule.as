@@ -1,4 +1,4 @@
-package lxf
+package lxf.CenterPanel
 {
 	import mx.modules.Module;
 	
