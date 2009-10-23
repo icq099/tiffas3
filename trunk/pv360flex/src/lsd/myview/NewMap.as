@@ -1,9 +1,11 @@
 package lsd.myview
 {
+	import communication.MainSystem;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-
+	
 	import gs.TweenLite;
 	
 	import mx.effects.Tween;
@@ -27,7 +29,7 @@ package lsd.myview
 			addChild(mapDirector);
 			initListtener();
 			this.dispatchEvent(new MapChangeEvent(MapChangeEvent.MAPCHANGEVENT, mapFrist))
-			trace(this.numChildren);
+			//trace(this.numChildren);
 		}
 
 		private function initListtener():void
@@ -42,8 +44,15 @@ package lsd.myview
 			mapDirector.second.addEventListener(MapChangeEvent.MAPCHANGEVENT, showMap);
 			mapDirector.thrid.addEventListener(MapChangeEvent.MAPCHANGEVENT, showMap);
 			this.addEventListener(MapChangeEvent.MAPCHANGEVENT, showMap);
-			mapFrist.one.addEventListener(MouseEvent.CLICK, onechange);
-			mapSecond.three.addEventListener(MouseEvent.CLICK, twochange);
+			
+			mapFrist.three.addEventListener(MouseEvent.CLICK, onechange);
+			mapSecond.two.addEventListener(MouseEvent.CLICK, twochange);
+			mapSecond.three.addEventListener(MouseEvent.CLICK,threechange);
+			mapSecond.four.addEventListener(MouseEvent.CLICK,fourchange);
+			mapSecond.five.addEventListener(MouseEvent.CLICK,fivechange);
+			mapThrid.one.addEventListener(MouseEvent.CLICK,sixchange);
+			mapThrid.two.addEventListener(MouseEvent.CLICK,sevenchange);
+			mapThrid.three.addEventListener(MouseEvent.CLICK,eightchange);
 
 		}
 
@@ -80,13 +89,42 @@ package lsd.myview
 		private function onechange(e:MouseEvent):void
 		{
 
-			trace("fuck");
+			 MainSystem.getInstance().gotoScene(0);
 		}
 
 		private function twochange(e:MouseEvent):void
 		{
 
-			trace("fuck you");
+			 MainSystem.getInstance().gotoScene(4);
+		}
+		
+		private function threechange(e:MouseEvent):void{
+			
+			 MainSystem.getInstance().gotoScene(2);
+		}
+		
+		private function fourchange(e:MouseEvent):void{
+			
+			MainSystem.getInstance().gotoScene(1);
+		}
+		private function fivechange(e:MouseEvent):void{
+			
+			MainSystem.getInstance().gotoScene(3);
+		}
+		
+		private function sixchange(e:MouseEvent):void{
+			
+			MainSystem.getInstance().gotoScene(5);
+		}
+		
+		private function sevenchange(e:MouseEvent):void{
+			
+			MainSystem.getInstance().gotoScene(6);
+		}
+		
+		private function eightchange(e:MouseEvent):void{
+			
+			MainSystem.getInstance().gotoScene(7);
 		}
 
 
