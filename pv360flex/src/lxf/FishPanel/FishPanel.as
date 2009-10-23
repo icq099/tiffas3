@@ -3,6 +3,8 @@ package lxf.FishPanel{
 	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	
+	import mx.controls.scrollClasses.ScrollBar;
 
 	public class FishPanel extends Sprite
 	{
@@ -10,6 +12,7 @@ package lxf.FishPanel{
 		private var defaultLocationX:int=5;
 		private var defaultLocationY:int=48;
 		private var test:SampleList;
+		private var sb:ScrollBar=new ScrollBar();
 		public function FishPanel()
 		{
 			fpp=new FishPanelPlugin();
@@ -20,6 +23,10 @@ package lxf.FishPanel{
 			//添加API
 			MainSystem.getInstance().addAPI("showFishPanel",showFishPanel);
 			MainSystem.getInstance().addAPI("removeFishPanel",removeishPanel);
+//			MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,function(e:MainSystemEvent):void{
+//				trace(e.id);
+//			})
+//			MainSystem.getInstance().showPluginById("map");
 		}
 		//API函数
 		private function showFishPanel():void
