@@ -11,6 +11,7 @@ package communication
 	import scripsimple.ScriptSimple;
 	
 	[Event(name="init", type="communication.Event.MainSystemEvent")]
+	[Event(name="on_plugin_ready", type="communication.Event.MainSystemEvent")]
 	[Event(name="add_api", type="communication.Event.ScriptAPIAddEvent")]
 	[Event(name="run", type="communication.Event.ScriptEvent")]
 /**
@@ -116,7 +117,7 @@ package communication
 		 * @param id 插件索引值
 		 * 
 		 */		
-		public function showPluginById(id:int):void{
+		public function showPluginById(id:String):void{
 			runAPIDirect("showPluginById",[id]);
 		}
 		/**
@@ -124,7 +125,7 @@ package communication
 		 * @param id 插件索引值
 		 * 
 		 */
-		public function removePluginById(id:int):void{
+		public function removePluginById(id:String):void{
 			runAPIDirect("removePluginById",[id]);
 		}
 		/**
