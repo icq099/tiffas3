@@ -1,11 +1,16 @@
 package communication
 {
+	import communication.Event.MainSystemEvent;
+	import communication.Event.SceneChangeEvent;
 	import communication.Event.ScriptAPIAddEvent;
 	import communication.Event.ScriptEvent;
 	import communication.camera.CameraProxy;
 	
 	import flash.events.EventDispatcher;
 	
+	import scripsimple.ScriptSimple;
+	
+	[Event(name="init", type="communication.Event.MainSystemEvent")]
 	[Event(name="add_api", type="communication.Event.ScriptAPIAddEvent")]
 	[Event(name="run", type="communication.Event.ScriptEvent")]
 /**
@@ -22,6 +27,9 @@ package communication
 	{
 		private static var instance:MainSystem;
 		private var _camera:CameraProxy;
+		private var _script_runer:ScriptSimple;
+		private var _currentScene:int;
+		
 		public function MainSystem()
 		{
 			if(instance==null){
@@ -30,6 +38,18 @@ package communication
 			}else{
 				throw new Error("Cann't be new!");
 			}
+			init();
+		}
+		private function init():void{
+			addEventListener(SceneChangeEvent.CHANGE,onSceneChange);	
+			addEventListener(MainSystemEvent.INIT,onSystemInit);
+		}
+		private function onSystemInit(e:MainSystemEvent):void{
+			_camera=e.camera;
+			_script_runer=e.script_runer;
+		}
+		private function onSceneChange(e:SceneChangeEvent):void{
+			_currentScene=e.id;
 		}
 		/**
 		 * 获得主系统的操作接口实例 
@@ -80,8 +100,8 @@ package communication
 		 * @param parm	API参数数组
 		 * 
 		 */		
-		public function runAPIDirect(function_name:String,parm:Array=null):void{
-			dispatchEvent(new ScriptEvent(ScriptEvent.RUN_BY_FUNCTION,null,function_name,parm));		
+		public function runAPIDirect(function_name:String,parm:Array=null):*{
+			return _script_runer.runFunctionDirect(function_name,parm);		
 		}
 		/**
 		 * 转到指定场景 
@@ -103,7 +123,7 @@ package communication
 		 * 删除指定插件
 		 * @param id 插件索引值
 		 * 
-		 */		
+		 */
 		public function removePluginById(id:int):void{
 			runAPIDirect("removePluginById",[id]);
 		}
@@ -136,6 +156,14 @@ package communication
 		 */		
 		public function normalScreen():void{
 			runAPIDirect("normalScreen");
+		}
+		/**
+		 * 当前场景索引值 
+		 * @return 
+		 * 
+		 */		
+		public function get currentScene():int{
+			return _currentScene;
 		}
 	}
 }

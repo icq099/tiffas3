@@ -5,6 +5,7 @@
 <classEntry path="communication.Event.SceneChangeEvent"/>
 <classEntry path="communication.camera.CameraProxy"/>
 <classEntry path="communication.MainSystem"/>
+<classEntry path="communication.Event.MainSystemEvent"/>
 <classEntry path="communication.Event.ScriptAPIAddEvent"/>
 </includeClasses>
 <includeResources/>
