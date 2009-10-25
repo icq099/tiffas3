@@ -4,6 +4,7 @@ package lsd
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.filters.DropShadowFilter;
 	
 	import gs.TweenLite;
 	
@@ -14,6 +15,7 @@ package lsd
 		private var a:NewMap;
 		public function Map()
 		{
+			this.filters=[new DropShadowFilter(10,45,0,0.5,10,10,1,3)];
 			a=new NewMap();
 			//addChild(a);
 			MainSystem.getInstance().addAPI("showMap",showMap);
@@ -26,10 +28,12 @@ package lsd
 			
 			 removeMap();
 		}
-		private function showMap():Boolean{
+		private function showMap():void{
+			
 			addChild(a);
-			TweenLite.from(a, 1, {alpha: 0});
-			return true;
+			a.alpha=0;
+			TweenLite.to(a, 1, {alpha: 1});
+			
 		}
 		private function removeMap():void{
 			
