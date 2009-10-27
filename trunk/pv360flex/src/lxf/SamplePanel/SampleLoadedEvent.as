@@ -1,4 +1,4 @@
-package lxf.FishPanel
+package lxf.SamplePanel
 {
 	import flash.events.Event;
 

@@ -1,8 +1,5 @@
-package lxf.FishPanel
+package lxf.SamplePanel
 {
-	import communication.Event.MainSystemEvent;
-	import communication.MainSystem;
-	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
@@ -10,15 +7,20 @@ package lxf.FishPanel
 	
 	public class FishPanelButtons extends Sprite
 	{
+		
 		private var fpb:FishPanelButton;
 		private var textFieldLocationX:int=20;
 		private var textFieldLocationY:int=5;
 		private var buttonText:String=null;
+		public var label:String="";
+		public var icon:String="yes";
+		public var hello:String="hello";
 		public function FishPanelButtons(text:String)
 		{
 			this.buttonText=text;
 			addButton();
 			addTextField();
+			label=text;
 		}
 		//添加按钮
 		private function addButton():void
