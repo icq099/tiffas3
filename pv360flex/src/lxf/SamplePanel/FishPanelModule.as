@@ -1,4 +1,4 @@
-package lxf.FishPanel
+package lxf.SamplePanel
 {
 	import mx.modules.Module;
 	
@@ -8,7 +8,7 @@ package lxf.FishPanel
 	{
 		public function FishPanelModule()
 		{
-			addChild(Toolyzhkof.mcToUI(new FishPanel()));
+ 			addChild(Toolyzhkof.mcToUI(new SamplePanel()));
 		}
 		
 	}

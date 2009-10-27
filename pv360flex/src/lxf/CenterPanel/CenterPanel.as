@@ -8,6 +8,7 @@ package lxf.CenterPanel{
 	public class CenterPanel extends Sprite
 	{
 		private var cpp:CenterPanelPlugin=null;
+		
 		private var defaultAplha:Number=0.4;
 		private var mouseOverAplha:Number=0.8;
 		private var cameraRotateSpeed:int=8;
