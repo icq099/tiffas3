@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" label="演示动画" clipContent="false">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" label="演示动画" clipContent="false" implements="lsd.IPlayerBasic">
 	
 	<mx:Script>
 		<![CDATA[
@@ -10,6 +10,8 @@
 			import mx.controls.SWFLoader;
 			
 			private static var swfLoaded:Object=new Object();
+			private var swfLoader:SWFLoader;
+			private var loading:UIComponent;
 			
 			public function loadSwf(url:String,save:Boolean=true,width:Number=-1,height:Number=-1):void{
 				
@@ -19,45 +21,49 @@
 				
 				}else{
 					
-					var swfLoader:SWFLoader=new SWFLoader()
+					swfLoader=new SWFLoader()
 					
 					swfLoader.load(url);
 					
 					if(width>0){
-						
-						swfLoader.width=width;
-					
-					}
-					if(height>0){
-						
-						swfLoader.height=height;
-					
-					}
+							swfLoader.width=width;
+						}
+						if(height>0){
+							swfLoader.height=height;
+						}
 					
 					if(save){
 						
 						swfLoaded[url]=swfLoader;
 						
 					}
-					var loading:UIComponent=Toolyzhkof.mcToUI(new LoadingSimpleRota());
+					loading=Toolyzhkof.mcToUI(new LoadingSimpleRota());
 					
 					addChild(loading);
 					
 					TweenLite.from(loading,2,{alpha:0});
 					
-					loading.setStyle("horizontalCenter",0)
-					loading.setStyle("verticalCenter",0)
+					loading.setStyle("horizontalCenter",0);
+					loading.setStyle("verticalCenter",0);
 					
-					swfLoader.addEventListener(Event.COMPLETE,function(e:Event):void{
-						
-						swfLoader.setStyle("horizontalCenter",0)
-						swfLoader.setStyle("verticalCenter",0)
-						addChild(swfLoader);
-						removeChild(loading);
-					
-					});					
+					swfLoader.addEventListener(Event.COMPLETE,onLoadComplete);					
 					
 				}
+			
+			}
+			private function onLoadComplete(e:Event):void{
+				
+				swfLoader.setStyle("horizontalCenter",0)
+				swfLoader.setStyle("verticalCenter",0)
+				//swfLoader.x=(this.width-swfLoader.width)/2;
+				//swfLoader.y=(this.height-swfLoader.height)/2;
+				addChild(swfLoader);
+				removeChild(loading);
+			
+			}
+			public function stopAll():void{
+				
+				swfLoader.unloadAndStop(true);
 			
 			}
 			
