@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" label="360展示" xmlns:view="view.*">
+<view:Object360Viewer id="view360"/>
+
+	<mx:Script>
+		<![CDATA[
+		
+			public function load(i_picture_name_pre:String,i_v_count:int,i_h_count:int,i_picture_type:String="jpg",i_v_name_unit:Number=10000,offset_v:int=0):void{
+				
+				view360.load(i_picture_name_pre,i_v_count,i_h_count,i_picture_type,i_v_name_unit,offset_v);
+			
+			}
+			public function setSize(scale:Number):void{
+				
+				view360.scaleX=view360.scaleY=scale;
+				
+			}
+		]]>
+	</mx:Script>
+</mx:Canvas>
