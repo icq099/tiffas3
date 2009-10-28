@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TitleWindowCustom xmlns="view.*" title="展项浏览" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" showCloseButton="true" xmlns:ns1="view.*">
+		<mx:TextArea id="instruction_text" top="40" bottom="10" right="10" width="230" text="文本载入中...."/>
+		<mx:TabNavigator historyManagementEnabled="false" id="tabNavigator" top="10" bottom="10" left="10" right="248">
+		</mx:TabNavigator>
+		<ns1:ExhibitSound id="soundPlayer" top="10" right="32">
+		</ns1:ExhibitSound>
+	<mx:Script>
+		<![CDATA[
+			import view.Event.ExhitbitSoundEvent;
+			import gs.TweenLite;
+			import lsd.IPlayerBasic;
+			import mx.core.UIComponent;
+			
+			private var instruction:ExhibitInstruction;
+			private var video:ExhibitVideo;
+			private var viewswf:ExhibitSwf;
+			private var view360:Exhibit360;
+			protected var items:Array=new Array();
+			
+			public function loadText(url:String):void{
+				
+				var loader:URLLoader=new URLLoader(new URLRequest(url));
+				
+				var onComplete:Function=function(e:Event):void{
+					
+					instruction_text.htmlText=loader.data as String;
+				
+				}
+				
+				loader.addEventListener(Event.COMPLETE,onComplete);
+			
+			}
+			/////////////////////////////////////////////////////////////////
+			public function set instructionLabel(value:String):void{
+				instruction==null?initExhibitInstruction():null;
+				instruction.label=value;
+			}
+			public function set videoLabel(value:String):void{
+				video==null?initExhibitVideo():null;
+				video.label=value;
+			}
+			public function set swfLabel(value:String):void{
+				viewswf==null?initExhibitSwf():null;
+				viewswf.label=value;
+			}
+			public function set view360Label(value:String):void{
+				view360==null?initExhibit360():null;
+				view360.label=value;			
+			}
+			///////////////////////////////////////////////////////////////////
+			public function loadPicture(url:String):void{
+				instruction==null?initExhibitInstruction():null;
+				instruction.loadImage(url);			
+			}
+			public function loadVideo(url:String):void{
+				video==null?initExhibitVideo():null;
+				video.loadflv(url);
+			}
+			public function loadSwf(url:String,save:Boolean=true,width:Number=-1,height:Number=-1):void{
+				viewswf==null?initExhibitSwf():null;
+				viewswf.loadSwf(url,save,width,height);
+			}
+			public function load360(i_picture_name_pre:String,i_v_count:int,i_h_count:int,i_picture_type:String="jpg",i_v_name_unit:Number=10000,offset_v:int=0):void{
+				view360==null?initExhibit360():null;
+				view360.load(i_picture_name_pre,i_v_count,i_h_count,i_picture_type,i_v_name_unit,offset_v);
+			}
+			public function setSize360(scale:Number):void{
+				view360==null?initExhibit360():null;
+				view360.setSize(scale);
+			}
+			/////////////////////////////////////////////////////////////////////
+			private function initExhibitInstruction():void{
+				instruction=new ExhibitInstruction;
+				instruction.initialize();
+				items.push(instruction);
+				tabNavigator.addChild(instruction);
+			}
+			private function initExhibitVideo():void{
+				video=new ExhibitVideo();
+				video.initialize();
+				items.push(video);
+				tabNavigator.addChild(video);
+			}
+			private function initExhibitSwf():void{
+				viewswf=new ExhibitSwf();
+				viewswf.initialize();
+				items.push(viewswf);
+				tabNavigator.addChild(viewswf);
+			}
+			private function initExhibit360():void{
+				view360=new Exhibit360();
+				view360.initialize();
+				tabNavigator.addChild(view360);
+			}
+			//////////////////////////////////////////////////////////
+			public function loadSound(url:String):void{
+				
+				soundPlayer.changeSound(url);
+				items.push(soundPlayer);
+			
+			}
+			public function removeSound():void{
+				
+				removeChild(soundPlayer);
+				
+			}
+		]]>
+	</mx:Script>
+</TitleWindowCustom>
