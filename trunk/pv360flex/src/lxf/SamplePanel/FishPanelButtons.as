@@ -55,5 +55,9 @@ package lxf.SamplePanel
 		{
 			fpb.gotoAndStop("1");
 		}
+		public function traceMeg():void
+		{
+			trace("hello");
+		}
 	}
 }
