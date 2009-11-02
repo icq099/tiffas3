@@ -12,12 +12,14 @@
 <classEntry path="yzhkof.TimeCounter"/>
 <classEntry path="yzhkof.MyGraphy"/>
 <classEntry path="yzhkof.loadings.IYzhkofLoading"/>
+<classEntry path="yzhkof.loader.LoaderManager"/>
 <classEntry path="yzhkof.BytesUtil"/>
 <classEntry path="yzhkof.file.SimpleDecoder"/>
 <classEntry path="yzhkof.loadings.LoadingWaveRota"/>
 <classEntry path="yzhkof.ToolBitmapData"/>
 <classEntry path="yzhkof.tiff.TiffAnalyser"/>
 <classEntry path="yzhkof.BasicCameraContrler"/>
+<classEntry path="yzhkof.loader.CompatibleLoader"/>
 <classEntry path="yzhkof.KeyMy"/>
 <classEntry path="yzhkof.CameraRotationControler"/>
 <classEntry path="yzhkof.MyGC"/>
