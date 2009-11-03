@@ -4,58 +4,188 @@ package yzhkof.loader
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
-	import flash.display.LoaderInfo;
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.HTTPStatusEvent;
+	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 
-	public class CompatibleLoader extends Loader
+[Event(name="complete", type="flash.events.Event")]
+[Event(name="httpStatus", type="flash.events.HTTPStatusEvent")]
+[Event(name="init", type="flash.events.Event")]
+[Event(name="ioError", type="flash.events.IOErrorEvent")]
+[Event(name="open", type="flash.events.Event")]
+[Event(name="progress", type="flash.events.ProgressEvent")]
+[Event(name="securityError", type="flash.events.SecurityErrorEvent")]
+[Event(name="unload", type="flash.events.Event")]
+
+	public class CompatibleLoader extends Sprite
 	{
 		protected var _content:DisplayObject;
+		protected var _loader:Loader;
 		
 		public function CompatibleLoader()
 		{
-			super();
 		}
 		protected function reInitLoader():void{
-			try{
-				removeChild(_content);
-			}catch(e:Error){
-			}
+			_content!=null?removeChild(_content):null;
+			_loader!=null?removeChild(loader):null;
 			_content=null;
+			_loader=null;
 		}
-		public function loadUrl(url:Object):void{
-			reInitLoader();			
+		protected function get loader():Loader{
+			if(_loader==null) loader=new Loader();
+			return _loader;
+		}
+		protected function set loader(value:Loader):void{
+			if(_loader!=null){
+				_loader.contentLoaderInfo.removeEventListener(
+				Event.COMPLETE,contentLoaderInfo_completeEventHandler);
+			_loader.contentLoaderInfo.removeEventListener(
+				HTTPStatusEvent.HTTP_STATUS,contentLoaderInfo_httpStatusEventHandler);
+			_loader.contentLoaderInfo.removeEventListener(
+                Event.INIT, contentLoaderInfo_initEventHandler);
+            _loader.contentLoaderInfo.removeEventListener(
+                IOErrorEvent.IO_ERROR, contentLoaderInfo_ioErrorEventHandler);
+            _loader.contentLoaderInfo.removeEventListener(
+                Event.OPEN, contentLoaderInfo_openEventHandler);
+            _loader.contentLoaderInfo.removeEventListener(
+                ProgressEvent.PROGRESS, contentLoaderInfo_progressEventHandler);
+            _loader.contentLoaderInfo.removeEventListener(
+                SecurityErrorEvent.SECURITY_ERROR, contentLoaderInfo_securityErrorEventHandler);
+            _loader.contentLoaderInfo.removeEventListener(
+                Event.UNLOAD, contentLoaderInfo_unloadEventHandler);
+			}
+			_loader=value;
+			_loader.contentLoaderInfo.addEventListener(
+				Event.COMPLETE,contentLoaderInfo_completeEventHandler);
+			_loader.contentLoaderInfo.addEventListener(
+				HTTPStatusEvent.HTTP_STATUS,contentLoaderInfo_httpStatusEventHandler);
+			_loader.contentLoaderInfo.addEventListener(
+                Event.INIT, contentLoaderInfo_initEventHandler);
+            _loader.contentLoaderInfo.addEventListener(
+                IOErrorEvent.IO_ERROR, contentLoaderInfo_ioErrorEventHandler);
+            _loader.contentLoaderInfo.addEventListener(
+                Event.OPEN, contentLoaderInfo_openEventHandler);
+            _loader.contentLoaderInfo.addEventListener(
+                ProgressEvent.PROGRESS, contentLoaderInfo_progressEventHandler);
+            _loader.contentLoaderInfo.addEventListener(
+                SecurityErrorEvent.SECURITY_ERROR, contentLoaderInfo_securityErrorEventHandler);
+            _loader.contentLoaderInfo.addEventListener(
+                Event.UNLOAD, contentLoaderInfo_unloadEventHandler);
+		}
+		protected function dispatchManual():void{
+			dispatchEvent(new Event(Event.INIT));
+			dispatchEvent(new Event(Event.COMPLETE));
+		}
+		private function contentLoaderInfo_completeEventHandler(e:Event):void{
+			dispatchEvent(e);
+		}
+		private function contentLoaderInfo_httpStatusEventHandler(e:HTTPStatusEvent):void{
+			dispatchEvent(e);
+		}
+		private function contentLoaderInfo_initEventHandler(e:Event):void{
+			dispatchEvent(e);
+		}
+		private function contentLoaderInfo_ioErrorEventHandler(e:IOErrorEvent):void{
+			dispatchEvent(e);
+		}
+		private function contentLoaderInfo_openEventHandler(e:Event):void{
+			dispatchEvent(e);
+		}
+		private function contentLoaderInfo_progressEventHandler(e:ProgressEvent):void{
+			dispatchEvent(e);
+		}
+		private function contentLoaderInfo_securityErrorEventHandler(e:SecurityErrorEvent):void{
+			dispatchEvent(e);
+		}
+		private function contentLoaderInfo_unloadEventHandler(e:Event):void{
+			dispatchEvent(e);
+		}
+		public override function dispatchEvent(event:Event):Boolean{
+			if(hasEventListener(event.type))
+				return super.dispatchEvent(event);
+			return false;
+		} 
+		/**
+		 * 与系统Loader方法一样，可传入参数为String,URLRequest,DisplayObject,BitmapData,ByteArray 
+		 * 事件发送者由contentLoaderInfo更变为本自身
+		 * @param url 任意支持传入的参数
+		 * @param context
+		 * 
+		 */		
+		public function load(url:Object,context:LoaderContext = null):void{
+			reInitLoader();
 			if(url is String){
-				super.load(new URLRequest(String(url)));
+				loader.load(new URLRequest(String(url)),context);
+				return
+			}else if(url is URLRequest){
+				loader.load(URLRequest(url),context);
+				return
 			}else{
 				if(url is DisplayObject){
 					_content=url as DisplayObject;
 					addChild(_content);
-					contentLoaderInfo.dispatchEvent(new Event(Event.COMPLETE));
+					dispatchManual();
 				}else if(url is BitmapData){
 					_content=new Bitmap(BitmapData(url));
 					addChild(_content);
-					contentLoaderInfo.dispatchEvent(new Event(Event.COMPLETE));
+					dispatchManual();
 				}else if(url is ByteArray){
-					loadBytes(ByteArray(url));
+					loader.loadBytes(ByteArray(url));
+					return
 				}else if(url is Loader){
-					_content=url as Loader;
-					addChild(_content);
-					contentLoaderInfo.dispatchEvent(new Event(Event.COMPLETE));
+					loader=url as Loader;
+					addChild(loader);
+					dispatchManual();
 				}
 			}
 		}
-		public override function load(request:URLRequest, context:LoaderContext=null):void{
-			reInitLoader();
-			super.load(request,context);
+		public function get content():DisplayObject{
+			return _loader!=null?_loader.content:_content;
 		}
-		public override function get contentLoaderInfo():LoaderInfo{
-			return _content is Loader?Loader(_content).contentLoaderInfo:super.contentLoaderInfo;
+		public function unloadAndStop(gc:Boolean=true):void{
+			if(_loader!=null){
+				_loader.unloadAndStop(gc);
+				return
+			}
+			if(_content!=null){
+				if(_content is MovieClip){
+					MovieClip(_content).stop();
+					dispatchEvent(new Event(Event.UNLOAD));
+					return
+				}
+				if(_content is Bitmap){
+					Bitmap(_content).bitmapData.dispose();
+					dispatchEvent(new Event(Event.UNLOAD));
+					return
+				}
+			}
 		}
-		public override function get content():DisplayObject{
-			return _content==null?super.content:_content;
+		public function close():void{
+			if(_loader!=null){
+				_loader.close();
+				return
+			}
+		}
+		public function unload():void{
+			if(_loader!=null){
+				_loader.unload();
+				return;
+			}
+			if(_content!=null){
+				removeChild(_content);
+				_content=null
+				dispatchEvent(new Event(Event.UNLOAD));
+			}
+		}
+		public function loadBytes(bytes:ByteArray, context:LoaderContext = null):void{
+			loader.loadBytes(bytes,context);
 		}
 	}
 }

@@ -12,7 +12,7 @@ package yzhkof.loader
 		public function LoaderManager()
 		{
 		}
-		private static function add(url:*,loader:Loader,autoRemove:Boolean=true):void{
+		private static function add(url:*,loader:Object,autoRemove:Boolean=true):void{
 			loader_map[url]=loader;
 			if(autoRemove){
 				loader.loaderInfo.addEventListener(Event.COMPLETE,function(e:Event):void{
@@ -20,21 +20,27 @@ package yzhkof.loader
 				});
 			}
 		}
-		public static function getLoader(url:*,type:String="Loader",autoLoad:Boolean=false,autoRemove:Boolean=true):Loader{
+		public static function getLoader(url:*,type:String="Loader",autoLoad:Boolean=false,autoRemove:Boolean=true):Object{
 			if(loader_map[url]!=undefined){
 				return loader_map[url]
 			}else{
-				var loader:Loader;
+				var loader:Object;
 				if(type==LOADER){
 					loader=new Loader();
 					if(autoLoad) loader.load(url);
 				}else if(type==COMPATIBLELOADER){
 					loader=new CompatibleLoader();
-					if(autoLoad) CompatibleLoader(loader).loadUrl(url);
+					if(autoLoad) CompatibleLoader(loader).load(url);
 				}
 				add(url,loader,autoRemove);
 				return loader;
 			}
+		}
+		public static function getCompatibleLoader(url:*,autoLoad:Boolean=false,autoRemove:Boolean=true):CompatibleLoader{
+			return getLoader(url,COMPATIBLELOADER,autoLoad,autoRemove) as CompatibleLoader;
+		}
+		public static function getNormalLoader(url:*,autoLoad:Boolean=false,autoRemove:Boolean=true):Loader{
+			return getLoader(url,LOADER,autoLoad,autoRemove) as Loader;
 		}
 	}
 }
