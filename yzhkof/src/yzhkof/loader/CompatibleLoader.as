@@ -7,6 +7,7 @@ package yzhkof.loader
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
@@ -34,17 +35,23 @@ package yzhkof.loader
 		}
 		protected function reInitLoader():void{
 			_content!=null?removeChild(_content):null;
-			_loader!=null?removeChild(loader):null;
+			if(_loader!=null){
+				removeChild(loader);
+				loader.unloadAndStop();
+			}
 			_content=null;
 			_loader=null;
 		}
 		protected function get loader():Loader{
-			if(_loader==null) loader=new Loader();
+			if(_loader==null){
+				loader=new Loader();
+				addChild(loader);
+			} 
 			return _loader;
 		}
 		protected function set loader(value:Loader):void{
 			if(_loader!=null){
-				_loader.contentLoaderInfo.removeEventListener(
+			_loader.contentLoaderInfo.removeEventListener(
 				Event.COMPLETE,contentLoaderInfo_completeEventHandler);
 			_loader.contentLoaderInfo.removeEventListener(
 				HTTPStatusEvent.HTTP_STATUS,contentLoaderInfo_httpStatusEventHandler);
@@ -78,6 +85,7 @@ package yzhkof.loader
                 SecurityErrorEvent.SECURITY_ERROR, contentLoaderInfo_securityErrorEventHandler);
             _loader.contentLoaderInfo.addEventListener(
                 Event.UNLOAD, contentLoaderInfo_unloadEventHandler);
+            addChild(loader);
 		}
 		protected function dispatchManual():void{
 			dispatchEvent(new Event(Event.INIT));
@@ -121,18 +129,24 @@ package yzhkof.loader
 		 * 
 		 */		
 		public function load(url:Object,context:LoaderContext = null):void{
-			reInitLoader();
 			if(url is String){
 				loader.load(new URLRequest(String(url)),context);
 				return
 			}else if(url is URLRequest){
 				loader.load(URLRequest(url),context);
 				return
-			}else{
-				if(url is Loader){
+			}else if(url is ByteArray){
+				loader.loadBytes(ByteArray(url));
+				return
+			}else if(url is Loader){
+				if(_loader!=url){
+					reInitLoader();
 					loader=url as Loader;
-					addChild(loader);
-				}else if(url is DisplayObject){
+				}
+				return
+			}else{
+				reInitLoader();
+				if(url is DisplayObject){
 					_content=url as DisplayObject;
 					addChild(_content);
 					dispatchManual();
@@ -140,9 +154,6 @@ package yzhkof.loader
 					_content=new Bitmap(BitmapData(url));
 					addChild(_content);
 					dispatchManual();
-				}else if(url is ByteArray){
-					loader.loadBytes(ByteArray(url));
-					return
 				}
 			}
 		}
