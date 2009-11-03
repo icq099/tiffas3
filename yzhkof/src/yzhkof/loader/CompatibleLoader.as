@@ -81,6 +81,7 @@ package yzhkof.loader
 		}
 		protected function dispatchManual():void{
 			dispatchEvent(new Event(Event.INIT));
+			dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS,false,false,0,0));
 			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		private function contentLoaderInfo_completeEventHandler(e:Event):void{
@@ -128,7 +129,10 @@ package yzhkof.loader
 				loader.load(URLRequest(url),context);
 				return
 			}else{
-				if(url is DisplayObject){
+				if(url is Loader){
+					loader=url as Loader;
+					addChild(loader);
+				}else if(url is DisplayObject){
 					_content=url as DisplayObject;
 					addChild(_content);
 					dispatchManual();
@@ -139,10 +143,6 @@ package yzhkof.loader
 				}else if(url is ByteArray){
 					loader.loadBytes(ByteArray(url));
 					return
-				}else if(url is Loader){
-					loader=url as Loader;
-					addChild(loader);
-					dispatchManual();
 				}
 			}
 		}

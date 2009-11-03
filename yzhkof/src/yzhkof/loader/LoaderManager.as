@@ -2,6 +2,7 @@ package yzhkof.loader
 {
 	import flash.display.Loader;
 	import flash.events.Event;
+	import flash.net.URLRequest;
 	
 	public class LoaderManager
 	{
@@ -15,19 +16,27 @@ package yzhkof.loader
 		private static function add(url:*,loader:Object,autoRemove:Boolean=true):void{
 			loader_map[url]=loader;
 			if(autoRemove){
-				loader.loaderInfo.addEventListener(Event.COMPLETE,function(e:Event):void{
+				var com_fun:Function=function(e:Event):void{
 					delete loader_map[url];
-				});
+				};
+				if(loader is CompatibleLoader){
+					loader.addEventListener(Event.COMPLETE,com_fun);
+					return;
+				}
+				if(loader is Loader){
+					Loader(loader).contentLoaderInfo.addEventListener(Event.COMPLETE,com_fun);
+					return;
+				}
 			}
 		}
-		public static function getLoader(url:*,type:String="Loader",autoLoad:Boolean=false,autoRemove:Boolean=true):Object{
+		public static function getLoader(url:String,type:String="Loader",autoLoad:Boolean=true,autoRemove:Boolean=true):Object{
 			if(loader_map[url]!=undefined){
 				return loader_map[url]
 			}else{
 				var loader:Object;
 				if(type==LOADER){
 					loader=new Loader();
-					if(autoLoad) loader.load(url);
+					if(autoLoad) loader.load(new URLRequest(url));
 				}else if(type==COMPATIBLELOADER){
 					loader=new CompatibleLoader();
 					if(autoLoad) CompatibleLoader(loader).load(url);
@@ -36,10 +45,10 @@ package yzhkof.loader
 				return loader;
 			}
 		}
-		public static function getCompatibleLoader(url:*,autoLoad:Boolean=false,autoRemove:Boolean=true):CompatibleLoader{
+		public static function getCompatibleLoader(url:String,autoLoad:Boolean=true,autoRemove:Boolean=true):CompatibleLoader{
 			return getLoader(url,COMPATIBLELOADER,autoLoad,autoRemove) as CompatibleLoader;
 		}
-		public static function getNormalLoader(url:*,autoLoad:Boolean=false,autoRemove:Boolean=true):Loader{
+		public static function getNormalLoader(url:String,autoLoad:Boolean=true,autoRemove:Boolean=true):Loader{
 			return getLoader(url,LOADER,autoLoad,autoRemove) as Loader;
 		}
 	}
