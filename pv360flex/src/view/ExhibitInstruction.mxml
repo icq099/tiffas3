@@ -23,8 +23,8 @@
 			
 			TweenLite.from(loading,2,{alpha:0});
 			
-			loading.setStyle("horizontalCenter",0)
-			loading.setStyle("verticalCenter",0)
+			loading.setStyle("horizontalCenter",0);
+			loading.setStyle("verticalCenter",0);
 			
 			picture_viewer.addEventListener(Event.COMPLETE,loadCompleteHandler);
 			
