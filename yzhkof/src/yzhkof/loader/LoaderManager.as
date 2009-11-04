@@ -5,8 +5,8 @@ package yzhkof.loader
 	
 	public class LoaderManager
 	{
-		public static const LOADER:String="Loader";
-		public static const COMPATIBLELOADER:String="CompatibleLoader";
+		public static const LOADER_ITEM:Class=NormalLoaderItem;
+		public static const COMPATIBLELOADER_ITEM:Class=CompatibleLoaderItem;
 		
 		private static var currentLoadRank:int=0;
 		private static var loader_map:LoaderMap=new LoaderMap();
@@ -64,19 +64,20 @@ package yzhkof.loader
 				loadRank(++currentLoadRank);
 			}
 		}
-		public static function getLoader(url:Object,rank:int=0,type:String="Loader",autoRemove:Boolean=true):Object{
+		public static function getLoader(url:Object,type:Class,rank:int=0,autoRemove:Boolean=true):Object{
 
 			if(loader_map.getLoaderBase(url)!=null){
 				return loader_map.getLoaderBase(url).loader;
 			}else{
-				var loader:LoaderBase;
-				if(type==LOADER){
+				var loader:LoaderBase=new type();
+				if(currentLoadRank>=rank) loader.start(url);
+				/* if(type==LOADER){
 					loader=new NormalLoaderItem();
 					if(currentLoadRank>=rank) loader.start(url);
 				}else if(type==COMPATIBLELOADER){
 					loader=new CompatibleLoaderItem();
 					if(currentLoadRank>=rank) loader.start(url);
-				}
+				} */
 				loader.rank=rank;
 				loader.url=url;
 				add(url,loader,autoRemove);
@@ -85,10 +86,10 @@ package yzhkof.loader
 			}
 		}
 		public static function getCompatibleLoader(url:Object,rank:int=0,autoRemove:Boolean=true):CompatibleLoader{
-			return getLoader(url,rank,COMPATIBLELOADER,autoRemove) as CompatibleLoader;
+			return getLoader(url,COMPATIBLELOADER_ITEM,rank,autoRemove) as CompatibleLoader;
 		}
 		public static function getNormalLoader(url:String,rank:int=0,autoRemove:Boolean=true):Loader{
-			return getLoader(url,rank,LOADER,autoRemove) as Loader;
+			return getLoader(url,LOADER_ITEM,rank,autoRemove) as Loader;
 		}
 		public static function removeLoader(url:Object):void{
 			loader_map.remove(url);
