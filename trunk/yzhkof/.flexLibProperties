@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties version="1">
 <includeClasses>
+<classEntry path="yzhkof.util.HashMap"/>
 <classEntry path="yzhkof.debug.TextTrace"/>
 <classEntry path="yzhkof.EfficiencyTestor"/>
 <classEntry path="yzhkof.CamereaControlerEvent"/>
 <classEntry path="yzhkof.AddToStageSetter"/>
+<classEntry path="yzhkof.loader.LoaderMap"/>
 <classEntry path="yzhkof.tiff.TiffDecoder"/>
 <classEntry path="yzhkof.FPSfromA3d"/>
 <classEntry path="yzhkof.loadings.IYzhkofProgressLoading"/>
 <classEntry path="yzhkof.file.SimpleEncoder"/>
 <classEntry path="yzhkof.TimeCounter"/>
 <classEntry path="yzhkof.MyGraphy"/>
+<classEntry path="yzhkof.loader.LoaderBase"/>
 <classEntry path="yzhkof.loadings.IYzhkofLoading"/>
 <classEntry path="yzhkof.loader.LoaderManager"/>
+<classEntry path="yzhkof.loader.LoaderArray"/>
 <classEntry path="yzhkof.BytesUtil"/>
+<classEntry path="yzhkof.loader.CompatibleLoaderItem"/>
 <classEntry path="yzhkof.file.SimpleDecoder"/>
 <classEntry path="yzhkof.loadings.LoadingWaveRota"/>
 <classEntry path="yzhkof.ToolBitmapData"/>
 <classEntry path="yzhkof.tiff.TiffAnalyser"/>
+<classEntry path="yzhkof.loader.NormalLoaderItem"/>
 <classEntry path="yzhkof.BasicCameraContrler"/>
 <classEntry path="yzhkof.loader.CompatibleLoader"/>
 <classEntry path="yzhkof.KeyMy"/>
@@ -26,7 +32,9 @@
 <classEntry path="yzhkof.BasicAsProject"/>
 <classEntry path="yzhkof.Toolyzhkof"/>
 <classEntry path="yzhkof.PositionSeter"/>
+<classEntry path="yzhkof.util.delayCallNextFrame"/>
 <classEntry path="yzhkof.debug.debugTrace"/>
+<classEntry path="yzhkof.loader.LoaderGroup"/>
 <classEntry path="yzhkof.loadings.LoadingSimpleProgressBar"/>
 </includeClasses>
 <includeResources>

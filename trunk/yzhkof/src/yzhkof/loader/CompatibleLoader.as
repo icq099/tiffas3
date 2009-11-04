@@ -7,7 +7,6 @@ package yzhkof.loader
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
@@ -15,6 +14,8 @@ package yzhkof.loader
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
+	
+	import yzhkof.util.delayCallNextFrame;
 
 [Event(name="complete", type="flash.events.Event")]
 [Event(name="httpStatus", type="flash.events.HTTPStatusEvent")]
@@ -88,9 +89,11 @@ package yzhkof.loader
             addChild(loader);
 		}
 		protected function dispatchManual():void{
-			dispatchEvent(new Event(Event.INIT));
-			dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS,false,false,0,0));
-			dispatchEvent(new Event(Event.COMPLETE));
+			delayCallNextFrame(this,function():void{
+				dispatchEvent(new Event(Event.INIT));
+				dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS,false,false,0,0));
+				dispatchEvent(new Event(Event.COMPLETE));
+			});
 		}
 		private function contentLoaderInfo_completeEventHandler(e:Event):void{
 			dispatchEvent(e);
@@ -142,6 +145,8 @@ package yzhkof.loader
 				if(_loader!=url){
 					reInitLoader();
 					loader=url as Loader;
+					if(_loader.contentLoaderInfo.bytesLoaded>=_loader.contentLoaderInfo.bytesTotal)
+						dispatchManual();
 				}
 				return
 			}else{
