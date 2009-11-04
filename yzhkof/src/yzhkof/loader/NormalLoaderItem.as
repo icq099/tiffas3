@@ -2,6 +2,7 @@ package yzhkof.loader
 {
 	import flash.display.Loader;
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.net.URLRequest;
 	
 	public class NormalLoaderItem extends LoaderBase
@@ -10,6 +11,7 @@ package yzhkof.loader
 		{
 			super(new Loader());
 			currentLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,onComplete);
+			currentLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,onComplete);
 		}
 		public override function start(value:Object=null):void{
 			currentLoader.load(new URLRequest((String(value))));

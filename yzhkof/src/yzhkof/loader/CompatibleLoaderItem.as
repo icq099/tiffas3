@@ -1,6 +1,7 @@
 package yzhkof.loader
 {
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	
 	public class CompatibleLoaderItem extends LoaderBase
 	{
@@ -8,6 +9,7 @@ package yzhkof.loader
 		{
 			super(new CompatibleLoader());
 			currentLoader.addEventListener(Event.COMPLETE,onComplete);
+			currentLoader.addEventListener(IOErrorEvent.IO_ERROR,onComplete);
 		}
 		public override function start(value:Object=null):void{
 			currentLoader.load(value);
