@@ -1,41 +1,37 @@
 package yzhkof.loader
 {
-	import flash.display.Loader;
-	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import flash.net.URLRequest;
+	import yzhkof.loader.proxy.NormalLoaderProxy;
 	
-	public class NormalLoaderItem extends LoaderBase
+	public class NormalLoaderItem extends LoaderBaseItem
 	{
 		public function NormalLoaderItem()
 		{
-			super(new Loader());
-			currentLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,onComplete);
-			currentLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,onComplete);
+			super(new NormalLoaderProxy());
 		}
 		public override function start(value:Object=null):void{
-			currentLoader.load(new URLRequest((String(value))));
+			currentLoader.manageStart(value);
 			super.start();
 		}
 		public override function pause():void{
-			try{
-				currentLoader.close();
-			}catch(e:Error){
-			}
+			currentLoader.managePause();
 			super.pause();
 		}
 		public override function resume():void{
 			if(!isLoading){
-				currentLoader.load(new URLRequest(String(_url)));
+				currentLoader.manageResume(_url);
 				super.resume();
 			}
 		}
 		public override function unload():void{
-			currentLoader.unload();
+			currentLoader.manageUnload()
 			super.unload();
 		}
-		private function get currentLoader():Loader{
-			return loader as Loader
+		public override function unLoadAndStop(gc:Boolean=true):void{
+			currentLoader.manageUnloadAndStop(gc);
+			super.unload();
+		}
+		private function get currentLoader():NormalLoaderProxy{
+			return _loader as NormalLoaderProxy
 		}
 		
 	}

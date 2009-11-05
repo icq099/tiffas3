@@ -2,24 +2,27 @@ package yzhkof.loader
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	
+	import yzhkof.loader.proxy.IManageLoader;
 
-[Event(name="complete", type="flash.events.Event")]
-	public class LoaderBase extends EventDispatcher
+[Event(name="next_step", type="yzhkof.loader.LoaderEvent")]
+	public class LoaderBaseItem extends EventDispatcher
 	{
 		protected var _isLoading:Boolean=false;
-		protected var _loader:Object;
+		protected var _loader:IManageLoader;
 		protected var _isComplete:Boolean=false;
 		protected var _url:Object;
 		protected var _rank:int=0;
 		
-		public function LoaderBase(loader:Object)
+		public function LoaderBaseItem(loader:IManageLoader)
 		{
 			_loader=loader;
+			_loader.addEventListener(LoaderEvent.NEXT_STEP,onNextStep);
 		}
 		public function get isLoading():Boolean{
 			return _isLoading;
 		}
-		public function get loader():Object{
+		public function get loader():IManageLoader{
 			return _loader;
 		}
 		public function get isComplete():Boolean{
@@ -69,10 +72,19 @@ package yzhkof.loader
 			_isComplete=false;
 			_isLoading=false;
 		}
-		protected function onComplete(e:Event):void{
+		/**
+		 * override 
+		 * @param value
+		 * 
+		 */	
+		public function unLoadAndStop(gc:Boolean=true):void{
+			_isComplete=false;
+			_isLoading=false;
+		}
+		protected function onNextStep(e:Event):void{
 			_isLoading=false;
 			_isComplete=true;
-			dispatchEvent(e);
+			dispatchEvent(new Event(LoaderEvent.NEXT_STEP));
 		}
 	}
 }

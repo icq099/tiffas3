@@ -7,11 +7,11 @@ package yzhkof.loader
 		public function LoaderMap()
 		{
 		}
-		public function getLoaderBase(key:Object):LoaderBase{
-			return getValue(key) as LoaderBase
+		public function getLoaderBase(key:Object):LoaderBaseItem{
+			return getValue(key) as LoaderBaseItem
 		}
 		public override function put(key:Object, value:Object):Object{
-			return super.put(key,value as LoaderBase);
+			return super.put(key,value as LoaderBaseItem);
 		}
 		
 	}
