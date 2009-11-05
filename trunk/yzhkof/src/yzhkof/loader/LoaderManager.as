@@ -3,6 +3,8 @@ package yzhkof.loader
 	import flash.display.Loader;
 	import flash.events.Event;
 	
+	import yzhkof.loader.proxy.IManageLoader;
+	
 	public class LoaderManager
 	{
 		public static const LOADER_ITEM:Class=NormalLoaderItem;
@@ -15,10 +17,11 @@ package yzhkof.loader
 		public function LoaderManager()
 		{
 		}
-		private static function add(url:Object,loader:LoaderBase,autoRemove:Boolean=true):void{
+		private static function add(url:Object,loader:LoaderBaseItem,autoRemove:Boolean=true):void{
 			loader_map.put(url,loader);
 			if(autoRemove){
 				var com_fun:Function=function(e:Event):void{
+					loader.removeEventListener(LoaderEvent.NEXT_STEP,com_fun);
 					removeLoader(url);
 					if(rank_arr[loader.rank].length<=0){
 						if(currentLoadRank==loader.rank){
@@ -26,7 +29,7 @@ package yzhkof.loader
 						}
 					}
 				};
-				loader.addEventListener(Event.COMPLETE,com_fun);
+				loader.addEventListener(LoaderEvent.NEXT_STEP,com_fun);
 			};
 		}
 		private static function setRank(url:Object,rank:int=0):void{
@@ -44,10 +47,12 @@ package yzhkof.loader
 		private static function loadRank(rank:int):void{
 			if(rank_arr[rank]==undefined) rank_arr[rank]=new Array();
 			if(rank_arr[rank].length>0){
+				var loader_item:LoaderBaseItem
 				for(var i:int=rank+1;i<rank_arr.length;i++){
 					if(rank_arr[i]!=undefined){
 						for each(var j:Object in rank_arr[i]){
-							loader_map.getLoaderBase(j).pause();
+							loader_item=loader_map.getLoaderBase(j);
+							if(loader_item.isLoading) loader_item.pause();
 						}
 					}
 				}
@@ -64,12 +69,12 @@ package yzhkof.loader
 				loadRank(++currentLoadRank);
 			}
 		}
-		public static function getLoader(url:Object,type:Class,rank:int=0,autoRemove:Boolean=true):Object{
+		public static function getLoader(url:Object,type:Class,rank:int=0,autoRemove:Boolean=true):IManageLoader{
 
 			if(loader_map.getLoaderBase(url)!=null){
 				return loader_map.getLoaderBase(url).loader;
 			}else{
-				var loader:LoaderBase=new type();
+				var loader:LoaderBaseItem=new type();
 				if(currentLoadRank>=rank) loader.start(url);
 				/* if(type==LOADER){
 					loader=new NormalLoaderItem();
