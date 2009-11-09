@@ -8,6 +8,7 @@ package lxf.SamplePanel
 	{
 		public function FishPanelModule()
 		{
+			
  			addChild(Toolyzhkof.mcToUI(new SamplePanel()));
 		}
 		
