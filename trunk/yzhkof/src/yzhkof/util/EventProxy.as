@@ -9,7 +9,8 @@ package yzhkof.util
 		}
 		public static function proxy(dispatcher:EventDispatcher,proxyDispatcher:EventDispatcher,event_type:Array):void{
 			for each(var i:String in event_type){
-				dispatcher.addEventListener(i,proxyDispatcher.dispatchEvent);
+				if(i!=null)
+					dispatcher.addEventListener(i,proxyDispatcher.dispatchEvent);
 			}
 		}
 		public static function unProxy(dispatcher:EventDispatcher,proxyDispatcher:EventDispatcher,event_type:Array):void{
