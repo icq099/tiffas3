@@ -1,5 +1,7 @@
 package lxf.SamplePanel
 {
+	import communication.MainSystem;
+	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
@@ -15,12 +17,14 @@ package lxf.SamplePanel
 		public var label:String="";
 		public var icon:String="yes";
 		public var hello:String="hello";
-		public function FishPanelButtons(text:String)
+		private var id:int=-1;
+		public function FishPanelButtons(text:int)
 		{
-			this.buttonText=text;
+			this.buttonText=text.toString();
 			addButton();
 			addTextField();
-			label=text;
+			label=text.toString();
+			id=text;
 		}
 		//添加按钮
 		private function addButton():void
@@ -55,9 +59,9 @@ package lxf.SamplePanel
 		{
 			fpb.gotoAndStop("1");
 		}
-		public function traceMeg():void
+		public function clickEvent():void
 		{
-			trace("hello");
+			MainSystem.getInstance().runAPIDirect("showSample",[id]);
 		}
 	}
 }

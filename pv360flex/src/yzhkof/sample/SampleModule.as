@@ -24,7 +24,7 @@ package yzhkof.sample
 		}
 		private function init():void{
 			loader=new CompatibleURLLoader();
-			loader.loadURL("hotpoints.xml");
+			loader.loadURL("xml/hotpoints.xml");
 			loader.addEventListener(Event.COMPLETE,onComplete);
 		}
 		private function onComplete(e:Event):void{

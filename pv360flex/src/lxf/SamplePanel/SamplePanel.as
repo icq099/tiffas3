@@ -70,7 +70,7 @@ package lxf.SamplePanel{
 		}
 		private function listClickEvent(e:ListEvent):void
 		{
-			FishPanelButtons(List(e.currentTarget).getItemAt(e.index)).traceMeg();
+			FishPanelButtons(List(e.currentTarget).getItemAt(e.index)).clickEvent();
 //			trace(List(e.currentTarget).getChildAt(int(e.rowIndex)).alpha);
 //			List(e.currentTarget).getChildAt(e.rowIndex)
 //			trace(FishPanelButtons(List(e.currentTarget).getChildAt(e.rowIndex)).hello);
