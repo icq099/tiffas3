@@ -89,7 +89,7 @@ package yzhkof.loader
             addChild(loader);
 		}
 		protected function dispatchManual():void{
-			delayCallNextFrame(this,function():void{
+			delayCallNextFrame(function():void{
 				dispatchEvent(new Event(Event.INIT));
 				dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS,false,false,0,0));
 				dispatchEvent(new Event(Event.COMPLETE));
