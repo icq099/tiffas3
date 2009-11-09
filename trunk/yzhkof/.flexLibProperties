@@ -7,6 +7,7 @@
 <classEntry path="yzhkof.loader.proxy.CompatibleLoaderProxy"/>
 <classEntry path="yzhkof.CamereaControlerEvent"/>
 <classEntry path="yzhkof.AddToStageSetter"/>
+<classEntry path="yzhkof.loader.CompatibleURLLoader"/>
 <classEntry path="yzhkof.loader.LoaderMap"/>
 <classEntry path="yzhkof.tiff.TiffDecoder"/>
 <classEntry path="yzhkof.FPSfromA3d"/>
@@ -35,6 +36,7 @@
 <classEntry path="yzhkof.BasicAsProject"/>
 <classEntry path="yzhkof.Toolyzhkof"/>
 <classEntry path="yzhkof.PositionSeter"/>
+<classEntry path="yzhkof.util.EventProxy"/>
 <classEntry path="yzhkof.util.delayCallNextFrame"/>
 <classEntry path="yzhkof.debug.debugTrace"/>
 <classEntry path="yzhkof.loadings.LoadingSimpleProgressBar"/>
