@@ -13,7 +13,7 @@
 			private var swfLoader:SWFLoader;
 			private var loading:UIComponent;
 			
-			public function loadSwf(url:String,save:Boolean=true,width:Number=-1,height:Number=-1):void{
+			public function loadSwf(url:Object,save:Boolean=true,width:Number=-1,height:Number=-1):void{
 				
 				if(swfLoaded[url]!=null){
 
@@ -23,7 +23,7 @@
 					
 					swfLoader=new SWFLoader()
 					
-					swfLoader.load(url);
+					swfLoader.source=url;
 					
 					if(width>0){
 							swfLoader.width=width;
