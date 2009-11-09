@@ -102,7 +102,7 @@ package communication
 		 * 
 		 */		
 		public function runAPIDirect(function_name:String,parm:Array=null):*{
-			return _script_runer.runFunctionDirect(function_name,parm);		
+			return _script_runer.runFunctionDirect(function_name,parm);
 		}
 		/**
 		 * 转到指定场景 
