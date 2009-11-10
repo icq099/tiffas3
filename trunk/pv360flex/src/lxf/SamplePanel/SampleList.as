@@ -10,7 +10,7 @@ package lxf.SamplePanel
 		private var myXML:XML = new XML();
 		private var myXMLURL:URLRequest = new URLRequest(XML_URL);
 		private var myLoader:URLLoader = new URLLoader(myXMLURL);
-		private var XML_URL:String = "menu.xml";
+		private var XML_URL:String = "xml/menu.xml";
 		private var sceneNum:int=-1;
 		private var list:Array=new Array();		
 		public function SampleList()
