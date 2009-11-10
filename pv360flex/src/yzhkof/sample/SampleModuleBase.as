@@ -15,7 +15,7 @@ package yzhkof.sample
 	
 	import yzhkof.loader.CompatibleURLLoader;
 
-	public class SampleModuleBase extends Module
+	public class SampleModuleBase extends Module implements ISampleModule
 	{
 		private var hot_point_xml:XML;
 		private var loader:CompatibleURLLoader;
@@ -35,15 +35,22 @@ package yzhkof.sample
 		}
 		private function initAPI():void{
 			MainSystem.getInstance().addAPI("showSample",showSample);
+			MainSystem.getInstance().addAPI("getSampleName",getSampleName);
 		}
-		private function showSample(id:String):void{
-			var xml_string:String=hot_point_xml.HotPoint.(@id==id).toXMLString();
+		public function getSampleName(id:String):String{
+			return getHotPointXmlById(id);
+		}
+		public function showSample(id:String):void{
+			var xml_string:String=getHotPointXmlById(id);
 			var menu:PopMenusFlex=PopUpManager.createPopUp(DisplayObject(Application.application),PopMenusFlex,true) as PopMenusFlex;
 			menu.addEventListener(FlexEvent.CREATION_COMPLETE,function(e:Event):void{
 				menu.constructByXml(new XML(xml_string));
 			});
 			PopUpManager.centerPopUp(menu);
 			menu.addEventListener(CloseEvent.CLOSE,onClose);
+		}
+		private function getHotPointXmlById(id:String):String{
+			return hot_point_xml.HotPoint.(@id==id).toXMLString();
 		}
 		private function onClose(e:Event):void{
 			PopUpManager.removePopUp(PopMenusFlex(e.currentTarget));
