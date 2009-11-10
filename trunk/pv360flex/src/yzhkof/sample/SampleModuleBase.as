@@ -37,9 +37,10 @@ package yzhkof.sample
 			MainSystem.getInstance().addAPI("showSample",showSample);
 		}
 		private function showSample(id:String):void{
+			var xml_string:String=hot_point_xml.HotPoint.(@id==id).toXMLString();
 			var menu:PopMenusFlex=PopUpManager.createPopUp(DisplayObject(Application.application),PopMenusFlex,true) as PopMenusFlex;
 			menu.addEventListener(FlexEvent.CREATION_COMPLETE,function(e:Event):void{
-				menu.constructByXml(new XML(hot_point_xml.HotPoint.(@id==id).toXMLString()));
+				menu.constructByXml(new XML(xml_string));
 			});
 			PopUpManager.centerPopUp(menu);
 			menu.addEventListener(CloseEvent.CLOSE,onClose);
