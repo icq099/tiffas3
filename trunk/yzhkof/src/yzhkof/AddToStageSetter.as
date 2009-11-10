@@ -33,13 +33,15 @@ package yzhkof
 		
 		public static function setObjToMiddleOfStage(obj:DisplayObject,offset_x:Number=0,offset_y:Number=0):void{
 			
-			delayExcuteAfterAddToStage(obj,function():void{
-				
+			var fun:Function=function():void{
 				obj.x=(obj.stage.stageWidth-obj.width)/2+offset_x;
 				obj.y=(obj.stage.stageHeight-obj.height)/2+offset_y;
-			
-			});
-		
+			}
+			if(obj.stage!=null){
+				fun();
+			}else{
+				delayExcuteAfterAddToStage(obj,fun);
+			}
 		}
 
 	}
