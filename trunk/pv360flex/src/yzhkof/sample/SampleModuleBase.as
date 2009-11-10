@@ -38,7 +38,7 @@ package yzhkof.sample
 			MainSystem.getInstance().addAPI("getSampleName",getSampleName);
 		}
 		public function getSampleName(id:String):String{
-			return new XML(getHotPointXmlById(id)).@name as String;
+			return new XML(getHotPointXmlById(id)).@name;
 		}
 		public function showSample(id:String):void{
 			var xml_string:String=getHotPointXmlById(id);
