@@ -2,6 +2,7 @@ package mediators
 {
 	import communication.Event.MainSystemEvent;
 	import communication.MainSystem;
+	import communication.main_system;
 	
 	import mx.containers.Canvas;
 	import mx.events.ModuleEvent;
@@ -14,6 +15,8 @@ package mediators
 
 	public class PluginMediator extends Mediator
 	{
+		
+		use namespace main_system;
 		public static const NAME:String="PluginMediator";
 		//消息体为当前plugin的xml数据
 		public static const SHOW_PLUGIN:String="PluginMediator.SHOW_PLUGIN";
@@ -48,6 +51,7 @@ package mediators
 			loader.addEventListener(ModuleEvent.READY,function(e:ModuleEvent):void{
 				var event:MainSystemEvent=new MainSystemEvent(MainSystemEvent.ON_PLUGIN_READY);
 				event.paramOnPluginReady(xml.@id,loader.child);
+				MainSystem.getInstance().addPlugin(xml.@id,loader.child);
 				MainSystem.getInstance().dispatchEvent(event);				
 			});
 			loader.url=xml.@url;
@@ -61,14 +65,16 @@ package mediators
 			position_obj["horizontalCenter"]=xml.@horizontalCenter.length()>0?xml.@horizontalCenter:undefined;
 			position_obj["verticalCenter"]=xml.@verticalCenter.length()>0?xml.@verticalCenter:undefined;
 			
-			plugin_container.addChild(plugin_obj[xml.@url]=loader);
-			position_setters[xml.@url]=new PositionSeter(loader,position_obj,false,true);
+			plugin_container.addChild(plugin_obj[xml.@id]=loader);
+			position_setters[xml.@id]=new PositionSeter(loader,position_obj,false,true);
+			
 		}
 		protected function removePlugin(xml:XML):void{
 			try{
-				plugin_container.removeChild(plugin_obj[xml.@url]);
-				delete plugin_obj[xml.@url];
-				delete position_setters[xml.@url];
+				plugin_container.removeChild(plugin_obj[xml.@id]);
+				delete plugin_obj[xml.@id];
+				delete position_setters[xml.@id];
+				MainSystem.getInstance().removePlugin(xml.@id);
 			}catch(e:Error){
 			}
 		}
