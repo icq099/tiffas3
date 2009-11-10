@@ -7,6 +7,7 @@ package yzhkof.sample
 	
 	import mx.core.Application;
 	import mx.events.CloseEvent;
+	import mx.events.FlexEvent;
 	import mx.managers.PopUpManager;
 	import mx.modules.Module;
 	
@@ -37,10 +38,11 @@ package yzhkof.sample
 		}
 		private function showSample(id:String):void{
 			var menu:PopMenusFlex=PopUpManager.createPopUp(DisplayObject(Application.application),PopMenusFlex,true) as PopMenusFlex;
-			//var menu:PopMenusFlex=new PopMenusFlex()
-			menu.initialize();
-			menu.constructByXml(new XML(hot_point_xml.HotPoint.(@id==id).toXMLString()));
-			menu.addEventListener(CloseEvent.CLOSE,onClose);			
+			menu.addEventListener(FlexEvent.CREATION_COMPLETE,function(e:Event):void{
+				menu.constructByXml(new XML(hot_point_xml.HotPoint.(@id==id).toXMLString()));
+			});
+			PopUpManager.centerPopUp(menu);
+			menu.addEventListener(CloseEvent.CLOSE,onClose);
 		}
 		private function onClose(e:Event):void{
 			PopUpManager.removePopUp(PopMenusFlex(e.currentTarget));
