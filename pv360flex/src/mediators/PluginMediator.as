@@ -3,8 +3,6 @@ package mediators
 	import communication.Event.MainSystemEvent;
 	import communication.MainSystem;
 	
-	import flash.events.Event;
-	
 	import mx.containers.Canvas;
 	import mx.events.ModuleEvent;
 	import mx.modules.ModuleLoader;
@@ -47,9 +45,9 @@ package mediators
 		protected function showPlugin(xml:XML):void{
 			removePlugin(xml);
 			var loader:ModuleLoader=new ModuleLoader();
-			loader.addEventListener(ModuleEvent.READY,function(e:Event):void{
+			loader.addEventListener(ModuleEvent.READY,function(e:ModuleEvent):void{
 				var event:MainSystemEvent=new MainSystemEvent(MainSystemEvent.ON_PLUGIN_READY);
-				event.paramOnPluginReady(xml.@id);
+				event.paramOnPluginReady(xml.@id,loader.child);
 				MainSystem.getInstance().dispatchEvent(event);				
 			});
 			loader.url=xml.@url;
