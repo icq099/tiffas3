@@ -2,9 +2,10 @@ package yzhkof.sample
 {
 	import communication.MainSystem;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
-	import mx.core.IFlexDisplayObject;
+	import mx.core.Application;
 	import mx.events.CloseEvent;
 	import mx.managers.PopUpManager;
 	import mx.modules.Module;
@@ -13,11 +14,11 @@ package yzhkof.sample
 	
 	import yzhkof.loader.CompatibleURLLoader;
 
-	public class SampleModule extends Module
+	public class SampleModuleBase extends Module
 	{
 		private var hot_point_xml:XML;
 		private var loader:CompatibleURLLoader;
-		public function SampleModule()
+		public function SampleModuleBase()
 		{
 			super();
 			init();
@@ -28,20 +29,21 @@ package yzhkof.sample
 			loader.addEventListener(Event.COMPLETE,onComplete);
 		}
 		private function onComplete(e:Event):void{
-			hot_point_xml=loader.data as XML;
+			hot_point_xml=new XML(loader.data);
 			initAPI();
 		}
 		private function initAPI():void{
 			MainSystem.getInstance().addAPI("showSample",showSample);
 		}
 		private function showSample(id:String):void{
-			var menu:PopMenusFlex=new PopMenusFlex();
+			var menu:PopMenusFlex=PopUpManager.createPopUp(DisplayObject(Application.application),PopMenusFlex,true) as PopMenusFlex;
+			//var menu:PopMenusFlex=new PopMenusFlex()
+			menu.initialize();
 			menu.constructByXml(new XML(hot_point_xml.HotPoint.(@id==id).toXMLString()));
-			menu.addEventListener(CloseEvent.CLOSE,onClose);
-			PopUpManager.centerPopUp(menu);
+			menu.addEventListener(CloseEvent.CLOSE,onClose);			
 		}
 		private function onClose(e:Event):void{
-			PopUpManager.removePopUp(IFlexDisplayObject(e.currentTarget));
+			PopUpManager.removePopUp(PopMenusFlex(e.currentTarget));
 		}
 	}
 }
