@@ -6,9 +6,12 @@ package communication
 	import communication.Event.ScriptEvent;
 	import communication.camera.CameraProxy;
 	
+	import flash.display.DisplayObject;
 	import flash.events.EventDispatcher;
 	
 	import scripsimple.ScriptSimple;
+	
+	import yzhkof.util.HashMap;
 	
 	[Event(name="init", type="communication.Event.MainSystemEvent")]
 	[Event(name="on_plugin_ready", type="communication.Event.MainSystemEvent")]
@@ -30,7 +33,8 @@ package communication
 		private var _camera:CameraProxy;
 		private var _script_runer:ScriptSimple;
 		private var _currentScene:int;
-		
+		private var _plugin_map:HashMap=new HashMap();
+				
 		public function MainSystem()
 		{
 			if(instance==null){
@@ -60,6 +64,21 @@ package communication
 		public static function getInstance():MainSystem{
 			if(instance==null) instance=new MainSystem();
 			return instance;
+		}
+		/**
+		 * 得到插件引用 
+		 * @param id 插件的id名
+		 * @return 
+		 * 
+		 */		
+		public function getPlugin(id:String):DisplayObject{
+			return _plugin_map.getValue(id) as DisplayObject;
+		}
+		main_system function addPlugin(name:String,plugin:DisplayObject):void{
+			_plugin_map.put(name,plugin);
+		}
+		main_system function removePlugin(name:String):void{
+			_plugin_map.remove(name);
 		}
 		/**
 		 * 直接设置相机转动（不推荐使用，应该使用camera属性） 
