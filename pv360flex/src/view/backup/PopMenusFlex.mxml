@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PopMenusFlexView xmlns="view.*" xmlns:mx="http://www.adobe.com/2006/mxml" close="closeHandler()" addedEffect="{fadein}" removedEffect="{fadeout}" xmlns:ns1="view.*">
-		<mx:TabNavigator historyManagementEnabled="false" id="tabNavigator" top="10" bottom="10" left="10" right="248">
-		</mx:TabNavigator>
 		<mx:Fade id="fadein" alphaFrom="0" alphaTo="1"/>
 		<mx:Fade id="fadeout" alphaFrom="1" alphaTo="0"/>
 	<mx:Script>
