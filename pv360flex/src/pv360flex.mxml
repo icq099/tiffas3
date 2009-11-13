@@ -8,7 +8,6 @@
 			import yzhkof.FPSfromA3d;
 			import yzhkof.Toolyzhkof;
 			private function init():void{
-				
 				addChild(new pv360project());
 				//FPSfromA3d.init(UIComponent(addChild(new UIComponent())));
 				

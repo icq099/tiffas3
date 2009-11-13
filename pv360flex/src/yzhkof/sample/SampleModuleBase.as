@@ -40,6 +40,14 @@ package yzhkof.sample
 		public function getSampleName(id:String):String{
 			return new XML(getHotPointXmlById(id)).@name;
 		}
+		public function getSamplePictureUrl(id:String):String{
+			var t_xml:Boolean=new XML(getHotPointXmlById(id)).hasOwnProperty("ExhibitInstruction");
+			if(t_xml){
+				return new XML(getHotPointXmlById(id)).ExhibitInstruction.Img[0].@url;
+			}else{
+				return null;
+			}
+		}
 		public function showSample(id:String):void{
 			var xml_string:String=getHotPointXmlById(id);
 			var menu:PopMenusFlex=PopUpManager.createPopUp(DisplayObject(Application.application),PopMenusFlex,true) as PopMenusFlex;
