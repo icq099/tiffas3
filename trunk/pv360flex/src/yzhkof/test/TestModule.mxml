@@ -3,17 +3,24 @@
 	<mx:Button x="165" y="122" label="Button" click="click()"/>
 	<mx:Script>
 		<![CDATA[
+			import mx.modules.ModuleManager;
+			import yzhkof.sample.SampleModule;
+			import yzhkof.sample.SampleModuleBase;
+			import flash.utils.getQualifiedSuperclassName;
+			import yzhkof.sample.ISampleModule;
 			import communication.Event.MainSystemEvent;
 			import communication.MainSystem;
+			private var s:ISampleModule;
 			private function init():void{
-				
-				MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,onPR);
+				s=ISampleModule(MainSystem.getInstance().getPlugin("SampleModule"));
 			}
 			private function onPR(e:MainSystemEvent):void{
-				trace(e.id);
+				if(e.id=="SampleModule"){
+					s=ISampleModule(MainSystem.getInstance().getPlugin("SampleModule"));
+				}
 			}
 			private function click():void{
-				MainSystem.getInstance().showPluginById("a");
+				trace(s.getSamplePictureUrl("3"));
 			}
 		]]>
 	</mx:Script>

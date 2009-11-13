@@ -4,7 +4,11 @@ package mediators
 	import communication.MainSystem;
 	import communication.main_system;
 	
+	import flash.events.Event;
+	import flash.system.ApplicationDomain;
+	
 	import mx.containers.Canvas;
+	import mx.events.FlexEvent;
 	import mx.events.ModuleEvent;
 	import mx.modules.ModuleLoader;
 	
@@ -48,6 +52,7 @@ package mediators
 		protected function showPlugin(xml:XML):void{
 			removePlugin(xml);
 			var loader:ModuleLoader=new ModuleLoader();
+			loader.applicationDomain=ApplicationDomain.currentDomain;
 			loader.addEventListener(ModuleEvent.READY,function(e:ModuleEvent):void{
 				var event:MainSystemEvent=new MainSystemEvent(MainSystemEvent.ON_PLUGIN_READY);
 				event.paramOnPluginReady(xml.@id,loader.child);
