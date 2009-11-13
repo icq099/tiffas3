@@ -60,7 +60,14 @@ package yzhkof.demo
 		}
 		private function unPopPictures():void{
 			for (var i:int=0;i<panel.numChildren;i++){
-				TweenLite.to(panel.getChildAt(i),0.5,{alpha:0,z:100});
+				
+				if(i==panel.numChildren-1){
+					TweenLite.to(panel.getChildAt(i),0.5,{alpha:0,z:100,onComplete:function():void{
+						panel.visible=false;
+					}});
+				}else{
+					TweenLite.to(panel.getChildAt(i),0.5,{alpha:0,z:100});
+				}
 			}
 		}
 	}

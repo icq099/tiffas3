@@ -7,7 +7,7 @@ package yzhkof.demo
 	public class DemoSpriteModule extends Module 
 	{
 		public function DemoSpriteModule()  
-		{  
+		{   
 			addChild(Toolyzhkof.mcToUI(new DemoSprite())); 
 		} 
 		
