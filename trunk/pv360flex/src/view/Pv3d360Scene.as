@@ -23,6 +23,7 @@
 	
 	import yzhkof.MovieCacheMaterial;
 	import yzhkof.MyGC;
+	import yzhkof.loader.CompatibleLoader;
 
 	public class Pv3d360Scene extends Sprite {
 		
@@ -33,7 +34,7 @@
 		
 		private var this_stage:Stage;
 		private var URLpath:URLRequest;
-		protected var pLoader:Loader;
+		protected var pLoader:CompatibleLoader;
 		protected var czoom:Number;
 		protected var pdetail:Number;
 		protected var tip_sprite:MapToolTip=new MapToolTip();
@@ -84,10 +85,10 @@
 			scene = new Scene3D();
 			camera = new FreeCamera3D();
 			viewport=new Viewport3D(0,0,true,true);
-			pLoader=new Loader();
+			pLoader=new CompatibleLoader();
 			
-			pLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,chageCompleteHandler);
-			pLoader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,loadProgessHandler);			
+			pLoader.addEventListener(Event.COMPLETE,chageCompleteHandler);
+			pLoader.addEventListener(ProgressEvent.PROGRESS,loadProgessHandler);			
 			
 			addChild(viewport);
 
@@ -200,7 +201,7 @@
 		
 		}
 		//更改场景全景
-		public function changeBitmap(URL:String,onComplete:Function=null):void{
+		public function changeBitmap(URL:Object,onComplete:Function=null):void{
 			
 			if(state!=LOADING_IMG){
 				
@@ -219,7 +220,7 @@
 				view_loader.percent_text.selectable=false;
 				this_stage.addChild(view_loader);
 				
-				pLoader.load(new URLRequest(URL));
+				pLoader.load(URL);
 			}
 		}
 		public function setCompassRotation(rota:Number):void{

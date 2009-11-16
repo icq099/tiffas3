@@ -34,7 +34,7 @@
 					if(xml.ExhibitInstruction.@label.length()>0){
 						instructionLabel=xml.ExhibitInstruction.@label;
 					}
-					loadPicture(xml.ExhibitInstruction);
+					loadPicture(String(xml.ExhibitInstruction));
 				}
 				if(xml.ExhibitVideo.length()>0){
 					if(xml.ExhibitVideo.@label.length()>0){
