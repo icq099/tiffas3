@@ -42,6 +42,12 @@
 			picture_viewer.loadPictures();
 		
 		}
+		public function addPicture(source:Object):void{
+			picture_viewer.add(source);
+		}
+		public function refreshPicture():void{
+			picture_viewer.loadPictures();
+		}
 		public function stopAll():void{
 			
 			picture_viewer.stopAll();

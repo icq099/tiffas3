@@ -133,7 +133,7 @@ package mediators
 		}
 		private function changePosition(goto:int):void{
 			
-			viewer.changeBitmap(xml.Travel.Scene.@picture[goto],function():void{
+			viewer.changeBitmap(String(xml.Travel.Scene.@picture[goto]),function():void{
 				
 				updataArrows(goto);
 				updataHotPoints(goto);

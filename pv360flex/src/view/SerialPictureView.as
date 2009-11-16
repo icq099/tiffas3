@@ -1,8 +1,5 @@
 package view
 {
-	import br.com.stimuli.loading.BulkLoader;
-	import br.com.stimuli.loading.BulkProgressEvent;
-	
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -12,11 +9,13 @@ package view
 	
 	import lsd.IPlayerBasic;
 	
+	import yzhkof.loader.SeriaCompatibleLoader;
+	
 	[Event(name="complete", type="flash.events.Event")]
 
 	public class SerialPictureView extends Sprite implements IPlayerBasic
 	{
-		private var loader:BulkLoader;
+		private var loader:SeriaCompatibleLoader;
 		private var urls:Array=new Array();
 		private var pictures:Array=new Array();
 		private var buttons:Array=new Array();
@@ -33,16 +32,16 @@ package view
 		{
 			
 			super();
-			loader=new BulkLoader(this.name);
+			loader=new SeriaCompatibleLoader()
 			PICTURE_WIDTH=p_width;
 			PICTURE_HEIGHT=p_height;
 			TWEEN_TIME=tween_time;
 			
 		}
-		public function add(url:String):void{
+		public function add(source:Object):void{
 			
-			loader.add(url);
-			urls.push(url);
+			loader.add(source);
+			urls.push(source);
 		
 		}
 		public function stopAll():void{
@@ -53,7 +52,7 @@ package view
 		public function loadPictures():void{
 			
 			loader.start();
-			loader.addEventListener(BulkProgressEvent.COMPLETE,onCompleteHandler);
+			loader.addEventListener(Event.COMPLETE,onCompleteHandler);
 		
 		}
 		public function changePicture(num:int):void{
@@ -66,9 +65,9 @@ package view
 		}
 		private function onCompleteHandler(e:Event):void{
 			
-			for each(var i:String in urls){
+			for each(var i:Object in urls){
 				
-				var bitmap:Bitmap=loader.getBitmap(i);
+				var bitmap:Bitmap=loader.getItem(i) as Bitmap;
 				bitmap.width=PICTURE_WIDTH;
 				bitmap.height=PICTURE_HEIGHT;
 				pictures.push(bitmap);

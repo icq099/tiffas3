@@ -34,6 +34,7 @@ package yzhkof.demo
 			//panel.addEventListener(MouseEvent.MOUSE_OUT,onPanelMouseOut);
 			for (var i:int=0;i<panel.numChildren;i++){
 				var dobj:Sprite=panel.getChildAt(i) as Sprite;
+				dobj.buttonMode=true;
 				map[dobj]={x:dobj.x,y:dobj.y,scene:MovieClip(dobj).scene};
 				dobj.addEventListener(MouseEvent.CLICK,function(e:Event):void{
 					MainSystem.getInstance().gotoScene(map[e.currentTarget].scene);

@@ -53,11 +53,19 @@
 				instruction==null?initExhibitInstruction():null;
 				instruction.loadImage(url);			
 			}
+			public function addPicture(source:Object):void{
+				instruction==null?initExhibitInstruction():null;
+				instruction.addPicture(source);
+			}
+			public function refreshPicture():void{
+				instruction==null?initExhibitInstruction():null;
+				instruction.refreshPicture();
+			}
 			public function loadVideo(url:String):void{
 				video==null?initExhibitVideo():null;
 				video.loadflv(url);
 			}
-			public function loadSwf(url:Object,save:Boolean=true,width:Number=-1,height:Number=-1):void{
+			public function loadSwf(url:Object,save:Boolean=false,width:Number=-1,height:Number=-1):void{
 				viewswf==null?initExhibitSwf():null;
 				viewswf.loadSwf(url,save,width,height);
 			}
