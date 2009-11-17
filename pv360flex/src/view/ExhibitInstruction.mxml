@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" label="展项说明" xmlns:view="view.*" implements="lsd.IPlayerBasic" >
+<mx:Canvas creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" label="展项说明" xmlns:view="view.*" implements="lsd.IPlayerBasic" >
 	<mx:Script>
 		<![CDATA[
 			import gs.TweenLite;
@@ -15,8 +15,7 @@
 			removeChild(loading);
 		
 		}
-		public function loadImage(xml:String):void{
-			
+		private function init():void{
 			loading=Toolyzhkof.mcToUI(new LoadingSimpleRota());
 			
 			addChild(loading);
@@ -33,6 +32,8 @@
 			ui.setStyle("horizontalCenter",-picture_viewer.PICTURE_WIDTH/2);
 			
 			addChild(ui);
+		}
+		public function loadImage(xml:String):void{
 			
 			for each(var i:XML in XMLList(XML(xml).Img)){
 				

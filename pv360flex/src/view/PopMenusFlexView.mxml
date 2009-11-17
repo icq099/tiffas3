@@ -7,6 +7,7 @@
 		</ns1:ExhibitSound>
 	<mx:Script>
 		<![CDATA[
+			import yzhkof.loader.CompatibleURLLoader;
 			import view.Event.ExhitbitSoundEvent;
 			import gs.TweenLite;
 			import lsd.IPlayerBasic;
@@ -18,10 +19,14 @@
 			private var view360:Exhibit360;
 			protected var items:Array=new Array();
 			
-			public function loadText(url:String):void{
+			public function loadText(source:Object,isText:Boolean=false):void{
 				
-				var loader:URLLoader=new URLLoader(new URLRequest(url));
-				
+				var loader:CompatibleURLLoader=new CompatibleURLLoader();
+				if(isText){
+					loader.load(String(source));
+				}else{
+					loader.loadURL(String(source));
+				}				
 				var onComplete:Function=function(e:Event):void{
 					
 					instruction_text.htmlText=loader.data as String;
@@ -53,6 +58,9 @@
 				instruction==null?initExhibitInstruction():null;
 				instruction.loadImage(url);			
 			}
+			/*
+				添加图片介绍
+			 */
 			public function addPicture(source:Object):void{
 				instruction==null?initExhibitInstruction():null;
 				instruction.addPicture(source);
