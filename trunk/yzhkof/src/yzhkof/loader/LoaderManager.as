@@ -12,6 +12,13 @@ package yzhkof.loader
 		
 		private static var currentLoadRank:int=0;
 		private static var loader_map:LoaderMap=new LoaderMap();
+		/**
+		 * 二维数组
+		 * y:rank,x:url
+		 * rank1:url1,url2
+		 * rank21:url3,url4
+		 * rank3:url5,url5
+		 */		
 		private static var rank_arr:Array=new Array(new Array());
 		
 		public function LoaderManager()
@@ -69,10 +76,22 @@ package yzhkof.loader
 				loadRank(++currentLoadRank);
 			}
 		}
+		/**
+		 *  
+		 * @param url 地址或数据key
+		 * @param type loaderitem类类型
+		 * @param rank 加载等级
+		 * @param autoRemove 
+		 * @return 
+		 * 
+		 */		
 		public static function getLoader(url:Object,type:Class,rank:int=0,autoRemove:Boolean=true):IManageLoader{
 
 			if(loader_map.getLoaderBase(url)!=null){
-				return loader_map.getLoaderBase(url).loader;
+				var re_loader:LoaderBaseItem=loader_map.getLoaderBase(url);
+				if(re_loader.rank!=rank)
+					setRank(url,rank);
+				return re_loader.loader
 			}else{
 				var loader:LoaderBaseItem=new type();
 				if(currentLoadRank>=rank) loader.start(url);
