@@ -8,6 +8,7 @@ package yzhkof.loader
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.utils.getQualifiedClassName;
 	
 	import yzhkof.util.EventProxy;
 	import yzhkof.util.delayCallNextFrame;
@@ -35,6 +36,13 @@ package yzhkof.loader
 				url_loader=request as URLLoader;
 				return;
 			}
+			try{
+				String(request);
+			}catch(e:Error){
+				throw new Error("CompatibleURLLoader错误："+getQualifiedClassName(request)+"不是支持的类型！");
+				return;
+			}
+			load(String(request));
 		};
 		public function loadURL(url:Object):void{
 			if(url is String){
@@ -45,6 +53,13 @@ package yzhkof.loader
 				getURLLoader().load(URLRequest(url))
 				return;
 			}
+			try{
+				String(url);
+			}catch(e:Error){
+				throw new Error("CompatibleURLLoader错误："+getQualifiedClassName(url)+"不是支持的类型！");
+				return;
+			}
+			loadURL(String(url));
 		}
 		public function get data():Object{
 			var re_data:Object;
@@ -78,7 +93,7 @@ package yzhkof.loader
 		private function reInit():void{
 			text_data=null;
 			if(url_loader!=null) url_loader.close();
-			url_loader=null
+			_url_loader=null
 		}
 	}
 }

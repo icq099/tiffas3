@@ -14,6 +14,9 @@ package yzhkof.loader
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
+	import flash.utils.getQualifiedClassName;
+	
+	import flashx.textLayout.elements.SubParagraphGroupElement;
 	
 	import yzhkof.util.delayCallNextFrame;
 
@@ -134,13 +137,13 @@ package yzhkof.loader
 		public function load(url:Object,context:LoaderContext = null):void{
 			if(url is String){
 				loader.load(new URLRequest(String(url)),context);
-				return
+				return;
 			}else if(url is URLRequest){
 				loader.load(URLRequest(url),context);
-				return
+				return;
 			}else if(url is ByteArray){
 				loader.loadBytes(ByteArray(url));
-				return
+				return;
 			}else if(url is Loader){
 				if(_loader!=url){
 					reInitLoader();
@@ -148,19 +151,29 @@ package yzhkof.loader
 					if(_loader.contentLoaderInfo.bytesLoaded>=_loader.contentLoaderInfo.bytesTotal)
 						dispatchManual();
 				}
-				return
+				return;
 			}else{
-				reInitLoader();
 				if(url is DisplayObject){
+					reInitLoader();
 					_content=url as DisplayObject;
 					addChild(_content);
 					dispatchManual();
+					return;
 				}else if(url is BitmapData){
+					reInitLoader();
 					_content=new Bitmap(BitmapData(url));
 					addChild(_content);
 					dispatchManual();
+					return;
 				}
 			}
+			var s_url:String;
+			try{
+				s_url=String(url);
+			}catch(e:Error){
+				throw new Error("CompatibleLoader错误："+getQualifiedClassName(url)+"不是支持的类型！");
+			}
+			load(s_url);
 		}
 		public function get content():DisplayObject{
 			return _loader!=null?_loader.content:_content;
