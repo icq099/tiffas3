@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+<mx:RemoteObject id="testByteArray" destination="TestByteArray"/>
+<mx:RemoteObject id="fileup" destination="FileUpLoader"/>
+	<mx:Script>
+		<![CDATA[
+			import remoteobject.HotPointStruct;
+			private function init():void{
+				/* var arr:Array=new Array();
+				var byte_arr:ByteArray=new ByteArray();
+				byte_arr.writeByte(128);
+				byte_arr.writeByte(255);
+				arr.push(byte_arr);
+				arr.push(byte_arr);
+				testByteArray.test(arr); */
+				var test:HotPointStruct=new HotPointStruct();
+				var by:ByteArray=new ByteArray();
+				by.writeUTFBytes("fuckfsadfasdf")
+				test.xml=by;
+				fileup.upLoadHotPoint(test);
+			}
+		]]>
+	</mx:Script>
+</mx:Application>
