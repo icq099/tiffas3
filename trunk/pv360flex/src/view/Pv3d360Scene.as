@@ -21,6 +21,8 @@
 	import org.papervision3d.view.layer.util.ViewportLayerSortMode;
 	import org.papervision3d.view.stats.StatsView;
 	
+	import view.struct.BendPlane;
+	
 	import yzhkof.MovieCacheMaterial;
 	import yzhkof.MyGC;
 	import yzhkof.loader.CompatibleLoader;
@@ -296,8 +298,10 @@
 			var segmentsH:Number=init_obj["segmentsH"]?init_obj["segmentsH"]:2;
 			
 			
-			var plane_animate:Plane=new Plane(new ColorMaterial(0xffffff),width,height,segmentsW,segmentsH,init_obj);
-			
+			var plane_animate:BendPlane=new BendPlane(new ColorMaterial(0xffffff),width,height,segmentsW,segmentsH,init_obj);
+			plane_animate.offset=init_obj["offset"]?init_obj["offset"]:0;
+			plane_animate.angle=init_obj["angle"]?init_obj["angle"]:0;
+			plane_animate.force=init_obj["force"]?init_obj["force"]:0;
 			/* plane_animate.x=x;
 			plane_animate.y=y;
 			plane_animate.z=z;
