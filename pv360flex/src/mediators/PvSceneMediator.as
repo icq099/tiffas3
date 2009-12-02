@@ -194,7 +194,7 @@ package mediators
 			for(var i:int=0;i<xml_animate.length();i++){
 				
 				cache=xml_animate[i].@cache==1?true:false;				
-				viewer.addAminate(xml_animate[i].@url,{x:xml_animate[i].@x,y:xml_animate[i].@y,z:xml_animate[i].@z,rotationX:xml_animate[i].@rotationX,rotationY:xml_animate[i].@rotationY,rotationZ:xml_animate[i].@rotationZ,width:xml_animate[i].@width,height:xml_animate[i].@height,segmentsW:xml_animate[i].@segmentsW,segmentsH:xml_animate[i].@segmentsH},cache);
+				viewer.addAminate(xml_animate[i].@url,{x:xml_animate[i].@x,y:xml_animate[i].@y,z:xml_animate[i].@z,rotationX:xml_animate[i].@rotationX,rotationY:xml_animate[i].@rotationY,rotationZ:xml_animate[i].@rotationZ,width:xml_animate[i].@width,height:xml_animate[i].@height,segmentsW:xml_animate[i].@segmentsW,segmentsH:xml_animate[i].@segmentsH,offset:xml_animate[i].@offset,angle:xml_animate[i].@angle,force:xml_animate[i].@force},cache);
 			}
 		
 		}
