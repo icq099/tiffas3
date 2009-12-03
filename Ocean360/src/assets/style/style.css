@@ -1,0 +1,69 @@
+/*
+
+	For more information about Degrafa, visit http://www.degrafa.com
+
+*/
+
+/*------------------------------------------------------------------------------ FONTS */
+/*
+@font-face
+{
+	src: 						url('../fonts/Myriad.swf');
+	fontFamily: 				'Myriad Pro';
+	fontWeight:					Regular;
+}
+
+@font-face
+{
+	src: 						url('../fonts/Myriad.swf');
+	fontFamily: 				'Myriad Pro Semibold';
+	fontWeight:					Semibold;
+}
+
+/*------------------------------------------------------------------------------ GLOBAL */
+
+global
+{
+	font-family:				'Myriad Pro';
+	color:						#CCCCCC;	
+}
+
+/*------------------------------------------------------------------------------ TEXT */
+
+.title
+{
+	font-size:					24;
+	text-align:					right;	
+}
+
+/*------------------------------------------------------------------------------ APPLICATION */
+/*
+Application
+{
+	background-color:			"#222222";
+    background-image:			GRID, LOGO;
+    background-repeat:			repeat-x, no-repeat;
+    background-position:		"top left", "10px 10px";
+    borderSkin:					ClassReference("com.degrafa.skins.CSSSkin");
+    asset-class:				ClassReference("assets.EmbeddedAssets");	
+}
+
+/*------------------------------------------------------------------------------ BUTTON LOADER */
+
+.buttonLoader
+{
+	skin:						ClassReference('assets.skins.ButtonLoader_skin');
+	color:						#FFFFFF;
+	textRollOverColor:			#FFFFFF;
+	disabledColor:				#FFFFFF;
+	fontSize:					20;
+	paddingTop: 				6;
+}
+
+/*------------------------------------------------------------------------------ LINK BUTTON */
+
+LinkButton
+{
+	color:						#FFFFFF;
+	fontSize:					12;
+}
