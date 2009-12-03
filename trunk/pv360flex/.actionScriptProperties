@@ -18,6 +18,7 @@
 <application path="pv360flexDebug.mxml"/>
 <application path="pv360flex.mxml"/>
 <application path="pv360flexop.mxml"/>
+<application path="Testor.mxml"/>
 </applications>
 <modules>
 <module application="src/pv360flex.mxml" destPath="FishPanelModule.swf" optimize="true" sourcePath="src/lxf/SamplePanel/FishPanelModule.as"/>
@@ -26,6 +27,7 @@
 <module application="src/pv360flex.mxml" destPath="yzhkof/sample/SampleModule.swf" optimize="true" sourcePath="src/yzhkof/sample/SampleModule.mxml"/>
 <module application="src/pv360flex.mxml" destPath="yzhkof/test/TestModule.swf" optimize="true" sourcePath="src/yzhkof/test/TestModule.mxml"/>
 <module application="src/pv360flex.mxml" destPath="DemoSpriteModule.swf" optimize="true" sourcePath="src/yzhkof/demo/DemoSpriteModule.as"/>
+<module application="src/pv360flex.mxml" destPath="yzhkof/position/PositionModule.swf" optimize="true" sourcePath="src/yzhkof/position/PositionModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>

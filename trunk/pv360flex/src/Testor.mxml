@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:Script>
+		<![CDATA[
+			import yzhkof.position.LabelsContainer;
+			import yzhkof.Toolyzhkof;
+			import yzhkof.position.PositionEffectContainer;
+			private function init():void{
+				var t:LabelsContainer=new LabelsContainer("广东海洋大学","goud haiyang");;
+				addChild(Toolyzhkof.mcToUI(t));
+			}
+		]]>
+	</mx:Script>
+</mx:Application>
