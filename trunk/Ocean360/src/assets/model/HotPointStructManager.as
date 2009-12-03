@@ -5,6 +5,8 @@ package assets.model
 	import mx.core.Application;
 	import mx.rpc.events.ResultEvent;
 	
+	import remoteobject.HotPointStruct;
+	
 	public class HotPointStructManager
 	{
 		private var hps:HotPointStruct=new HotPointStruct();
@@ -50,9 +52,12 @@ package assets.model
 		}
 		public function startToUpdate():void
 		{
+			var by:ByteArray=new ByteArray();
+			by.writeUTFBytes("fuckfsadfasdf")
+			hps.xml=by;
 			Application.application.fileup.upLoadHotPoint(hps);
 			Application.application.fileup.addEventListener(ResultEvent.RESULT,function():void{
-				trace("ok");
+				Application.application.startUpdateButton.enabled=true;
 			});
 		}
 	}
