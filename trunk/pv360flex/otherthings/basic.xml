@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v5 U (http://www.xmlspy.com) by et8 (et8) -->
+<Basic>
+	<Travel start_scene="0">
+		<!--场景1-->
+		<Scene picture="img/博物馆门口 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/一楼大厅 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/水族馆 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/鱼类陈列室 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/鱼池 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/朱元鼎纪念厅 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/二楼大厅 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/贝类陈列室一_cube.jpg">
+		</Scene>
+		<Scene picture="img/贝类陈列室二 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/张玺教授纪念厅 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/虾蟹陈列室 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/曾呈奎教授纪念厅 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/海藻陈列室 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/其他水生生物陈列室 Panorama_cube.jpg">
+		</Scene>
+		<Scene picture="img/三楼大厅 Panorama_cube.jpg">
+		</Scene>
+
+		
+			<Scene picture="">
+		</Scene>
+		
+	</Travel>
+</Basic>
