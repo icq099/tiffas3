@@ -38,6 +38,9 @@ package commands
 		private function onCompleteHandler(e:Event=null):void{
 			
 			var p_xml:PXml=PXml(facade.retrieveProxy(PXml.NAME));
+			var p_travel:PTravel=PTravel(facade.retrieveProxy(PTravel.NAME));
+			p_travel.getCamera().rotationY=p_xml.xml.Travel.@stop_rotationY;
+			p_travel.getCamera().rotationX=p_xml.xml.Travel.@stop_rotationX;
 			
 			loader.clear();
 			

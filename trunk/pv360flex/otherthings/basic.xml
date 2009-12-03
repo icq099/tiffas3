@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- edited with XMLSPY v5 U (http://www.xmlspy.com) by et8 (et8) -->
 <Basic>
-	<Travel start_scene="0">
+	<Travel start_scene="0" stop_rotationY="81.90">
 		<!--场景0-->
 		<Scene picture="img/博物馆门口 Panorama_cube.jpg">
 		</Scene>

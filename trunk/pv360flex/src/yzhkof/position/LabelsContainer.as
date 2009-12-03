@@ -9,7 +9,7 @@ package yzhkof.position
 		private var label1:PositionEffectContainer;
 		private var label2:PositionEffectContainer;
 		private var line:CutingLine=new CutingLine();
-		private const label1_size:int=30;
+		private const label1_size:int=35;
 		private const label2_size:int=15;
 		//private var label1_text:String;
 		//private var label2_text:String;
@@ -21,11 +21,11 @@ package yzhkof.position
 			addChild(label2);
 			addChild(line);
 			line.y=label1.height+5;
-			line.width=label1.width*1.5
+			line.width=label1.width*2;
 			label1.x=30;
 			label2.y=line.y+5;
 			label2.x=line.width-label2.width-30;
-			TweenLite.from(line,0.5,{alpha:0,x:-line.width});
+			TweenLite.from(line,2,{alpha:0,x:-line.width});
 		}
 		public function dispose():void{
 			label1.dispose();

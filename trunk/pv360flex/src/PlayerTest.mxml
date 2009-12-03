@@ -30,7 +30,7 @@
 			view_com.loadText("fuck",true);
 			view_com.width=700;
 			view_com.height=500
-			view_com.data
+			view_com.data;
 		}
 	]]>
 </mx:Script>

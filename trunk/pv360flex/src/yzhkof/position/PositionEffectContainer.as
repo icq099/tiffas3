@@ -21,7 +21,7 @@ package yzhkof.position
 		private var textfield:TextField=new TextField();
 		private var bitmap_arr:Array;//type bitmap;
 		private var textFormat:TextFormat;
-		private const offset:Number=5;
+		//private const offset:Number=5;
 		public function PositionEffectContainer(text:String,type:String="normal",size:int=43)
 		{
 			super();
@@ -43,7 +43,7 @@ package yzhkof.position
 			for(var i:int=0;i<bitmap_arr.length;i++){
 				addChild(Bitmap(bitmap_arr[i]));
 				if(i>0){
-					bitmap_arr[i].x=bitmap_arr[i-1].x+bitmap_arr[i-1].width+offset;
+					bitmap_arr[i].x=bitmap_arr[i-1].x+bitmap_arr[i-1].width;
 				}
 			}
 			for(i=0;i<bitmap_arr.length;i++){
