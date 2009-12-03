@@ -1,5 +1,7 @@
 package assets
 {
+	import communication.MainSystem;
+	
 	import flash.events.MouseEvent;
 	
 	import mx.core.Application;
@@ -12,7 +14,7 @@ package assets
 		}
 		private function previewButtonClickEvent(e:MouseEvent):void
 		{
-			Application.application.previewButton.enabled=false;
+			MainSystem.getInstance().runAPIDirect("showSample",["1"]);
 		}
 		private function startUpdateButtonClickEvent(e:MouseEvent):void
 		{

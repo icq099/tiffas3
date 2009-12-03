@@ -7,6 +7,8 @@ package assets.model
 	
 	import remoteobject.HotPointStruct;
 	
+//	import util.HotpointStructUtil;
+	
 	public class HotPointStructManager
 	{
 		private var hps:HotPointStruct=new HotPointStruct();
@@ -52,10 +54,7 @@ package assets.model
 		}
 		public function startToUpdate():void
 		{
-			var by:ByteArray=new ByteArray();
-			by.writeUTFBytes("fuckfsadfasdf")
-			hps.xml=by;
-			Application.application.fileup.upLoadHotPoint(hps);
+//			Application.application.fileup.upLoadHotPoint(HotpointStructUtil.trans(xml,hps,"标本名字"));
 			Application.application.fileup.addEventListener(ResultEvent.RESULT,function():void{
 				Application.application.startUpdateButton.enabled=true;
 			});
