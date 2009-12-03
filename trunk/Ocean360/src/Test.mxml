@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
-<mx:RemoteObject id="testByteArray" destination="TestByteArray"/>
 <mx:RemoteObject id="fileup" destination="FileUpLoader"/>
 	<mx:Script>
 		<![CDATA[
