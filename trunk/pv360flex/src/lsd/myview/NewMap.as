@@ -1,18 +1,18 @@
 package lsd.myview
 {
 	import communication.MainSystem;
-	
+
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	
+
 	import gs.TweenLite;
-	
+
 	import mx.effects.Tween;
 
 	public class NewMap extends Sprite
 	{
-        private var fadeTween:Tween;
+		private var fadeTween:Tween;
 		private var mapDirector:MapDirector=new MapDirector();
 		private var mapFrist:MapFrist=new MapFrist();
 		private var mapSecond:MapSecond=new MapSecond();
@@ -38,22 +38,29 @@ package lsd.myview
 
 			mapDirector.frist.addEventListener(MouseEvent.CLICK, changeFristMap);
 			mapDirector.second.addEventListener(MouseEvent.CLICK, changeSecondMap);
-			mapDirector.thrid.addEventListener(MouseEvent.CLICK,changeThridMap);
-			mapDirector.close.addEventListener(MouseEvent.CLICK,closeMap);
+			mapDirector.thrid.addEventListener(MouseEvent.CLICK, changeThridMap);
+			mapDirector.close.addEventListener(MouseEvent.CLICK, closeMap);
 			mapDirector.frist.addEventListener(MapChangeEvent.MAPCHANGEVENT, showMap);
 			mapDirector.second.addEventListener(MapChangeEvent.MAPCHANGEVENT, showMap);
 			mapDirector.thrid.addEventListener(MapChangeEvent.MAPCHANGEVENT, showMap);
 			this.addEventListener(MapChangeEvent.MAPCHANGEVENT, showMap);
-			
-			mapFrist.three.addEventListener(MouseEvent.CLICK, onechange);
-			mapSecond.two.addEventListener(MouseEvent.CLICK, twochange);
-			mapSecond.three.addEventListener(MouseEvent.CLICK,threechange);
-			mapSecond.four.addEventListener(MouseEvent.CLICK,fourchange);
-			mapSecond.five.addEventListener(MouseEvent.CLICK,fivechange);
-			mapThrid.one.addEventListener(MouseEvent.CLICK,sixchange);
-			mapThrid.two.addEventListener(MouseEvent.CLICK,sevenchange);
-			mapThrid.three.addEventListener(MouseEvent.CLICK,eightchange);
-
+			mapFrist.one.addEventListener(MouseEvent.CLICK, onechange);
+			mapFrist.two.addEventListener(MouseEvent.CLICK, twochange);
+			mapFrist.three.addEventListener(MouseEvent.CLICK, threechange);
+			mapFrist.four.addEventListener(MouseEvent.CLICK, fourchange);
+			mapFrist.five.addEventListener(MouseEvent.CLICK, fivechange);
+			mapSecond.one.addEventListener(MouseEvent.CLICK, sixchange);
+			mapSecond.two.addEventListener(MouseEvent.CLICK, sevenchange);
+			mapSecond.three.addEventListener(MouseEvent.CLICK, eightchange);
+			mapSecond.four.addEventListener(MouseEvent.CLICK, nightchange);
+			mapSecond.five.addEventListener(MouseEvent.CLICK, tenchange);
+			mapThrid.one.addEventListener(MouseEvent.CLICK, elevnchange);
+			mapThrid.two.addEventListener(MouseEvent.CLICK, twelfchange);
+			mapThrid.three.addEventListener(MouseEvent.CLICK, thirteenchange);
+			mapThrid.four.addEventListener(MouseEvent.CLICK, fifteenchange);
+			mapDirector.title.addEventListener(MouseEvent.MOUSE_DOWN, dragMovie);
+			mapDirector.title.addEventListener(MouseEvent.MOUSE_UP, dropMovie);
+			mapDirector.title.buttonMode=true;
 		}
 
 		private function changeFristMap(e:MouseEvent):void
@@ -69,104 +76,161 @@ package lsd.myview
 			mapDirector.second.dispatchEvent(new MapChangeEvent(MapChangeEvent.MAPCHANGEVENT, mapSecond));
 
 		}
-		
-		private function changeThridMap(e:MouseEvent):void{
-			
+
+		private function changeThridMap(e:MouseEvent):void
+		{
+
 			mapDirector.thrid.dispatchEvent(new MapChangeEvent(MapChangeEvent.MAPCHANGEVENT, mapThrid));
 		}
-		
-		private function closeMap(e:MouseEvent):void{
-			
+
+		private function closeMap(e:MouseEvent):void
+		{
+
 			dispatchEvent(new Event(Event.CLOSE));
 		}
-		
-		
-		
-		
+
+
+
+
 
 
 
 		private function onechange(e:MouseEvent):void
 		{
 
-			 MainSystem.getInstance().gotoScene(0);
+			MainSystem.getInstance().gotoScene(2);
 		}
 
 		private function twochange(e:MouseEvent):void
 		{
 
-			 MainSystem.getInstance().gotoScene(4);
-		}
-		
-		private function threechange(e:MouseEvent):void{
-			
-			 MainSystem.getInstance().gotoScene(2);
-		}
-		
-		private function fourchange(e:MouseEvent):void{
-			
-			MainSystem.getInstance().gotoScene(1);
-		}
-		private function fivechange(e:MouseEvent):void{
-			
 			MainSystem.getInstance().gotoScene(3);
 		}
-		
-		private function sixchange(e:MouseEvent):void{
-			
-			MainSystem.getInstance().gotoScene(5);
+
+		private function threechange(e:MouseEvent):void
+		{
+
+			MainSystem.getInstance().gotoScene(4);
 		}
-		
-		private function sevenchange(e:MouseEvent):void{
-			
-			MainSystem.getInstance().gotoScene(6);
+
+		private function fourchange(e:MouseEvent):void
+		{
+
+			MainSystem.getInstance().gotoScene(1);
 		}
-		
-		private function eightchange(e:MouseEvent):void{
-			
+
+		private function fivechange(e:MouseEvent):void
+		{
+
+			MainSystem.getInstance().gotoScene(3);
+		}
+
+		private function sixchange(e:MouseEvent):void
+		{
+
+			MainSystem.getInstance().gotoScene(8);
+		}
+
+		private function sevenchange(e:MouseEvent):void
+		{
+
+			MainSystem.getInstance().gotoScene(9);
+		}
+
+		private function eightchange(e:MouseEvent):void
+		{
+
 			MainSystem.getInstance().gotoScene(7);
 		}
 
+		private function nightchange(e:MouseEvent):void
+		{
+
+			MainSystem.getInstance().gotoScene(6);
+		}
+
+		private function tenchange(e:MouseEvent):void
+		{
+
+			MainSystem.getInstance().gotoScene(10);
+		}
+
+		private function elevnchange(e:MouseEvent):void
+		{
+
+			MainSystem.getInstance().gotoScene(11);
+		}
+
+		private function twelfchange(e:MouseEvent):void
+		{
+
+			MainSystem.getInstance().gotoScene(12);
+		}
+
+		private function thirteenchange(e:MouseEvent):void
+		{
+
+			MainSystem.getInstance().gotoScene(14);
+		}
+
+		private function fifteenchange(e:MouseEvent):void
+		{
+
+			MainSystem.getInstance().gotoScene(13);
+		}
+
+
+		private function dragMovie(event:MouseEvent):void
+		{
+			this.startDrag();
+		}
+
+		private function dropMovie(event:MouseEvent):void
+		{
+			this.stopDrag();
+		}
 
 
 
 
 		public function showMap(e:MapChangeEvent):void
 		{
-			
+
 			var d_width:Number=_forceWidth <= 0 ? e.sprite.width : _forceWidth;
-		    var d_height:Number=_forceHeight <= 0 ? e.sprite.height : _forceHeight;
-		    e.sprite.x=-d_width/2+135
+			var d_height:Number=_forceHeight <= 0 ? e.sprite.height : _forceHeight;
+			e.sprite.x=-d_width / 2 + 135
 			e.sprite.y=69;
 			if (this.numChildren > 1)
 			{
 				removeChildAt(1);
-				TweenLite.to(mapDirector.frist,0.2,{x:-d_width/2+140,y:50});
-				TweenLite.to(mapDirector.second,0.2,{x:-d_width/2+165,y:51});
-				TweenLite.to(mapDirector.thrid,0.2,{x:-d_width/2+190,y:50});
-				TweenLite.to(mapDirector.close,0.2,{x:d_width/2+120,y:20});
-				TweenLite.to(mapDirector.title,0.2,{width:d_width + 38});
-			    TweenLite.to(mapDirector.mapback,0.2,{height:d_height + 40,width:d_width + 42,onComplete:function():void{
-			 
-			 	
-			 	addChild(e.sprite);
-			 	e.sprite.alpha=0;
-			 	TweenLite.to(e.sprite,0.5,{alpha:1});
-                //e.sprite.alpha=1;
-			 
-		 }});
+				TweenLite.to(mapDirector.frist, 0.2, {x: -d_width / 2 + 140, y: 52});
+				TweenLite.to(mapDirector.second, 0.2, {x: -d_width / 2 + 170, y: 52});
+				TweenLite.to(mapDirector.thrid, 0.2, {x: -d_width / 2 + 200, y: 52});
+				TweenLite.to(mapDirector.close, 0.2, {x: d_width / 2 + 120, y: 20});
+				TweenLite.to(mapDirector.title, 0.2, {width: d_width + 47});
+				TweenLite.to(mapDirector.mapback, 0.2, {height: d_height + 40, width: d_width + 42, onComplete: function():void
+					{
+
+
+						addChild(e.sprite);
+						e.sprite.alpha=0;
+						TweenLite.to(e.sprite, 0.5, {alpha: 1});
+					//e.sprite.alpha=1;
+
+					}});
 
 			}
 			else
-			{   mapDirector.frist.x=-d_width/2+140;
-			    mapDirector.frist.y=50;
-			    mapDirector.second.x=-d_width/2+165;
-			    mapDirector.second.y=51;
-			    mapDirector.thrid.x=-d_width/2+190;
-			    mapDirector.thrid.y=50
-                mapDirector.close.x=d_width/2+120;
+			{
+				mapDirector.frist.x=-d_width / 2 + 140;
+				mapDirector.frist.y=52;
+				mapDirector.second.x=-d_width / 2 + 170;
+				mapDirector.second.y=52;
+				mapDirector.thrid.x=-d_width / 2 + 200;
+				mapDirector.thrid.y=52;
+				mapDirector.close.x=d_width / 2 + 120;
 				mapDirector.close.y=20;
-				mapDirector.title.width=d_width + 38;
+				mapDirector.title.width=d_width + 47;
 				mapDirector.mapback.height=d_height + 40;
 				mapDirector.mapback.width=d_width + 42;
 				addChild(e.sprite);

@@ -4,6 +4,7 @@ package lsd
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.filters.DropShadowFilter;
 	
 	import gs.TweenLite;
@@ -47,5 +48,6 @@ package lsd
 
 		   
 		}
+		
 	}
 }
