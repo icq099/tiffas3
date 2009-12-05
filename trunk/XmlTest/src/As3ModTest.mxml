@@ -20,7 +20,7 @@
 			private var bend:Bend;
 			private function init():void{
 				b=new BasicView(642,320,true,false,FreeCamera3D.TYPE);
-				p=new Plane(null,1000,2000,20,20);
+				p=new Plane(null,2000,1000,20,20);
 				p.material=new WireframeMaterial();
 				p.material.doubleSided=true;
 				addChild(Toolyzhkof.mcToUI(b));
@@ -28,6 +28,7 @@
 				b.startRendering();
 				m=new ModifierStack(new LibraryPv3d(),p);
 				bend=new Bend();
+				bend.diagAngle
 				m.addModifier(bend);
 				m.apply();
 				b.addEventListener(Event.ENTER_FRAME,function(e:Event):void{
