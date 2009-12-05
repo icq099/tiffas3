@@ -24,13 +24,10 @@
 			c.x=200;
 			c.y=100;
 			//p.x=-200;
-			p.width=300;
-			p.height=500;
+			p.width=500;
+			p.height=300;
 			//addChild(c);
 			//container.addChild(c);
-			c.addEventListener(FlexEvent.UPDATE_COMPLETE,function():void{
-				addChild(Toolyzhkof.mcToUI(new Bitmap(ToolBitmapData.getInstance().drawDisplayObject(c))));
-			})
 			
 		}
 		private function onRemove():void{

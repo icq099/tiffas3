@@ -16,6 +16,9 @@ package view.struct
 			super(material, width, height, segmentsW, segmentsH, initObject);
 			modifi=new ModifierStack(new LibraryPv3d(),this);
 			bend=new Bend();
+			if(height>width){
+				bend.switchAxes=true;
+			}
 			modifi.addModifier(bend);
 		}
 		public function set offset(value:Number):void{
