@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" clipContent="false">
+	<mx:Script>
+		<![CDATA[
+			import yzhkof.Toolyzhkof;
+			import mx.controls.Button;
+			import mx.containers.Canvas;
+			import mx.containers.Panel;
+			private var c:Canvas=new Canvas();
+			private var p:Panel=new Panel();
+			private var b:Button=new Button();
+			private function init():void{
+				c.clipContent=false;
+				p.addChild(b);
+				c.addChild(p);
+				addChild(c);
+				p.width=500;
+				p.height=300;
+				p.x=-100;
+				c.visible=false;
+			}
+			private function onDraw():void{
+				try{
+					container.removeChildAt(0);
+				}catch(e:Error){
+				}
+				trace(c.getBounds(c),c.width);
+				container.addChild(Toolyzhkof.mcToUI(new Bitmap(drawDisplayObject(c))));
+				
+			}
+			private function drawDisplayObject(obj:DisplayObject=null):BitmapData{
+				var bitmapdata:BitmapData=new BitmapData(obj.width,obj.height,true,0);
+				var rect:Rectangle=obj.getBounds(obj);
+				var matrix:Matrix=new Matrix();
+				matrix.translate(Number(txt_x.text),Number(txt_y.text));
+				bitmapdata.draw(obj,matrix);
+				return bitmapdata;
+			}
+		]]>
+	</mx:Script>
+	<mx:Canvas id="container" right="10" left="10" top="10" bottom="72" borderStyle="inset">
+	</mx:Canvas>
+	<mx:TextInput id="txt_y"  x="295.5" width="73" bottom="21"/>
+	<mx:TextInput id="txt_x"  x="177.5" width="73" bottom="21"/>
+	<mx:Label x="150.5" text="x" bottom="23"/>
+	<mx:Label x="268.5" text="y" bottom="23"/>
+	<mx:Button x="59.5" label="draw" bottom="21" click="onDraw()"/>
+</mx:Application>
