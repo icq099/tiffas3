@@ -24,7 +24,9 @@ package yzhkof
 		
 			var bitmapdata:BitmapData=new BitmapData(obj.width,obj.height,true,0);
 			var rect:Rectangle=obj.getBounds(obj);
-			bitmapdata.draw(obj,obj.transform.matrix,obj.transform.colorTransform);
+			var matrix:Matrix=new Matrix();
+			matrix.translate(-rect.x,-rect.y);
+			bitmapdata.draw(obj,matrix);
 			return bitmapdata;
 		
 		}
