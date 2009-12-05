@@ -1,7 +1,8 @@
 package yzhkof.effect
 {
 	import mx.core.UIComponent;
-	import mx.events.FlexEvent;
+	
+	import yzhkof.util.HashMap;
 	
 	public class MyEffect
 	{
@@ -9,26 +10,20 @@ package yzhkof.effect
 		{
 		}
 		public static function addChild(effect:EffectBase):void{
-			var doFun:Function=function():void{
-				doEffect(effect,function():void{
-					effect.effector.visible=true;
-				});
-			}
 			effect.container.addChild(effect.effector);
 			effect.effector.visible=false;
 			if(effect.effector is UIComponent){
-				effect.effector.addEventListener(FlexEvent.CREATION_COMPLETE,doFun);
-			}else{
-				doFun();
+				UIComponent(effect.effector).validateNow();
 			}
-		}
-		public static function removeChild(effect:EffectBase):void{
-			effect.effector.visible=false;
 			doEffect(effect,function():void{
-				effect.container.removeChild(effect.effector);
+				effect.effector.visible=true;
 			});
 		}
-		private static function doEffect(effect:EffectBase,onComplete:Function):void{
+		public static function removeChild(effect:EffectBase):void{
+			effect.container.removeChild(effect.effector);
+			doEffect(effect);
+		}
+		private static function doEffect(effect:EffectBase,onComplete:Function=null):void{
 			effect.onEffectComplete=onComplete;
 			effect.start();
 		}

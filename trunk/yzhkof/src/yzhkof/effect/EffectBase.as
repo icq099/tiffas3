@@ -5,8 +5,11 @@ package yzhkof.effect
 	
 	import mx.core.FlexSprite;
 	
+	import yzhkof.util.HashMap;
+	
 	public class EffectBase
 	{
+		protected static const effector_map:HashMap=new HashMap();//<displayObject,EffectBase>
 		protected var _onEffectComplete:Function;
 		protected var _container:DisplayObjectContainer;//效果的容器
 		protected var _effector:DisplayObject;//效果的发起者
@@ -18,8 +21,21 @@ package yzhkof.effect
 			_container is FlexSprite?isFlex=true:isFlex=false;
 		}
 		public function start():void{
+			if(effector_map.containsKey(effector)){
+				EffectBase(effector_map.getValue(effector)).cancel();
+			}
+			effector_map.put(effector,this);
 			onEffectStart();
 		}
+		/**
+		 * 当效果结束时手动触发; 
+		 * 
+		 */		
+		public function cancel():void{
+			effector_map.remove(effector);
+			onEffectComplete();
+		}
+		//当效果开始时触发;
 		protected function onEffectStart():void{
 		}
 		public function set onEffectComplete(value:Function):void{
