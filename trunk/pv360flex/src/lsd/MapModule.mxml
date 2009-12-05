@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:Script>
+		<![CDATA[
+			import yzhkof.Toolyzhkof;
+			private function init():void{
+				addChild(Toolyzhkof.mcToUI(new Map()));
+			}
+		]]>
+	</mx:Script>
+</mx:Module>
