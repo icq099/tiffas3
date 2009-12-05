@@ -2,6 +2,7 @@ package other
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.geom.Rectangle;
 	
 	import gs.TweenLite;
 	
@@ -41,11 +42,12 @@ package other
 			this.easeIn=easeIn
 		}
 		protected override function onEffectStart():void{
-			view_port=new BasicView(effector.width*2,effector.height*2,false);
+			var rect:Rectangle=effector.getBounds(effector);
+			view_port=new BasicView(rect.width*2,rect.height*2,false);
 			material=new BitmapMaterial(effector_bitmap.bitmapData);
 			//material=new WireframeMaterial();
 			material.doubleSided=true;
-			plane=new BendPlane(material,effector.width,effector.height,10,10);
+			plane=new BendPlane(material,rect.width,rect.height,10,10);
 			plane.offset=0;
 			view_port.scene.addChild(plane);
 			if(isFlex){
@@ -54,8 +56,8 @@ package other
 				container.addChild(view_port);
 			}
 			view_port.startRendering();
-			view_port.x=effector.x-effector.width/2;
-			view_port.y=effector.y-effector.height/2;
+			view_port.x=effector.x+rect.x-rect.width/2;
+			view_port.y=effector.y+rect.y-rect.height/2;
 			plane.angle=angle;
 			plane.force=startForce;
 			TweenLite.to(plane,duration,{force:stopForce,onComplete:function():void{
