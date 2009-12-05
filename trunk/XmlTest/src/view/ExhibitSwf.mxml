@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" label="演示动画" clipContent="false" implements="lsd.IPlayerBasic">
+	
+	<mx:Script>
+		<![CDATA[
+			import gs.TweenLite;
+			import mx.core.UIComponent;
+			import yzhkof.Toolyzhkof;
+			import yzhkof.MyGraphy;
+			import mx.controls.SWFLoader;
+			
+			private static var swfLoaded:Object=new Object();
+			private var swfLoader:SWFLoader;
+			private var loading:UIComponent;
+			
+			public function loadSwf(url:Object,save:Boolean=true,width:Number=-1,height:Number=-1):void{
+				
+				if(swfLoaded[url]!=null){
+
+					addChild(swfLoaded[url]);
+				
+				}else{
+					
+					swfLoader=new SWFLoader()
+					
+					swfLoader.source=url;
+					
+					if(width>0){
+							swfLoader.width=width;
+						}
+						if(height>0){
+							swfLoader.height=height;
+						}
+					
+					if(save){
+						
+						swfLoaded[url]=swfLoader;
+						
+					}
+					loading=Toolyzhkof.mcToUI(new LoadingSimpleRota());
+					
+					addChild(loading);
+					
+					TweenLite.from(loading,2,{alpha:0});
+					
+					loading.setStyle("horizontalCenter",0);
+					loading.setStyle("verticalCenter",0);
+					
+					swfLoader.addEventListener(Event.COMPLETE,onLoadComplete);					
+					
+				}
+			
+			}
+			private function onLoadComplete(e:Event):void{
+				
+				swfLoader.setStyle("horizontalCenter",0)
+				swfLoader.setStyle("verticalCenter",0)
+				//swfLoader.x=(this.width-swfLoader.width)/2;
+				//swfLoader.y=(this.height-swfLoader.height)/2;
+				addChild(swfLoader);
+				removeChild(loading);
+			
+			}
+			public function stopAll():void{
+				
+				swfLoader.unloadAndStop(true);
+			
+			}
+			
+		]]>
+	</mx:Script>
+	
+</mx:Canvas>
