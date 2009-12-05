@@ -1,6 +1,8 @@
 package yzhkof
 {
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
+	import flash.text.TextField;
 	
 	public class MyGraphy
 	{
@@ -22,6 +24,11 @@ package yzhkof
 			return re_obj;
 			
 		}
-
+		/* public static function getTextBitmapData(textField:TextField):BitmapData{
+			var bitmap:BitmapData;
+			bitmap=new BitmapData(textField.width,textField.height,true,0x00000000);
+			bitmap.draw(textField,textField.transform.matrix);
+			return bitmap;
+		} */
 	}
 }

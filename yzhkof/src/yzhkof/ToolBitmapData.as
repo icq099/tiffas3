@@ -22,9 +22,9 @@ package yzhkof
 		}
 		public function drawDisplayObject(obj:DisplayObject=null):BitmapData{
 		
-			var bitmapdata:BitmapData=new BitmapData(obj.width,obj.height,true,0x00FFFFFF);
+			var bitmapdata:BitmapData=new BitmapData(obj.width,obj.height,true,0);
 			var rect:Rectangle=obj.getBounds(obj);
-			bitmapdata.draw(obj,new Matrix(1,0,0,1,-rect.x,-rect.y),obj.transform.colorTransform);
+			bitmapdata.draw(obj,null,obj.transform.colorTransform);
 			return bitmapdata;
 		
 		}
