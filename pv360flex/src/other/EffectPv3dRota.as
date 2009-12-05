@@ -18,10 +18,10 @@ package other
 
 	public class EffectPv3dRota extends EffectBitmapBase
 	{
-		public static const TYPE_LEFT:Number=0;
-		public static const TYPE_RIGHT:Number=Math.PI;
-		public static const TYPE_UP:Number=-Math.PI/2;
-		public static const TYPE_DOWN:Number=Math.PI/2;
+		public static const ANGLE_LEFT:Number=0;
+		public static const ANGLE_RIGHT:Number=Math.PI;
+		public static const ANGLE_UP:Number=-Math.PI/2;
+		public static const ANGLE_DOWN:Number=Math.PI/2;
 		private var view_port:BasicView;
 		private var plane:BendPlane;
 		private var material:MaterialObject3D;
@@ -30,13 +30,15 @@ package other
 		private var stopForce:Number;
 		private var duration:Number;
 		private var ui_com:UIComponent;
-		public function EffectPv3dRota(container:DisplayObjectContainer, effector:DisplayObject,duration:Number=1,angle:Number=0,startForce:Number=0.5,stopForce:Number=0)
+		private var easeIn:Boolean;
+		public function EffectPv3dRota(container:DisplayObjectContainer, effector:DisplayObject,duration:Number=1,easeIn:Boolean=true,angle:Number=0,startForce:Number=0.5,stopForce:Number=0)
 		{
 			super(container, effector);
 			this.angle=angle;
 			this.startForce=startForce;
 			this.stopForce=stopForce;
 			this.duration=duration;
+			this.easeIn=easeIn
 		}
 		protected override function onEffectStart():void{
 			view_port=new BasicView(effector.width*2,effector.height*2,false);
@@ -56,17 +58,29 @@ package other
 			view_port.y=effector.y-effector.height/2;
 			plane.angle=angle;
 			plane.force=startForce;
-			TweenLite.to(plane,duration,{force:stopForce});
-			TweenLite.from(view_port,duration,{alpha:0,onComplete:function():void{
+			TweenLite.to(plane,duration,{force:stopForce,onComplete:function():void{
+				cancel();
+			}});
+			if(easeIn){
+				TweenLite.from(view_port,duration,{alpha:0});
+			}else{
+				TweenLite.to(view_port,duration,{alpha:0});
+			}
+		}
+		public override function cancel():void{
+			try{
 				if(isFlex){
 					container.removeChild(ui_com);
 				}else{
 					container.removeChild(view_port);
 				}
-				view_port.stopRendering();
-				material.destroy();
-				onEffectComplete();
-			}});
+			}catch(e:Error){
+			}
+			TweenLite.killTweensOf(plane);
+			TweenLite.killTweensOf(view_port);
+			view_port.stopRendering();
+			material.destroy();
+			super.cancel();
 		}
 		
 	}
