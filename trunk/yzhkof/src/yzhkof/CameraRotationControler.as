@@ -34,6 +34,8 @@ package  yzhkof
 			this.weak_reference=weak_reference;
 			this.rota_speed=rota_speed;
 			this.tween_speed=tween_speed;
+			goto_rotaX=camera.rotationX;
+			goto_rotaY=camera.rotationY;
 			enable();
 			
 		}
