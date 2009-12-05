@@ -1,16 +1,22 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.events.ProgressEvent;
+	
+	import yzhkof.util.EventProxy;
 
 	public class DebugTest extends Sprite
 	{
 		//yzhkof::debugging
 		public function DebugTest()
 		{
-			super();
-			var a:Object=new Object
+			var a:A=new A();
 			
-			trace(Number(a.a))
+			this.addEventListener(ProgressEvent.PROGRESS,function(e:ProgressEvent):void{
+				trace(e.bytesLoaded);
+			});
+			//EventProxy.proxy(a,this,[ProgressEvent.PROGRESS]);
+			a.o2();
 
 		}
 		
