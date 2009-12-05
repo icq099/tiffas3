@@ -6,6 +6,7 @@ package
 	{
 		public function XmlTest()
 		{
+		
 		}
 		
 	}
