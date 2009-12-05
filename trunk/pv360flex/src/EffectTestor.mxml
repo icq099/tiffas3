@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+<mx:Script>
+	<![CDATA[
+		import yzhkof.ToolBitmapData;
+		import yzhkof.Toolyzhkof;
+		import other.EffectPv3dRota;
+		import yzhkof.effect.MyEffect;
+		import mx.containers.Panel;
+		private function init():void{
+			var p:Panel=new Panel();
+			//p.initialize();
+			p.width=500;
+			p.height=500;
+			//addChild(Toolyzhkof.mcToUI(new Bitmap(ToolBitmapData.getInstance().drawDisplayObject(p))));
+			MyEffect.addChild(new EffectPv3dRota(this,p,1,EffectPv3dRota.TYPE_DOWN));
+		}
+	]]>
+</mx:Script>
+	
+</mx:Application>
