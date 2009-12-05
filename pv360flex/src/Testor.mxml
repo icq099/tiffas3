@@ -2,12 +2,26 @@
 <mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.Button;
+			import gs.TweenLite;
+			import yzhkof.ToolBitmapData;
+			import other.EffectPv3dRota;
+			import yzhkof.effect.MyEffect;
+			import mx.containers.Panel;
 			import yzhkof.position.LabelsContainer;
 			import yzhkof.Toolyzhkof;
 			import yzhkof.position.PositionEffectContainer;
 			private function init():void{
-				var t:LabelsContainer=new LabelsContainer("广东海洋大学","goud haiyang");;
+				var t:LabelsContainer=new LabelsContainer("广东海洋大学","goud haiyang");
 				addChild(Toolyzhkof.mcToUI(t));
+				/* var a:Button=new Button();
+				a.width=500;
+				a.height=500;
+				a.x=600;
+				addChild(a);
+				//MyEffect.addChild(new EffectPv3dRota(this,a));
+				TweenLite.delayedCall(2,function():void{addChild(Toolyzhkof.mcToUI(new Bitmap(ToolBitmapData.getInstance().drawDisplayObject(a))));}); */
+				
 			}
 		]]>
 	</mx:Script>
