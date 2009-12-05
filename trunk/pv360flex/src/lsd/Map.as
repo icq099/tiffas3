@@ -4,12 +4,13 @@ package lsd
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.filters.DropShadowFilter;
 	
-	import gs.TweenLite;
-	
 	import lsd.myview.NewMap;
+	
+	import other.EffectPv3dRota;
+	
+	import yzhkof.effect.MyEffect;
 
 	public class Map extends Sprite
 	{
@@ -24,30 +25,16 @@ package lsd
 			a.addEventListener(Event.CLOSE,onClose);
 			
 		}
-		
 		private function onClose(e:Event):void{
-			
 			 removeMap();
 		}
 		private function showMap():void{
-			
-			addChild(a);
-			a.alpha=0;
-			TweenLite.to(a, 1, {alpha: 1});
+			MyEffect.addChild(new EffectPv3dRota(this,a,1,true,EffectPv3dRota.ANGLE_DOWN));
 			
 		}
 		private function removeMap():void{
 			
-			TweenLite.to(a,0.5,{alpha:0,onComplete:remove});
+			MyEffect.removeChild(new EffectPv3dRota(this,a,1,false,-1.1,0,-0.5));
 		}
-		
-		
-		private function remove():void{
-                
-               removeChild(a);
-
-		   
-		}
-		
 	}
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<actionScriptProperties mainApplicationPath="EffectTestor.mxml" version="3">
+<actionScriptProperties mainApplicationPath="pv360flex.mxml" version="3">
 <compiler additionalCompilerArguments="-locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="10.0.0" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
 <compilerSourcePath/>
 <libraryPath defaultLinkType="1">
@@ -22,13 +22,13 @@
 <application path="EffectTestor.mxml"/>
 </applications>
 <modules>
-<module application="src/pv360flex.mxml" destPath="FishPanelModule.swf" optimize="true" sourcePath="src/lxf/SamplePanel/FishPanelModule.as"/>
-<module application="src/pv360flex.mxml" destPath="MapModule.swf" optimize="true" sourcePath="src/lsd/MapModule.as"/>
-<module application="src/pv360flex.mxml" destPath="CenterPanelModule.swf" optimize="true" sourcePath="src/lxf/CenterPanel/CenterPanelModule.as"/>
+<module application="src/pv360flex.mxml" destPath="DemoSpriteModule.swf" optimize="true" sourcePath="src/yzhkof/demo/DemoSpriteModule.as"/>
 <module application="src/pv360flex.mxml" destPath="yzhkof/sample/SampleModule.swf" optimize="true" sourcePath="src/yzhkof/sample/SampleModule.mxml"/>
 <module application="src/pv360flex.mxml" destPath="yzhkof/test/TestModule.swf" optimize="true" sourcePath="src/yzhkof/test/TestModule.mxml"/>
-<module application="src/pv360flex.mxml" destPath="DemoSpriteModule.swf" optimize="true" sourcePath="src/yzhkof/demo/DemoSpriteModule.as"/>
 <module application="src/pv360flex.mxml" destPath="yzhkof/position/PositionModule.swf" optimize="true" sourcePath="src/yzhkof/position/PositionModule.mxml"/>
+<module application="src/pv360flex.mxml" destPath="CenterPanelModule.swf" optimize="true" sourcePath="src/lxf/CenterPanel/CenterPanelModule.as"/>
+<module application="src/pv360flex.mxml" destPath="FishPanelModule.swf" optimize="true" sourcePath="src/lxf/SamplePanel/FishPanelModule.as"/>
+<module application="src/pv360flex.mxml" destPath="lsd/MapModule.swf" optimize="true" sourcePath="src/lsd/MapModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>
