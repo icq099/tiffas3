@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:XML id="xml" xmlns="">
+	<plugin>
+		<plugin id="a" url="lxf\CenterPanel\CenterPanelModule.swf" preLoad="0" visible="1" bottom="100" horizontalCenter="0"/>
+		<plugin id="b" url="lsd\MapModule.swf" preLoad="0" visible="1" right="500" top="0"/>
+		<plugin id="c" url="yzhkof\test\testModule.swf" preLoad="0" visible="1" right="500" top="0"/>
+    </plugin>
+	</mx:XML>
+	<mx:Panel id="s" width="500" height="200">
+	</mx:Panel>
+	<mx:Script>
+		<![CDATA[
+			import other.EffectPv3dRota;
+			import yzhkof.effect.MyEffect;
+			import gs.TweenLite;
+			import mx.events.FlexEvent;
+			import yzhkof.Toolyzhkof;
+			import yzhkof.ToolBitmapData;
+			private function init():void{
+				/* 
+				//trace(xml.plugin.(@id=="a").toXMLString());
+				trace(xml);
+				i.addEventListener(IOErrorEvent.IO_ERROR,function(e:IOErrorEvent):void{
+				trace(e)
+				})
+				i.source="ff.jpg"; */
+				/* var n_xml:XML=new XML("<plugin/>");
+				n_xml.appendChild(new XML("<fuck/>"));
+				n_xml.appendChild(new XML("<fuck/>"));
+				n_xml.appendChild(new XML("<fuck/>"));
+				n_xml.@id="d";
+				n_xml.@url="fdflk/dfdf/dfddf";
+				xml.plugin[xml.plugin.length()]=n_xml;
+				trace(n_xml,xml) */
+				var v:TestView=new TestView();
+				v.x=500;
+				/* addChild(v);
+				v.visible=false;
+				s.x=500;
+				var b:BitmapData=new BitmapData(500,500);
+				b.draw(s);
+				var bt:Bitmap=new Bitmap(b);
+				//addChild(Toolyzhkof.mcToUI(bt));
+				addChild(Toolyzhkof.mcToUI(new Bitmap(ToolBitmapData.getInstance().drawDisplayObject(v)))); */
+				MyEffect.addChild(new EffectPv3dRota(this,v));
+			 
+			}
+		]]>
+	</mx:Script>
+	<mx:Image id="i">
+		
+	</mx:Image>
+</mx:Application>

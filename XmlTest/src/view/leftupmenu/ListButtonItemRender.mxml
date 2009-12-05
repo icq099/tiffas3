@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas creationComplete="init()" dataChange="init()" horizontalScrollPolicy="off" verticalScrollPolicy="off" xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Label id="show_label" left="30" right="30" textAlign="left"/>
+	<mx:UIComponent id="uicom_arrow" left="10" verticalCenter="-5"/>
+	<mx:UIComponent id="uicom_go" right="20" verticalCenter="-5"/>
+	<mx:UIComponent creationComplete="addLineIcon()" id="uicom_line" left="20" right="40" bottom="2"/>
+	<mx:Script>
+		<![CDATA[
+			import view.leftupmenu.Event.LeftUpMenuEvent;
+			import yzhkof.Toolyzhkof;
+			private function init():void{
+				
+				try{
+					
+					show_label.text=data.@label;
+					show_label.toolTip=data.@label;
+					if(int(data.@hot)==1){
+						
+						uicom_arrow.addChild(Toolyzhkof.mcToUI(new IconHot()));
+						
+					}else{
+						
+						uicom_arrow.addChild(Toolyzhkof.mcToUI(new SubMenuItemIcon()));
+					
+					}
+					if(data.@go.length()>0){
+						
+						uicom_go.addChild(Toolyzhkof.mcToUI(new BottonGo()));
+						uicom_go.addEventListener(MouseEvent.CLICK,onGoClick)
+					
+					}
+					
+				}catch(e:Error){
+				
+				}
+		
+			}
+			/* private function addArrowIcon():void{
+				
+				
+			
+			} */
+			private function onGoClick(e:Event):void{
+				
+				dispatchEvent(new LeftUpMenuEvent(LeftUpMenuEvent.GO_CLICK,null,int(data.@go)));
+			
+			}
+			private function addLineIcon():void{
+				
+				uicom_line.addChild(Toolyzhkof.mcToUI(new SubMenuItemLine()));
+			
+			}
+		]]>
+	</mx:Script>
+</mx:Canvas>

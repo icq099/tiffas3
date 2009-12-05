@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:Script>
+		<![CDATA[
+			import org.papervision3d.materials.MovieMaterial;
+			import mx.binding.utils.BindingUtils;
+			import yzhkof.Toolyzhkof;
+			import com.as3dmod.ModifierStack;
+			import com.as3dmod.modifiers.Bend;
+			import com.as3dmod.plugins.pv3d.LibraryPv3d;
+			
+			import org.papervision3d.cameras.FreeCamera3D;
+			import org.papervision3d.materials.WireframeMaterial;
+			import org.papervision3d.objects.primitives.Plane;
+			import org.papervision3d.view.BasicView;
+			
+			private var b:BasicView;
+			private var p:Plane;
+			private var m:ModifierStack;
+			private var bend:Bend;
+			private function init():void{
+				b=new BasicView(642,320,true,false,FreeCamera3D.TYPE);
+				p=new Plane(null,1000,2000,20,20);
+				p.material=new WireframeMaterial();
+				p.material.doubleSided=true;
+				addChild(Toolyzhkof.mcToUI(b));
+				b.scene.addChild(p);
+				b.startRendering();
+				m=new ModifierStack(new LibraryPv3d(),p);
+				bend=new Bend();
+				m.addModifier(bend);
+				m.apply();
+				b.addEventListener(Event.ENTER_FRAME,function(e:Event):void{
+					m.apply();
+				});
+				BindingUtils.bindProperty(bend,"force",force_slider,"value");
+				BindingUtils.bindProperty(bend,"offset",offset_slider,"value");
+				BindingUtils.bindProperty(bend,"angle",angle_slider,"value");
+				BindingUtils.bindProperty(p,"rotationX",x_slider,"value");
+				BindingUtils.bindProperty(p,"rotationY",y_slider,"value");
+				BindingUtils.bindProperty(p,"rotationZ",z_slider,"value");
+			}
+		]]>
+	</mx:Script>
+	<mx:VSlider id="force_slider" value="0" right="123" bottom="10" minimum="-1" maximum="1" labels="force"/>
+	<mx:VSlider id="offset_slider" value="0" right="60" bottom="10" minimum="-1" maximum="1" labels="offset"/>
+	<mx:VSlider id="angle_slider" value="0" right="10" bottom="10" minimum="-2" maximum="2" labels="angle"/>
+	<mx:VSlider id="x_slider" value="0" bottom="10" minimum="0" maximum="360" labels="rotationX" left="-13" width="73"/>
+	<mx:VSlider id="y_slider" value="0" bottom="10" minimum="0" maximum="360" labels="rotationY" left="70" width="73"/>
+	<mx:VSlider id="z_slider" value="0" bottom="10" minimum="0" maximum="360" labels="rotationZ" left="151" width="73"/>
+</mx:Application>
