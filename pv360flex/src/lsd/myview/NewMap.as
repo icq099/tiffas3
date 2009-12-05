@@ -1,13 +1,13 @@
 package lsd.myview
 {
 	import communication.MainSystem;
-
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-
+	
 	import gs.TweenLite;
-
+	
 	import mx.effects.Tween;
 
 	public class NewMap extends Sprite
@@ -61,6 +61,7 @@ package lsd.myview
 			mapDirector.title.addEventListener(MouseEvent.MOUSE_DOWN, dragMovie);
 			mapDirector.title.addEventListener(MouseEvent.MOUSE_UP, dropMovie);
 			mapDirector.title.buttonMode=true;
+			
 		}
 
 		private function changeFristMap(e:MouseEvent):void
@@ -206,7 +207,7 @@ package lsd.myview
 				TweenLite.to(mapDirector.frist, 0.2, {x: -d_width / 2 + 140, y: 52});
 				TweenLite.to(mapDirector.second, 0.2, {x: -d_width / 2 + 170, y: 52});
 				TweenLite.to(mapDirector.thrid, 0.2, {x: -d_width / 2 + 200, y: 52});
-				TweenLite.to(mapDirector.close, 0.2, {x: d_width / 2 + 120, y: 20});
+				TweenLite.to(mapDirector.close, 0.2, {x: d_width / 2 + 140, y: 20});
 				TweenLite.to(mapDirector.title, 0.2, {width: d_width + 47});
 				TweenLite.to(mapDirector.mapback, 0.2, {height: d_height + 40, width: d_width + 42, onComplete: function():void
 					{
@@ -228,7 +229,7 @@ package lsd.myview
 				mapDirector.second.y=52;
 				mapDirector.thrid.x=-d_width / 2 + 200;
 				mapDirector.thrid.y=52;
-				mapDirector.close.x=d_width / 2 + 120;
+				mapDirector.close.x=d_width / 2 + 140;
 				mapDirector.close.y=20;
 				mapDirector.title.width=d_width + 47;
 				mapDirector.mapback.height=d_height + 40;
