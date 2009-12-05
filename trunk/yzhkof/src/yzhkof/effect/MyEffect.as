@@ -13,7 +13,9 @@ package yzhkof.effect
 				doEffect(effect,function():void{
 					effect.effector.visible=true;
 				});
-				UIComponent(effect.effector).removeEventListener(FlexEvent.UPDATE_COMPLETE,doFun);
+				if(effect.effector is UIComponent){
+					UIComponent(effect.effector).removeEventListener(FlexEvent.UPDATE_COMPLETE,doFun);
+				}
 			}
 			if(effect.effector is UIComponent){
 				UIComponent(effect.effector).addEventListener(FlexEvent.UPDATE_COMPLETE,doFun);
