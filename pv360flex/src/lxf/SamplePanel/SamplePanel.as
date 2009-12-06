@@ -9,6 +9,10 @@ package lxf.SamplePanel{
 	import flash.filters.DropShadowFilter;
 	
 	import gs.TweenLite;
+	
+	import other.EffectPv3dRota;
+	
+	import yzhkof.effect.MyEffect;
 
 	public class SamplePanel extends Sprite
 	{
@@ -37,12 +41,13 @@ package lxf.SamplePanel{
 		{
 			test=new SampleList();
 			test.addEventListener(SampleLoadedEvent.sampleLoaded,traceStr);
-			TweenLite.to(fpp, 1, {alpha: 1});
+			//TweenLite.to(fpp, 1, {alpha: 1});
+			MyEffect.addChild(new EffectPv3dRota(this,fpp,1,true,1));
 			addChild(fpp);
 		}
 		private function removeishPanel():void
 		{
-			TweenLite.to(fpp,0.5,{alpha:0,onComplete:removeList});
+			MyEffect.removeChild(new EffectPv3dRota(this,fpp,1,false,-0.8,0,-0.2));
 		}
 		private function removeList():void
 		{
