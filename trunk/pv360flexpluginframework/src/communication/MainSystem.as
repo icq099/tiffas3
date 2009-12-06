@@ -185,5 +185,26 @@ package communication
 		public function get currentScene():int{
 			return _currentScene;
 		}
+		/**
+		 * 开始渲染场景 
+		 * 
+		 */		
+		public function startRender():void{
+			runAPIDirect("startRender");
+		}
+		/**
+		 * 停止渲染场景 
+		 * 
+		 */		
+		public function stopRender():void{
+			runAPIDirect("stopRender");
+		}
+		/**
+		 * 更新单幅画面 
+		 * 
+		 */		
+		public function updataScene():void{
+			runAPIDirect("updataScene");
+		}
 	}
 }
