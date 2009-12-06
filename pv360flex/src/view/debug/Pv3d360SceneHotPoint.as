@@ -5,11 +5,11 @@ package view.debug
 	import org.papervision3d.core.utils.Mouse3D;
 	import org.papervision3d.events.InteractiveScene3DEvent;
 	
-	import view.Pv3d360Scene;
+	import view.Pv3d360SceneCompass;
 	
 	import yzhkof.debug.debugTrace;
 
-	public class Pv3d360SceneHotPoint extends Pv3d360Scene
+	public class Pv3d360SceneHotPoint extends Pv3d360SceneCompass
 	{
 		private var _mouse:Mouse3D;
 		public function Pv3d360SceneHotPoint(czoom:Number=11, pdetail:Number=50)
@@ -29,7 +29,7 @@ package view.debug
 			material.interactive=true;
 		}
 		private function onMouseClick(e:Event):void{
-			debugTrace("x=\""+_mouse.x+"\"","y=\""+_mouse.y+"\"","z=\""+_mouse.z+"\"");	
+			debugTrace("x=\""+int(_mouse.x)+"\"","y=\""+int(_mouse.y)+"\"","z=\""+int(_mouse.z)+"\"");	
 		}
 	}
 }
