@@ -29,7 +29,7 @@ package view.debug
 			material.interactive=true;
 		}
 		private function onMouseClick(e:Event):void{
-			debugTrace("x:"+_mouse.x,"y:"+_mouse.y,"z:"+_mouse.z);	
+			debugTrace("x=\""+_mouse.x+"\"","y=\""+_mouse.y+"\"","z=\""+_mouse.z+"\"");	
 		}
 	}
 }
