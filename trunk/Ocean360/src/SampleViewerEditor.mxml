@@ -2,11 +2,14 @@
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()"  backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FDFDFD, #FDFDFD]" width="800" height="600" xmlns:ns1="view.*">
 	<mx:Style
 		source="/assets/style/style.css"/>
+		<mx:Style source="css/TabNavigatorCSS.css"/>
 <mx:Script
 	>
 	<![CDATA[
+		import assets.model.HotPointStructManager;
 		import mx.core.UIComponent;
 		public var sp:SamplePanel;
+		public var hpsm:HotPointStructManager=new HotPointStructManager();//所要上传的数据结构
 		private function init():void
 		{
 			sp=new SamplePanel();
@@ -23,6 +26,4 @@
 	<mx:Button x="182" y="166" label="开始上传" id="startUpdateButton" width="213" height="40"/>
 	<mx:Button x="182" y="100" label="预览" id="previewButton" width="213" height="40"/>
 	<mx:RemoteObject id="fileup" destination="FileUpLoader"/>
-	<ns1:PopMenusFlexView x="418" y="100" id="popmenu">
-	</ns1:PopMenusFlexView>
 </mx:Application>
