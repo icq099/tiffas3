@@ -6,6 +6,7 @@ package view
 		public function Pv3d360SceneCompass(czoom:Number=11, pdetail:Number=50)
 		{
 			super(czoom, pdetail);
+			compass_visible=false;
 		}
 		public function set compass_visible(value:Boolean):void{
 			_compass_visible=value
