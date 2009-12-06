@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas initialize="init()" horizontalScrollPolicy="off" verticalScrollPolicy="off" width="100%" height="100%" xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:TileList id="tilelist" itemRenderer="view.leftupmenu.ListButtonItemRender" horizontalScrollPolicy="off" verticalScrollPolicy="off" columnCount="2" columnWidth="289" rowHeight="30" width="100%" height="100%" xmlns:mx="http://www.adobe.com/2006/mxml" left="0" right="0" top="0" bottom="0">
+	</mx:TileList>
+	<mx:Script>
+		<![CDATA[
+			import view.leftupmenu.Event.LeftUpMenuEvent;
+			import mx.events.ListEvent;
+			private var is_go_click:Boolean=false;
+			private function init():void{
+				
+				//tilelist.doubleClickEnabled=true;
+				tilelist.addEventListener(ListEvent.ITEM_CLICK,itemClickHandler);
+				tilelist.addEventListener(LeftUpMenuEvent.GO_CLICK,onGoClick);
+			
+			}
+			private function itemClickHandler(e:ListEvent):void{
+				
+				if(!is_go_click){
+					
+					dispatchEvent(new LeftUpMenuEvent(LeftUpMenuEvent.ITEM_CLICK,String(e.itemRenderer.data.@id)));
+					
+				}
+				is_go_click=false;
+			
+			}
+			private function onGoClick(e:LeftUpMenuEvent):void{
+				
+				is_go_click=true;
+			
+			}
+		]]>
+	</mx:Script>
+</mx:Canvas>
