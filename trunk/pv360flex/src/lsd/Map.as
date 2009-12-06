@@ -38,7 +38,7 @@ package lsd
 		}
 		private function removeMap():void{
 			
-			MyEffect.removeChild(new EffectPv3dRota(this,a,1,false,-1.1,0,-0.5));
+			MyEffect.removeChild(new EffectPv3dRota(this,a,1,false,-0.8,0,-0.2));
 		}
 		
 		private function dragMovie(event:MouseEvent):void
