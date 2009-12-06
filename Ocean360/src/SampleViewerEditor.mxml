@@ -20,6 +20,7 @@
 			//再panel2添加“预览”按钮
 			SamplePanel.sp.panel2.addChild(new UIComponent().addChild(previewButton));
 			previewButton.styleName="buttonLoader"
+			
 		}
 	]]>
 </mx:Script>
