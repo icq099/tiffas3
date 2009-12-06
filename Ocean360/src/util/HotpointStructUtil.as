@@ -8,7 +8,7 @@ package util
 	{
 		public static function trans(xml:XML,hotpoint:HotPointStruct,name:String):HotPointStruct{
 			var new_xml:XML=new XML("<HotPoint/>");
-			var id:String=String(re_xml.HotPoint.length());
+			var id:String=String(xml.HotPoint.length());
 			var xml_byte:ByteArray=new ByteArray();
 			new_xml.@id=id;
 			new_xml.@texturl="points/"+hotpoint.textName;

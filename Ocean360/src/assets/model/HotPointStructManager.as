@@ -1,17 +1,19 @@
 package assets.model
 {
+	import flash.events.Event;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
-	
 	import mx.core.Application;
-	import mx.rpc.events.ResultEvent;
-	
+	import mx.rpc.events.ResultEvent;	
 	import remoteobject.HotPointStruct;
+	import util.HotpointStructUtil;
 	
 //	import util.HotpointStructUtil;
 	
 	public class HotPointStructManager
 	{
-		private var hps:HotPointStruct=new HotPointStruct();
+		public var hps:HotPointStruct=new HotPointStruct();
 		public function HotPointStructManager()
 		{
 			hps.image=new Array();
@@ -52,9 +54,18 @@ package assets.model
 			temp.writeUTFBytes(text);
 			hps.text=temp;
 		}
+		private	var XML_URL:String = "../xml/hotpoints.xml";
+		private	var urlRequest:URLRequest = new URLRequest(XML_URL); 
+		private	var myLoader:URLLoader = new URLLoader(); 
 		public function startToUpdate():void
 		{
-//			Application.application.fileup.upLoadHotPoint(HotpointStructUtil.trans(xml,hps,"标本名字"));
+			myLoader.addEventListener(Event.COMPLETE,xmlLoaded);
+			myLoader.load(urlRequest);
+		}
+		private function xmlLoaded(e:Event):void
+		{
+			var xml:XML=XML(myLoader.data);
+			Application.application.fileup.upLoadHotPoint(HotpointStructUtil.trans(xml,hps,SamplePanel.sp.panel1.title.text));
 			Application.application.fileup.addEventListener(ResultEvent.RESULT,function():void{
 				Application.application.startUpdateButton.enabled=true;
 			});
