@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- edited with XMLSPY v5 U (http://www.xmlspy.com) by et8 (et8) -->
 <Basic>
-	<Travel start_scene="0" stop_rotationY="81.90">
+	<Travel start_scene="0" stop_rotationX="0" stop_rotationY="81.90">
 		<!--场景0-->
 		<Scene picture="img/博物馆门口 Panorama_cube.jpg">
+			<HotPoint onClick="gotoScene(4);" tip="前往水池" icon="0" x="4734" y="280" z="1544"  width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景1-->
 		<Scene picture="img/一楼大厅 Panorama_cube.jpg">
