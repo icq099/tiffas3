@@ -21,7 +21,7 @@ package util
 				var t_xml:XML;
 				for(var i:int=0;i<hotpoint.image.length;i++){
 					t_xml=new XML("<Img/>");
-					t_xml.@url="points/"+hotpoint.imageName;
+					t_xml.@url="points/"+hotpoint.imageName[i];
 					image_xml.appendChild(t_xml);	
 				}
 				new_xml.appendChild(image_xml);
