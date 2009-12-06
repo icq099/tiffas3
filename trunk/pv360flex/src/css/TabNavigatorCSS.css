@@ -18,7 +18,7 @@ TileList
 	
 	fontSize: 14;
 	highlightAlphas: 0, 0;
-	backgroundColor: #ff9900;
+	backgroundColor: #FFFFFF;
 	cornerRadius: 10;
 	fillColors: #cccccc, #cccccc;
 
@@ -48,7 +48,7 @@ Button {
 }
 TitleWindow
 {
-	borderColor: #54D841;
+	borderColor: #4449B4;
 	borderThicknessLeft: 1;
 	borderThicknessRight: 1;
 	roundedBottomCorners: true;
@@ -59,7 +59,6 @@ TitleWindow
 	closeButtonUpSkin: Embed(source="asset/Map.swf", symbol="CloseButtonUp");
 	closeButtonOverSkin: Embed(source="asset/Map.swf", symbol="CloseButtonOver");
 	closeButtonDownSkin: Embed(source="asset/Map.swf", symbol="CloseButtonOver");
-	titleBackgroundSkin: Embed(source="asset/Map.swf", symbol="TitleBar");
 	borderAlpha: 1;
 }
 .titleWindowFront
