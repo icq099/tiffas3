@@ -4,6 +4,8 @@
 		<mx:Fade id="fadeout" alphaFrom="1" alphaTo="0"/>
 	<mx:Script>
 		<![CDATA[
+			import other.EffectPv3dRota;
+			import yzhkof.effect.MyEffect;
 			import lsd.IPlayerBasic;
 			import view.Event.ExhitbitSoundEvent;
 			import gs.TweenLite;
@@ -65,9 +67,7 @@
 				}
 			}
 			private function closeHandler():void{
-				TweenLite.to(this,0.3,{z:50,rotationY:-10})
-				this.parent.removeChild(this);
-				
+				//MyEffect.removeChild(new EffectPv3dRota(this.parent,this,1,false,-1,0,-0.5));
 				for(var i:int=0;i<items.length;i++){
 					
 					IPlayerBasic(items[i]).stopAll();

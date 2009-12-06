@@ -17,16 +17,10 @@ package commands
 	import proxys.PTravel;
 	import proxys.PXml;
 	
-	import view.AnimatePlayer;
-	import view.ExhibitSound;
-	import view.MapDirector;
 	import view.MovieViewer;
 	import view.Pv3d360Scene;
-	import view.Pv3d360SceneCompass;
-	import view.SubTitle;
-	import view.leftupmenu.LeftUpMenuContainer;
+	import view.debug.Pv3d360SceneHotPoint;
 	
-	import yzhkof.PositionSeter;
 	import yzhkof.Toolyzhkof;
 
 	public class InitDisplayCommand extends SimpleCommand
@@ -45,7 +39,7 @@ package commands
 			
 			}
 			//debug设置
-			var main_scene:Pv3d360Scene=new Pv3d360SceneCompass();
+			var main_scene:Pv3d360Scene=new Pv3d360SceneHotPoint();
 			//
 			//var main_map:MapDirector=new MapDirector();
 			//var main_animate_player:AnimatePlayer=new AnimatePlayer();
