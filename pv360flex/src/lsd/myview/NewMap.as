@@ -13,7 +13,7 @@ package lsd.myview
 	public class NewMap extends Sprite
 	{
 		private var fadeTween:Tween;
-		private var mapDirector:MapDirector=new MapDirector();
+	    public var mapDirector:MapDirector=new MapDirector();
 		private var mapFrist:MapFrist=new MapFrist();
 		private var mapSecond:MapSecond=new MapSecond();
 		private var mapThrid:MapThrid=new MapThrid();
@@ -58,9 +58,6 @@ package lsd.myview
 			mapThrid.two.addEventListener(MouseEvent.CLICK, twelfchange);
 			mapThrid.three.addEventListener(MouseEvent.CLICK, thirteenchange);
 			mapThrid.four.addEventListener(MouseEvent.CLICK, fifteenchange);
-			mapDirector.title.addEventListener(MouseEvent.MOUSE_DOWN, dragMovie);
-			mapDirector.title.addEventListener(MouseEvent.MOUSE_UP, dropMovie);
-			mapDirector.title.buttonMode=true;
 			
 		}
 
@@ -181,15 +178,6 @@ package lsd.myview
 		}
 
 
-		private function dragMovie(event:MouseEvent):void
-		{
-			this.startDrag();
-		}
-
-		private function dropMovie(event:MouseEvent):void
-		{
-			this.stopDrag();
-		}
 
 
 
@@ -199,17 +187,17 @@ package lsd.myview
 
 			var d_width:Number=_forceWidth <= 0 ? e.sprite.width : _forceWidth;
 			var d_height:Number=_forceHeight <= 0 ? e.sprite.height : _forceHeight;
-			e.sprite.x=-d_width / 2 + 135
-			e.sprite.y=69;
+			e.sprite.x=-d_width / 2+205;
+            e.sprite.y=95;
 			if (this.numChildren > 1)
 			{
 				removeChildAt(1);
-				TweenLite.to(mapDirector.frist, 0.2, {x: -d_width / 2 + 140, y: 52});
-				TweenLite.to(mapDirector.second, 0.2, {x: -d_width / 2 + 170, y: 52});
-				TweenLite.to(mapDirector.thrid, 0.2, {x: -d_width / 2 + 200, y: 52});
-				TweenLite.to(mapDirector.close, 0.2, {x: d_width / 2 + 140, y: 20});
-				TweenLite.to(mapDirector.title, 0.2, {width: d_width + 47});
-				TweenLite.to(mapDirector.mapback, 0.2, {height: d_height + 40, width: d_width + 42, onComplete: function():void
+				TweenLite.to(mapDirector.frist, 0.2, {x: -d_width / 2 + 225, y: 68});
+				TweenLite.to(mapDirector.second, 0.2, {x: -d_width / 2 + 305, y: 68});
+				TweenLite.to(mapDirector.thrid, 0.2, {x: -d_width / 2 + 385, y: 68});
+				TweenLite.to(mapDirector.close, 0.2, {x: d_width / 2 + 190, y: 13});
+				TweenLite.to(mapDirector.title, 0.2, {width: d_width + 40});
+				TweenLite.to(mapDirector.mapback, 0.2, {height: d_height + 60, width: d_width +32, onComplete: function():void
 					{
 
 
@@ -223,17 +211,17 @@ package lsd.myview
 			}
 			else
 			{
-				mapDirector.frist.x=-d_width / 2 + 140;
-				mapDirector.frist.y=52;
-				mapDirector.second.x=-d_width / 2 + 170;
-				mapDirector.second.y=52;
-				mapDirector.thrid.x=-d_width / 2 + 200;
-				mapDirector.thrid.y=52;
-				mapDirector.close.x=d_width / 2 + 140;
-				mapDirector.close.y=20;
-				mapDirector.title.width=d_width + 47;
-				mapDirector.mapback.height=d_height + 40;
-				mapDirector.mapback.width=d_width + 42;
+				mapDirector.frist.x=-d_width / 2 + 225;
+				mapDirector.frist.y=68;
+				mapDirector.second.x=-d_width / 2 + 305;
+				mapDirector.second.y=68;
+				mapDirector.thrid.x=-d_width / 2 + 385;
+				mapDirector.thrid.y=68;
+				mapDirector.close.x=d_width / 2 + 190;
+				mapDirector.close.y=13;
+				mapDirector.title.width=d_width + 40;
+				mapDirector.mapback.height=d_height +60;
+				mapDirector.mapback.width=d_width +32;
 				addChild(e.sprite);
 			}
 
