@@ -4,6 +4,7 @@ package lsd
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.filters.DropShadowFilter;
 	
 	import lsd.myview.NewMap;
@@ -23,18 +24,31 @@ package lsd
 			MainSystem.getInstance().addAPI("showMap",showMap);
 			MainSystem.getInstance().addAPI("removeMap",removeMap);
 			a.addEventListener(Event.CLOSE,onClose);
+			a.mapDirector.title.addEventListener(MouseEvent.MOUSE_DOWN, dragMovie);
+			a.mapDirector.title.addEventListener(MouseEvent.MOUSE_UP, dropMovie);
+			a.mapDirector.title.buttonMode=true;
 			
 		}
 		private function onClose(e:Event):void{
 			 removeMap();
 		}
 		private function showMap():void{
-			MyEffect.addChild(new EffectPv3dRota(this,a,1,true,EffectPv3dRota.ANGLE_DOWN));
+			MyEffect.addChild(new EffectPv3dRota(this,a,1,true,1));
 			
 		}
 		private function removeMap():void{
 			
 			MyEffect.removeChild(new EffectPv3dRota(this,a,1,false,-1.1,0,-0.5));
+		}
+		
+		private function dragMovie(event:MouseEvent):void
+		{
+			this.startDrag();
+		}
+
+		private function dropMovie(event:MouseEvent):void
+		{
+			this.stopDrag();
 		}
 	}
 }
