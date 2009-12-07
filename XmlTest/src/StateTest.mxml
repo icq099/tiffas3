@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:states>
+		<mx:State name="Astate">
+			<mx:AddChild position="lastChild">
+				<mx:Button x="70" y="406" label="Button"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:Button x="178" y="406" label="Button"/>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="Bstate">
+			<mx:AddChild position="lastChild">
+				<mx:Button x="384" y="426" label="Button"/>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="Cstate">
+			<mx:AddChild position="lastChild">
+				<mx:ColorPicker x="247" y="239"/>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+	<mx:Script>
+		<![CDATA[
+			import mx.states.AddChild;
+			import gs.plugins.VolumePlugin;
+			private function btn1():void{
+				currentState="Bstate";
+			}
+			private function basicClick():void{
+				currentState="Cstate"
+			}
+		]]>
+	</mx:Script>
+	<mx:Button x="45" y="10" label="Button" click="basicClick()"/>
+	
+</mx:Application>

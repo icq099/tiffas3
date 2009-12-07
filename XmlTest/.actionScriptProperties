@@ -15,6 +15,8 @@
 <application path="As3ModTest.mxml"/>
 <application path="FlexTest.mxml"/>
 <application path="BitmapTest.mxml"/>
+<application path="StateTest.mxml"/>
+<application path="ListTest.mxml"/>
 </applications>
 <modules/>
 <buildCSSFiles/>
