@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TitleWindowCustom xmlns="view.*" title="展项浏览" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" showCloseButton="true" xmlns:ns1="view.*">
+<TitleWindowCustom xmlns="view.*" title="展项浏览" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" showCloseButton="true" xmlns:ns1="view.*" styleName="hotpointTabNavigator">
 		<mx:TextArea id="instruction_text" top="40" bottom="10" right="10" width="230" text="文本载入中...."/>
 		<mx:TabNavigator historyManagementEnabled="false" id="tabNavigator" top="10" bottom="10" left="10" right="248">
 		</mx:TabNavigator>

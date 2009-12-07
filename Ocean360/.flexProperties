@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flexProperties flexServerType="2" serverContextRoot="/Ocean360" serverRoot="//Yzhkof/Tomcat 5.5/webapps/Ocean360" serverRootURL="http://yzhkof:8080/Ocean360" toolCompile="true" useServerFlexSDK="false" version="1"/>
+<flexProperties flexServerType="2" serverContextRoot="/" serverRoot="//Yzhkof/Tomcat 5.5/webapps/Ocean360" serverRootURL="http://yzhkof:8080/Ocean360" toolCompile="true" useServerFlexSDK="false" version="1"/>

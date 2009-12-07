@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas currentState="AddHotpointToscene" xmlns:mx="http://www.adobe.com/2006/mxml" width="654" height="480" xmlns:ns1="myviews.*" xmlns:Logic="Logic.*">
+	<mx:states>
+		<mx:State name="AddHotpointToscene">
+			<mx:AddChild position="lastChild">
+				<mx:TabNavigator right="10" left="10" top="10" bottom="10">
+					<mx:Canvas label="场景" width="100%" height="100%">
+						<Logic:HotPointTosceneViewScript right="10" left="10" top="10" bottom="10">
+						</Logic:HotPointTosceneViewScript>
+					</mx:Canvas>
+					<mx:Canvas label="标本" width="100%" height="100%">
+						<ns1:HotPointAddEditView right="10" left="10" top="10" bottom="10">
+						</ns1:HotPointAddEditView>
+					</mx:Canvas>
+				</mx:TabNavigator>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+</mx:Canvas>

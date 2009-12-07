@@ -1,0 +1,46 @@
+/* CSS file */
+global
+{
+	fontSize: 13;
+}
+TabNavigator {
+   textIndent: 0;
+   horizontalGap: 2;
+   tabHeight: 30;
+   tabWidth: 114;
+   tabStyleName: "myTabs";
+   firstTabStyleName: "myTabs";
+   lastTabStyleName: "myTabs";
+   selectedTabTextStyleName: "mySelectedTabs";
+   tab-style-name:"myTabs";
+}
+.myTabs{
+	
+	fontSize: 14;
+	highlightAlphas: 0, 0;
+	backgroundColor: #FFFFFF;
+	cornerRadius: 10;
+	fillColors: #cccccc, #cccccc;
+
+}
+TitleWindow
+{
+	borderColor: #4449B4;
+	borderThicknessLeft: 1;
+	borderThicknessRight: 1;
+	roundedBottomCorners: true;
+	borderThicknessBottom: 1;
+	headerHeight: 35;
+	fontSize: 14;
+	title-style-name:"titleWindowFront";
+	closeButtonUpSkin: Embed(source="asset/Map.swf", symbol="CloseButtonUp");
+	closeButtonOverSkin: Embed(source="asset/Map.swf", symbol="CloseButtonOver");
+	closeButtonDownSkin: Embed(source="asset/Map.swf", symbol="CloseButtonOver");
+	borderAlpha: 1;
+}
+.titleWindowFront
+{
+	
+	color: #FFFFFF;
+
+}

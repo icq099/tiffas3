@@ -1,0 +1,21 @@
+/* CSS file */
+TabNavigator {
+   textIndent: 0;
+   horizontalGap: 2;
+   tabHeight: 30;
+   tabWidth: 114;
+   tabStyleName: "myTabs";
+   firstTabStyleName: "myTabs";
+   lastTabStyleName: "myTabs";
+   selectedTabTextStyleName: "mySelectedTabs";
+   tab-style-name:"myTabs";
+}
+.myTabs{
+	
+	fontSize: 14;
+	highlightAlphas: 0, 0;
+	backgroundColor: #FFFFFF;
+	cornerRadius: 10;
+	fillColors: #cccccc, #cccccc;
+
+}

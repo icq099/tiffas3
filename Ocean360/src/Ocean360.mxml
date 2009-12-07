@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+<mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:ns1="myviews.*">
+<mx:Style source="css/MainCss.css">
 	
+</mx:Style>
+	<ns1:MainView right="10" left="10" top="10" bottom="10">
+	</ns1:MainView>
+	<mx:Script>
+		<![CDATA[
+			import model.MXml;
+			private function init():void{
+				MXml.getInstance().loadXml();
+			}
+		]]>
+	</mx:Script>
 </mx:Application>
