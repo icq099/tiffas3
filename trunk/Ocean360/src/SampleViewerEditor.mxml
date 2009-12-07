@@ -21,7 +21,7 @@
 		}
 	]]>
 </mx:Script>
-	<mx:Button x="182" y="166" label="开始上传" id="startUpdateButton" width="213" height="40" fontSize="29"/>
-	<mx:Button x="182" y="100" label="预览" id="previewButton" width="213" height="40" fontSize="28"/>
+	<mx:Button x="182" y="166" label="开始上传" id="startUpdateButton" width="213" height="40" fontSize="29" fillAlphas="[1.0, 1.0]" fillColors="[#95C2F6, #DAEAFC]"/>
+	<mx:Button x="182" y="100" label="预览" id="previewButton" width="213" height="40" fontSize="28" fillAlphas="[1.0, 1.0]" fillColors="[#95C2F6, #DAEAFC]"/>
 	<mx:RemoteObject id="fileup" destination="FileUpLoader"/>
 </mx:Application>
