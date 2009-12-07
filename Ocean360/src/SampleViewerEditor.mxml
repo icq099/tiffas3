@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()"  backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#FDFDFD, #FDFDFD]" width="800" height="600" xmlns:ns1="view.*">
 	<mx:Style
-		source="/assets/style/style.css"/>
+		source="/css/TabNavigatorCSS.css"/>
 <mx:Script
 	>
 	<![CDATA[
@@ -15,10 +15,8 @@
 			//下面是界面代码
 			//在panel2里面添加“开始上传”按钮
 			SamplePanel.sp.panel2.addChild(startUpdateButton);
-			startUpdateButton.styleName="buttonLoader"
 			//再panel2添加“预览”按钮
 			SamplePanel.sp.panel2.addChild(new UIComponent().addChild(previewButton));
-			previewButton.styleName="buttonLoader"
 			
 		}
 	]]>
