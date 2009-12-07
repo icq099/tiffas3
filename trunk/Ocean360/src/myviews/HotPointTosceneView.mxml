@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="600" height="452">
+	<mx:List left="193" right="10" top="10" bottom="73" id="list_hotpoint"></mx:List>
+	<mx:List id="list_scene" x="10" width="161" top="10" bottom="73"></mx:List>
+	<mx:Button id="btn_add" label="添加标本至此场景" bottom="10" horizontalCenter="-127"/>
+	<mx:Button id="btn_delete" label="从此场景删除标本" bottom="10" horizontalCenter="145"/>
+	
+</mx:Module>
