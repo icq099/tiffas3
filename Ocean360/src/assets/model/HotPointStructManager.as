@@ -54,7 +54,7 @@ package assets.model
 			temp.writeUTFBytes(text);
 			hps.text=temp;
 		}
-		private	var XML_URL:String = "../xml/hotpoints.xml";
+		private	var XML_URL:String = "/xml/hotpoints.xml";
 		private	var urlRequest:URLRequest = new URLRequest(XML_URL); 
 		private	var myLoader:URLLoader = new URLLoader(); 
 		public function startToUpdate():void

@@ -17,7 +17,6 @@
 			SamplePanel.sp.panel2.addChild(startUpdateButton);
 			//再panel2添加“预览”按钮
 			SamplePanel.sp.panel2.addChild(new UIComponent().addChild(previewButton));
-			
 		}
 	]]>
 </mx:Script>
