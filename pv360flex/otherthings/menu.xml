@@ -7,9 +7,9 @@
 		<sample>4</sample>
 	</Scene>
 	<Scene sceneID="2">
-		<sample>ID="1"</sample>
-		<sample>ID="2"</sample>
-		<sample>ID="3"</sample>
-		<sample>ID="4"</sample>
+		<sample>1"</sample>
+		<sample>2</sample>
+		<sample>3</sample>
+		<sample>4</sample>
 	</Scene>
 </Scenes>

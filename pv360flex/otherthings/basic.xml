@@ -3,11 +3,11 @@
 <Basic>
 	<Travel start_scene="0" stop_rotationX="0" stop_rotationY="81.90">
 		<!--场景0-->
-		<Scene picture="img/博物馆门口 Panorama_cube.jpg">
+		<Scene picture="img/p0.jpg">
 		   <HotPoint onClick="gotoScene(4);" tip="前往水池" icon="0" x="4646" y="952" z="1550"  width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景1-->
-		<Scene picture="img/一楼大厅 Panorama_cube.jpg">
+		<Scene picture="img/p1.jpg">
 		     <HotPoint onClick="gotoScene(2);" tip="前往水族馆" icon="0" x="-614" y="-18" z="4942"   width="500" height="500" segmentsW="0" segmentsH="0"/>
              <HotPoint onClick="gotoScene(5);" tip="前往朱元鼎纪念厅" icon="0" x="3298" y="256" z="3734"  width="500" height="500" segmentsW="0" segmentsH="0"/>
 		     <HotPoint onClick="gotoScene(6);" tip="前往二楼大厅" icon="0" x="723" y="575" z="-4895"   width="500" height="500" segmentsW="0" segmentsH="0"/>
@@ -15,28 +15,28 @@
 			 <HotPoint onClick="gotoScene(4);" tip="前往水池" icon="0" x="-4886" y="-957" z="-310"    width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景2-->
-		<Scene picture="img/水族馆 Panorama_cube.jpg">
+		<Scene picture="img/p2.jpg">
 		      <HotPoint onClick="gotoScene(1);" tip="前往一楼大厅" icon="0" x="1576" y="-169" z="-4732"  width="500" height="500" segmentsW="0" segmentsH="0"/>
 		     <HotPoint onClick="gotoScene(4);" tip="前往水池" icon="0" x="-2177" y="-746" z="4423"  width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景3-->
-		<Scene picture="img/鱼类陈列室 Panorama_cube.jpg">
+		<Scene picture="img/p3.jpg">
 		   <HotPoint onClick="gotoScene(1);" tip="前往一楼大厅" icon="0" x="1398" y="521" z="4755"   width="500" height="500" segmentsW="0" segmentsH="0"/>
 		    <HotPoint onClick="gotoScene(1);" tip="前往一楼大厅" icon="0" x="1748" y="609" z="-4624"    width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景4-->
-		<Scene picture="img/鱼池 Panorama_cube.jpg">
+		<Scene picture="img/p4.jpg">
 		       <HotPoint onClick="gotoScene(2);" tip="前往水族馆" icon="0" x="-3814" y="620" z="3142"   width="500" height="500" segmentsW="0" segmentsH="0"/>
 			    <HotPoint onClick="gotoScene(1);" tip="前往一楼大厅" icon="0" x="4922" y="789" z="112"   width="500" height="500" segmentsW="0" segmentsH="0"/>
 		       <HotPoint onClick="gotoScene(0);" tip="前往博物馆门口" icon="0" x="-4088" y="602" z="-2783"   width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景5-->
-		<Scene picture="img/朱元鼎纪念厅 Panorama_cube.jpg">
+		<Scene picture="img/p5.jpg">
 		  <HotPoint onClick="gotoScene(1);" tip="前往一楼大厅" icon="0" x="102" y="752" z="-4925"   width="500" height="500" segmentsW="0" segmentsH="0"/>
 		   <HotPoint onClick="gotoScene(1);" tip="前往一楼大厅" icon="0" x="-1207" y="605" z="4793"    width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景6-->
-		<Scene picture="img/二楼大厅 Panorama_cube.jpg">
+		<Scene picture="img/p6.jpg">
 		      <HotPoint onClick="gotoScene(9);" tip="前往张玺教授纪念厅" icon="0" x="-2969" y="237" z="-3998"   width="500" height="500" segmentsW="0" segmentsH="0"/>
 		      <HotPoint onClick="gotoScene(8);" tip="贝类陈列室二" icon="0" x="1939" y="-6" z="-4588"   width="500" height="500" segmentsW="0" segmentsH="0"/>
 		      <HotPoint onClick="gotoScene(7);" tip="贝类陈列室一" icon="0" x="708" y="57" z="4930"   width="500" height="500" segmentsW="0" segmentsH="0"/>
@@ -44,40 +44,40 @@
 			   <HotPoint onClick="gotoScene(14);" tip="前往三楼大厅" icon="0" x="3761" y="363" z="-3256"  width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景7-->
-		<Scene picture="img/贝类陈列室一_cube.jpg">
+		<Scene picture="img/p7.jpg">
 		    <HotPoint onClick="gotoScene(6);" tip="前往二楼大厅" icon="0" x="-3194" y="166" z="-3832"    width="500" height="500" segmentsW="0" segmentsH="0"/>
 			 <HotPoint onClick="gotoScene(6);" tip="前往二楼大厅" icon="0" x="117" y="494" z="4957"     width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景8-->
-		<Scene picture="img/贝类陈列室二 Panorama_cube.jpg">
+		<Scene picture="img/p8.jpg">
 		    <HotPoint onClick="gotoScene(6);" tip="前往二楼大厅" icon="0" x="-1310" y="702" z="-4754"     width="500" height="500" segmentsW="0" segmentsH="0"/>
 			 <HotPoint onClick="gotoScene(6);" tip="前往二楼大厅" icon="0" x="-1560" y="448" z="4720"    width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景9-->
-		<Scene picture="img/张玺教授纪念厅 Panorama_cube.jpg">
+		<Scene picture="img/p9.jpg">
 		      <HotPoint onClick="gotoScene(6);" tip="前往二楼大厅" icon="0" x="-1698" y="690" z="4632"    width="500" height="500" segmentsW="0" segmentsH="0"/>
 			    <HotPoint onClick="gotoScene(6);" tip="前往二楼大厅" icon="0" x="-284" y="580" z="-4946"     width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景10-->
-		<Scene picture="img/虾蟹陈列室 Panorama_cube.jpg">
+		<Scene picture="img/p10.jpg">
 		</Scene>
 		<!--场景11-->
-		<Scene picture="img/曾呈奎教授纪念厅 Panorama_cube.jpg">
+		<Scene picture="img/p11.jpg">
 		   	<HotPoint onClick="gotoScene(14);" tip="前往三楼大厅" icon="0" x="1548" y="588" z="-4706"    width="500" height="500" segmentsW="0" segmentsH="0"/>
 			<HotPoint onClick="gotoScene(14);" tip="前往三楼大厅" icon="0" x="345" y="710" z="4925"    width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景12-->
-		<Scene picture="img/海藻陈列室 Panorama_cube.jpg">
+		<Scene picture="img/p12.jpg">
 		    <HotPoint onClick="gotoScene(14);" tip="前往三楼大厅" icon="0" x="2692" y="602" z="4154"  width="500" height="500" segmentsW="0" segmentsH="0"/>
 			<HotPoint onClick="gotoScene(14);" tip="前往三楼大厅" icon="0" x="2477" y="719" z="-4262"   width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景13-->
-		<Scene picture="img/其他水生生物陈列室 Panorama_cube.jpg">
+		<Scene picture="img/p13.jpg">
 		   <HotPoint onClick="gotoScene(14);" tip="前往三楼大厅" icon="0" x="1534" y="710" z="4695"  width="500" height="500" segmentsW="0" segmentsH="0"/>
 		    <HotPoint onClick="gotoScene(14);" tip="前往三楼大厅" icon="0" x="2325" y="436" z="-4387"   width="500" height="500" segmentsW="0" segmentsH="0"/>
 		</Scene>
 		<!--场景14-->
-		<Scene picture="img/三楼大厅 Panorama_cube.jpg">
+		<Scene picture="img/p14.jpg">
 		     <HotPoint onClick="gotoScene(12);" tip="前往藻类陈列室" icon="0" x="-179" y="628" z="4940"    width="500" height="500" segmentsW="0" segmentsH="0"/>
 			  <HotPoint onClick="gotoScene(13);" tip="前往其他水生物陈列室" icon="0" x="1342" y="710" z="-4745"  width="500" height="500" segmentsW="0" segmentsH="0"/>
 			  <HotPoint onClick="gotoScene(6);" tip="前往二楼大厅" icon="0" x="361" y="552" z="-4943"  width="500" height="500" segmentsW="0" segmentsH="0"/>

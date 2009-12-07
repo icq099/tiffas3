@@ -19,7 +19,7 @@ package commands
 	
 	import view.MovieViewer;
 	import view.Pv3d360Scene;
-	import view.debug.Pv3d360SceneHotPoint;
+	import view.Pv3d360SceneCompass;
 	
 	import yzhkof.Toolyzhkof;
 
@@ -39,7 +39,7 @@ package commands
 			
 			}
 			//debug设置
-			var main_scene:Pv3d360Scene=new Pv3d360SceneHotPoint();
+			var main_scene:Pv3d360Scene=new Pv3d360SceneCompass();
 			//
 			//var main_map:MapDirector=new MapDirector();
 			//var main_animate_player:AnimatePlayer=new AnimatePlayer();
