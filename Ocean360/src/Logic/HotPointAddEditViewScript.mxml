@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HotPointAddEditView  creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
+	<mx:Script>
+		<![CDATA[
+			import model.PopHotPoint;
+			import mx.events.ListEvent;
+			import model.MXml;
+			private function init():void{
+				list_hotpoint.addEventListener(ListEvent.CHANGE,onHotPointItemClick);
+				btn_add.addEventListener(MouseEvent.CLICK,onAddClick);
+			}
+			private function onHotPointItemClick(e:Event):void{
+				PopHotPoint.popUp(MXml.getInstance().getHotPointXml(String(list_hotpoint.selectedIndex))[0]);
+			}
+			private function onAddClick(e:Event):void{
+				
+			}
+			private function onDeleteClick(e:Event):void{
+				
+			}
+		]]>
+	</mx:Script>
+	<mx:Binding source="MXml.getInstance().xml_hotpoint.HotPoint.@name" destination="list_hotpoint.dataProvider">
+	</mx:Binding>
+	<mx:Binding source="MXml.getInstance().isComplete" destination="btn_add.enabled">
+	</mx:Binding>
+	<mx:Binding source="MXml.getInstance().isComplete" destination="btn_delete.enabled">
+	</mx:Binding>
+</HotPointAddEditView>
