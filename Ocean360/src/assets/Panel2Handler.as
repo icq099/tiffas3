@@ -1,17 +1,24 @@
 package assets
 {
+	import assets.model.HotPointStructManager;
+	
 	import flash.events.MouseEvent;
 	
+	import fl.controls.Button;
 	import mx.core.Application;
 	import mx.events.FlexEvent;
 	
 	import view.PopMenusFlexView;
 	public class Panel2Handler
 	{
-		public function Panel2Handler()
+		private var hpsm:HotPointStructManager;
+		public function Panel2Handler(hpsm:HotPointStructManager)
 		{
-			Application.application.startUpdateButton.addEventListener(MouseEvent.CLICK,startUpdateButtonClickEvent);
-			Application.application.previewButton.addEventListener(MouseEvent.CLICK,previewButtonClickEvent);
+			SamplePanel.sp.panel2.preview.label="预览";
+			SamplePanel.sp.panel2.update.label="开始上传";
+			SamplePanel.sp.panel2.preview.addEventListener(MouseEvent.CLICK,previewButtonClickEvent);
+			SamplePanel.sp.panel2.update.addEventListener(MouseEvent.CLICK,startUpdateButtonClickEvent);
+			this.hpsm=hpsm;
 		}
 		private function previewButtonClickEvent(e:MouseEvent):void
 		{
@@ -22,19 +29,19 @@ package assets
 		private function popMenusFlexViewComplete(e:FlexEvent):void
 		{
 			//添加图片
-			if(Application.application.hpsm.hps.image.length>0)
+			if(this.hpsm.hps.image.length>0)
 			{
-				var imageCount:int=Application.application.hpsm.hps.image.length;
+				var imageCount:int=this.hpsm.hps.image.length;
 				for(var i:int=0;i<imageCount;i++)
 				{
-					PopMenusFlexView(e.currentTarget).addPicture(Application.application.hpsm.hps.image[i]);
+					PopMenusFlexView(e.currentTarget).addPicture(this.hpsm.hps.image[i]);
 					PopMenusFlexView(e.currentTarget).refreshPicture();
 				}
 			}
 			//添加说明
-			if(Application.application.hpsm.hps.text.length>0)
+			if(this.hpsm.hps.text.length>0)
 			{
-				PopMenusFlexView(e.currentTarget).loadText(Application.application.hpsm.hps.text,true);
+				PopMenusFlexView(e.currentTarget).loadText(this.hpsm.hps.text,true);
 			}
 			//设置大小
 			PopMenusFlexView(e.currentTarget).width=700;
@@ -42,8 +49,8 @@ package assets
 		}
 		private function startUpdateButtonClickEvent(e:MouseEvent):void
 		{
-			Application.application.startUpdateButton.enabled=false;
-			Application.application.hpsm.startToUpdate();
+			Button(e.currentTarget).enabled=false;
+			this.hpsm.startToUpdate();
 		}
 	}
 }

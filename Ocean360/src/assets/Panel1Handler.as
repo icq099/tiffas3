@@ -1,5 +1,7 @@
 package assets
 {
+	import assets.model.HotPointStructManager;
+	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.FileFilter;
@@ -9,8 +11,10 @@ package assets
 	public class Panel1Handler
 	{
 		private var spbgHandler:SamplePanelBackGround;//界面句柄
-		public function Panel1Handler(p1h:SamplePanelBackGround)
+		private var hpsm:HotPointStructManager;
+		public function Panel1Handler(p1h:SamplePanelBackGround,hpsm:HotPointStructManager)
 		{
+			this.hpsm=hpsm;
 			spbgHandler=p1h;
 			p1h.panel1.addPicture.addEventListener(MouseEvent.CLICK,panel1AddPictureButtonClickEvent);
 			p1h.panel1.deletePicture.addEventListener(MouseEvent.CLICK,panel1DeletePictureButtonClickEvent);
@@ -21,12 +25,12 @@ package assets
 		//标题改变的事件
 		private function titleChanged(e:Event):void
 		{
-			Application.application.hpsm.setTextName(spbgHandler.panel1.title.text);
+			this.hpsm.setTextName(spbgHandler.panel1.title.text);
 		}
 		//详细描述的改变事件
 		private function detailChanged(e:Event):void
 		{
-			Application.application.hpsm.setText(spbgHandler.panel1.detail.text);
+			this.hpsm.setText(spbgHandler.panel1.detail.text);
 		}
 		private var pictureFileReference:FileReference;
 		//打开图片文件
@@ -57,7 +61,7 @@ package assets
 		}
 		private function pictureLoaded(e:Event):void
 		{
-			Application.application.hpsm.addImageByName(pictureFileReference.name,pictureFileReference.data);
+			this.hpsm.addImageByName(pictureFileReference.name,pictureFileReference.data);
 		}
 		private var musicFileReference:FileReference;
 		//打开音乐文件
@@ -77,7 +81,7 @@ package assets
 		}
 		private function musicLoaded(e:Event):void
 		{
-			Application.application.hpsm.setSound(musicFileReference.name,musicFileReference.data);
+			this.hpsm.setSound(musicFileReference.name,musicFileReference.data);
 		}
 		//删除图片的事件
 		private function panel1DeletePictureButtonClickEvent(e:MouseEvent):void
@@ -87,7 +91,7 @@ package assets
 				
 			}else
 			{
-				Application.application.hpsm.deleteImageByName(spbgHandler.panel1.pictureList.getItemAt(spbgHandler.panel1.pictureList.selectedIndex).label)//删除图片数据
+				this.hpsm.deleteImageByName(spbgHandler.panel1.pictureList.getItemAt(spbgHandler.panel1.pictureList.selectedIndex).label)//删除图片数据
 				spbgHandler.panel1.pictureList.removeItemAt(spbgHandler.panel1.pictureList.selectedIndex);
 			}
 		}
