@@ -43,6 +43,9 @@ package model
 		public function getHotPointXml(id:String):XMLList{
 			return xml_hotpoint.HotPoint.(@id==id) as XMLList;
 		}
+		public function getHotPointXmlByIndex(index:int):XML{
+			return xml_hotpoint.HotPoint[index];
+		}
 		private function onComplete(e:Event):void{
 			xml_scene=loader.getXML("xml/basic.xml");
 			xml_menu=loader.getXML("xml/menu.xml");
