@@ -12,6 +12,7 @@
 				list_hotpoint.doubleClickEnabled=true;
 				list_hotpoint.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,onHotPointItemClick);
 				btn_add.addEventListener(MouseEvent.CLICK,onAddClick);
+				btn_delete.addEventListener(MouseEvent.CLICK,onDeleteClick);
 			}
 			private function onHotPointItemClick(e:Event):void{
 				PopHotPoint.popUp(XML(MXml.getInstance().getHotPointXmlByIndex(list_hotpoint.selectedIndex)));
@@ -21,7 +22,9 @@
 				PopUpManager.centerPopUp(pop_add_window);
 			}
 			private function onDeleteClick(e:Event):void{
-				
+				if(list_hotpoint.selectedIndex!=-1){
+					MXml.getInstance().deleteHotPointXmlByIndex(list_hotpoint.selectedIndex);
+				}
 			}
 		]]>
 	</mx:Script>

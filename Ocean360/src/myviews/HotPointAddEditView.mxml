@@ -3,5 +3,4 @@
 	<mx:List id="list_hotpoint" left="10" right="10" top="10" bottom="54"></mx:List>
 	<mx:Button id="btn_add" label="添加标本" bottom="10" horizontalCenter="-95"/>
 	<mx:Button id="btn_delete" label="删除标本" bottom="10" horizontalCenter="92"/>
-	
 </mx:Module>

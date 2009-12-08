@@ -46,6 +46,12 @@ package model
 		public function getHotPointXmlByIndex(index:int):XML{
 			return xml_hotpoint.HotPoint[index];
 		}
+		public function deleteMenuXml(scene_index:int,sample_index:int):void{
+			delete xml_menu.Scene[scene_index].sample[sample_index];
+		}
+		public function deleteHotPointXmlByIndex(index:int):void{
+			delete xml_hotpoint.HotPoint[index];
+		}
 		private function onComplete(e:Event):void{
 			xml_scene=loader.getXML("xml/basic.xml");
 			xml_menu=loader.getXML("xml/menu.xml");
