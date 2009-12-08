@@ -2,6 +2,9 @@
 <HotPointAddEditView  creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
 	<mx:Script>
 		<![CDATA[
+			import myviews.SampleEditorView;
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
 			import model.PopHotPoint;
 			import mx.events.ListEvent;
 			import model.MXml;
@@ -14,7 +17,8 @@
 				PopHotPoint.popUp(XML(MXml.getInstance().getHotPointXmlByIndex(list_hotpoint.selectedIndex)));
 			}
 			private function onAddClick(e:Event):void{
-				var pop_add_window:
+				var pop_add_window:SampleEditorView=PopUpManager.createPopUp(DisplayObject(Application.application),SampleEditorView,true) as SampleEditorView;
+				PopUpManager.centerPopUp(pop_add_window);
 			}
 			private function onDeleteClick(e:Event):void{
 				
