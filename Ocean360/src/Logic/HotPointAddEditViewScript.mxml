@@ -14,7 +14,7 @@
 				PopHotPoint.popUp(XML(MXml.getInstance().getHotPointXmlByIndex(list_hotpoint.selectedIndex)));
 			}
 			private function onAddClick(e:Event):void{
-				
+				var pop_add_window:
 			}
 			private function onDeleteClick(e:Event):void{
 				
