@@ -4,9 +4,13 @@ package assets.model
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
+	
 	import mx.core.Application;
-	import mx.rpc.events.ResultEvent;	
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
+	
 	import remoteobject.HotPointStruct;
+	
 	import util.HotpointStructUtil;
 	
 //	import util.HotpointStructUtil;
@@ -64,10 +68,14 @@ package assets.model
 		}
 		private function xmlLoaded(e:Event):void
 		{
+			SamplePanel.sp.panel2.errorMsg.text="";
 			var xml:XML=XML(myLoader.data);
 			Application.application.fileup.upLoadHotPoint(HotpointStructUtil.trans(xml,hps,SamplePanel.sp.panel1.title.text));
 			Application.application.fileup.addEventListener(ResultEvent.RESULT,function():void{
 				SamplePanel.sp.panel2.update.enabled=true;
+			});
+			Application.application.fileup.addEventListener(FaultEvent.FAULT,function():void{
+				SamplePanel.sp.panel2.errorMsg.text="上传失败!";
 			});
 		}
 	}

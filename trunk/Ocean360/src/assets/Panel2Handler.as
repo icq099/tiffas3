@@ -2,10 +2,12 @@ package assets
 {
 	import assets.model.HotPointStructManager;
 	
+	import fl.controls.Button;
+	
 	import flash.events.MouseEvent;
 	
-	import fl.controls.Button;
 	import mx.core.Application;
+	import mx.events.CloseEvent;
 	import mx.events.FlexEvent;
 	
 	import view.PopMenusFlexView;
@@ -24,7 +26,12 @@ package assets
 		{
 			var popMenusFlexView:PopMenusFlexView=new PopMenusFlexView();
 			popMenusFlexView.addEventListener(FlexEvent.CREATION_COMPLETE,popMenusFlexViewComplete);
+			popMenusFlexView.addEventListener(CloseEvent.CLOSE,popMenusFlexViewClose);
 			Application.application.addChild(popMenusFlexView);
+		}
+		private function popMenusFlexViewClose(e:CloseEvent):void
+		{
+			Application.application.removeChild(e.currentTarget);
 		}
 		private function popMenusFlexViewComplete(e:FlexEvent):void
 		{
