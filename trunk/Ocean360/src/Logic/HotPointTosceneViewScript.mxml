@@ -16,6 +16,9 @@
 			
 			//点击场景列表事件
 			private function onSceneItemClick(e:ListEvent):void{
+				upDataHotpointList();
+			}
+			private function upDataHotpointList():void{
 				var xml_list:XMLList=MXml.getInstance().xml_menu.Scene.(@sceneID==list_scene.selectedIndex).sample;
 				hotpoint_xml=new XMLList();
 				for(var i:int=0;i<xml_list.length();i++){
@@ -27,16 +30,26 @@
 			private function onHotPointItemClick(e:ListEvent):void{
 				PopHotPoint.popUp(hotpoint_xml[list_hotpoint.selectedIndex]);
 			}
+			//添加按钮点击事件
 			private function onAddBtnClick(e:Event):void{
+				PopUpManager.addPopUp(pop_add_window,DisplayObject(Application.application),true);
 				PopUpManager.centerPopUp(pop_add_window);
 			};
+			private function onDeleteClick(e:Event):void{
+				if((list_hotpoint.selectedIndex!=-1)&&(list_scene.selectedIndex!=-1)){
+					MXml.getInstance().deleteMenuXml(list_scene.selectedIndex,list_hotpoint.selectedIndex);
+					upDataHotpointList();
+				}
+			}
+			//弹出窗口关闭事件
 			private function onPopClose(e:Event):void{
 				PopUpManager.removePopUp(pop_add_window);
 			}
 			//得到弹出窗口实例
 			private function get pop_add_window():AddHotPointToScenePop{
 				if(_pop_add_window==null){
-					_pop_add_window=PopUpManager.createPopUp(DisplayObject(Application.application),AddHotPointToScenePopScript,true) as AddHotPointToScenePop;
+					_pop_add_window=new AddHotPointToScenePopScript();
+					//_pop_add_window=PopUpManager.createPopUp(DisplayObject(Application.application),AddHotPointToScenePopScript,true) as AddHotPointToScenePop;
 					_pop_add_window.addEventListener(CloseEvent.CLOSE,onPopClose);
 				}
 				return _pop_add_window;
@@ -46,6 +59,7 @@
 				list_scene.addEventListener(ListEvent.CHANGE,onSceneItemClick);
 				list_hotpoint.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,onHotPointItemClick);
 				btn_add.addEventListener(MouseEvent.CLICK,onAddBtnClick);
+				btn_delete.addEventListener(MouseEvent.CLICK,onDeleteClick);
 			}
 		]]>
 	</mx:Script>
