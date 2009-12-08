@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" showCloseButton="true">
-	<mx:TileList right="0" left="0" top="0" bottom="49"></mx:TileList>
-	<mx:Button label="确定" horizontalCenter="0" bottom="19"/>
-	
+	<mx:List id="list_hotpoint" right="10" left="10" top="10" bottom="49"></mx:List>
+	<mx:Button id="btn_ok" label="确定" horizontalCenter="-91" bottom="14"/>
+	<mx:Button id="btn_cancel" label="取消" horizontalCenter="89" bottom="14"/>
 </mx:TitleWindow>

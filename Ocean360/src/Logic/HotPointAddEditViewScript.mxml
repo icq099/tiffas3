@@ -6,11 +6,12 @@
 			import mx.events.ListEvent;
 			import model.MXml;
 			private function init():void{
-				list_hotpoint.addEventListener(ListEvent.CHANGE,onHotPointItemClick);
+				list_hotpoint.doubleClickEnabled=true;
+				list_hotpoint.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,onHotPointItemClick);
 				btn_add.addEventListener(MouseEvent.CLICK,onAddClick);
 			}
 			private function onHotPointItemClick(e:Event):void{
-				PopHotPoint.popUp(MXml.getInstance().getHotPointXml(String(list_hotpoint.selectedIndex))[0]);
+				PopHotPoint.popUp(XML(MXml.getInstance().getHotPointXmlByIndex(list_hotpoint.selectedIndex)));
 			}
 			private function onAddClick(e:Event):void{
 				

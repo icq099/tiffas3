@@ -2,10 +2,19 @@
 <HotPointTosceneView creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
 	<mx:Script>
 		<![CDATA[
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			import myviews.AddHotPointToScenePop;
 			import model.PopHotPoint;
 			import mx.events.ListEvent;
 			import model.MXml;
+			//记录选中场景所有热点的xmllist;
 			private var hotpoint_xml:XMLList;
+			private var _pop_add_window:AddHotPointToScenePop;
+			
+			//点击场景列表事件
 			private function onSceneItemClick(e:ListEvent):void{
 				var xml_list:XMLList=MXml.getInstance().xml_menu.Scene.(@sceneID==list_scene.selectedIndex).sample;
 				hotpoint_xml=new XMLList();
@@ -14,12 +23,29 @@
 				}
 				list_hotpoint.dataProvider=hotpoint_xml.@name;
 			}
+			//双击展项列表事件
 			private function onHotPointItemClick(e:ListEvent):void{
 				PopHotPoint.popUp(hotpoint_xml[list_hotpoint.selectedIndex]);
 			}
+			private function onAddBtnClick(e:Event):void{
+				PopUpManager.centerPopUp(pop_add_window);
+			};
+			private function onPopClose(e:Event):void{
+				PopUpManager.removePopUp(pop_add_window);
+			}
+			//得到弹出窗口实例
+			private function get pop_add_window():AddHotPointToScenePop{
+				if(_pop_add_window==null){
+					_pop_add_window=PopUpManager.createPopUp(DisplayObject(Application.application),AddHotPointToScenePopScript,true) as AddHotPointToScenePop;
+					_pop_add_window.addEventListener(CloseEvent.CLOSE,onPopClose);
+				}
+				return _pop_add_window;
+			}
 			private function init():void{
+				list_hotpoint.doubleClickEnabled=true;
 				list_scene.addEventListener(ListEvent.CHANGE,onSceneItemClick);
-				list_hotpoint.addEventListener(ListEvent.CHANGE,onHotPointItemClick);
+				list_hotpoint.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,onHotPointItemClick);
+				btn_add.addEventListener(MouseEvent.CLICK,onAddBtnClick);
 			}
 		]]>
 	</mx:Script>
