@@ -67,7 +67,7 @@ package assets.model
 			var xml:XML=XML(myLoader.data);
 			Application.application.fileup.upLoadHotPoint(HotpointStructUtil.trans(xml,hps,SamplePanel.sp.panel1.title.text));
 			Application.application.fileup.addEventListener(ResultEvent.RESULT,function():void{
-				Application.application.startUpdateButton.enabled=true;
+				SamplePanel.sp.panel2.update.enabled=true;
 			});
 		}
 	}
