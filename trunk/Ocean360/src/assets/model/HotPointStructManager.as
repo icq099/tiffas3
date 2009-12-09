@@ -5,10 +5,10 @@ package assets.model
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	
-	import mx.core.Application;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	
+	import remoteobject.FileUpLoader;
 	import remoteobject.HotPointStruct;
 	
 	import util.HotpointStructUtil;
@@ -17,9 +17,10 @@ package assets.model
 	
 	public class HotPointStructManager
 	{
-		public var hps:HotPointStruct=new HotPointStruct();
-		public function HotPointStructManager()
+		private var hps:HotPointStruct;
+		public function HotPointStructManager(hps:HotPointStruct)
 		{
+			this.hps=hps;
 			hps.image=new Array();
 			hps.imageName=new Array();
 			hps.soundName="";
@@ -70,11 +71,12 @@ package assets.model
 		{
 			SamplePanel.sp.panel2.errorMsg.text="";
 			var xml:XML=XML(myLoader.data);
-			Application.application.fileup.upLoadHotPoint(HotpointStructUtil.trans(xml,hps,SamplePanel.sp.panel1.title.text));
-			Application.application.fileup.addEventListener(ResultEvent.RESULT,function():void{
+			var fileup:FileUpLoader=new FileUpLoader();
+			fileup.upLoadHotPoint(HotpointStructUtil.trans(xml,hps,SamplePanel.sp.panel1.title.text));
+			fileup.addEventListener(ResultEvent.RESULT,function():void{
 				SamplePanel.sp.panel2.update.enabled=true;
 			});
-			Application.application.fileup.addEventListener(FaultEvent.FAULT,function():void{
+			fileup.addEventListener(FaultEvent.FAULT,function():void{
 				SamplePanel.sp.panel2.errorMsg.text="上传失败!";
 			});
 		}

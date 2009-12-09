@@ -7,8 +7,7 @@ package remoteobject
 	{
 		public function FileUpLoader()
 		{
-			super(FileUpLoader);
+//			super(FileUpLoader);
 		}
-		
 	}
 }
