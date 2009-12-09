@@ -10,27 +10,27 @@ package assets
 	import mx.core.Application;
 	public class Panel1Handler
 	{
-		private var spbgHandler:SamplePanelBackGround;//界面句柄
+		private var sp:SamplePanelBackGround;//界面句柄
 		private var hpsm:HotPointStructManager;
-		public function Panel1Handler(p1h:SamplePanelBackGround,hpsm:HotPointStructManager)
+		public function Panel1Handler(sp:SamplePanelBackGround,hpsm:HotPointStructManager)
 		{
 			this.hpsm=hpsm;
-			spbgHandler=p1h;
-			p1h.panel1.addPicture.addEventListener(MouseEvent.CLICK,panel1AddPictureButtonClickEvent);
-			p1h.panel1.deletePicture.addEventListener(MouseEvent.CLICK,panel1DeletePictureButtonClickEvent);
-			p1h.panel1.addMusic.addEventListener(MouseEvent.CLICK,panel1AddMusicButtonClickEvent);
-			p1h.panel1.title.addEventListener(Event.CHANGE,titleChanged);
-			p1h.panel1.detail.addEventListener(Event.CHANGE,detailChanged);
+			this.sp=sp;
+			this.sp.panel1.addPicture.addEventListener(MouseEvent.CLICK,panel1AddPictureButtonClickEvent);
+			this.sp.panel1.deletePicture.addEventListener(MouseEvent.CLICK,panel1DeletePictureButtonClickEvent);
+			this.sp.panel1.addMusic.addEventListener(MouseEvent.CLICK,panel1AddMusicButtonClickEvent);
+			this.sp.panel1.title.addEventListener(Event.CHANGE,titleChanged);
+			this.sp.panel1.detail.addEventListener(Event.CHANGE,detailChanged);
 		}
 		//标题改变的事件
 		private function titleChanged(e:Event):void
 		{
-			this.hpsm.setTextName(spbgHandler.panel1.title.text);
+			this.hpsm.setTextName(sp.panel1.title.text);
 		}
 		//详细描述的改变事件
 		private function detailChanged(e:Event):void
 		{
-			this.hpsm.setText(spbgHandler.panel1.detail.text);
+			this.hpsm.setText(sp.panel1.detail.text);
 		}
 		private var pictureFileReference:FileReference;
 		//打开图片文件
@@ -45,16 +45,16 @@ package assets
 		{
 			var pictureName:String=FileReference(e.currentTarget).name;
 			var isDouble:Boolean=false;
-			for(var i:int=0;i<spbgHandler.panel1.pictureList.length;i++)
+			for(var i:int=0;i<sp.panel1.pictureList.length;i++)
 			{
-				if(pictureName==spbgHandler.panel1.pictureList.getItemAt(i).label)
+				if(pictureName==sp.panel1.pictureList.getItemAt(i).label)
 				{
 					isDouble=true;
 				}
 			}
 			if(isDouble==false)
 			{
-				spbgHandler.panel1.pictureList.addItem({label:pictureName,icon:""});
+				sp.panel1.pictureList.addItem({label:pictureName,icon:""});
 			}
 			pictureFileReference.addEventListener(Event.COMPLETE,pictureLoaded);
 			pictureFileReference.load();
@@ -75,7 +75,7 @@ package assets
 		//设置音乐文件名
 		private function musicSelect(e:Event):void
 		{
-			spbgHandler.panel1.musicName.text=FileReference(e.currentTarget).name;
+			sp.panel1.musicName.text=FileReference(e.currentTarget).name;
 			musicFileReference.addEventListener(Event.COMPLETE,musicLoaded);
 			musicFileReference.load();
 		}
@@ -86,13 +86,13 @@ package assets
 		//删除图片的事件
 		private function panel1DeletePictureButtonClickEvent(e:MouseEvent):void
 		{
-			if(spbgHandler.panel1.pictureList.selectedIndex==-1)
+			if(sp.panel1.pictureList.selectedIndex==-1)
 			{
 				
 			}else
 			{
-				this.hpsm.deleteImageByName(spbgHandler.panel1.pictureList.getItemAt(spbgHandler.panel1.pictureList.selectedIndex).label)//删除图片数据
-				spbgHandler.panel1.pictureList.removeItemAt(spbgHandler.panel1.pictureList.selectedIndex);
+				this.hpsm.deleteImageByName(sp.panel1.pictureList.getItemAt(sp.panel1.pictureList.selectedIndex).label)//删除图片数据
+				sp.panel1.pictureList.removeItemAt(sp.panel1.pictureList.selectedIndex);
 			}
 		}
 	}
