@@ -5,9 +5,11 @@
 			import mx.events.CloseEvent;
 			import model.MXml;
 			private function init():void{
-				btn_cancel.addEventListener(MouseEvent.CLICK,function(e:Event):void{
+				var fun_close:Function=function(e:Event):void{
 					dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
-				})
+				};
+				btn_ok.addEventListener(MouseEvent.CLICK,fun_close);
+				btn_cancel.addEventListener(MouseEvent.CLICK,fun_close);
 			}
 		]]>
 	</mx:Script>

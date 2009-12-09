@@ -2,6 +2,7 @@
 <HotPointTosceneView creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
 			import mx.core.Application;
@@ -36,7 +37,12 @@
 				PopUpManager.centerPopUp(pop_add_window);
 			};
 			private function onDeleteClick(e:Event):void{
-				if((list_hotpoint.selectedIndex!=-1)&&(list_scene.selectedIndex!=-1)){
+				if(operatable){
+					Alert.show("确定删除？","提示",Alert.YES|Alert.NO,null,onAlerClose);
+				}
+			}
+			private function onAlerClose(e:CloseEvent):void{
+				if(e.detail==Alert.YES){
 					MXml.getInstance().deleteMenuXml(list_scene.selectedIndex,list_hotpoint.selectedIndex);
 					upDataHotpointList();
 				}
@@ -49,10 +55,22 @@
 			private function get pop_add_window():AddHotPointToScenePop{
 				if(_pop_add_window==null){
 					_pop_add_window=new AddHotPointToScenePopScript();
-					//_pop_add_window=PopUpManager.createPopUp(DisplayObject(Application.application),AddHotPointToScenePopScript,true) as AddHotPointToScenePop;
 					_pop_add_window.addEventListener(CloseEvent.CLOSE,onPopClose);
+					_pop_add_window.addEventListener(FlexEvent.CREATION_COMPLETE,function(e:Event):void{
+						_pop_add_window.btn_ok.addEventListener(MouseEvent.CLICK,onPopComfirm);
+					});
 				}
 				return _pop_add_window;
+			}
+			//点击弹出窗口的确定按钮
+			private function onPopComfirm(e:Event):void{
+				if(list_scene.selectedIndex!=-1){
+					MXml.getInstance().addMenuXml(list_scene.selectedIndex,MXml.getInstance().getHotPointXmlByIndex(_pop_add_window.list_hotpoint.selectedIndex).@id);
+					upDataHotpointList();					
+				}
+			}
+			private function get operatable():Boolean{
+				return (list_hotpoint.selectedIndex!=-1)&&(list_scene.selectedIndex!=-1);
 			}
 			private function init():void{
 				list_hotpoint.doubleClickEnabled=true;
