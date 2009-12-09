@@ -5,7 +5,6 @@
 <mx:Script
 	>
 	<![CDATA[
-		import assets.UploadEvent;
 		public var sp:SamplePanel;
 		private function init():void
 		{

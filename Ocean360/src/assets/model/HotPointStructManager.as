@@ -1,11 +1,16 @@
 package assets.model
 {
+	import assets.ErrorView;
+	
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	
+	import mx.core.Application;
+	import mx.managers.PopUpManager;
 	import mx.rpc.AbstractOperation;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
@@ -76,8 +81,8 @@ package assets.model
 			}
 			else
 			{
-//				var errorView:ErrorView=PopUpManager.createPopUp(DisplayObject(Application.application),ErrorView,true) as ErrorView;
-//				PopUpManager.centerPopUp(errorView);
+				var errorView:ErrorView=PopUpManager.createPopUp(DisplayObject(Application.application),ErrorView,true) as ErrorView;
+				PopUpManager.centerPopUp(errorView);
 			}
 		}
 		private function xmlLoaded(e:Event):void
