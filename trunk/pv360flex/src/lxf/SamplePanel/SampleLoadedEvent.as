@@ -9,6 +9,5 @@ package lxf.SamplePanel
 		{
 			super(type, bubbles, cancelable);
 		}
-		
 	}
 }
