@@ -5,19 +5,19 @@ package remoteobject
 	import mx.rpc.AbstractOperation;
 	import mx.rpc.remoting.RemoteObject;
 
-	public class FileUpLoader extends RemoteObject
+	public dynamic class FileUpLoader extends RemoteObject
 	{
 		public function FileUpLoader()
 		{
 			super("FileUpLoader");
 		}
-		public function upLoadHotPoint(data:HotPointStruct):AbstractOperation{
-			super.upLoadHotPoint(data);
-			return super.getOperation("upLoadHotPoint");
+		public function upLoadHotPointO(data:HotPointStruct):AbstractOperation{
+			this.upLoadHotPoint(data);
+			return getOperation("upLoadHotPoint");
 		}
-		public function saveXml(menuxml:ByteArray,hotpointxml:ByteArray):AbstractOperation{
-			super.saveXml(menuxml,hotpointxml);
-			return super.getOperation("saveXml");
+		public function saveXmlO(menuxml:ByteArray,hotpointxml:ByteArray):AbstractOperation{
+			this.saveXml(menuxml,hotpointxml);
+			return getOperation("saveXml");
 		}
 	}
 }
