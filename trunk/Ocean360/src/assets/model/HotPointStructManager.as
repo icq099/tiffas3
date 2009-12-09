@@ -5,6 +5,7 @@ package assets.model
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
@@ -72,18 +73,28 @@ package assets.model
 		private	var XML_URL:String = "xml/hotpoints.xml";
 		private	var urlRequest:URLRequest = new URLRequest(XML_URL); 
 		private	var myLoader:URLLoader = new URLLoader(); 
+		private var errorView:ErrorView;
 		public function startToUpdate():void
 		{
-			if(sp.panel1.title.text!=null)//如果标题不为空
+			if(sp.panel1.title.text!="")//如果标题不为空
 			{
 				myLoader.addEventListener(Event.COMPLETE,xmlLoaded);
 				myLoader.load(urlRequest);
 			}
 			else
 			{
-				var errorView:ErrorView=PopUpManager.createPopUp(DisplayObject(Application.application),ErrorView,true) as ErrorView;
+				errorView=PopUpManager.createPopUp(DisplayObject(Application.application),ErrorView,true) as ErrorView;
+				errorView.width=400;
+				errorView.height=300;
+				errorView.errorMsg.text="标本标题不能为空！";
 				PopUpManager.centerPopUp(errorView);
+				errorView.ok.addEventListener(MouseEvent.CLICK,errorViewClose);
 			}
+		}
+		private function errorViewClose(e:MouseEvent):void
+		{
+			PopUpManager.removePopUp(errorView);
+			sp.panel2.update.enabled=true;
 		}
 		private function xmlLoaded(e:Event):void
 		{
