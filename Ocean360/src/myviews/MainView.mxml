@@ -3,7 +3,7 @@
 	<mx:states>
 		<mx:State name="AddHotpointToscene">
 			<mx:AddChild position="lastChild">
-				<mx:TabNavigator right="10" left="10" top="10" bottom="10">
+				<mx:TabNavigator historyManagementEnabled="false" right="10" left="10" top="10" bottom="10">
 					<mx:Canvas label="场景" width="100%" height="100%">
 						<Logic:HotPointTosceneViewScript right="10" left="10" top="10" bottom="10">
 						</Logic:HotPointTosceneViewScript>

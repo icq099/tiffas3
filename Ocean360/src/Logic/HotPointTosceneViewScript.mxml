@@ -58,6 +58,8 @@
 					_pop_add_window.addEventListener(CloseEvent.CLOSE,onPopClose);
 					_pop_add_window.addEventListener(FlexEvent.CREATION_COMPLETE,function(e:Event):void{
 						_pop_add_window.btn_ok.addEventListener(MouseEvent.CLICK,onPopComfirm);
+						_pop_add_window.list_hotpoint.doubleClickEnabled=true;
+						_pop_add_window.addEventListener(MouseEvent.DOUBLE_CLICK,onPopComfirm);
 					});
 				}
 				return _pop_add_window;
