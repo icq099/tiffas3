@@ -8,6 +8,7 @@ package lxf.SamplePanel{
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.filters.DropShadowFilter;
+	import flash.text.TextFormat;
 	
 	import other.EffectPv3dRota;
 	
@@ -24,6 +25,9 @@ package lxf.SamplePanel{
 			fpp=new FishPanelPlugin();
 			fpp.close.addEventListener(MouseEvent.CLICK,fppCloseClickEvent);
 			fpp.list.rowHeight=25;
+			var format:TextFormat = new TextFormat();
+			format.size = 16;
+			fpp.list.setRendererStyle("textFormat", format);
 //			//载入XML
 			fpp.list.addEventListener(ListEvent.ITEM_CLICK,listClickEvent);
 			this.filters=[new DropShadowFilter(10,45,0,0.5,10,10,1,3)];

@@ -23,7 +23,7 @@ package lxf.SamplePanel
 			this.buttonText=text.toString();
 			addButton();
 			addTextField();
-			label=MainSystem.getInstance().runAPIDirect("getSampleName",[text]);;
+			label=MainSystem.getInstance().runAPIDirect("getSampleName",[text]);
 			id=text;
 		}
 		//添加按钮
