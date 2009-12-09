@@ -24,6 +24,7 @@ package lxf.SamplePanel
 		}
 		public function readSampleList(num:int):Array
 		{
+			list=new Array();
 		    for(var i:int=0;i<myXML.Scene.length();i++)
 		    {
 		    	if(myXML.Scene[i].@sceneID==num)
