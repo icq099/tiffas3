@@ -13,10 +13,10 @@ package
 	
 	public class SamplePanel extends UIComponent
 	{
-		public static var sp:SamplePanelBackGround=new SamplePanelBackGround();
+		public var sp:SamplePanelBackGround=new SamplePanelBackGround();
 		public var p1h:Panel1Handler;
 		public var hps:HotPointStruct=new HotPointStruct();
-		public var hpsm:HotPointStructManager=new HotPointStructManager(hps);//所要上传的数据结构
+		public var hpsm:HotPointStructManager=new HotPointStructManager(sp,hps);//所要上传的数据结构
 		public function SamplePanel()
 		{
 			addHandler();
@@ -25,7 +25,6 @@ package
 			addSp();
 			hideAllPanel();
 			sp.panel1.visible=true;
-			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 		//返回hotpoiotStruct
 		public function getHotpointStruct():HotPointStruct
@@ -36,7 +35,7 @@ package
 		private function addHandler():void
 		{
 			p1h=new Panel1Handler(sp,hpsm);
-			new Panel2Handler(hps,hpsm);
+			new Panel2Handler(sp,hps,hpsm);
 		}
 
 		//添加标本面板

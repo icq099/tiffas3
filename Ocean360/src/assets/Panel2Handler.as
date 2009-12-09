@@ -18,12 +18,14 @@ package assets
 	{
 		private var hps:HotPointStruct;
 		private var hpsm:HotPointStructManager;
-		public function Panel2Handler(hps:HotPointStruct,hpsm:HotPointStructManager)
+		private var sp:SamplePanelBackGround;//界面句柄
+		public function Panel2Handler(sp:SamplePanelBackGround,hps:HotPointStruct,hpsm:HotPointStructManager)
 		{
-			SamplePanel.sp.panel2.preview.label="预览";
-			SamplePanel.sp.panel2.update.label="开始上传";
-			SamplePanel.sp.panel2.preview.addEventListener(MouseEvent.CLICK,previewButtonClickEvent);
-			SamplePanel.sp.panel2.update.addEventListener(MouseEvent.CLICK,startUpdateButtonClickEvent);
+			this.sp=sp;
+			this.sp.panel2.preview.label="预览";
+			this.sp.panel2.update.label="开始上传";
+			this.sp.panel2.preview.addEventListener(MouseEvent.CLICK,previewButtonClickEvent);
+			this.sp.panel2.update.addEventListener(MouseEvent.CLICK,startUpdateButtonClickEvent);
 			this.hps=hps;
 			this.hpsm=hpsm;
 		}

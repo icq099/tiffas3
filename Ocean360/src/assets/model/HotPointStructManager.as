@@ -1,5 +1,6 @@
 package assets.model
 {
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
@@ -15,11 +16,13 @@ package assets.model
 	
 //	import util.HotpointStructUtil;
 	
-	public class HotPointStructManager
+	public class HotPointStructManager extends Sprite
 	{
 		private var hps:HotPointStruct;
-		public function HotPointStructManager(hps:HotPointStruct)
+		private var sp:SamplePanelBackGround;
+		public function HotPointStructManager(sp:SamplePanelBackGround,hps:HotPointStruct)
 		{
+			this.sp=sp;
 			this.hps=hps;
 			hps.image=new Array();
 			hps.imageName=new Array();
@@ -69,15 +72,17 @@ package assets.model
 		}
 		private function xmlLoaded(e:Event):void
 		{
-			SamplePanel.sp.panel2.errorMsg.text="";
+			this.sp.panel2.errorMsg.text="";
 			var xml:XML=XML(myLoader.data);
 			var fileup:FileUpLoader=new FileUpLoader();
-			fileup.upLoadHotPoint(HotpointStructUtil.trans(xml,hps,SamplePanel.sp.panel1.title.text));
+			fileup.upLoadHotPoint(HotpointStructUtil.trans(xml,hps,this.sp.panel1.title.text));
 			fileup.addEventListener(ResultEvent.RESULT,function():void{
-				SamplePanel.sp.panel2.update.enabled=true;
+				this.sp.panel2.update.enabled=true;
+				this.dispatchEvent(new Event(Event.COMPLETE));
 			});
 			fileup.addEventListener(FaultEvent.FAULT,function():void{
-				SamplePanel.sp.panel2.errorMsg.text="上传失败!";
+				this.sp.panel2.errorMsg.text="上传失败!";
+				this.dispatchEvent(new Event(Event.COMPLETE));
 			});
 		}
 	}
