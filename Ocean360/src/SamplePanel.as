@@ -4,16 +4,19 @@ package
 	import assets.Panel2Handler;
 	import assets.model.HotPointStructManager;
 	
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
-	import mx.core.Application;
 	import mx.core.UIComponent;
+	
+	import remoteobject.HotPointStruct;
 	
 	public class SamplePanel extends UIComponent
 	{
 		public static var sp:SamplePanelBackGround=new SamplePanelBackGround();
 		public var p1h:Panel1Handler;
-		public var hpsm:HotPointStructManager=new HotPointStructManager();//所要上传的数据结构
+		public var hps:HotPointStruct=new HotPointStruct();
+		public var hpsm:HotPointStructManager=new HotPointStructManager(hps);//所要上传的数据结构
 		public function SamplePanel()
 		{
 			addHandler();
@@ -22,12 +25,18 @@ package
 			addSp();
 			hideAllPanel();
 			sp.panel1.visible=true;
+			this.dispatchEvent(new Event(Event.COMPLETE));
+		}
+		//返回hotpoiotStruct
+		public function getHotpointStruct():HotPointStruct
+		{
+			return hps;
 		}
 		//给各个界面的按钮添加监听器
 		private function addHandler():void
 		{
 			p1h=new Panel1Handler(sp,hpsm);
-			new Panel2Handler(hpsm);
+			new Panel2Handler(hps,hpsm);
 		}
 
 		//添加标本面板
