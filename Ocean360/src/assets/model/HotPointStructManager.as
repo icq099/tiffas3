@@ -77,14 +77,12 @@ package assets.model
 			var xml:XML=XML(myLoader.data);
 			var fileup:FileUpLoader=new FileUpLoader();
 			var dispather:AbstractOperation;
-			dispather=fileup.upLoadHotPoint(HotpointStructUtil.trans(xml,hps,this.sp.panel1.title.text));
-			dispather.addEventListener(ResultEvent.RESULT,function():void{
-				this.sp.panel2.update.enabled=true;
-				this.dispatchEvent(new Event(Event.COMPLETE));
+			dispather=fileup.upLoadHotPointO(HotpointStructUtil.trans(xml,hps,this.sp.panel1.title.text));
+			dispather.addEventListener(ResultEvent.RESULT,function(e:Event):void{
+				sp.panel2.update.enabled=true;
 			});
-			dispather.addEventListener(FaultEvent.FAULT,function():void{
-				this.sp.panel2.errorMsg.text="上传失败!";
-				this.dispatchEvent(new Event(Event.COMPLETE));
+			dispather.addEventListener(FaultEvent.FAULT,function(e:Event):void{
+				sp.panel2.errorMsg.text="上传失败!";
 			});
 		}
 	}
