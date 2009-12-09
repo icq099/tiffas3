@@ -55,9 +55,9 @@ package assets
 			if(isDouble==false)
 			{
 				sp.panel1.pictureList.addItem({label:pictureName,icon:""});
+				pictureFileReference.addEventListener(Event.COMPLETE,pictureLoaded);
+				pictureFileReference.load();
 			}
-			pictureFileReference.addEventListener(Event.COMPLETE,pictureLoaded);
-			pictureFileReference.load();
 		}
 		private function pictureLoaded(e:Event):void
 		{
@@ -91,7 +91,7 @@ package assets
 				
 			}else
 			{
-				this.hpsm.deleteImageByName(sp.panel1.pictureList.getItemAt(sp.panel1.pictureList.selectedIndex).label)//删除图片数据
+				this.hpsm.deleteImageByName(sp.panel1.pictureList.getItemAt(sp.panel1.pictureList.selectedIndex).label,sp.panel1.pictureList.selectedIndex)//删除图片数据
 				sp.panel1.pictureList.removeItemAt(sp.panel1.pictureList.selectedIndex);
 			}
 		}
