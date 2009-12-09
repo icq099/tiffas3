@@ -2,6 +2,8 @@
 <HotPointAddEditView  creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
 	<mx:Script>
 		<![CDATA[
+			import mx.events.CloseEvent;
+			import mx.controls.Alert;
 			import myviews.SampleEditorView;
 			import mx.core.Application;
 			import mx.managers.PopUpManager;
@@ -18,11 +20,23 @@
 				PopHotPoint.popUp(XML(MXml.getInstance().getHotPointXmlByIndex(list_hotpoint.selectedIndex)));
 			}
 			private function onAddClick(e:Event):void{
-				var pop_add_window:SampleEditorView=PopUpManager.createPopUp(DisplayObject(Application.application),SampleEditorView,true) as SampleEditorView;
+				var pop_add_window:SampleEditorView=new SampleEditorView();
+				pop_add_window.addEventListener(Event.COMPLETE,function(e:Event):void{
+					PopUpManager.removePopUp(pop_add_window);
+				});
+				PopUpManager.addPopUp(pop_add_window,DisplayObject(Application.application),true);
 				PopUpManager.centerPopUp(pop_add_window);
+				pop_add_window.addEventListener(CloseEvent.CLOSE,function(e:Event):void{
+					PopUpManager.removePopUp(pop_add_window);
+				});
 			}
 			private function onDeleteClick(e:Event):void{
 				if(list_hotpoint.selectedIndex!=-1){
+					Alert.show("确定删除？"+list_hotpoint.selectedItem,"提示",Alert.YES|Alert.NO,null,onAlerClose);
+				}
+			}
+			private function onAlerClose(e:CloseEvent):void{
+				if(e.detail==Alert.YES){
 					MXml.getInstance().deleteHotPointXmlByIndex(list_hotpoint.selectedIndex);
 				}
 			}

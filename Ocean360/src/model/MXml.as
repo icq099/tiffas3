@@ -46,6 +46,9 @@ package model
 		public function getHotPointXmlByIndex(index:int):XML{
 			return xml_hotpoint.HotPoint[index];
 		}
+		public function addMenuXml(scene_index:int,hotpoint_id:String):void{
+			xml_menu.Scene[scene_index].appendChild(hotpoint_id);
+		}
 		public function deleteMenuXml(scene_index:int,sample_index:int):void{
 			delete xml_menu.Scene[scene_index].sample[sample_index];
 		}
