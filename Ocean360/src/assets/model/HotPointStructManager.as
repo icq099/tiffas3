@@ -36,14 +36,14 @@ package assets.model
 			hps.imageName.push(name);
 			hps.image.push(data);
 		}
-		public function deleteImageByName(name:String):void
+		public function deleteImageByName(name:String,id:int):void
 		{
 			for(var i:int=0;i<hps.imageName.length;i++)
 			{
 				if(hps.imageName[i]==name)
 				{
-					hps.imageName.splice(i,i);
-					hps.image.splice(i,i);
+					hps.imageName.splice(i,1);
+					hps.image.splice(i,1);
 				}
 			}
 		}
