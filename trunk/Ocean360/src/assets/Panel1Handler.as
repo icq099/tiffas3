@@ -2,12 +2,14 @@ package assets
 {
 	import assets.model.HotPointStructManager;
 	
+	import fl.core.UIComponent;
+	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
 	
-	import mx.core.Application;
+	import mx.controls.TextArea;
 	public class Panel1Handler
 	{
 		private var sp:SamplePanelBackGround;//界面句柄
@@ -21,6 +23,13 @@ package assets
 			this.sp.panel1.addMusic.addEventListener(MouseEvent.CLICK,panel1AddMusicButtonClickEvent);
 			this.sp.panel1.title.addEventListener(Event.CHANGE,titleChanged);
 			this.sp.panel1.detail.addEventListener(Event.CHANGE,detailChanged);
+			var textArea:TextArea=new TextArea();
+			textArea.editable=true;
+			textArea.width=200;
+			textArea.height=200;
+			var ui:UIComponent=new UIComponent();
+			ui.addChild(textArea);
+			this.sp.panel1.addChild(ui);
 		}
 		//标题改变的事件
 		private function titleChanged(e:Event):void

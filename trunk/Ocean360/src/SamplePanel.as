@@ -4,9 +4,9 @@ package
 	import assets.Panel2Handler;
 	import assets.model.HotPointStructManager;
 	
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import mx.containers.Panel;
 	import mx.core.UIComponent;
 	
 	import remoteobject.HotPointStruct;
@@ -88,5 +88,6 @@ package
 			sp.panel2.visible=true;
 			sp.button2.gotoAndStop("2");
 		}
+		
 	}
 }

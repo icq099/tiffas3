@@ -10,6 +10,8 @@ package assets.model
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	
+	import model.MXml;
+	
 	import mx.core.Application;
 	import mx.managers.PopUpManager;
 	import mx.rpc.AbstractOperation;
@@ -70,23 +72,24 @@ package assets.model
 			temp.writeUTFBytes(text);
 			hps.text=temp;
 		}
-		private	var XML_URL:String = "xml/hotpoints.xml";
-		private	var urlRequest:URLRequest = new URLRequest(XML_URL); 
-		private	var myLoader:URLLoader = new URLLoader(); 
 		private var errorView:ErrorView;
 		public function startToUpdate():void
 		{
-			if(sp.panel1.title.text!="")//如果标题不为空
+			if(sp.panel1.title.text!="" && sp.panel1.detail.text!="")//如果标题不为空
 			{
-				myLoader.addEventListener(Event.COMPLETE,xmlLoaded);
-				myLoader.load(urlRequest);
+				this.sp.panel2.errorMsg.text="";
+				var fileup:FileUpLoader=new FileUpLoader();
+				var dispather:AbstractOperation;
+				dispather=fileup.upLoadHotPointO(HotpointStructUtil.trans(MXml.getInstance().xml_hotpoint,hps,this.sp.panel1.title.text));
+				dispather.addEventListener(ResultEvent.RESULT,RESULT);
+				dispather.addEventListener(FaultEvent.FAULT,FAULT);
 			}
 			else
 			{
 				errorView=PopUpManager.createPopUp(DisplayObject(Application.application),ErrorView,true) as ErrorView;
 				errorView.width=400;
 				errorView.height=300;
-				errorView.errorMsg.text="标本标题不能为空！";
+				errorView.errorMsg.text="标题或详细描述不能为空！";
 				PopUpManager.centerPopUp(errorView);
 				errorView.ok.addEventListener(MouseEvent.CLICK,errorViewClose);
 			}
@@ -95,16 +98,6 @@ package assets.model
 		{
 			PopUpManager.removePopUp(errorView);
 			sp.panel2.update.enabled=true;
-		}
-		private function xmlLoaded(e:Event):void
-		{
-			this.sp.panel2.errorMsg.text="";
-			var xml:XML=XML(myLoader.data);
-			var fileup:FileUpLoader=new FileUpLoader();
-			var dispather:AbstractOperation;
-			dispather=fileup.upLoadHotPointO(HotpointStructUtil.trans(xml,hps,this.sp.panel1.title.text));
-			dispather.addEventListener(ResultEvent.RESULT,RESULT);
-			dispather.addEventListener(FaultEvent.FAULT,FAULT);
 		}
 		private function RESULT(e:Event):void
 		{
