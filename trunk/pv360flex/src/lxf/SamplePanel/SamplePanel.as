@@ -35,6 +35,8 @@ package lxf.SamplePanel{
 			MainSystem.getInstance().addAPI("showFishPanel",showFishPanel);
 			MainSystem.getInstance().addAPI("removeFishPanel",removefishPanel);
 			MainSystem.getInstance().addEventListener(SceneChangeEvent.CHANGE,refreshFishPanel);
+			this.addEventListener(MouseEvent.MOUSE_DOWN, dragMovie);
+			this..addEventListener(MouseEvent.MOUSE_UP, dropMovie);
 //			MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,function(e:MainSystemEvent):void{
 //				trace(e.id);
 //			})
@@ -80,6 +82,15 @@ package lxf.SamplePanel{
 		private function listClickEvent(e:ListEvent):void
 		{
 			FishPanelButtons(List(e.currentTarget).getItemAt(e.index)).clickEvent();
+		}
+		private function dragMovie(event:MouseEvent):void
+		{
+			this.startDrag();
+		}
+
+		private function dropMovie(event:MouseEvent):void
+		{
+			this.stopDrag();
 		}
 	}
 }
