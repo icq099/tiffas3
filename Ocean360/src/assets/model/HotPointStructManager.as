@@ -21,6 +21,7 @@ package assets.model
 	{
 		private var hps:HotPointStruct;
 		private var sp:SamplePanelBackGround;
+		private var samplepanel:SamplePanel;
 		public function HotPointStructManager(sp:SamplePanelBackGround,hps:HotPointStruct)
 		{
 			this.sp=sp;
@@ -68,8 +69,16 @@ package assets.model
 		private	var myLoader:URLLoader = new URLLoader(); 
 		public function startToUpdate():void
 		{
-			myLoader.addEventListener(Event.COMPLETE,xmlLoaded);
-			myLoader.load(urlRequest);
+			if(sp.panel1.title.text!=null)//如果标题不为空
+			{
+				myLoader.addEventListener(Event.COMPLETE,xmlLoaded);
+				myLoader.load(urlRequest);
+			}
+			else
+			{
+//				var errorView:ErrorView=PopUpManager.createPopUp(DisplayObject(Application.application),ErrorView,true) as ErrorView;
+//				PopUpManager.centerPopUp(errorView);
+			}
 		}
 		private function xmlLoaded(e:Event):void
 		{
@@ -78,12 +87,18 @@ package assets.model
 			var fileup:FileUpLoader=new FileUpLoader();
 			var dispather:AbstractOperation;
 			dispather=fileup.upLoadHotPointO(HotpointStructUtil.trans(xml,hps,this.sp.panel1.title.text));
-			dispather.addEventListener(ResultEvent.RESULT,function(e:Event):void{
-				sp.panel2.update.enabled=true;
-			});
-			dispather.addEventListener(FaultEvent.FAULT,function(e:Event):void{
-				sp.panel2.errorMsg.text="上传失败!";
-			});
+			dispather.addEventListener(ResultEvent.RESULT,RESULT);
+			dispather.addEventListener(FaultEvent.FAULT,FAULT);
+		}
+		private function RESULT(e:Event):void
+		{
+			sp.panel2.update.enabled=true;
+			this.parent.dispatchEvent(new Event(Event.COMPLETE));
+		}
+		private function FAULT(e:Event):void
+		{
+			sp.panel2.errorMsg.text="上传失败!";
+			sp.panel2.update.enabled=true;
 		}
 	}
 }
