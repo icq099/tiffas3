@@ -5,12 +5,19 @@
 <mx:Script
 	>
 	<![CDATA[
+		import assets.UploadEvent;
 		public var sp:SamplePanel;
 		private function init():void
 		{
+			sp=new SamplePanel();
+			sp.addEventListener(Event.COMPLETE,ok);
+			addChild(sp);
+		}
+		private function ok(e:Event):void
+		{
+			trace("ok");
 		}
 	]]>
 </mx:Script>
 	<mx:RemoteObject id="fileup" destination="FileUpLoader"/>
-	<ns2:SamplePanel x="215" y="120" width="310" height="278"/>
 </mx:Application>

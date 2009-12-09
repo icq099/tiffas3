@@ -19,6 +19,7 @@ package
 		public var hpsm:HotPointStructManager=new HotPointStructManager(sp,hps);//所要上传的数据结构
 		public function SamplePanel()
 		{
+			this.addChild(hpsm);
 			addHandler();
 			addButtonsEvent();
 			stopAllButton();

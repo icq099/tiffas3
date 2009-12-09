@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
+	<mx:Panel x="55" y="45" width="255" height="133" layout="absolute">
+		<mx:Text x="29.5" y="15" width="176" fontSize="21" color="#FD0813" id="errorMsg"/>
+		<mx:Button x="80" y="57" label="确定" id="ok" width="63"/>
+	</mx:Panel>
+</mx:Canvas>
