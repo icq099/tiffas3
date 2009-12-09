@@ -6,6 +6,7 @@ package assets.model
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	
+	import mx.rpc.AbstractOperation;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	
@@ -75,12 +76,13 @@ package assets.model
 			this.sp.panel2.errorMsg.text="";
 			var xml:XML=XML(myLoader.data);
 			var fileup:FileUpLoader=new FileUpLoader();
-			fileup.upLoadHotPoint(HotpointStructUtil.trans(xml,hps,this.sp.panel1.title.text));
-			fileup.addEventListener(ResultEvent.RESULT,function():void{
+			var dispather:AbstractOperation;
+			dispather=fileup.upLoadHotPoint(HotpointStructUtil.trans(xml,hps,this.sp.panel1.title.text));
+			dispather.addEventListener(ResultEvent.RESULT,function():void{
 				this.sp.panel2.update.enabled=true;
 				this.dispatchEvent(new Event(Event.COMPLETE));
 			});
-			fileup.addEventListener(FaultEvent.FAULT,function():void{
+			dispather.addEventListener(FaultEvent.FAULT,function():void{
 				this.sp.panel2.errorMsg.text="上传失败!";
 				this.dispatchEvent(new Event(Event.COMPLETE));
 			});
