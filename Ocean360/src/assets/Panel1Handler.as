@@ -18,18 +18,12 @@ package assets
 		{
 			this.hpsm=hpsm;
 			this.sp=sp;
+			sp.panel1.detail.text="";
 			this.sp.panel1.addPicture.addEventListener(MouseEvent.CLICK,panel1AddPictureButtonClickEvent);
 			this.sp.panel1.deletePicture.addEventListener(MouseEvent.CLICK,panel1DeletePictureButtonClickEvent);
 			this.sp.panel1.addMusic.addEventListener(MouseEvent.CLICK,panel1AddMusicButtonClickEvent);
 			this.sp.panel1.title.addEventListener(Event.CHANGE,titleChanged);
 			this.sp.panel1.detail.addEventListener(Event.CHANGE,detailChanged);
-			var textArea:TextArea=new TextArea();
-			textArea.editable=true;
-			textArea.width=200;
-			textArea.height=200;
-			var ui:UIComponent=new UIComponent();
-			ui.addChild(textArea);
-			this.sp.panel1.addChild(ui);
 		}
 		//标题改变的事件
 		private function titleChanged(e:Event):void
