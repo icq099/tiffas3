@@ -1,5 +1,6 @@
 package lxf.CenterPanel
 {
+	
 	import mx.modules.Module;
 	
 	import yzhkof.Toolyzhkof;
@@ -10,6 +11,5 @@ package lxf.CenterPanel
 		{
 			addChild(Toolyzhkof.mcToUI(new CenterPanel()));
 		}
-		
 	}
 }
