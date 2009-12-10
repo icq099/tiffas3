@@ -36,7 +36,10 @@ package lxf.SamplePanel
 		    {
 			    for(i=0;i<myXML.Scene[num].sample.length();i++)
 			    {
-			    	list.push(myXML.Scene[num].sample[i]);
+			    	if(myXML.Scene[num].sample[i]!=null)
+			    	{
+			    		list.push(myXML.Scene[num].sample[i]);
+			    	}
 			    }
 		    }
 		    return list;
