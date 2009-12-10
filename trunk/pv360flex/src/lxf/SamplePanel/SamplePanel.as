@@ -31,16 +31,25 @@ package lxf.SamplePanel{
 //			//载入XML
 			fpp.list.addEventListener(ListEvent.ITEM_CLICK,listClickEvent);
 			this.filters=[new DropShadowFilter(10,45,0,0.5,10,10,1,3)];
+			this.addEventListener(MouseEvent.MOUSE_DOWN, dragMovie);
+			this..addEventListener(MouseEvent.MOUSE_UP, dropMovie);
 			//添加API
 			MainSystem.getInstance().addAPI("showFishPanel",showFishPanel);
 			MainSystem.getInstance().addAPI("removeFishPanel",removefishPanel);
 			MainSystem.getInstance().addEventListener(SceneChangeEvent.CHANGE,refreshFishPanel);
-			this.addEventListener(MouseEvent.MOUSE_DOWN, dragMovie);
-			this..addEventListener(MouseEvent.MOUSE_UP, dropMovie);
 //			MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,function(e:MainSystemEvent):void{
 //				trace(e.id);
 //			})
 //			MainSystem.getInstance().showPluginById("map");
+		}
+		private function dragMovie(event:MouseEvent):void
+		{
+			this.startDrag();
+		}
+
+		private function dropMovie(event:MouseEvent):void
+		{
+			this.stopDrag();
 		}
 		//API函数
 		private function showFishPanel():void
@@ -73,24 +82,18 @@ package lxf.SamplePanel{
 		private function addButtons():void
 		{
 			var sceneID:int=MainSystem.getInstance().currentScene;
-			var temp:Array=test.readSampleList(sceneID);
-			for(var i:int;i<temp.length;i++)
+			if(temp!=null)
 			{
-				fpp.list.addItem(new FishPanelButtons(temp[i]));
+				var temp:Array=test.readSampleList(sceneID);
+				for(var i:int;i<temp.length;i++)
+				{
+					fpp.list.addItem(new FishPanelButtons(temp[i]));
+				}
 			}
 		}
 		private function listClickEvent(e:ListEvent):void
 		{
 			FishPanelButtons(List(e.currentTarget).getItemAt(e.index)).clickEvent();
-		}
-		private function dragMovie(event:MouseEvent):void
-		{
-			this.startDrag();
-		}
-
-		private function dropMovie(event:MouseEvent):void
-		{
-			this.stopDrag();
 		}
 	}
 }
