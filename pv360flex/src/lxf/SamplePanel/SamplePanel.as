@@ -82,9 +82,9 @@ package lxf.SamplePanel{
 		private function addButtons():void
 		{
 			var sceneID:int=MainSystem.getInstance().currentScene;
+			var temp:Array=test.readSampleList(sceneID);
 			if(temp!=null)
 			{
-				var temp:Array=test.readSampleList(sceneID);
 				for(var i:int;i<temp.length;i++)
 				{
 					fpp.list.addItem(new FishPanelButtons(temp[i]));
