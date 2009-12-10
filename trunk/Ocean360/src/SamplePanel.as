@@ -6,7 +6,6 @@ package
 	
 	import flash.events.MouseEvent;
 	
-	import mx.containers.Panel;
 	import mx.core.UIComponent;
 	
 	import remoteobject.HotPointStruct;
