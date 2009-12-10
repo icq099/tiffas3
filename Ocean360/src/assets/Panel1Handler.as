@@ -6,7 +6,7 @@ package assets
 	import flash.events.MouseEvent;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
-	import flash.text.TextField;
+	import mx.controls.scrollClasses.ScrollBar;
 	public class Panel1Handler
 	{
 		private var sp:SamplePanelBackGround;//界面句柄
@@ -16,7 +16,6 @@ package assets
 			this.hpsm=hpsm;
 			this.sp=sp;
 			sp.panel1.detail.text="";
-			sp.panel1.detail.wordWrap=true;
 			this.sp.panel1.addPicture.addEventListener(MouseEvent.CLICK,panel1AddPictureButtonClickEvent);
 			this.sp.panel1.deletePicture.addEventListener(MouseEvent.CLICK,panel1DeletePictureButtonClickEvent);
 			this.sp.panel1.addMusic.addEventListener(MouseEvent.CLICK,panel1AddMusicButtonClickEvent);
