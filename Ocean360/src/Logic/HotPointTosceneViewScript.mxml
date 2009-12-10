@@ -2,6 +2,7 @@
 <HotPointTosceneView creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
 	<mx:Script>
 		<![CDATA[
+			import flash.net.navigateToURL;
 			import mx.controls.Alert;
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
@@ -71,19 +72,24 @@
 					upDataHotpointList();
 				}
 			}
+			private function onSceneDClick(e:Event):void{
+				navigateToURL(new URLRequest("pv360flex.html#scene="+list_scene.selectedIndex),"_blank");
+			}
 			private function get operatable():Boolean{
 				return (list_hotpoint.selectedIndex!=-1)&&(list_scene.selectedIndex!=-1);
 			}
 			private function init():void{
 				list_hotpoint.doubleClickEnabled=true;
+				list_scene.doubleClickEnabled=true;
 				list_scene.addEventListener(ListEvent.CHANGE,onSceneItemClick);
+				list_scene.addEventListener(MouseEvent.DOUBLE_CLICK,onSceneDClick);
 				list_hotpoint.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,onHotPointItemClick);
 				btn_add.addEventListener(MouseEvent.CLICK,onAddBtnClick);
 				btn_delete.addEventListener(MouseEvent.CLICK,onDeleteClick);
 			}
 		]]>
 	</mx:Script>
-	<mx:Binding source="MXml.getInstance().xml_scene.Travel.Scene.@picture" destination="list_scene.dataProvider">
+	<mx:Binding source="MXml.getInstance().xml_scene.Travel.Scene.@name" destination="list_scene.dataProvider">
 	</mx:Binding>
 	<mx:Binding source="MXml.getInstance().isComplete" destination="btn_add.enabled">
 	</mx:Binding>

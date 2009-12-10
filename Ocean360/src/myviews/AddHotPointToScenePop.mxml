@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" showCloseButton="true">
+<view:TitleWindowCustom xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" showCloseButton="true" xmlns:view="view.*">
 	<mx:List id="list_hotpoint" right="10" left="10" top="10" bottom="49"></mx:List>
 	<mx:Button id="btn_add" label="添加" horizontalCenter="-91" bottom="14"/>
 	<mx:Button id="btn_return" label="返回" horizontalCenter="89" bottom="14"/>
-</mx:TitleWindow>
+</view:TitleWindowCustom>

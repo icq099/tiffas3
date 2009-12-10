@@ -8,14 +8,14 @@ package util
 	{
 		public static function trans(xml:XML,hotpoint:HotPointStruct,name:String):HotPointStruct{
 			var date:Date=new Date();
-			hotpoint.textName=String(date.getTime()+Math.random()+hotpoint.text.length);
+			hotpoint.textName=new String()+date.getTime()+hotpoint.text.length+int(Math.random()*100);
 			if(hotpoint.image!=null){
 				for(var i:int=0;i<hotpoint.image.length;i++){
-					hotpoint.imageName[i]=String(date.getTime()+Math.random()+hotpoint.image[0].length);
+					hotpoint.imageName[i]=new String()+date.getTime()+hotpoint.image[0].length+int(Math.random()*100);
 				}
 			}
 			if(hotpoint.sound!=null){
-				hotpoint.soundName=String(date.getTime()+Math.random()+hotpoint.sound.length);
+				hotpoint.soundName=new String()+date.getTime()+hotpoint.sound.length+int(Math.random()*100);
 			}
 			var new_xml:XML=new XML("<HotPoint/>");
 			var id:String=String(xml.HotPoint.length());
@@ -38,7 +38,7 @@ package util
 					new_xml.appendChild(image_xml);
 				}
 			}
-			if(xml.length()<=0){
+			if(xml.HotPoint.length()<=0){
 				xml=new XML("<HotPoints></HotPoints>");
 			}
 			xml.appendChild(new_xml);
