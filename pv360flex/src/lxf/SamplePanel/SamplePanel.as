@@ -30,6 +30,7 @@ package lxf.SamplePanel{
 			fpp.list.setRendererStyle("textFormat", format);
 //			//载入XML
 			fpp.list.addEventListener(ListEvent.ITEM_CLICK,listClickEvent);
+			fpp.list.tabEnabled=false;
 			this.filters=[new DropShadowFilter(10,45,0,0.5,10,10,1,3)];
 			fpp.title.addEventListener(MouseEvent.MOUSE_DOWN, dragMovie);
 			fpp.title.addEventListener(MouseEvent.MOUSE_UP, dropMovie);
