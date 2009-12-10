@@ -6,8 +6,6 @@ package assets.model
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	
 	import model.MXml;
@@ -36,8 +34,6 @@ package assets.model
 			this.hps=hps;
 			hps.image=new Array();
 			hps.imageName=new Array();
-			hps.soundName="";
-			hps.sound=new ByteArray();
 			hps.textName="";
 			hps.text=new ByteArray();
 		}
@@ -60,6 +56,7 @@ package assets.model
 		public function setSound(name:String,data:ByteArray):void
 		{
 			hps.soundName=name;
+			hps.sound=new ByteArray();
 			hps.sound=data;
 		}
 		public function setTextName(name:String):void
@@ -75,11 +72,6 @@ package assets.model
 		private var errorView:ErrorView;
 		public function startToUpdate():void
 		{
-			if(sp.panel1.musicName.text=="")
-			{
-				hps.soundName=null;
-				hps.sound=null;
-			}
 			if(sp.panel1.title.text!="" && sp.panel1.detail.text!="")//如果标题不为空
 			{
 				this.sp.panel2.errorMsg.text="";
