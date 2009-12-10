@@ -19,6 +19,7 @@ package assets
 			this.hpsm=hpsm;
 			this.sp=sp;
 			sp.panel1.detail.text="";
+			sp.panel1.detail.scrollV=true;
 			this.sp.panel1.addPicture.addEventListener(MouseEvent.CLICK,panel1AddPictureButtonClickEvent);
 			this.sp.panel1.deletePicture.addEventListener(MouseEvent.CLICK,panel1DeletePictureButtonClickEvent);
 			this.sp.panel1.addMusic.addEventListener(MouseEvent.CLICK,panel1AddMusicButtonClickEvent);
