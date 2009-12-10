@@ -75,6 +75,11 @@ package assets.model
 		private var errorView:ErrorView;
 		public function startToUpdate():void
 		{
+			if(sp.panel1.musicName.text=="")
+			{
+				hps.soundName=null;
+				hps.sound=null;
+			}
 			if(sp.panel1.title.text!="" && sp.panel1.detail.text!="")//如果标题不为空
 			{
 				this.sp.panel2.errorMsg.text="";
