@@ -196,7 +196,8 @@ package lsd.myview
 				TweenLite.to(mapDirector.second, 0.2, {x: -d_width / 2 + 305, y: 65});
 				TweenLite.to(mapDirector.thrid, 0.2, {x: -d_width / 2 + 385, y: 65});
 				TweenLite.to(mapDirector.close, 0.2, {x: d_width / 2 + 190, y: 13});
-				TweenLite.to(mapDirector.title, 0.2, {width: d_width + 40});
+				TweenLite.to(mapDirector.title, 0.2, {width: d_width + 36});
+				TweenLite.to(mapDirector.sign, 0.2, {x: -d_width / 2 + 200, y: 13});
 				TweenLite.to(mapDirector.mapback, 0.2, {height: d_height + 70, width: d_width +34, onComplete: function():void
 					{
 
@@ -219,9 +220,11 @@ package lsd.myview
 				mapDirector.thrid.y=65;
 				mapDirector.close.x=d_width / 2 + 190;
 				mapDirector.close.y=13;
-				mapDirector.title.width=d_width + 40;
+				mapDirector.title.width=d_width + 36;
 				mapDirector.mapback.height=d_height +70;
 				mapDirector.mapback.width=d_width +34;
+				mapDirector.sign.x=-d_width / 2+200;
+				mapDirector.sign.y=13;
 				addChild(e.sprite);
 			}
 
