@@ -2,14 +2,10 @@ package assets
 {
 	import assets.model.HotPointStructManager;
 	
-	import fl.core.UIComponent;
-	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
-	
-	import mx.controls.TextArea;
 	public class Panel1Handler
 	{
 		private var sp:SamplePanelBackGround;//界面句柄
@@ -19,12 +15,17 @@ package assets
 			this.hpsm=hpsm;
 			this.sp=sp;
 			sp.panel1.detail.text="";
-			sp.panel1.detail.scrollV=true;
+			sp.panel1.detail.wordWrap=true;
+			sp.panel1.detail.addEventListener(Event.SCROLL,scroll);
 			this.sp.panel1.addPicture.addEventListener(MouseEvent.CLICK,panel1AddPictureButtonClickEvent);
 			this.sp.panel1.deletePicture.addEventListener(MouseEvent.CLICK,panel1DeletePictureButtonClickEvent);
 			this.sp.panel1.addMusic.addEventListener(MouseEvent.CLICK,panel1AddMusicButtonClickEvent);
 			this.sp.panel1.title.addEventListener(Event.CHANGE,titleChanged);
 			this.sp.panel1.detail.addEventListener(Event.CHANGE,detailChanged);
+		}
+		private function scroll(e:Event):void
+		{
+			trace("滚动");
 		}
 		//标题改变的事件
 		private function titleChanged(e:Event):void
