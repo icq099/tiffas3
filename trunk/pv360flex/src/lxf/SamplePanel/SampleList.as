@@ -32,9 +32,12 @@ package lxf.SamplePanel
 		    		num=i;
 		    	}
 		    }
-		    for(i=0;i<myXML.Scene[num].sample.length();i++)
+		    if(myXML.Scene[num]!=null)
 		    {
-		    	list.push(myXML.Scene[num].sample[i]);
+			    for(i=0;i<myXML.Scene[num].sample.length();i++)
+			    {
+			    	list.push(myXML.Scene[num].sample[i]);
+			    }
 		    }
 		    return list;
 		}
