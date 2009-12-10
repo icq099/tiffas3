@@ -6,6 +6,8 @@ package model
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
+	import yzhkof.util.XmlUtil;
+	
 	public class MXml extends EventDispatcher
 	{
 		[Bindable]
@@ -16,6 +18,7 @@ package model
 		public var xml_hotpoint:XML;
 		private var _isComplete:Boolean=false;
 		private var loader:BulkLoader=BulkLoader.createUniqueNamedLoader();
+		private var random_num:Number;
 		private static var _instance:MXml;
 		
 		public function MXml()
@@ -30,9 +33,10 @@ package model
 			return new MXml();
 		}
 		public function loadXml():void{
-			loader.add("xml/basic.xml");
-			loader.add("xml/menu.xml");
-			loader.add("xml/hotpoints.xml");
+			random_num=Math.random();
+			loader.add("xml/basic.xml?num="+random_num);
+			loader.add("xml/menu.xml?num="+random_num);
+			loader.add("xml/hotpoints.xml?num="+random_num);
 			loader.start();
 			loader.addEventListener(BulkProgressEvent.COMPLETE,onComplete);
 		}
@@ -47,18 +51,27 @@ package model
 			return xml_hotpoint.HotPoint[index];
 		}
 		public function addMenuXml(scene_index:int,hotpoint_id:String):void{
-			xml_menu.Scene[scene_index].appendChild(hotpoint_id);
+			xml_menu.Scene[scene_index].appendChild(new XML("<sample>"+hotpoint_id+"</sample>"));
 		}
 		public function deleteMenuXml(scene_index:int,sample_index:int):void{
 			delete xml_menu.Scene[scene_index].sample[sample_index];
 		}
 		public function deleteHotPointXmlByIndex(index:int):void{
+			var xml_list:XMLList=xml_menu.Scene..sample;
+			var delete_list:XMLList=new XMLList();
+			var length:int;
+			for(var i:int=0;i<xml_list.length();i++){
+			 	if(xml_list[i]==xml_hotpoint.HotPoint[index].@id){
+					delete_list+=xml_list[i];
+			 	}
+			}
+			XmlUtil.deleteXmlList(delete_list);
 			delete xml_hotpoint.HotPoint[index];
 		}
 		private function onComplete(e:Event):void{
-			xml_scene=loader.getXML("xml/basic.xml");
-			xml_menu=loader.getXML("xml/menu.xml");
-			xml_hotpoint=loader.getXML("xml/hotpoints.xml");
+			xml_scene=loader.getXML("xml/basic.xml?num="+random_num);
+			xml_menu=loader.getXML("xml/menu.xml?num="+random_num);
+			xml_hotpoint=loader.getXML("xml/hotpoints.xml?num="+random_num);
 			_isComplete=true;
 			dispatchEvent(new Event("isCompleteChanged"));
 		}
