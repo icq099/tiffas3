@@ -18,8 +18,14 @@ package util
 				hotpoint.soundName=new String()+date.getTime()+hotpoint.sound.length+int(Math.random()*100);
 			}
 			var new_xml:XML=new XML("<HotPoint/>");
-			var id:String=String(xml.HotPoint.length());
+			var id:String;
 			var xml_byte:ByteArray=new ByteArray();
+			if(xml.HotPoint.length()<=0){
+				id="0";
+				xml=new XML("<HotPoints></HotPoints>");
+			}else{
+				id=String(int(xml.HotPoint[xml.HotPoint.length()-1].@id)+1);
+			}
 			new_xml.@id=id;
 			new_xml.@texturl="points/"+hotpoint.textName;
 			new_xml.@sound="points/"+hotpoint.soundName;
@@ -38,9 +44,7 @@ package util
 					new_xml.appendChild(image_xml);
 				}
 			}
-			if(xml.HotPoint.length()<=0){
-				xml=new XML("<HotPoints></HotPoints>");
-			}
+			
 			xml.appendChild(new_xml);
 			xml_byte.writeUTFBytes(xml.toString())
 			hotpoint.xml=xml_byte;			
