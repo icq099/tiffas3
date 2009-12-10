@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="640" height="500" xmlns:ns1="*" showCloseButton="true">
+<view:TitleWindowCustom xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="620" height="500" xmlns:ns1="*" showCloseButton="true" xmlns:view="view.*">
 	<ns1:SamplePanel id="panel_in" left="-10" right="0" top="0" bottom="0"/>
-</mx:TitleWindow>
+</view:TitleWindowCustom>

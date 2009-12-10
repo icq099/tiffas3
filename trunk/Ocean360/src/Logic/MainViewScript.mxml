@@ -2,6 +2,7 @@
 <MainView creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
 	<mx:Script>
 		<![CDATA[
+			import yzhkof.AddToStageSetter;
 			import mx.events.CollectionEvent;
 			import mx.collections.XMLListCollection;
 			import mx.rpc.events.ResultEvent;
