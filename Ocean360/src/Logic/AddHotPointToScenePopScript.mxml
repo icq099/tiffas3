@@ -8,8 +8,7 @@
 				var fun_close:Function=function(e:Event):void{
 					dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
 				};
-				btn_ok.addEventListener(MouseEvent.CLICK,fun_close);
-				btn_cancel.addEventListener(MouseEvent.CLICK,fun_close);
+				btn_return.addEventListener(MouseEvent.CLICK,fun_close);
 			}
 		]]>
 	</mx:Script>

@@ -57,7 +57,7 @@
 					_pop_add_window=new AddHotPointToScenePopScript();
 					_pop_add_window.addEventListener(CloseEvent.CLOSE,onPopClose);
 					_pop_add_window.addEventListener(FlexEvent.CREATION_COMPLETE,function(e:Event):void{
-						_pop_add_window.btn_ok.addEventListener(MouseEvent.CLICK,onPopComfirm);
+						_pop_add_window.btn_add.addEventListener(MouseEvent.CLICK,onPopComfirm);
 						_pop_add_window.list_hotpoint.doubleClickEnabled=true;
 						_pop_add_window.addEventListener(MouseEvent.DOUBLE_CLICK,onPopComfirm);
 					});
@@ -66,9 +66,9 @@
 			}
 			//点击弹出窗口的确定按钮
 			private function onPopComfirm(e:Event):void{
-				if(list_scene.selectedIndex!=-1){
+				if((list_scene.selectedIndex!=-1)&&(_pop_add_window.list_hotpoint.selectedIndex!=-1)){
 					MXml.getInstance().addMenuXml(list_scene.selectedIndex,MXml.getInstance().getHotPointXmlByIndex(_pop_add_window.list_hotpoint.selectedIndex).@id);
-					upDataHotpointList();					
+					upDataHotpointList();
 				}
 			}
 			private function get operatable():Boolean{
