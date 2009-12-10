@@ -2,6 +2,7 @@
 <MainView creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
 	<mx:Script>
 		<![CDATA[
+			import mx.rpc.events.FaultEvent;
 			import yzhkof.AddToStageSetter;
 			import mx.events.CollectionEvent;
 			import mx.collections.XMLListCollection;
@@ -32,11 +33,11 @@
 				byte_menu.writeUTFBytes(MXml.getInstance().xml_menu.toString());
 				dispatcher=ro.saveXmlO(byte_menu,byte_hotpoint);
 				dispatcher.addEventListener(ResultEvent.RESULT,onUpdataComplete);
+				dispatcher.addEventListener(FaultEvent.FAULT,onUpdataFail);
 				btn_save.enabled=false;
 			}
 			private function onUpdataComplete(e:Event):void{
 				Alert.show("上传成功！");
-				btn_save.enabled=true;
 			}
 			private function onUpdataFail(e:Event):void{
 				Alert.show("上传失败！");
@@ -55,6 +56,6 @@
 	</mx:XMLListCollection>
 	<mx:XMLListCollection id="xmlc_menu" source="{toXmlList(MXml.getInstance().xml_menu)}">
 	</mx:XMLListCollection>
-	<mx:Binding source="MXml.getInstance().isComplete" destination="btn_save.enabled">
+	<mx:Binding source="MXml.getInstance().isChange" destination="btn_save.enabled">
 	</mx:Binding>
 </MainView>

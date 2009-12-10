@@ -6,6 +6,9 @@ package model
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
+	import mx.collections.XMLListCollection;
+	import mx.events.CollectionEvent;
+	
 	import yzhkof.util.XmlUtil;
 	
 	public class MXml extends EventDispatcher
@@ -16,9 +19,13 @@ package model
 		public var xml_menu:XML;
 		[Bindable]
 		public var xml_hotpoint:XML;
+		[Bindable]
+		public var isChange:Boolean=false;
 		private var _isComplete:Boolean=false;
 		private var loader:BulkLoader=BulkLoader.createUniqueNamedLoader();
 		private var random_num:Number;
+		private var xml_menu_watcher:XMLListCollection=new XMLListCollection();
+		private var xml_hotpoint_watcher:XMLListCollection=new XMLListCollection();
 		private static var _instance:MXml;
 		
 		public function MXml()
@@ -26,6 +33,8 @@ package model
 			if(_instance!=null)
 				throw new Error("error");
 			_instance=this;
+			xml_hotpoint_watcher.addEventListener(CollectionEvent.COLLECTION_CHANGE,onXmlChange);
+			xml_menu_watcher.addEventListener(CollectionEvent.COLLECTION_CHANGE,onXmlChange);
 		}
 		public static function getInstance():MXml{
 			if(_instance!=null)
@@ -72,8 +81,14 @@ package model
 			xml_scene=loader.getXML("xml/basic.xml?num="+random_num);
 			xml_menu=loader.getXML("xml/menu.xml?num="+random_num);
 			xml_hotpoint=loader.getXML("xml/hotpoints.xml?num="+random_num);
+			xml_menu_watcher.source=new XMLList()+xml_menu;
+			xml_hotpoint_watcher.source=new XMLList()+xml_hotpoint;
+			isChange=false;
 			_isComplete=true;
 			dispatchEvent(new Event("isCompleteChanged"));
+		}
+		private function onXmlChange(e:Event):void{
+			isChange=true;
 		}
 	}
 }
