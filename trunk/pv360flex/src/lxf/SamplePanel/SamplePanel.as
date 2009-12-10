@@ -23,7 +23,7 @@ package lxf.SamplePanel{
 		public function SamplePanel()
 		{
 			fpp=new FishPanelPlugin();
-			fpp.close.addEventListener(MouseEvent.CLICK,fppCloseClickEvent);
+			fpp.title.close.addEventListener(MouseEvent.CLICK,fppCloseClickEvent);
 			fpp.list.rowHeight=25;
 			var format:TextFormat = new TextFormat();
 			format.size = 16;
@@ -31,8 +31,8 @@ package lxf.SamplePanel{
 //			//载入XML
 			fpp.list.addEventListener(ListEvent.ITEM_CLICK,listClickEvent);
 			this.filters=[new DropShadowFilter(10,45,0,0.5,10,10,1,3)];
-			this.addEventListener(MouseEvent.MOUSE_DOWN, dragMovie);
-			this..addEventListener(MouseEvent.MOUSE_UP, dropMovie);
+			fpp.title.addEventListener(MouseEvent.MOUSE_DOWN, dragMovie);
+			fpp.title.addEventListener(MouseEvent.MOUSE_UP, dropMovie);
 			//添加API
 			MainSystem.getInstance().addAPI("showFishPanel",showFishPanel);
 			MainSystem.getInstance().addAPI("removeFishPanel",removefishPanel);
