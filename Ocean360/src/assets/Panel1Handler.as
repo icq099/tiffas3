@@ -6,6 +6,7 @@ package assets
 	import flash.events.MouseEvent;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
+	import flash.text.TextFieldAutoSize;
 	public class Panel1Handler
 	{
 		private var sp:SamplePanelBackGround;//界面句柄
