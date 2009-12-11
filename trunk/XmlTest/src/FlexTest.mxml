@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
-	<mx:Script>
-		<![CDATA[
-			import com.rictus.reflector.Reflector;
-			import mx.events.FlexEvent;
-			import mx.core.UIComponent;
-			import mx.managers.SystemManager;
-			import mx.managers.LayoutManager;
-			import gs.TweenLite;
-			import mx.controls.Button;
-			import mx.containers.Canvas;
-			private function init():void{
-				var c:Canvas=new Canvas();
-				var b:Button=new Button();
-				c.addChild(b);
-				
-				c.addEventListener(FlexEvent.UPDATE_COMPLETE,function():void{
-					trace(c.width,b.width,c.updateCompletePendingFlag);
-					//addChild(c);
-				});
-				//addChild(c);
-				trace(c.width,b.width,c.updateCompletePendingFlag);
-				var f:Reflector=new Reflector();
-				f.target=c;
-				addChild(f);
-				f.falloff=0.1;
-			}
-		]]>
-	</mx:Script>
+<mx:Application  xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" styleName="lastButtonBarButton">
+<mx:Style source="yflexskin.css">
+	
+</mx:Style>
+	<mx:HDividedBox right="10" left="10" top="10" bottom="10">
+		<mx:Panel layout="horizontal" width="100%" height="100%">
+			<mx:ProgressBar/>
+		</mx:Panel>
+		<mx:Panel layout="horizontal" width="100%" height="100%">
+			<mx:PopUpButton label="PopUpButton"/>
+		</mx:Panel>
+	</mx:HDividedBox>
 </mx:Application>
