@@ -22,9 +22,9 @@ package model
 			}
 			menu.addEventListener(FlexEvent.CREATION_COMPLETE,function(e:Event):void{
 				menu.constructByXml(xml);
-				PopUpManager.centerPopUp(menu);
 				menu.addEventListener(CloseEvent.CLOSE,fun_close);
 			});	
+			PopUpManager.centerPopUp(menu);
 		}
 
 	}

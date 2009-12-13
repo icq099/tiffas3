@@ -3,12 +3,12 @@
 	<mx:states>
 		<mx:State name="AddHotpointToscene">
 			<mx:AddChild position="lastChild">
-				<mx:TabNavigator right="9" left="10" top="10" bottom="9">
+				<mx:TabNavigator historyManagementEnabled="false" right="9" left="10" top="10" bottom="9">
 					<mx:Canvas label="编辑" width="100%" height="100%">
 						<mx:TabNavigator historyManagementEnabled="false" right="10" left="8" top="10" bottom="5">
 							<mx:Canvas label="场景" width="100%" height="100%">
-								<Logic:HotPointTosceneViewScript right="10" left="10" top="10" bottom="10">
-								</Logic:HotPointTosceneViewScript>
+								<mx:ModuleLoader url="Logic/HotPointTosceneViewScript.swf" right="10" left="10" top="10" bottom="10">
+								</mx:ModuleLoader>
 							</mx:Canvas>
 							<mx:Canvas label="标本" width="100%" height="100%">
 								<Logic:HotPointAddEditViewScript right="10" left="10" top="10" bottom="10">
@@ -24,18 +24,6 @@
 						<mx:Label y="10" text="hotpoints.xml" left="326"/>
 					</mx:Canvas>
 				</mx:TabNavigator>
-			</mx:AddChild>
-		</mx:State>
-		<mx:State name="login">
-			<mx:AddChild position="lastChild">
-				<mx:Form height="460" right="10" left="10" top="10">
-					<mx:FormItem label="用户名：">
-						<mx:TextInput width="200"/>
-					</mx:FormItem>
-					<mx:FormItem label="密码：">
-						<mx:TextInput width="200"/>
-					</mx:FormItem>
-				</mx:Form>
 			</mx:AddChild>
 		</mx:State>
 	</mx:states>
