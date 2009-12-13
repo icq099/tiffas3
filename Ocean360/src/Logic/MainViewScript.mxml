@@ -2,6 +2,8 @@
 <MainView creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
 	<mx:Script>
 		<![CDATA[
+			import mx.events.ModuleEvent;
+			import mx.events.FlexEvent;
 			import mx.rpc.events.FaultEvent;
 			import yzhkof.AddToStageSetter;
 			import mx.events.CollectionEvent;
@@ -13,10 +15,14 @@
 			import remoteobject.FileUpLoader;
 			import model.MXml;
 			private function init():void{
-				btn_save.addEventListener(MouseEvent.CLICK,onSaveClick);
-				initTextBind();
+				save_view_container.addEventListener(FlexEvent.CREATION_COMPLETE,function(e:Event):void{
+					btn_save.addEventListener(MouseEvent.CLICK,onSaveClick);
+					initTextBind();
+				});
 			}
 			private function initTextBind():void{
+				text_hotpoint.text=xmlc_hotpoint.source;
+				text_menu.text=xmlc_menu.source;
 				xmlc_hotpoint.addEventListener(CollectionEvent.COLLECTION_CHANGE,function(e:Event):void{
 					text_hotpoint.text=xmlc_hotpoint.source;
 				});

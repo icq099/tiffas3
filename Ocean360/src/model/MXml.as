@@ -16,9 +16,9 @@ package model
 		[Bindable]
 		public var xml_scene:XML;
 		[Bindable]
-		public var xml_menu:XML;
+		public var xml_menu:XML=new XML("loading...");
 		[Bindable]
-		public var xml_hotpoint:XML;
+		public var xml_hotpoint:XML=new XML("loading...");
 		[Bindable]
 		public var isChange:Boolean=false;
 		private var _isComplete:Boolean=false;

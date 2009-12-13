@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas currentState="AddHotpointToscene" xmlns:mx="http://www.adobe.com/2006/mxml" width="654" height="480" xmlns:ns1="myviews.*" xmlns:Logic="Logic.*">
-	<mx:states>
-		<mx:State name="AddHotpointToscene">
-			<mx:AddChild position="lastChild">
-				<mx:TabNavigator historyManagementEnabled="false" right="9" left="10" top="10" bottom="9">
-					<mx:Canvas label="编辑" width="100%" height="100%">
-						<mx:TabNavigator historyManagementEnabled="false" right="10" left="8" top="10" bottom="5">
-							<mx:Canvas label="场景" width="100%" height="100%">
-								<mx:ModuleLoader url="Logic/HotPointTosceneViewScript.swf" right="10" left="10" top="10" bottom="10">
-								</mx:ModuleLoader>
-							</mx:Canvas>
-							<mx:Canvas label="标本" width="100%" height="100%">
-								<Logic:HotPointAddEditViewScript right="10" left="10" top="10" bottom="10">
-								</Logic:HotPointAddEditViewScript>
-							</mx:Canvas>
-						</mx:TabNavigator>
-					</mx:Canvas>
-					<mx:Canvas label="保存" width="100%" height="100%">
-						<mx:Button id="btn_save" label="保存更改" horizontalCenter="0" bottom="10"/>
-						<mx:Label y="10" text="menu.xml" left="10"/>
-						<mx:TextArea id="text_hotpoint" editable="false" top="40" bottom="41" left="326" right="10"/>
-						<mx:TextArea id="text_menu" editable="false" top="40" bottom="41" width="293" left="10"/>
-						<mx:Label y="10" text="hotpoints.xml" left="326"/>
-					</mx:Canvas>
-				</mx:TabNavigator>
-			</mx:AddChild>
-		</mx:State>
-	</mx:states>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="654" height="480" xmlns:ns1="myviews.*" xmlns:Logic="Logic.*">
+	<mx:TabNavigator historyManagementEnabled="false" right="9" left="10" top="10" bottom="9">
+		<mx:Canvas label="编辑" width="100%" height="100%">
+			<mx:TabNavigator historyManagementEnabled="false" right="10" left="8" top="10" bottom="5">
+				<mx:Canvas label="场景" width="100%" height="100%">
+					<mx:ModuleLoader id="loader_hts" url="Logic/HotPointTosceneViewScript.swf" ready="{p_loader_hts.parent.removeChild(p_loader_hts)}" right="10" left="10" top="10" bottom="10">
+					</mx:ModuleLoader>
+					<mx:ProgressBar id="p_loader_hts" horizontalCenter="-1" verticalCenter="-18" source="loader_hts"/>
+				</mx:Canvas>
+				<mx:Canvas label="标本" width="100%" height="100%">
+					<Logic:HotPointAddEditViewScript right="10" left="10" top="10" bottom="10">
+					</Logic:HotPointAddEditViewScript>
+				</mx:Canvas>
+			</mx:TabNavigator>
+		</mx:Canvas>
+		<mx:Canvas id="save_view_container" label="保存" width="100%" height="100%">
+			<mx:Button id="btn_save" label="保存更改" horizontalCenter="0" bottom="10"/>
+			<mx:Label y="10" text="menu.xml" left="10"/>
+			<mx:TextArea id="text_hotpoint" editable="false" top="40" bottom="41" left="326" right="10"/>
+			<mx:TextArea id="text_menu" editable="false" top="40" bottom="41" width="293" left="10"/>
+			<mx:Label y="10" text="hotpoints.xml" left="326"/>
+		</mx:Canvas>
+	</mx:TabNavigator>
 </mx:Canvas>
