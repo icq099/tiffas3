@@ -1,31 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application  xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" styleName="lastButtonBarButton">
-<mx:Style source="darkroom.css">
-	
-</mx:Style>
-		<mx:ViewStack id="viewstack1" width="657" height="318">
-			<mx:Canvas label="View 1" width="100%" height="100%">
-				<mx:Panel x="10" y="56" width="250" height="200" layout="absolute">
-					<mx:Text x="10" y="38" text="Text"/>
-					<mx:TabNavigator x="155" y="62" width="200" height="200">
-						<mx:Canvas label="Tab 1" width="100%" height="100%">
-						</mx:Canvas>
-						<mx:Canvas label="gdfg" width="100%" height="100%">
-						</mx:Canvas>
-					</mx:TabNavigator>
-				</mx:Panel>
-				<mx:ComboBox x="104" y="26"></mx:ComboBox>
-				<mx:CheckBox x="396" y="26" label="Checkbox"/>
-				<mx:Image x="312" y="37"/>
-				<mx:Accordion x="425" y="100" width="200" height="200">
-					<mx:Canvas label="Accordion Pane 1" width="100%" height="100%">
-					</mx:Canvas>
-				</mx:Accordion>
-			</mx:Canvas>
-			<mx:Canvas label="scdfd" width="100%" height="100%">
-				<mx:TitleWindow x="136" y="72" width="250" height="200" layout="absolute">
-				</mx:TitleWindow>
-			</mx:Canvas>
-		</mx:ViewStack>
-		<mx:Button x="467" y="326" label="Button"/>
+<mx:Application  xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" styleName="lastButtonBarButton" xmlns:test="test.*">
+<mx:Array id="a1">
+	<mx:String>fuck</mx:String>
+	<mx:String>b</mx:String>
+	<mx:String>c</mx:String>
+</mx:Array>
+<mx:Array id="a2">
+	<mx:String>shit</mx:String>
+	<mx:String>d</mx:String>
+	<mx:String>e</mx:String>
+</mx:Array>
+<test:IndexCanvas y="10" width="646" height="323">
+	<mx:List x="47" y="58" dataProvider="{a1}" dragEnabled="true" width="206"></mx:List>
+	<mx:List x="347" y="58" height="159" dataProvider="{a2}" dragEnabled="true" width="156" dropEnabled="true" editable="true" allowMultipleSelection="true"></mx:List>
+	<mx:TitleWindow id="f" x="178" y="83" width="250" height="200" layout="absolute">
+	</mx:TitleWindow>
+	<mx:TitleWindow x="371" y="41" width="250" height="200" layout="absolute">
+	</mx:TitleWindow>
+</test:IndexCanvas>
 </mx:Application>
