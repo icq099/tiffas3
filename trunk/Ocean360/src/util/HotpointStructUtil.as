@@ -14,10 +14,11 @@ package util
 					hotpoint.imageName[i]=new String()+date.getTime()+hotpoint.image[0].length+int(Math.random()*100);
 				}
 			}
+			var new_xml:XML=new XML("<HotPoint/>");
 			if(hotpoint.sound!=null){
 				hotpoint.soundName=new String()+date.getTime()+hotpoint.sound.length+int(Math.random()*100);
+				new_xml.@sound="points/"+hotpoint.soundName;
 			}
-			var new_xml:XML=new XML("<HotPoint/>");
 			var id:String;
 			var xml_byte:ByteArray=new ByteArray();
 			if(xml.HotPoint.length()<=0){
@@ -28,7 +29,6 @@ package util
 			}
 			new_xml.@id=id;
 			new_xml.@texturl="points/"+hotpoint.textName;
-			new_xml.@sound="points/"+hotpoint.soundName;
 			new_xml.@name=name;
 			new_xml.@swfWidth=700;
 			new_xml.@swfHeight=500;
