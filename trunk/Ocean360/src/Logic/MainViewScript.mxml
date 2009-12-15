@@ -2,6 +2,7 @@
 <MainView creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
 	<mx:Script>
 		<![CDATA[
+			import mx.accessibility.AlertAccImpl;
 			import mx.events.ModuleEvent;
 			import mx.events.FlexEvent;
 			import mx.rpc.events.FaultEvent;
@@ -35,6 +36,7 @@
 				var byte_hotpoint:ByteArray=new ByteArray();
 				var byte_menu:ByteArray=new ByteArray();
 				var dispatcher:AbstractOperation;
+				var pop_progress:Progressbar=new Progressbar();
 				byte_hotpoint.writeUTFBytes(MXml.getInstance().xml_hotpoint.toString());
 				byte_menu.writeUTFBytes(MXml.getInstance().xml_menu.toString());
 				dispatcher=ro.saveXmlO(byte_menu,byte_hotpoint);
@@ -44,6 +46,7 @@
 			}
 			private function onUpdataComplete(e:Event):void{
 				Alert.show("上传成功！");
+				MXml.getInstance().isChange=false;
 			}
 			private function onUpdataFail(e:Event):void{
 				Alert.show("上传失败！");
