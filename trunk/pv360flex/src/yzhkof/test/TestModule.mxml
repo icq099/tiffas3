@@ -24,4 +24,7 @@
 			}
 		]]>
 	</mx:Script>
+	<mx:List x="10" y="27" width="135">
+	<mx:String>fsf</mx:String>
+	</mx:List>
 </mx:Module>
