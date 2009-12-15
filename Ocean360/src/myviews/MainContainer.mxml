@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300" currentState="login">
+	<mx:states>
+		<mx:State name="login">
+			<mx:AddChild  position="lastChild">
+				<mx:Canvas id="login_container" right="0" left="0" top="0" bottom="0">
+					<mx:Form id="form" height="94" width="273" right="10" bottom="45">
+						<mx:FormItem label="用户名：" horizontalAlign="right" required="true">
+							<mx:TextInput id="user"/>
+						</mx:FormItem>
+						<mx:FormItem label="密码：" required="true">
+							<mx:TextInput id="password"  displayAsPassword="true"/>
+						</mx:FormItem>
+					</mx:Form>
+					<mx:Button id="btn_access" label="登陆" enabled="true" right="48" bottom="10"/>
+				</mx:Canvas>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="MainView">
+			<mx:AddChild position="lastChild">
+				<mx:ModuleLoader url="Logic/MainViewScript.swf" right="10" left="10" top="10" bottom="10">
+				</mx:ModuleLoader>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+</mx:Canvas>

@@ -2,8 +2,6 @@
 <mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:ns1="myviews.*" xmlns:Logic="Logic.*" xmlns:managers="fl.managers.*">
 <mx:Style source="css/yflexskin.css">
 </mx:Style>
-	<Logic:MainViewScript right="10" left="10" top="10" bottom="10">
-	</Logic:MainViewScript>
 	<mx:Script>
 		<![CDATA[
 			import model.MXml;
@@ -12,4 +10,6 @@
 			}
 		]]>
 	</mx:Script>
+	<Logic:MainContainerScript right="10" left="10" top="10" bottom="10">
+	</Logic:MainContainerScript>
 </mx:Application>
