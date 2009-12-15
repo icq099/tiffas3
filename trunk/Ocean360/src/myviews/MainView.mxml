@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="654" height="480" xmlns:ns1="myviews.*" xmlns:Logic="Logic.*">
+<mx:Module layout="absolute" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:ns1="myviews.*" xmlns:Logic="Logic.*">
 	<mx:Script>
 		<![CDATA[
 			import mx.core.Application;
@@ -34,4 +34,4 @@
 			</mx:HDividedBox>
 		</mx:Canvas>
 	</mx:TabNavigator>
-</mx:Canvas>
+</mx:Module>
