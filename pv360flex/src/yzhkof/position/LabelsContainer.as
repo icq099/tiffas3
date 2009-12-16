@@ -21,7 +21,7 @@ package yzhkof.position
 			addChild(label2);
 			addChild(line);
 			line.y=label1.height+5;
-			line.width=label1.width*2;
+			line.width=label1.width+150;
 			label1.x=30;
 			label2.y=line.y+5;
 			label2.x=line.width-label2.width-30;
