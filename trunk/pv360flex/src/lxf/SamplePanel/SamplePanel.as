@@ -19,7 +19,7 @@ package lxf.SamplePanel{
 		private var fpp:FishPanelPlugin=null;
 		private var defaultLocationX:int=5;
 		private var defaultLocationY:int=48;
-		private var test:SampleList;
+		private var test:SampleList=new SampleList();
 		public function SamplePanel()
 		{
 			fpp=new FishPanelPlugin();
