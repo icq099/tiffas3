@@ -1,6 +1,5 @@
 package remoteobject
 {
-	import mx.events.DynamicEvent;
 	import mx.rpc.AbstractOperation;
 	import mx.rpc.remoting.RemoteObject;
 	
@@ -17,6 +16,10 @@ package remoteobject
 		public function getSessionO(session_name:String):AbstractOperation{
 			this.getSession(session_name);
 			return getOperation("getSession");
+		}
+		public function passwordUpdateO(name:String,password:String,newpassword:String,passwordagain:String):AbstractOperation{
+			this.passwordUpdate(name,password,newpassword,passwordagain);
+			return getOperation("passwordUpdate");
 		}
 	}
 }

@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300" currentState="login">
+<mx:Fade alphaFrom="0" alphaTo="1" duration="2000" id="fadein"/>
+<mx:Fade alphaFrom="1" alphaTo="0" duration="2000" id="fadeout"/>
 	<mx:states>
 		<mx:State name="login">
 			<mx:AddChild  position="lastChild">
-				<mx:Canvas id="login_container" right="0" left="0" top="0" bottom="0">
-					<mx:Form id="form" height="94" width="273" right="10" bottom="45">
+				<mx:Canvas id="login_container" right="0" left="0" top="0" bottom="0" addedEffect="{fadein}" removedEffect="{fadeout}">
+					<mx:Form id="form" height="94" width="273" right="44" bottom="51" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 						<mx:FormItem label="用户名：" horizontalAlign="right" required="true">
-							<mx:TextInput id="user"/>
+							<mx:TextInput id="user" width="180"/>
 						</mx:FormItem>
 						<mx:FormItem label="密码：" required="true">
-							<mx:TextInput id="password"  displayAsPassword="true"/>
+							<mx:TextInput id="password"  displayAsPassword="true" width="180"/>
 						</mx:FormItem>
 					</mx:Form>
-					<mx:Button id="btn_access" label="登陆" enabled="true" right="48" bottom="10"/>
+					<mx:Button id="btn_access" label="登陆" enabled="true" right="157" bottom="25"/>
+					<mx:Button id="btn_change_password" label="更改密码" bottom="25" right="61"/>
 				</mx:Canvas>
 			</mx:AddChild>
 		</mx:State>
 		<mx:State name="MainView">
 			<mx:AddChild position="lastChild">
-				<mx:ModuleLoader url="Logic/MainViewScript.swf" right="10" left="10" top="10" bottom="10">
+				<mx:ModuleLoader id="mainview_loader" url="Logic/MainViewScript.swf" right="10" left="10" top="51" bottom="10" addedEffect="{fadein}" removedEffect="{fadeout}">
 				</mx:ModuleLoader>
 			</mx:AddChild>
 		</mx:State>
 	</mx:states>
+	<mx:UIComponent id="title_container"/>
 </mx:Canvas>

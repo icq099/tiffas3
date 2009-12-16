@@ -2,6 +2,14 @@
 <MainContainer creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
 	<mx:Script>
 		<![CDATA[
+			import mx.rpc.AbstractOperation;
+			import mx.events.CloseEvent;
+			import mx.core.Application;
+			import mx.managers.PopUpManager;
+			import myviews.PassWordChange;
+			import mx.core.Container;
+			import yzhkof.position.LabelsContainer;
+			import yzhkof.position.PositionEffectContainer;
 			import mx.controls.Alert;
 			import mx.rpc.events.ResultEvent;
 			import remoteobject.LoginFilter;
@@ -9,8 +17,40 @@
 			import mx.events.StateChangeEvent;
 			import mx.events.FlexEvent;
 			private var ro:LoginFilter=new LoginFilter();
+			private var title:LabelsContainer;
+			private var pop_changepassword:PassWordChange;
 			private function init():void{
-				btn_access.addEventListener(MouseEvent.CLICK,onAccessBtnClick);		
+				btn_access.addEventListener(MouseEvent.CLICK,onAccessBtnClick);
+				btn_change_password.addEventListener(MouseEvent.CLICK,onChangePassWordClick);
+				title_container.addChild(title=new LabelsContainer("广东海洋大学水生博物馆浏览系统管理系统","design by SmartThink"));
+			}
+			private function onChangePassWordClick(e:Event):void{
+				pop_changepassword=new PassWordChange();
+				pop_changepassword.addEventListener(CloseEvent.CLOSE,function(e:Event):void{
+					PopUpManager.removePopUp(pop_changepassword);
+				});	
+				pop_changepassword.addEventListener(FlexEvent.CREATION_COMPLETE,popInit);
+				PopUpManager.addPopUp(pop_changepassword,DisplayObject(Application.application),true);
+				PopUpManager.centerPopUp(pop_changepassword);
+			}
+			private function popInit(e:Event):void{
+				pop_changepassword.btn_ok.addEventListener(MouseEvent.CLICK,function(e:Event):void{
+					if(pop_changepassword.password_new.text!=pop_changepassword.password_comfird.text){
+						Alert.show("两次输入的密码不一致！");
+					}else{
+						pop_changepassword.btn_ok.enabled=false;
+						var dispatcher:AbstractOperation=ro.passwordUpdateO(pop_changepassword.user.text,pop_changepassword.password_old.text,pop_changepassword.password_new.text,pop_changepassword.password_comfird.text);
+						dispatcher.addEventListener(ResultEvent.RESULT,onChangePassResult);
+					}
+				});
+			}
+			private function onChangePassResult(e:ResultEvent):void{
+				if(e.result){
+					Alert.show("修改密码成功！");
+				}else{
+					Alert.show("原密码错误或用户名不存在！");
+				}
+				PopUpManager.removePopUp(pop_changepassword);
 			}
 			private function onAccessBtnClick(e:Event):void{
 				if((user_v.validate().type==ValidationResultEvent.VALID)&&(password_v.validate().type==ValidationResultEvent.VALID)){

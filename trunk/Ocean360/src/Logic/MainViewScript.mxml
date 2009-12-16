@@ -16,6 +16,7 @@
 			import remoteobject.FileUpLoader;
 			import model.MXml;
 			private function init():void{
+				
 				save_view_container.addEventListener(FlexEvent.CREATION_COMPLETE,function(e:Event):void{
 					btn_save.addEventListener(MouseEvent.CLICK,onSaveClick);
 					initTextBind();
