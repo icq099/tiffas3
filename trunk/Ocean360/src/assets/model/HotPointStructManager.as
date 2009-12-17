@@ -1,6 +1,7 @@
 package assets.model
 {
 	import assets.ErrorView;
+	import assets.event.SamplePanelEvent;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -103,6 +104,7 @@ package assets.model
 		}
 		private function FAULT(e:Event):void
 		{
+			this.parent.dispatchEvent(new SamplePanelEvent(SamplePanelEvent.FAILED));
 			sp.panel2.errorMsg.text="上传失败!";
 			sp.panel2.update.enabled=true;
 		}
