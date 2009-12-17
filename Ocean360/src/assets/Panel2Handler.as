@@ -33,7 +33,6 @@ package assets
 		}
 		private function previewButtonClickEvent(e:MouseEvent):void
 		{
-			this.dispatchEvent(new SamplePanelEvent(SamplePanelEvent.START_UPLOAD));
 			var popMenusFlexView:PopMenusFlexView=PopUpManager.createPopUp(DisplayObject(Application.application),PopMenusFlexView,true) as PopMenusFlexView;
 			popMenusFlexView.width=700;
 			popMenusFlexView.height=400;
@@ -68,6 +67,7 @@ package assets
 		}
 		private function startUpdateButtonClickEvent(e:MouseEvent):void
 		{
+			this.dispatchEvent(new SamplePanelEvent(SamplePanelEvent.START_UPLOAD));
 			Button(e.currentTarget).enabled=false;
 			this.hpsm.startToUpdate();
 		}
