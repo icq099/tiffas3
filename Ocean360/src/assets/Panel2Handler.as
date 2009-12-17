@@ -1,10 +1,12 @@
 package assets
 {
+	import assets.event.SamplePanelEvent;
 	import assets.model.HotPointStructManager;
 	
 	import fl.controls.Button;
 	
 	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
 	import mx.core.Application;
@@ -14,7 +16,7 @@ package assets
 	import remoteobject.HotPointStruct;
 	
 	import view.PopMenusFlexView;
-	public class Panel2Handler
+	public class Panel2Handler extends Sprite
 	{
 		private var hps:HotPointStruct;
 		private var hpsm:HotPointStructManager;
@@ -31,6 +33,7 @@ package assets
 		}
 		private function previewButtonClickEvent(e:MouseEvent):void
 		{
+			this.dispatchEvent(new SamplePanelEvent(SamplePanelEvent.START_UPLOAD));
 			var popMenusFlexView:PopMenusFlexView=PopUpManager.createPopUp(DisplayObject(Application.application),PopMenusFlexView,true) as PopMenusFlexView;
 			popMenusFlexView.width=700;
 			popMenusFlexView.height=400;

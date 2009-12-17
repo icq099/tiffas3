@@ -2,6 +2,7 @@ package
 {
 	import assets.Panel1Handler;
 	import assets.Panel2Handler;
+	import assets.event.SamplePanelEvent;
 	import assets.model.HotPointStructManager;
 	
 	import flash.events.MouseEvent;
@@ -14,6 +15,7 @@ package
 	{
 		public var sp:SamplePanelBackGround=new SamplePanelBackGround();
 		public var p1h:Panel1Handler;
+		private var p2h:Panel2Handler;
 		public var hps:HotPointStruct=new HotPointStruct();
 		public var hpsm:HotPointStructManager=new HotPointStructManager(sp,hps);//所要上传的数据结构
 		public function SamplePanel()
@@ -35,9 +37,13 @@ package
 		private function addHandler():void
 		{
 			p1h=new Panel1Handler(sp,hpsm);
-			new Panel2Handler(sp,hps,hpsm);
+			p2h=new Panel2Handler(sp,hps,hpsm);
+			p2h.addEventListener(SamplePanelEvent.START_UPLOAD,startUpload);
 		}
-
+		private function startUpload(e:SamplePanelEvent):void
+		{
+			this.dispatchEvent(e);
+		}
 		//添加标本面板
 		private function addSp():void
 		{
