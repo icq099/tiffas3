@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:local="*">
+	<mx:NumericStepper id="step_scale" x="51" minimum="0" maximum="10" stepSize="0.01" value="1" enabled="true" bottom="10"/>
+	<mx:NumericStepper id="step_x" x="189" stepSize="10" value="0" enabled="true" bottom="10" change="{viewer.view_port.camera.x=step_x.value}" minimum="-10000" maximum="10000"/>
+	<mx:Label x="117" text="camera_x:" bottom="10"/>
+	<mx:Label x="14" text="scale:" bottom="10"/>
+	<mx:Panel layout="absolute" right="10" left="10" top="10" bottom="50">
+		<local:DaeViewer id="viewer" scale="{step_scale.value}" source="dae/daetest.dae" left="0" right="0" top="0" bottom="0">
+			
+		</local:DaeViewer>
+	</mx:Panel>
+	<mx:NumericStepper id="step_y" x="346" stepSize="10" value="0" enabled="true" bottom="10" change="{viewer.view_port.camera.y=step_y.value}" minimum="-10000" maximum="10000"/>
+	<mx:Label x="274" text="camera_y:" bottom="10"/>
+	<mx:NumericStepper id="step_z" x="503" stepSize="10" value="-1000" enabled="true" bottom="10" change="{viewer.view_port.camera.z=step_z.value}" minimum="-10000" maximum="10000"/>
+	<mx:Label x="431" text="camera_z:" bottom="10"/>
+</mx:Application>
