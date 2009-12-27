@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application clipContent="false" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="800" height="600" frameRate="30" applicationComplete="init()">
+<mx:Application clipContent="false" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" frameRate="30" applicationComplete="init()">
 <mx:Style source="css/TabNavigatorCSS.css"/>
 	<mx:Script>
 		<![CDATA[
