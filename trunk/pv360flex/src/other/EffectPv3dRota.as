@@ -44,6 +44,7 @@ package other
 		protected override function onEffectStart():void{
 			var rect:Rectangle=effector.getBounds(effector);
 			view_port=new BasicView(rect.width*2,rect.height*2,false);
+			view_port.startRendering();
 			material=new BitmapMaterial(effector_bitmap.bitmapData);
 			//material=new WireframeMaterial();
 			material.doubleSided=true;
@@ -55,7 +56,6 @@ package other
 			}else{
 				container.addChild(view_port);
 			}
-			view_port.startRendering();
 			view_port.x=effector.x+rect.x-rect.width/2;
 			view_port.y=effector.y+rect.y-rect.height/2;
 			plane.angle=angle;
