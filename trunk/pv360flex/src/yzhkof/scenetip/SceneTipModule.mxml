@@ -36,8 +36,8 @@
 					tipPanel.text_area.text=String(loader.data);
 				});
 				tipPanel.alpha=1;
-				tipPanel.x=mouseX;
-				tipPanel.y=mouseY;
+				tipPanel.x=mouseX+10;
+				tipPanel.y=mouseY+10;
 				MyEffect.addChild(new EffectPv3dRota(this,tipPanel,1,true,EffectPv3dRota.ANGLE_DOWN)); 
 			}
 			private function delayRemoveTip():void{
