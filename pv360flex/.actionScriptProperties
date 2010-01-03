@@ -29,6 +29,7 @@
 <module application="src/pv360flex.mxml" destPath="yzhkof/position/PositionModule.swf" optimize="true" sourcePath="src/yzhkof/position/PositionModule.mxml"/>
 <module application="src/pv360flex.mxml" destPath="lxf/SamplePanel/FishPanelModule.swf" optimize="true" sourcePath="src/lxf/SamplePanel/FishPanelModule.mxml"/>
 <module application="src/pv360flex.mxml" destPath="lxf/SamplePanel/FishPanelModule.swf" optimize="true" sourcePath="src/lxf/SamplePanel/FishPanelModule.mxml"/>
+<module application="src/pv360flex.mxml" destPath="yzhkof/scenetip/SceneTipModule.swf" optimize="true" sourcePath="src/yzhkof/scenetip/SceneTipModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>

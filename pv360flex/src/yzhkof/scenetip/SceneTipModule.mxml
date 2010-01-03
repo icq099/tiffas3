@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:Script>
+		<![CDATA[
+			import gs.TweenLite;
+			import other.EffectPv3dRota;
+			import yzhkof.effect.MyEffect;
+			import communication.MainSystem;
+			import yzhkof.loader.CompatibleURLLoader;
+			import yzhkof.loader.CompatibleLoader;
+			private var xml_loader:CompatibleURLLoader=new CompatibleURLLoader();
+			private var xml:XML;
+			private var tipPanel:TipPanel=new TipPanel();
+			private function init():void{
+				tipPanel.isPopUp=true;
+				tipPanel.addEventListener(MouseEvent.ROLL_OUT,function(e:Event):void{
+					delayRemoveTip();
+				});
+				tipPanel.addEventListener(MouseEvent.ROLL_OVER,function(e:Event):void{
+					TweenLite.killTweensOf(removeTip);
+				});
+				xml_loader.loadURL("xml/scenetip.xml");
+				xml_loader.addEventListener(Event.COMPLETE,initOther);
+			}
+			private function initOther(e:Event):void{
+				xml=XML(xml_loader.data);
+				MainSystem.getInstance().addAPI("showTip",showTip);
+			}
+			private function showTip(scene_id:int):void{
+				TweenLite.killTweensOf(removeTip);
+				TweenLite.delayedCall(2,removeTip);
+				var loader:CompatibleURLLoader=new CompatibleURLLoader();
+				var url:String=xml.tip[scene_id].@url;
+				loader.loadURL(url);
+				loader.addEventListener(Event.COMPLETE,function(e:Event):void{
+					tipPanel.text_area.text=String(loader.data);
+				});
+				tipPanel.alpha=1;
+				tipPanel.x=mouseX;
+				tipPanel.y=mouseY;
+				MyEffect.addChild(new EffectPv3dRota(this,tipPanel,1,true,EffectPv3dRota.ANGLE_DOWN)); 
+			}
+			private function delayRemoveTip():void{
+				TweenLite.delayedCall(1,removeTip);
+			}
+			private function removeTip():void{
+				MyEffect.removeChild(new EffectPv3dRota(this,tipPanel,1,false,EffectPv3dRota.ANGLE_DOWN,0,0.5));
+			}
+		]]>
+	</mx:Script>
+</mx:Module>

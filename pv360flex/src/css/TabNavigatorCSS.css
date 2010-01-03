@@ -82,3 +82,17 @@ Label{
 Application {
    themeColor: #cccccc;
 }
+.tipPanel
+{
+	statusStyleName: panelStatus;
+}
+.panelStatus
+{
+	borderColor: #45539E;
+	roundedBottomCorners: false;
+	borderThicknessRight: 2;
+	borderThicknessLeft: 2;
+	borderThicknessTop: 0;
+	cornerRadius: 0;
+	borderAlpha: 1.0;
+}

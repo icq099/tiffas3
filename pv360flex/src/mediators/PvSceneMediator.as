@@ -223,6 +223,8 @@ package mediators
 			} */
 			var p_runer:PScriptRuner=facade.retrieveProxy(PScriptRunerBase.NAME) as PScriptRuner;
 			var onClickMap:Object=new Object();
+			var onRollOverMap:Object=new Object();
+			var onRollOutMap:Object=new Object();
 			//解析HotPoint标签
 			for(var i:int=0;i<hot_points_position.length();i++){
 				
@@ -230,9 +232,21 @@ package mediators
 				icon=pxml.getIconBitmapdataById(hot_points_position.@icon[i]);
 				plane=viewer.addHotPoint({x:hot_points_position.@x[i],y:hot_points_position.@y[i],z:hot_points_position.@z[i],width:hot_points_position.@width[i],height:hot_points_position.@height[i],segmentsW:hot_points_position.@segmentsW[i],segmentsH:hot_points_position.@segmentsH[i]},tip_text,icon);
 				onClickMap[plane]=hot_points_position[i].@onClick;
+				onRollOverMap[plane]=hot_points_position[i].@onRollOver;
+				onRollOutMap[plane]=hot_points_position[i].@onRollOut;
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK,function(e:InteractiveScene3DEvent):void{
 					
 					p_runer.runScript(onClickMap[Plane(e.currentTarget)]);
+				
+				});
+				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER,function(e:InteractiveScene3DEvent):void{
+					
+					p_runer.runScript(onRollOverMap[Plane(e.currentTarget)]);
+				
+				});
+				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT,function(e:InteractiveScene3DEvent):void{
+					
+					p_runer.runScript(onRollOutMap[Plane(e.currentTarget)]);
 				
 				});
 			
