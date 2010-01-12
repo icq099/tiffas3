@@ -67,7 +67,10 @@ package assets
 		}
 		private function startUpdateButtonClickEvent(e:MouseEvent):void
 		{
-			this.dispatchEvent(new SamplePanelEvent(SamplePanelEvent.START_UPLOAD));
+			if(this.sp.panel1.title.text!=""&&this.sp.panel1.detail.text!="")
+			{
+				this.dispatchEvent(new SamplePanelEvent(SamplePanelEvent.START_UPLOAD));
+			}
 			Button(e.currentTarget).enabled=false;
 			this.hpsm.startToUpdate();
 		}

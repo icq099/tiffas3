@@ -2,6 +2,7 @@
 <MainContainer creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
 	<mx:Script>
 		<![CDATA[
+			import mx.rpc.events.FaultEvent;
 			import mx.rpc.AbstractOperation;
 			import mx.events.CloseEvent;
 			import mx.core.Application;
@@ -52,9 +53,13 @@
 				}
 				PopUpManager.removePopUp(pop_changepassword);
 			}
+			private function onAccessFault(e:FaultEvent):void{
+				Alert.show(e.toString());
+			}
 			private function onAccessBtnClick(e:Event):void{
 				if((user_v.validate().type==ValidationResultEvent.VALID)&&(password_v.validate().type==ValidationResultEvent.VALID)){
-					ro.getOperation("sendUser").addEventListener(ResultEvent.RESULT,loginResult);;
+					ro.getOperation("sendUser").addEventListener(ResultEvent.RESULT,loginResult);
+					ro.getOperation("sendUser").addEventListener(FaultEvent.FAULT,onAccessFault);
 					ro.sendUserO(user.text,password.text)
 				}
 			}

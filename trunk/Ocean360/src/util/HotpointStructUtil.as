@@ -19,6 +19,12 @@ package util
 				hotpoint.soundName=new String()+date.getTime()+hotpoint.sound.length+int(Math.random()*100);
 				new_xml.@sound="points/"+hotpoint.soundName;
 			}
+			if(hotpoint.video!=null){
+				hotpoint.videoName=new String()+date.getTime()+hotpoint.video.length+int(Math.random()*100);
+				var video_xml:XML=new XML("<ExhibitVideo/>");
+				video_xml.@url="points/"+hotpoint.videoName;
+				new_xml.appendChild(video_xml);
+			}
 			var id:String;
 			var xml_byte:ByteArray=new ByteArray();
 			if(xml.HotPoint.length()<=0){

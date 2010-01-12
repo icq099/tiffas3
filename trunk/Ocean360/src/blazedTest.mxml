@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:RemoteObject id="ro" destination="FileUpLoader" />
+	<mx:Script>
+		<![CDATA[
+			import mx.rpc.events.ResultEvent;
+			private function init():void{
+				ro.getOperation("getPath").addEventListener(ResultEvent.RESULT,success);
+			}
+			private function success(e:ResultEvent):void{
+				text_show.text=e.result as String;
+			}
+			private function click():void{
+				ro.getPath();
+			}
+		]]>
+	</mx:Script>
+	<mx:Button x="10" y="10" label="Button" click="click()"/>
+	<mx:TextArea id="text_show" x="10" y="40" width="277" height="257"/>
+</mx:Application>

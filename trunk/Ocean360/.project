@@ -27,6 +27,16 @@
 			<location>//Yzhkof/Tomcat 5.5/webapps/Ocean360</location>
 		</link>
 		<link>
+			<name>bin-release2</name>
+			<type>2</type>
+			<location>//Yzhkof/Tomcat 5.5/webapps/Ocean360final</location>
+		</link>
+		<link>
+			<name>bin-release3</name>
+			<type>2</type>
+			<location>//Yzhkof/Tomcat 5.5/webapps/new360</location>
+		</link>
+		<link>
 			<name>bin-release</name>
 			<type>2</type>
 			<location>//Yzhkof/Tomcat 5.5/webapps/Ocean360/Ocean360</location>
