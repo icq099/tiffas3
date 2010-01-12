@@ -60,6 +60,12 @@ package assets.model
 			hps.sound=new ByteArray();
 			hps.sound=data;
 		}
+		public function setVideo(name:String,data:ByteArray):void
+		{
+			hps.videoName=name;
+			hps.video=new ByteArray();
+			hps.video=data;
+		}
 		public function setTextName(name:String):void
 		{
 			hps.textName=name;

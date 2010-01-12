@@ -6,7 +6,6 @@ package assets
 	import flash.events.MouseEvent;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
-	import mx.controls.scrollClasses.ScrollBar;
 	public class Panel1Handler
 	{
 		private var sp:SamplePanelBackGround;//界面句柄
@@ -21,6 +20,7 @@ package assets
 			this.sp.panel1.addMusic.addEventListener(MouseEvent.CLICK,panel1AddMusicButtonClickEvent);
 			this.sp.panel1.title.addEventListener(Event.CHANGE,titleChanged);
 			this.sp.panel1.detail.addEventListener(Event.CHANGE,detailChanged);
+			this.sp.panel1.addMovie.addEventListener(MouseEvent.CLICK,panel1AddMovieButtonClickEvent);
 		}
 		//标题改变的事件
 		private function titleChanged(e:Event):void
@@ -40,6 +40,14 @@ package assets
 			var picFilter:FileFilter = new FileFilter("图片文件(jpg,png)", "*.jpg;*.png");
 			pictureFileReference.browse([picFilter]);
 			pictureFileReference.addEventListener(Event.SELECT,pictureSelect);
+		}
+		//打开视频文件
+		private function panel1AddMovieButtonClickEvent(e:MouseEvent):void
+		{
+			musicFileReference=new FileReference();
+			var movieFilter:FileFilter = new FileFilter("视频文件(flv)", "*.flv;");
+			musicFileReference.browse([movieFilter]);
+			musicFileReference.addEventListener(Event.SELECT,movieSelect);			
 		}
 		private function pictureSelect(e:Event):void
 		{
@@ -71,6 +79,17 @@ package assets
 			var musicFilter:FileFilter = new FileFilter("音乐文件(mp3)", "*.mp3;");
 			musicFileReference.browse([musicFilter]);
 			musicFileReference.addEventListener(Event.SELECT,musicSelect);
+		}
+		private function movieSelect(e:Event):void
+		{
+			sp.panel1.movieName.text=FileReference(e.currentTarget).name;
+			musicFileReference.addEventListener(Event.COMPLETE,movieLoaded);
+			musicFileReference.load();
+		}
+		//
+		private function movieLoaded(e:Event):void
+		{
+			this.hpsm.setVideo(musicFileReference.name,musicFileReference.data);
 		}
 		//设置音乐文件名
 		private function musicSelect(e:Event):void
