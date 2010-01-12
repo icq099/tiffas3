@@ -1,9 +1,11 @@
 package lxf.CenterPanel{ 
-	import communication.Event.MainSystemEvent;
 	import communication.MainSystem;
 	
 	import flash.display.Sprite;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	
+	import mx.core.Application;
 
 	public class CenterPanel extends Sprite
 	{
@@ -52,9 +54,26 @@ package lxf.CenterPanel{
 				cpp.down.addEventListener(MouseEvent.MOUSE_OUT,downLeaveEvent);
 				cpp.left.addEventListener(MouseEvent.MOUSE_OUT,leftLeaveEvent);
 				cpp.right.addEventListener(MouseEvent.MOUSE_OUT,rightLeaveEvent);
+				Application.application.stage.addEventListener(KeyboardEvent.KEY_DOWN,stageKeyEvent);
 				cpp.addCamera.addEventListener(MouseEvent.MOUSE_OUT,addCameraLeaveEvent);
 				cpp.notAddCamera.addEventListener(MouseEvent.MOUSE_OUT,notAddCameraLeaveEvent);
 			}				
+		}
+		private function stageKeyEvent(e:KeyboardEvent):void
+		{
+			if(e.keyCode==37)
+			{
+				MainSystem.getInstance().camera.rotationY-=cameraRotateSpeed;
+			}else if(e.keyCode==38)
+			{
+				MainSystem.getInstance().camera.rotationX+=cameraRotateSpeed;
+			}else if(e.keyCode==39)
+			{
+				MainSystem.getInstance().camera.rotationY+=cameraRotateSpeed;
+			}else if(e.keyCode==40)
+			{
+				MainSystem.getInstance().camera.rotationX-=cameraRotateSpeed;
+			}
 		}
 		//给所有按钮添加鼠标经过时的事件
 		private function addCppButtonOverEvent():void

@@ -9,6 +9,7 @@ package lxf.CenterPanel
 	{
 		public function CenterPanelModule()
 		{
+			
 			addChild(Toolyzhkof.mcToUI(new CenterPanel()));
 		}
 	}
