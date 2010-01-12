@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%">
+<mx:Script>
+	<![CDATA[
+		import model.MXml;
+		private function init():void{
+			
+		}
+	]]>
+</mx:Script>
+	<mx:HDividedBox x="10" y="10" width="689" height="468">
+		<mx:Canvas width="35%" height="100%">
+			<mx:List left="10" right="10" top="10" bottom="10" dataProvider="{MXml.getInstance().xml_scene}"></mx:List>
+		</mx:Canvas>
+		<mx:Canvas width="65%" height="100%">
+			<mx:RichTextEditor title="场景简介" right="10" left="10" top="10" bottom="60">
+			</mx:RichTextEditor>
+			<mx:Button label="保存" horizontalCenter="0" bottom="10"/>
+		</mx:Canvas>
+	</mx:HDividedBox>
+</mx:Module>
