@@ -69,6 +69,7 @@ package model
 			var xml_list:XMLList=xml_menu.Scene..sample;
 			var delete_list:XMLList=new XMLList();
 			var length:int;
+			//删除menu相关联xml
 			for(var i:int=0;i<xml_list.length();i++){
 			 	if(xml_list[i]==xml_hotpoint.HotPoint[index].@id){
 					delete_list+=xml_list[i];

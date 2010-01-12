@@ -2,6 +2,7 @@
 <HotPointAddEditView  creationComplete="init()" xmlns="myviews.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
 	<mx:Script>
 		<![CDATA[
+			import mx.collections.Sort;
 			import myviews.UpLoadTipPanel;
 			import mx.containers.Panel;
 			import assets.event.SamplePanelEvent;
@@ -19,6 +20,7 @@
 				list_hotpoint.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,onHotPointItemClick);
 				btn_add.addEventListener(MouseEvent.CLICK,onAddClick);
 				btn_delete.addEventListener(MouseEvent.CLICK,onDeleteClick);
+				xml_hotpoint_c.refresh();
 			}
 			private function onHotPointItemClick(e:Event):void{
 				PopHotPoint.popUp(XML(MXml.getInstance().getHotPointXmlByIndex(list_hotpoint.selectedIndex)));
@@ -58,12 +60,14 @@
 			}
 			private function onAlerClose(e:CloseEvent):void{
 				if(e.detail==Alert.YES){
-					MXml.getInstance().deleteHotPointXmlByIndex(list_hotpoint.selectedIndex);
+					MXml.getInstance().deleteHotPointXmlByIndex(XML(list_hotpoint.selectedItem.parent()).childIndex());
 				}
 			}
 		]]>
 	</mx:Script>
-	<mx:Binding source="MXml.getInstance().xml_hotpoint.HotPoint.@name" destination="list_hotpoint.dataProvider">
+	<mx:XMLListCollection id="xml_hotpoint_c" source="{MXml.getInstance().xml_hotpoint.HotPoint.@name}" sort="{new Sort()}">
+	</mx:XMLListCollection>
+	<mx:Binding source="xml_hotpoint_c" destination="list_hotpoint.dataProvider">
 	</mx:Binding>
 	<mx:Binding source="MXml.getInstance().isComplete" destination="btn_add.enabled">
 	</mx:Binding>
