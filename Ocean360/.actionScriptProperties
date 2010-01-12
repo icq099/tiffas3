@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actionScriptProperties mainApplicationPath="Ocean360.mxml" version="3">
-<compiler additionalCompilerArguments="-services &quot;\\Yzhkof\Tomcat 5.5\webapps\Ocean360\WEB-INF\flex\services-config.xml&quot; -locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="10.0.0" htmlPlayerVersionCheck="true" outputFolderLocation="//Yzhkof/Tomcat 5.5/webapps/Ocean360" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
+<compiler additionalCompilerArguments="-services &quot;\\Yzhkof\Tomcat 5.5\webapps\Ocean360\WEB-INF\flex\services-config-flex.xml&quot; -locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="10.0.0" htmlPlayerVersionCheck="true" outputFolderLocation="//Yzhkof/Tomcat 5.5/webapps/Ocean360" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
 <compilerSourcePath/>
 <libraryPath defaultLinkType="1">
 <libraryPathEntry kind="4" path=""/>
@@ -13,9 +13,10 @@
 <sourceAttachmentPath/>
 </compiler>
 <applications>
+<application path="blazedTest.mxml"/>
 <application path="SampleViewerEditor.mxml"/>
-<application path="Ocean360.mxml"/>
 <application path="Test.mxml"/>
+<application path="Ocean360.mxml"/>
 </applications>
 <modules>
 <module application="src/Ocean360.mxml" destPath="Logic/HotPointTosceneViewScript.swf" optimize="true" sourcePath="src/Logic/HotPointTosceneViewScript.mxml"/>

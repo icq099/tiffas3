@@ -1,7 +1,7 @@
 package remoteobject
 {
 	import mx.rpc.AbstractOperation;
-	import mx.rpc.remoting.RemoteObject;
+	import mx.rpc.remoting.mxml.RemoteObject;
 	
 	public dynamic class LoginFilter extends RemoteObject
 	{
