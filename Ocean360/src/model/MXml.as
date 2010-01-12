@@ -65,6 +65,25 @@ package model
 		public function deleteMenuXml(scene_index:int,sample_index:int):void{
 			delete xml_menu.Scene[scene_index].sample[sample_index];
 		}
+		public function getDeleteHotPointThingsByIndex(index:int):Array{
+			var re_arr:Array=new Array();
+			var t_xml:XML=xml_hotpoint.HotPoint[index];
+			if(t_xml.@texturl.length()>0){
+				re_arr.push(t_xml.@texturl.toXMLString());
+			}
+			if(t_xml.@sound.length()>0){
+				re_arr.push(t_xml.@sound.toXMLString());
+			}
+			if(t_xml.ExhibitVideo.length()>0){
+				re_arr.push(t_xml.ExhibitVideo.@url.toXMLString());
+			}
+			if(t_xml.ExhibitInstruction.length()>0){
+				for(var i:int=0;i<t_xml.ExhibitInstruction.Img.length();i++){
+					re_arr.push(t_xml.ExhibitInstruction.Img[i].@url.toXMLString());
+				}
+			}
+			return re_arr;
+		}
 		public function deleteHotPointXmlByIndex(index:int):void{
 			var xml_list:XMLList=xml_menu.Scene..sample;
 			var delete_list:XMLList=new XMLList();
