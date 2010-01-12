@@ -50,7 +50,6 @@ package util
 					new_xml.appendChild(image_xml);
 				}
 			}
-			
 			xml.appendChild(new_xml);
 			xml_byte.writeUTFBytes(xml.toString())
 			hotpoint.xml=xml_byte;			

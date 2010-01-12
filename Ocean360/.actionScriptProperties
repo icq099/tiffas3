@@ -13,9 +13,6 @@
 <sourceAttachmentPath/>
 </compiler>
 <applications>
-<application path="blazedTest.mxml"/>
-<application path="SampleViewerEditor.mxml"/>
-<application path="Test.mxml"/>
 <application path="Ocean360.mxml"/>
 </applications>
 <modules>
