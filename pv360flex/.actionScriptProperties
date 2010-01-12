@@ -14,13 +14,7 @@
 <sourceAttachmentPath/>
 </compiler>
 <applications>
-<application path="EffectTestor.mxml"/>
-<application path="PlayerTest.mxml"/>
-<application path="PreLoader.mxml"/>
-<application path="pv360flexDebug.mxml"/>
 <application path="pv360flex.mxml"/>
-<application path="pv360flexop.mxml"/>
-<application path="Testor.mxml"/>
 </applications>
 <modules>
 <module application="src/pv360flex.mxml" destPath="yzhkof/sample/SampleModule.swf" optimize="true" sourcePath="src/yzhkof/sample/SampleModule.mxml"/>
