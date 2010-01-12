@@ -18,7 +18,7 @@ package yzhkof.loader
 		private var text_data:String;
 		private var _url_loader:URLLoader
 		
-		public function CompatibleURLLoader(request:Object=null)
+		public function CompatibleURLLoader()
 		{
 		}
 		public function load(request:Object):void{

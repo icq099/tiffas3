@@ -3,6 +3,8 @@ package yzhkof.effect
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
 	
+	import yzhkof.util.delayCallNextFrame;
+	
 	public class MyEffect
 	{
 		public function MyEffect()
@@ -26,8 +28,8 @@ package yzhkof.effect
 			effect.effector.visible=false;
 		}
 		public static function removeChild(effect:EffectBase):void{
-			effect.container.removeChild(effect.effector);
 			doEffect(effect);
+			delayCallNextFrame(function():void{effect.container.removeChild(effect.effector);});
 		}
 		private static function doEffect(effect:EffectBase,onComplete:Function=null):void{
 			effect.onEffectComplete=onComplete;
