@@ -19,6 +19,7 @@
 <module application="src/Ocean360.mxml" destPath="Logic/HotPointTosceneViewScript.swf" optimize="true" sourcePath="src/Logic/HotPointTosceneViewScript.mxml"/>
 <module application="src/Ocean360.mxml" destPath="Logic/HotPointAddEditViewScript.swf" optimize="true" sourcePath="src/Logic/HotPointAddEditViewScript.mxml"/>
 <module application="src/Ocean360.mxml" destPath="Logic/MainViewScript.swf" optimize="true" sourcePath="src/Logic/MainViewScript.mxml"/>
+<module application="src/Ocean360.mxml" destPath="Logic/SceneTipScript.swf" optimize="true" sourcePath="src/Logic/SceneTipScript.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>

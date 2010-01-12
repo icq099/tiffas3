@@ -13,6 +13,11 @@
 					<mx:ModuleLoader id="loader_hts" initialize="loader_hts.applicationDomain=ApplicationDomain.currentDomain" url="Logic/HotPointTosceneViewScript.swf"  ready="{p_loader_hts.parent.removeChild(p_loader_hts)}" right="10" left="10" top="10" bottom="10">
 					</mx:ModuleLoader>
 				</mx:Canvas>
+				<mx:Canvas label="场景说明" width="100%" height="100%">
+					<mx:ProgressBar id="p_loader_st" horizontalCenter="-1" verticalCenter="-18" source="loader_st"/>
+					<mx:ModuleLoader id="loader_st" initialize="loader_st.applicationDomain=ApplicationDomain.currentDomain" url="Logic/SceneTipScript.swf" ready="{p_loader_st.parent.removeChild(p_loader_st)}" right="10" left="10" top="10" bottom="10">
+					</mx:ModuleLoader>
+				</mx:Canvas>
 				<mx:Canvas label="标本库" width="100%" height="100%">
 					<mx:ProgressBar id="p_loader_hev" horizontalCenter="-1" verticalCenter="-18" source="loader_hev"/>
 					<mx:ModuleLoader id="loader_hev" initialize="loader_hev.applicationDomain=ApplicationDomain.currentDomain" url="Logic/HotPointAddEditViewScript.swf" ready="{p_loader_hev.parent.removeChild(p_loader_hev)}" right="10" left="10" top="10" bottom="10">
