@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:XML id="xml" xmlns="">
+		<UserInfo>
+  <User name="bdmin1" password="123456" />
+  <User name="ndmin2" password="123456" />
+  <User name="2dmin3" password="123456" />
+  <User name="gdmin4" password="123456" />
+  <User name="ddmin5" password="123456" />
+  <User name="ddmin" password="37491803" />
+		</UserInfo>
+	</mx:XML>
+	<mx:Script>
+		<![CDATA[
+			import flash.utils.getQualifiedClassName;
+			import mx.collections.SortField;
+			import mx.collections.Sort;
+			import mx.collections.XMLListCollection;
+			private function init():void{
+				var xml_c:XMLListCollection=new XMLListCollection(xml.User.@name);
+				var sort:Sort=new Sort();
+				xml_c.sort=sort;
+				xml_c.refresh();
+				list.dataProvider=xml_c;
+				list.addEventListener(MouseEvent.CLICK,function(e:Event):void{
+					var t:XMLList=new XMLList()+XML(list.selectedItem).parent();
+					delete t[0];
+					trace(xml);
+				});
+			}
+		]]>
+	</mx:Script>
+	<mx:List right="10" left="10" top="10" bottom="10" id="list"></mx:List>
+</mx:Application>

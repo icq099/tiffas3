@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" currentState="fsfasd">
+	<mx:states>
+		<mx:State name="fsfasd">
+			<mx:AddChild position="lastChild">
+				<mx:TabNavigator x="176" y="60" width="200" height="200">
+					<mx:Canvas label="Tab 1" width="199" height="166">
+						<mx:ModuleLoader url="HotPointTosceneView.swf" width="135" height="145" x="26" y="10">
+						</mx:ModuleLoader>
+					</mx:Canvas>
+				</mx:TabNavigator>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+	
+</mx:Application>
