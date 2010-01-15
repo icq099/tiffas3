@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<actionScriptProperties mainApplicationPath="FlexTest.mxml" version="3">
+<actionScriptProperties mainApplicationPath="SortTest.mxml" version="3">
 <compiler additionalCompilerArguments="-locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="10.0.0" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
 <compilerSourcePath/>
 <libraryPath defaultLinkType="1">
@@ -11,13 +11,10 @@
 <sourceAttachmentPath/>
 </compiler>
 <applications>
-<application path="XmlTest.mxml"/>
-<application path="As3ModTest.mxml"/>
-<application path="FlexTest.mxml"/>
-<application path="BitmapTest.mxml"/>
-<application path="StateTest.mxml"/>
-<application path="ListTest.mxml"/>
+<application path="SortTest.mxml"/>
 </applications>
-<modules/>
+<modules>
+<module application="src/TestModule.mxml" destPath="Mymodule.swf" optimize="true" sourcePath="src/Mymodule.mxml"/>
+</modules>
 <buildCSSFiles/>
 </actionScriptProperties>

@@ -9,7 +9,7 @@ package view
 		private var skin:Sprite;
 		
 		public function SubTitleBase()
-		{
+		{ 
 			super();
 			addChild(skin);
 			addEventListener(Event.ENTER_FRAME,onEnterFrame);

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:ns1="*">
+<mx:Validator source="{t1}" required="true" property="text">
+	
+</mx:Validator>
+	<mx:TextInput x="129" y="47" id="t1"/>
+	<mx:TextInput x="129" y="77"/>
+	
+</mx:Application>
