@@ -23,5 +23,9 @@ package remoteobject
 			this.deleteHotPoint(hotpointxml,fileUrl);
 			return getOperation("deleteHotPoint");
 		}
+		public function updataTipO(id:int,text:String):AbstractOperation{
+			this.updataTip(id,text);
+			return getOperation("updataTip");
+		}
 	}
 }
