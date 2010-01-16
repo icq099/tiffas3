@@ -2,6 +2,8 @@
 <mx:Module creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
 	<mx:Script>
 		<![CDATA[
+			import yzhkof.util.delayCallNextFrame;
+			import mx.core.Container;
 			import gs.TweenLite;
 			import other.EffectPv3dRota;
 			import yzhkof.effect.MyEffect;
@@ -13,6 +15,7 @@
 			private var tipPanel:TipPanel=new TipPanel();
 			private function init():void{
 				tipPanel.isPopUp=true;
+				tipPanel.initialize();
 				tipPanel.addEventListener(MouseEvent.ROLL_OUT,function(e:Event):void{
 					delayRemoveTip();
 				});
@@ -27,24 +30,26 @@
 				MainSystem.getInstance().addAPI("showTip",showTip);
 			}
 			private function showTip(scene_id:int):void{
-				TweenLite.killTweensOf(removeTip);
-				TweenLite.delayedCall(2,removeTip);
 				var loader:CompatibleURLLoader=new CompatibleURLLoader();
 				var url:String=xml.tip[scene_id].@url;
+				var this_delegate:Container=this;
 				loader.loadURL(url);
 				loader.addEventListener(Event.COMPLETE,function(e:Event):void{
-					tipPanel.text_area.text=String(loader.data);
+					tipPanel.text_area.htmlText=String(loader.data);
+					TweenLite.killTweensOf(removeTip);
+					TweenLite.delayedCall(2,removeTip);
+					delayCallNextFrame(function():void{MyEffect.addChild(new EffectPv3dRota(this_delegate,tipPanel,0.5,true,EffectPv3dRota.ANGLE_DOWN));});
 				});
 				tipPanel.alpha=1;
 				tipPanel.x=mouseX+10;
 				tipPanel.y=mouseY+10;
-				MyEffect.addChild(new EffectPv3dRota(this,tipPanel,1,true,EffectPv3dRota.ANGLE_DOWN)); 
+				
 			}
 			private function delayRemoveTip():void{
-				TweenLite.delayedCall(1,removeTip);
+				TweenLite.delayedCall(0.5,removeTip);
 			}
 			private function removeTip():void{
-				MyEffect.removeChild(new EffectPv3dRota(this,tipPanel,1,false,EffectPv3dRota.ANGLE_DOWN,0,0.5));
+				MyEffect.removeChild(new EffectPv3dRota(this,tipPanel,0.5,false,EffectPv3dRota.ANGLE_DOWN,0,0.5));
 			}
 		]]>
 	</mx:Script>

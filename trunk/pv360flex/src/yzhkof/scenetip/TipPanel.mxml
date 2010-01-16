@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Panel styleName="panelStatus" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="158" height="158">
+<mx:Panel styleName="panelStatus" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="240" height="188">
 	<mx:TextArea id="text_area" right="0" left="0" top="0" bottom="0" editable="false" />
 </mx:Panel>
