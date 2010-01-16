@@ -2,20 +2,49 @@
 <mx:Module creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%">
 <mx:Script>
 	<![CDATA[
+		import mx.rpc.events.FaultEvent;
+		import mx.rpc.AbstractOperation;
+		import mx.controls.Alert;
+		import mx.rpc.events.ResultEvent;
+		import remoteobject.FileUpLoader;
+		import mx.events.ListEvent;
 		import model.MXml;
+		private var fileUpLoader:FileUpLoader=new FileUpLoader();
 		private function init():void{
-			
+			list_scene.addEventListener(ListEvent.CHANGE,onListEventChange);
+			btn_save.addEventListener(MouseEvent.CLICK,onSaveClick);
+		}
+		private function onListEventChange(e:Event):void{
+			updataTextById(list_scene.selectedIndex);
+		}
+		private function updataTextById(id:int):void{
+			var loader:URLLoader=new URLLoader();
+			loader.load(new URLRequest("introduce/"+id+".txt"+"?id="+Math.random()));
+			loader.addEventListener(Event.COMPLETE,function(e:Event):void{
+				text_editor.htmlText=String(loader.data);
+			});
+		}
+		private function onSaveClick(e:Event):void{
+			var dispather:AbstractOperation=fileUpLoader.updataTipO(list_scene.selectedIndex,text_editor.htmlText);
+			dispather.addEventListener(ResultEvent.RESULT,onSaveSuccess);
+			dispather.addEventListener(FaultEvent.FAULT,onSaveFailed);
+		}
+		private function onSaveSuccess(e:Event):void{
+			Alert.show("保存成功！");
+		}
+		private function onSaveFailed(e:FaultEvent):void{
+			Alert.show(e.fault.message);
 		}
 	]]>
 </mx:Script>
-	<mx:HDividedBox x="10" y="10" width="689" height="468">
+	<mx:HDividedBox right="10" left="10" top="10" bottom="10">
 		<mx:Canvas width="35%" height="100%">
-			<mx:List left="10" right="10" top="10" bottom="10" dataProvider="{MXml.getInstance().xml_scene}"></mx:List>
+			<mx:List id="list_scene" left="10" right="10" top="10" bottom="10" dataProvider="{MXml.getInstance().xml_scene.Travel.Scene.@name}"></mx:List>
 		</mx:Canvas>
 		<mx:Canvas width="65%" height="100%">
-			<mx:RichTextEditor title="场景简介" right="10" left="10" top="10" bottom="60">
+			<mx:RichTextEditor id="text_editor" title="场景简介" right="10" left="10" top="10" bottom="45">
 			</mx:RichTextEditor>
-			<mx:Button label="保存" horizontalCenter="0" bottom="10"/>
+			<mx:Button id="btn_save" label="保存" horizontalCenter="0" bottom="10"/>
 		</mx:Canvas>
 	</mx:HDividedBox>
 </mx:Module>
