@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application initialize="init()" clipContent="false" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" fontSize="15" xmlns:ns1="view.*">
+<mx:Script>
+	<![CDATA[
+		import yzhkof.AddToStageSetter;
+		import org.papervision3d.core.components.as3.utils.StageTools;
+		import mx.core.UIComponent;
+		import yzhkof.FPSfromA3d;
+		[Bindable]
+		private var in_data:ByteArray;
+		private function init():void{
+			var ui:UIComponent=new UIComponent();
+			addChild(ui);
+			AddToStageSetter.delayExcuteAfterAddToStage(ui,function():void{FPSfromA3d.init(ui);});
+		}
+		private function loadClick():void{
+			var file:FileReference=new FileReference();
+			file.browse();
+			file.addEventListener(Event.SELECT,function(e:Event):void{
+				file.load();
+			});
+			file.addEventListener(Event.COMPLETE,function(e:Event):void{
+				in_data=file.data;
+			});
+		}
+	]]>
+</mx:Script>
+	<mx:Panel layout="absolute" left="157" right="157" top="10" bottom="105">
+		<ns1:LoaderShower id="loader" right="10" left="10" top="10" bottom="10" source="{in_data}"/>
+	</mx:Panel>
+	<mx:Button label="load" bottom="29" horizontalCenter="-78" click="loadClick()"/>
+	<mx:Button label="unload" bottom="29" horizontalCenter="96" click="{loader.unloadAndStop()}"/>
+	
+</mx:Application>
