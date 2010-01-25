@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" clipContent="false">
+<mx:Script>
+	<![CDATA[
+		import mx.events.FlexEvent;
+		import mx.core.ContainerCreationPolicy;
+		import yzhkof.ToolBitmapData;
+		import yzhkof.Toolyzhkof;
+		import other.EffectPv3dRota;
+		import yzhkof.effect.MyEffect;
+		import mx.containers.Panel;
+		private var p:Panel;
+		private var c:Canvas;
+		private function init():void{
+			c=new Canvas;
+			c.clipContent=false;
+			p=new Panel();
+			var b:Button=new Button();
+			b.label="fuck";
+			p.addChild(b);
+			//c.addChild(p);
+			c.addChild(p);
+			//p.initialize();
+			c.x=200;
+			c.y=100;
+			//p.x=-200;
+			p.width=500;
+			p.height=300;
+			//addChild(c);
+			//container.addChild(c);
+			
+		}
+		private function onRemove():void{
+			MyEffect.removeChild(new EffectPv3dRota(container,c,1,false,EffectPv3dRota.ANGLE_UP,0,0.5));
+		}
+		private function onAdd():void{
+			MyEffect.addChild(new EffectPv3dRota(container,c,1,true,EffectPv3dRota.ANGLE_DOWN));
+		}
+		private function onGetBounds():void{
+			trace(c.width,c.height);
+		}
+	]]>
+</mx:Script>
+	<mx:Button id="btn_add" x="95" label="addChild" bottom="10" click="onAdd()"/>
+	<mx:Button id="btn_reamove" x="211" label="removeChild" bottom="10" click="onRemove()"/>
+	<mx:Canvas id="container" left="10" right="10" top="10" bottom="40">
+	</mx:Canvas>
+	<mx:Button x="333" label="getbounds" bottom="10" click="onGetBounds()"/>
+	
+</mx:Application>

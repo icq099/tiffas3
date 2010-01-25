@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="600" height="400" initialize="init()">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.XMLListCollection;
+			import mx.collections.ArrayCollection;
+			import yzhkof.Toolyzhkof;
+			
+			public var container_skin:AccordionPanelSkin=new AccordionPanelSkin();
+			
+			public function constructByXml(xml:XML):void{
+				
+				var list_button:ListButton;
+				var i:XML;
+				
+				for each(i in xml.submenu){
+					
+					list_button=new ListButton();
+					list_button.label=i.@label;
+					list_button.initialize()
+					
+					list_button.tilelist.dataProvider=new XMLListCollection(i.item);
+					
+					accordion_container.addChild(list_button);
+				
+				}
+			
+			}
+			private function init():void{
+				
+				addChild(Toolyzhkof.mcToUI(container_skin));
+			
+			}
+		]]>
+	</mx:Script>
+	<mx:Accordion id="accordion_container" x="6" y="6" width="588" height="388">
+	</mx:Accordion>
+</mx:Canvas>
