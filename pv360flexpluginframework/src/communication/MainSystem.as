@@ -14,6 +14,10 @@ package communication
 	import yzhkof.util.HashMap;
 	
 	[Event(name="init", type="communication.Event.MainSystemEvent")]
+/**
+* 当显示初始化完成后发送此事件(360场景与插件容器) 
+*/	
+	[Event(name="init_display", type="communication.Event.MainSystemEvent")]
 	[Event(name="on_plugin_ready", type="communication.Event.MainSystemEvent")]
 	[Event(name="add_api", type="communication.Event.ScriptAPIAddEvent")]
 	[Event(name="run", type="communication.Event.ScriptEvent")]
@@ -205,6 +209,20 @@ package communication
 		 */		
 		public function updataScene():void{
 			runAPIDirect("updataScene");
+		}
+		/**
+		 * 启动全景系统； 
+		 * 
+		 */		
+		public function enable360System():void{
+			runAPIDirect("enable360System");
+		}
+		/**
+		 * 关闭全景系统; 
+		 * 
+		 */		
+		public function disable360System():void{
+			runAPIDirect("disable360System");
 		}
 	}
 }
