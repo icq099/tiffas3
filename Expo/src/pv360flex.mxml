@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application clipContent="false" frameRate="30" width="900" height="600" creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
-	<mx:Style source="css/TabNavigatorCSS.css"/>
+<mx:Application clipContent="false" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" frameRate="30" applicationComplete="init()">
+<mx:Style source="css/TabNavigatorCSS.css"/>
 	<mx:Script>
 		<![CDATA[
 			import yzhkof.AddToStageSetter;

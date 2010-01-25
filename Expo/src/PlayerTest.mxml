@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application applicationComplete="init()" width="800" height="600" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:player="view.player.*" xmlns:view="view.*">
+<mx:Style source="css/TabNavigatorCSS.css"/>
+<mx:XML id="xml" xmlns="">
+<HotPoint id="3" texturl="points/text/1-3.html" name="贵州柳江畜禽有限公司贵州柳江畜禽有限公司贵州柳江畜禽有限公司贵州柳江畜禽有限公司贵州柳江畜禽有限公司贵州柳江畜禽有限公司" swfWidth="700" swfHeight="500">
+		<ExhibitInstruction>
+			<Img url="points/img/1-3-1-lxh.jpg"/>
+			<Img url="points/img/1-3-2-lxh.jpg"/>
+			<Img url="points/img/1-3-3-lxh.jpg"/>
+			<Img url="points/img/1-3-4-lxh.jpg"/>
+			<Img url="points/img/1-3-5-lxh.jpg"/>
+		</ExhibitInstruction>
+		<ExhibitVideo url="zx24.flv"/>
+</HotPoint>
+</mx:XML>
+<mx:Script>
+	<![CDATA[
+		import mx.core.Container;
+		import yzhkof.AddToStageSetter;
+		import mx.containers.Canvas;
+		import view.PopMenusFlex;
+		import gs.TweenLite;
+		import view.player.FlvPlayerUICom;
+		import view.player.FlvPlayer;
+		import view.player.PlayerBottomControler;
+		import yzhkof.Toolyzhkof;
+		private function init():void{
+			view_com.addPicture("test.jpg");
+			view_com.refreshPicture();
+			view_com.loadText("fuck",true);
+			view_com.width=700;
+			view_com.height=500
+			view_com.data;
+		}
+	]]>
+</mx:Script>
+	<view:PopMenusFlexView id="view_com" x="10" y="10">
+	</view:PopMenusFlexView>
+	
+</mx:Application>
