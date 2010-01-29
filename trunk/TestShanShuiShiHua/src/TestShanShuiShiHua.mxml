@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()">
+	<mx:Script>
+		<![CDATA[
+			import lxfa.shanshuishihua.view.ShanShuiShiHua;
+			import mx.core.UIComponent;
+			private function init():void
+			{
+				var shan:ShanShuiShiHua=new ShanShuiShiHua();
+				var ui:UIComponent=new UIComponent();
+				ui.addChild(shan);
+				this.addChild(ui);
+			}
+		]]>
+	</mx:Script>
+</mx:Application>
