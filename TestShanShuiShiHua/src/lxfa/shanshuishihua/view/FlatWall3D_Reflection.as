@@ -3,6 +3,7 @@
     
     import flash.display.*;
     import flash.events.*;
+    import flash.utils.getQualifiedClassName;
     
     import milkmidi.papervision3d.materials.ReflectionFileMaterial;
     
@@ -11,6 +12,7 @@
     import org.papervision3d.materials.*;
     import org.papervision3d.objects.primitives.Plane;
     import org.papervision3d.view.BasicView;
+    import org.papervision3d.view.layer.ViewportBaseLayer;
 	//匯入筆者所撰寫的MiniSlider類別。
     public class FlatWall3D_Reflection extends Sprite 	{
 		private var view			:BasicView;
@@ -47,9 +49,10 @@
 		}
 		private function onStageClick(e:MouseEvent):void
 		{
-			if(e.currentTarget!=Plane)
+			
+			if(getQualifiedClassName(e.target)=="ShanShuiShiHuaSwc")
 			{
-				trace("哇哈哈");
+				trace("ok");
 			}
 //			try
 //			{
