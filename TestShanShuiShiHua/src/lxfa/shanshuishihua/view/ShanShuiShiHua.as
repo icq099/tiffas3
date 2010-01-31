@@ -83,7 +83,7 @@ package lxfa.shanshuishihua.view
 		}
 		private function setCameraX():void
 		{
-			flatWall.cameraX=(shanShuiShiHuaSwc.scrubber.x-minMouseX)/(maxMouseX-minMouseX)*1000;
+			flatWall.cameraX=(shanShuiShiHuaSwc.scrubber.x-minMouseX)/(maxMouseX-minMouseX)*4000;
 		}
 	}
 }

@@ -15,11 +15,4 @@
 		<nature>com.adobe.flexbuilder.project.flexnature</nature>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>[source path] source path</name>
-			<type>2</type>
-			<location>D:/My Documents/桌面/source path/source path</location>
-		</link>
-	</linkedResources>
 </projectDescription>
