@@ -3,8 +3,6 @@ package yzhkof
 	import flash.display.BitmapData;
 	import flash.display.Graphics;
 	import flash.display.MovieClip;
-	import flash.display.Stage;
-	import flash.events.Event;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -67,6 +65,12 @@ package yzhkof
 		{
 			materialIsDrawn = true;
 			super.drawTriangle(face3D,graphics,renderSessionData,altBitmap,altUV);
+		}
+		override public function destroy():void{
+			super.destroy();
+			for each(var i:BitmapData in movieCache[movieAsset]){
+				i.dispose();
+			};
 		}
 		
 		protected static var movieCache:Dictionary = new Dictionary(true);
