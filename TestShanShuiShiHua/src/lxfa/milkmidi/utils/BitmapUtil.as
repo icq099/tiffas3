@@ -1,4 +1,4 @@
-﻿package milkmidi.utils
+﻿package lxfa.milkmidi.utils
 {	
 	import flash.display.*
 	import flash.errors.IllegalOperationError;

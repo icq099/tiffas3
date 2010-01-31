@@ -1,4 +1,4 @@
-package org.papervision3d.core.log
+package lxfa.org.papervision3d.core.log
 {
 	
 	/**

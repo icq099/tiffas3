@@ -1,4 +1,4 @@
-﻿package milkmidi.utils
+﻿package lxfa.milkmidi.utils
 {
 	import flash.errors.IllegalOperationError;
 	import flash.geom.Point;
