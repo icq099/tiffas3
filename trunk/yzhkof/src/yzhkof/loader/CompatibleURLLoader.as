@@ -12,7 +12,10 @@ package yzhkof.loader
 	
 	import yzhkof.util.EventProxy;
 	import yzhkof.util.delayCallNextFrame;
-
+	
+	[Event(name="complete", type="flash.events.Event")]
+	[Event(name="io_error", type="flash.events.IOErrorEvent")]
+	
 	public class CompatibleURLLoader extends EventDispatcher
 	{
 		private var text_data:String;
