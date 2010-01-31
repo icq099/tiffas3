@@ -7,12 +7,12 @@
     
     import milkmidi.papervision3d.materials.ReflectionFileMaterial;
     
+    import mx.managers.PopUpManager;
+    
     import org.papervision3d.core.proto.MaterialObject3D;
     import org.papervision3d.events.*;
     import org.papervision3d.materials.*;
-    import org.papervision3d.objects.primitives.Plane;
     import org.papervision3d.view.BasicView;
-    import org.papervision3d.view.layer.ViewportBaseLayer;
 	//匯入筆者所撰寫的MiniSlider類別。
     public class FlatWall3D_Reflection extends Sprite 	{
 		private var view			:BasicView;
@@ -23,12 +23,13 @@
 		private var cameraZMin		:Number = -1500;//cameraZ軸的最小值
 		private var cameraZMax		:Number = -150;	//cameraZ軸的最大值
 		private var secondLineHeight:int=   400;    //第二行的高度
+		private var fp:FLVPreview;
         public function FlatWall3D_Reflection(){
 			init3DEngine();
 			initObject();
         }
 		private function init3DEngine():void{
-			view = new BasicView(771, 224, false , true, "Free");
+			view = new BasicView(771, 224, false , true, "Target");
 			view.viewport.buttonMode = true;
 			this.addChild(view);
 			this.addEventListener(Event.ENTER_FRAME, onEventRender3D);			
@@ -49,20 +50,12 @@
 		}
 		private function onStageClick(e:MouseEvent):void
 		{
-			
 			if(getQualifiedClassName(e.target)=="ShanShuiShiHuaSwc")
 			{
-				trace("ok");
+				cameraX = 900;	//camera的目標x軸
+				cameraY= 200;	//camera的目標y軸
+				cameraZ= -1500;//camera的目標z軸
 			}
-//			try
-//			{
-//				Plane(e.currentTarget);
-//			}catch(e:Error)
-//			{
-//				cameraX = 900;	//camera的目標x軸
-//				cameraY= 200;	//camera的目標y軸
-//				cameraZ= -1500;//camera的目標z軸
-//			}
 		}
 		private function init3DObject():void {
 			var bmpMat		:MaterialObject3D;
@@ -82,9 +75,10 @@
 				}				
 				bmpMat.interactive = true;
 				bmpMat.smooth = true;				
-				var plane:Plane = new Plane(bmpMat, 320, planeHeight, 4, 4);
+				var plane:NumberPlane=new NumberPlane(bmpMat, 320, planeHeight, 4, 4);
 				plane.x =Math.floor(i/2)* 360;
 				plane.y = i % 2 * secondLineHeight;	
+				plane.setID(i);
 				//修正反射Plane物件的y軸。				
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, onEvent3DOver);
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, onEvent3DOut);
@@ -119,18 +113,22 @@
 			});
 		}
 		private function onEvent3DClick(e:InteractiveScene3DEvent):void{
-			var _target:Plane = e.displayObject3D as Plane;
-			trace("aaa");
+			var _target:NumberPlane = e.displayObject3D as NumberPlane;
 			//當使用者點選圖片時, 先取得廣播者 (被點選者),
 			//其x,y,z屬性即是Camera的目標值,
 			//z軸要多減去200,讓Camera可以往後一點
 			cameraX = _target.x;
 			cameraY = _target.y;
 			cameraZ = _target.z -400;
-			if(_target.position.y==0)
+			if(_target.y==0)
 			{
 				cameraY+=80;
 			}
+			fp = PopUpManager.createPopUp (this,FLVPreview, true) as FLVPreview;
+            fp.myPlay("flvs/"+_target.getID()+".flv");
+            PopUpManager.centerPopUp(fp);
+            fp.x=0;
+            fp.y=0;
 //			bg_mc.addEventListener(MouseEvent.CLICK, onBackGroundClick);
 			//偵聽場景上的bg_mc物件所發出的MouseEvent.CLICK事件。
 		}
