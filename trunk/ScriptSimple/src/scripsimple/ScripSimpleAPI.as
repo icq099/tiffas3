@@ -12,6 +12,9 @@ package scripsimple
 			out_fun[fun_name]=fun;
 		
 		}
+		public function removeAPI(fun_name:String):void{
+			delete out_fun[fun_name];
+		}
 		internal function excuteFunctionByName(function_name:String,param:Array=null):*{
 			var fun:Function=out_fun[function_name];
 			if(fun==null){
