@@ -110,7 +110,7 @@ package commands
 				app.removeChild(uicom);
 			});
 			
-			MainSystem.getInstance().dispatchEvent(new MainSystemEvent(MainSystemEvent.INIT_DISPLAY));
+			MainSystem.getInstance().dispatchEvent(new MainSystemEvent(MainSystemEvent.INIT));
 			facade.removeCommand(FacadePv.INIT_DISPLAY);
 		
 		}
