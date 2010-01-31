@@ -29,7 +29,7 @@
 			initObject();
         }
 		private function init3DEngine():void{
-			view = new BasicView(771, 224, false , true, "Target");
+			view = new BasicView(771, 224, false , true, "FREECAMERA3D");
 			view.viewport.buttonMode = true;
 			this.addChild(view);
 			this.addEventListener(Event.ENTER_FRAME, onEventRender3D);			
@@ -119,7 +119,7 @@
 			//z軸要多減去200,讓Camera可以往後一點
 			cameraX = _target.x;
 			cameraY = _target.y;
-			cameraZ = _target.z -400;
+			cameraZ = _target.z -150;
 			if(_target.y==0)
 			{
 				cameraY+=80;
