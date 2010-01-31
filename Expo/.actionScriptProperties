@@ -13,11 +13,12 @@
 <sourceAttachmentPath/>
 </compiler>
 <applications>
-<application path="pv360flex.mxml"/>
 <application path="Expo.mxml"/>
 </applications>
 <modules>
 <module application="src/Expo.mxml" destPath="yzhkof/flow/FlowModule.swf" optimize="true" sourcePath="src/yzhkof/flow/FlowModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/mainMenuBottom/MainMenuModule.swf" optimize="true" sourcePath="src/lxfa/mainMenuBottom/MainMenuModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/mainMenuTop/MainMenuTopModule.swf" optimize="true" sourcePath="src/lxfa/mainMenuTop/MainMenuTopModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>
