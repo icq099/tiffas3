@@ -1,14 +1,13 @@
 package mediators
 {
 	import communication.Event.MainSystemEvent;
+	import communication.IPlugin;
 	import communication.MainSystem;
 	import communication.main_system;
 	
-	import flash.events.Event;
 	import flash.system.ApplicationDomain;
 	
 	import mx.containers.Canvas;
-	import mx.events.FlexEvent;
 	import mx.events.ModuleEvent;
 	import mx.modules.ModuleLoader;
 	
@@ -42,7 +41,10 @@ package mediators
 		public override function handleNotification(notification:INotification):void{
 			switch(notification.getName()){
 				case PluginMediator.SHOW_PLUGIN:
-					showPlugin(XML(notification.getBody()));
+					var xml:XML=XML(notification.getBody());
+					if(plugin_obj[xml.@id]==null){
+						showPlugin(xml);
+					}
 				break;
 				case PluginMediator.REMOVE_PLUGIN:
 					removePlugin(XML(notification.getBody()));
@@ -50,10 +52,12 @@ package mediators
 			}			
 		}
 		protected function showPlugin(xml:XML):void{
-			removePlugin(xml);
 			var loader:ModuleLoader=new ModuleLoader();
 			loader.applicationDomain=ApplicationDomain.currentDomain;
 			loader.addEventListener(ModuleEvent.READY,function(e:ModuleEvent):void{
+				if(!loader.child is IPlugin){
+					throw new Error(xml.@id+"插件必需实现IPlugin接口!");
+				}
 				var event:MainSystemEvent=new MainSystemEvent(MainSystemEvent.ON_PLUGIN_READY);
 				event.paramOnPluginReady(xml.@id,loader.child);
 				MainSystem.getInstance().addPlugin(xml.@id,loader.child);
