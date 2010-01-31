@@ -4,8 +4,10 @@
 <classEntry path="communication.Event.ScriptEvent"/>
 <classEntry path="communication.Event.SceneChangeEvent"/>
 <classEntry path="communication.camera.CameraProxy"/>
+<classEntry path="communication.IPlugin"/>
 <classEntry path="communication.MainSystem"/>
 <classEntry path="communication.Event.MainSystemEvent"/>
+<classEntry path="communication.main_system"/>
 <classEntry path="communication.Event.ScriptAPIAddEvent"/>
 </includeClasses>
 <includeResources/>

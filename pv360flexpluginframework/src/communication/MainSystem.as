@@ -20,6 +20,7 @@ package communication
 	[Event(name="init_display", type="communication.Event.MainSystemEvent")]
 	[Event(name="on_plugin_ready", type="communication.Event.MainSystemEvent")]
 	[Event(name="add_api", type="communication.Event.ScriptAPIAddEvent")]
+	[Event(name="remove_api", type="communication.Event.ScriptAPIAddEvent")]
 	[Event(name="run", type="communication.Event.ScriptEvent")]
 /**
 * 当场景切换完毕时发送此事件
@@ -109,6 +110,14 @@ package communication
 		 */		
 		public function addAPI(fun_name:String,fun:Function):void{
 			dispatchEvent(new ScriptAPIAddEvent(ScriptAPIAddEvent.ADD_API,fun_name,fun));
+		}
+		/**
+		 *	移除应用接口 
+		 * @param fun_name 接口方法名
+		 * 
+		 */		
+		public function removeAPI(fun_name:String):void{
+			dispatchEvent(new ScriptAPIAddEvent(ScriptAPIAddEvent.REMOVE_API,fun_name));
 		}
 		/**
 		 * 运行simple scrip代码 
