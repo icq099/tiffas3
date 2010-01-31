@@ -106,13 +106,15 @@ package mediators
 				case FacadePv.START_RENDER:
 				
 					viewer.startRend();
-					controler.enable();
+					if(controler!=null)
+						controler.enable();
 				
 				break;
 				case FacadePv.STOP_RENDER:
 				
 					viewer.stopRend();
-					controler.disable();
+					if(controler!=null)
+						controler.disable();
 				
 				break;
 			
@@ -150,7 +152,7 @@ package mediators
 				
 				facade.sendNotification(PvSceneMediator.PICTURE_LOAD_COMPLETE,goto);
 				facade.sendNotification(FacadePv.COVER_DISABLE);
-				facade.sendNotification(FacadePv.START_RENDER);
+				//facade.sendNotification(FacadePv.START_RENDER);
 				//手动回收
 				MyGC.gc();
 				facade.sendNotification(FacadePv.REMOVE_MOVIE);

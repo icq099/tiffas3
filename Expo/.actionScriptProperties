@@ -16,6 +16,8 @@
 <application path="pv360flex.mxml"/>
 <application path="Expo.mxml"/>
 </applications>
-<modules/>
+<modules>
+<module application="src/Expo.mxml" destPath="yzhkof/flow/FlowModule.swf" optimize="true" sourcePath="src/yzhkof/flow/FlowModule.mxml"/>
+</modules>
 <buildCSSFiles/>
 </actionScriptProperties>
