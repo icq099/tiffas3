@@ -82,24 +82,5 @@ package proxys
 			return data as Travel;
 		
 		}
-		public function get menu_count():int{
-			
-			return travel.menu_count;
-		
-		}
-		public function set menu_count(value:int):void{
-			
-			travel.menu_count=value;
-			if(menu_count<=0){
-				
-				facade.sendNotification(FacadePv.START_RENDER);
-			
-			}else{
-				
-				facade.sendNotification(FacadePv.STOP_RENDER);
-			
-			}
-		
-		}
 	}
 }

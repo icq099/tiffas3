@@ -103,11 +103,11 @@ package commands
 			var uicom:UIComponent=Toolyzhkof.mcToUI(main_scene);
 			p_script.addAPI("enable360System",function():void{
 				app.addChild(uicom);
-				main_scene.startRend();	
+				facade.sendNotification(FacadePv.START_RENDER);
 			});
 			p_script.addAPI("disable360System",function():void{
+				facade.sendNotification(FacadePv.STOP_RENDER);
 				app.removeChild(uicom);
-				main_scene.stopDrag();	
 			});
 			
 			MainSystem.getInstance().dispatchEvent(new MainSystemEvent(MainSystemEvent.INIT_DISPLAY));

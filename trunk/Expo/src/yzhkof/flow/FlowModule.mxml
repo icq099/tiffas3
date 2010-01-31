@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PluginModule creationComplete="init()" xmlns="plugin.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
+	<mx:Script>
+		<![CDATA[
+			import yzhkof.util.HashMap;
+			import communication.MainSystem;
+			import yzhkof.loader.CompatibleURLLoader;
+			private var xml:XML;
+			private var loader:CompatibleURLLoader;
+			
+			private var current_state_map:HashMap=new HashMap();
+			private var current_step:int=-1;
+			private function init():void{
+				loader=new CompatibleURLLoader();
+				loader.loadURL("xml/flow.xml");
+				loader.addEventListener(Event.COMPLETE,initModule);
+			}
+			private function initModule(e:Event):void{
+				xml=XML(loader.data);
+				addAPI("gotoStepByIndex",gotoStepByIndex);
+				addAPI("nextStep",nextStep);
+				nextStep();
+			}
+			public function gotoStepByIndex(index:int):void{
+				if(!current_step<0)
+					MainSystem.getInstance().runScript(xml.step[current_step].@scriptOut.toXMLString());
+				current_step=index;
+				MainSystem.getInstance().runScript(xml.step[index].@scriptIn.toXMLString());
+			}
+			public function nextStep():void{
+				gotoStepByIndex(current_step+1);
+			}
+			public override function dispose():void{
+				super.dispose();
+			}
+		]]>
+	</mx:Script>
+</PluginModule>
