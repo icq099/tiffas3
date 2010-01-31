@@ -3,33 +3,28 @@ package lxfa.mainMenuBottom
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
-	import mx.core.Application;
-	import mx.core.UIComponent;
-	
 	public class MainMenuBottom extends Sprite
 	{
-		private var mainMenuSwc:MainMenuSwc;
+		private var bottom:MainMenuSwcBottom;
 		public function MainMenuBottom()
 		{
-			initMainMenuSwc();
+			initbottom();
 			initEvent();
 		}
-		private function initMainMenuSwc():void
+		private function initbottom():void
 		{
-			var ui:UIComponent=new UIComponent();
-			mainMenuSwc=new MainMenuSwc();
-			ui.addChild(mainMenuSwc);
-			this.addChild(ui);
+			bottom=new MainMenuSwcBottom();
+			this.addChild(bottom);
 		}
 		private function initEvent():void
 		{
-			mainMenuSwc.cameraAdd.addEventListener(MouseEvent.CLICK,cameraAddClickEvent);
-			mainMenuSwc.cameraNotAdd.addEventListener(MouseEvent.CLICK,cameraNotAddClickEvent);
-			mainMenuSwc.help.addEventListener(MouseEvent.CLICK,helpClickEvent);
-			mainMenuSwc.cameraUp.addEventListener(MouseEvent.CLICK,cameraUpClickEvent);
-			mainMenuSwc.cameraDown.addEventListener(MouseEvent.CLICK,cameraDownClickEvent);
-			mainMenuSwc.cameraLeft.addEventListener(MouseEvent.CLICK,cameraLeftClickEvent);
-			mainMenuSwc.cameraRight.addEventListener(MouseEvent.CLICK,cameraRightClickEvent);
+			bottom.cameraAdd.addEventListener(MouseEvent.CLICK,cameraAddClickEvent);
+			bottom.cameraNotAdd.addEventListener(MouseEvent.CLICK,cameraNotAddClickEvent);
+			bottom.help.addEventListener(MouseEvent.CLICK,helpClickEvent);
+			bottom.cameraUp.addEventListener(MouseEvent.CLICK,cameraUpClickEvent);
+			bottom.cameraDown.addEventListener(MouseEvent.CLICK,cameraDownClickEvent);
+			bottom.cameraLeft.addEventListener(MouseEvent.CLICK,cameraLeftClickEvent);
+			bottom.cameraRight.addEventListener(MouseEvent.CLICK,cameraRightClickEvent);
 		}
 		///////////////////////////////////////////按钮点击事件///////////////////////////////////////
 		private function cameraAddClickEvent(e:MouseEvent):void
