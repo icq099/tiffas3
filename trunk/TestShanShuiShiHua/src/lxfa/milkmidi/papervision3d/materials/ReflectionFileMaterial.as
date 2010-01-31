@@ -2,17 +2,17 @@
  * Design by milkmidi
  * http://milkmidi.com
  * */
-package milkmidi.papervision3d.materials
+package lxfa.milkmidi.papervision3d.materials
 {
 	import flash.net.URLRequest;
 	import flash.system.LoaderContext;
-	import milkmidi.utils.BitmapUtil;
+	import lxfa.milkmidi.utils.BitmapUtil;
 	import flash.display.Loader;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.geom.Matrix;
-	import org.papervision3d.core.log.PaperLogger;
+	import lxfa.org.papervision3d.core.log.PaperLogger;
 	import org.papervision3d.events.FileLoadEvent;
 	import org.papervision3d.materials.BitmapFileMaterial;
 	import org.papervision3d.materials.BitmapMaterial;

@@ -5,7 +5,7 @@
     import flash.events.*;
     import flash.utils.getQualifiedClassName;
     
-    import milkmidi.papervision3d.materials.ReflectionFileMaterial;
+    import lxfa.milkmidi.papervision3d.materials.ReflectionFileMaterial;
     
     import mx.managers.PopUpManager;
     

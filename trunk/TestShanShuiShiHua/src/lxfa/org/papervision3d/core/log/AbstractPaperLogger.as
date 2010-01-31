@@ -1,6 +1,6 @@
-package org.papervision3d.core.log
+package lxfa.org.papervision3d.core.log
 {
-	import org.papervision3d.core.log.event.PaperLoggerEvent;
+	import lxfa.org.papervision3d.core.log.event.PaperLoggerEvent;
 	
 	/**
 	 * @author Ralph Hauwert

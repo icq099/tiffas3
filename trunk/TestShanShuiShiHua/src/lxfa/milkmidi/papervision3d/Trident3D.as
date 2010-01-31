@@ -1,4 +1,4 @@
-﻿package milkmidi.papervision3d{
+﻿package lxfa.milkmidi.papervision3d{
 	import flash.display.*;
 	import flash.events.*;
 	import org.papervision3d.core.geom.renderables.*;
