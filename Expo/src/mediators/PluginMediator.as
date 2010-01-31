@@ -80,6 +80,7 @@ package mediators
 		}
 		protected function removePlugin(xml:XML):void{
 			try{
+				IPlugin(plugin_obj[xml.@id]).dispose();
 				plugin_container.removeChild(plugin_obj[xml.@id]);
 				delete plugin_obj[xml.@id];
 				delete position_setters[xml.@id];
