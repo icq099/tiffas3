@@ -18,6 +18,7 @@
 <modules>
 <module application="src/Expo.mxml" destPath="yzhkof/flow/FlowModule.swf" optimize="true" sourcePath="src/yzhkof/flow/FlowModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/mainMenuTop/MainMenuTopModule.swf" optimize="true" sourcePath="src/lxfa/mainMenuTop/MainMenuTopModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/mainMenuBottom/MainMenuBottomModule.swf" optimize="true" sourcePath="src/lxfa/mainMenuBottom/MainMenuBottomModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>
