@@ -10,12 +10,10 @@ package view
 		}
 		public function set compass_visible(value:Boolean):void{
 			_compass_visible=value
-			layer_arrows.visible=false;
-			layer_compass.visible=false;
+			layer_arrows.visible=value;
+			layer_compass.visible=value;
 		}
 		public function get compass_visible():Boolean{
-			layer_arrows.visible=true;
-			layer_compass.visible=true;
 			return _compass_visible;
 		}
 	}

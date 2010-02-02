@@ -45,7 +45,8 @@ package commands
 			
 			}
 			//debug设置
-			var main_scene:Pv3d360Scene=new Pv3d360SceneCompass();
+			var main_scene:Pv3d360SceneCompass=new Pv3d360SceneCompass();
+			main_scene.compass_visible=true;
 			main_scene.stopRend();
 			//
 			//var main_map:MapDirector=new MapDirector();
@@ -103,6 +104,7 @@ package commands
 			var uicom:UIComponent=Toolyzhkof.mcToUI(main_scene);
 			p_script.addAPI("enable360System",function():void{
 				app.addChild(uicom);
+				app.setChildIndex(main_plugin,app.getChildIndex(uicom));
 				facade.sendNotification(FacadePv.START_RENDER);
 			});
 			p_script.addAPI("disable360System",function():void{

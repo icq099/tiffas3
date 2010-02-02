@@ -26,14 +26,13 @@
 	
 	import yzhkof.MovieCacheMaterial;
 	import yzhkof.MyGC;
+	import yzhkof.ToolBitmapData;
 	import yzhkof.loader.CompatibleLoader;
 
 	public class Pv3d360Scene extends Sprite {
-		
-		[Embed(source="asset/compass.png")]
-		private var CompassBitmapdata:Class;
-		[Embed(source="asset/Arrow.png")]
-		private var Arrow:Class;
+	
+		private var compassBitmapdata:BitmapData=ToolBitmapData.getInstance().drawDisplayObject(new CompassSkin);
+		private var arrow_bitmapdata:BitmapData=ToolBitmapData.getInstance().drawDisplayObject(new ArrowSkin);
 		
 		private var this_stage:Stage;
 		private var URLpath:URLRequest;
@@ -102,8 +101,7 @@
 			sphere.scaleX*=-1
 			
 			//设置罗盘
-			var compass_bitmap:Bitmap=new CompassBitmapdata();
-			var material_compass:BitmapMaterial=new BitmapMaterial(compass_bitmap.bitmapData);
+			var material_compass:BitmapMaterial=new BitmapMaterial(compassBitmapdata.clone());
 			//material_compass.smooth=true;
 			material_compass.doubleSided=true;
 			compass_plane=new Plane(material_compass,35,35,5,5);
@@ -237,12 +235,11 @@
 		}
 		public function addArrow(rota:Number=0,tip_text:String=""):Plane{
 			
-			var arrow_bitmap:Bitmap=new Arrow();
-			var material_arrow:BitmapMaterial=new BitmapMaterial(arrow_bitmap.bitmapData);
+			var material_arrow:BitmapMaterial=new BitmapMaterial(arrow_bitmapdata.clone());
 			material_arrow.smooth=true;
 			material_arrow.doubleSided=true;
 			material_arrow.interactive=true;
-			var plane:Plane=new Plane(material_arrow,4,7,2,4)
+			var plane:Plane=new Plane(material_arrow,1.5,9,2,4)
 			arrows.push(plane);
 			plane.rotationX=-90;
 			plane.rotationY=rota;
