@@ -1,11 +1,14 @@
 package lxfa.mainMenuBottom
 {
+	import communication.MainSystem;
+	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
 	public class MainMenuBottom extends Sprite
 	{
 		private var bottom:MainMenuSwcBottom;
+		private const cameraRotateSpeed:int=8;
 		public function MainMenuBottom()
 		{
 			initbottom();
@@ -41,7 +44,7 @@ package lxfa.mainMenuBottom
 		}
 		private function cameraUpClickEvent(e:MouseEvent):void
 		{
-			trace("cameraUpClickEvent");
+			trace("upClickEvent");
 		}
 		private function cameraDownClickEvent(e:MouseEvent):void
 		{
