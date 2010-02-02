@@ -15,6 +15,7 @@ package mediators
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
 	import yzhkof.PositionSeter;
+	import yzhkof.util.HashMap;
 
 	public class PluginMediator extends Mediator
 	{
@@ -26,8 +27,8 @@ package mediators
 		//消息体为当前plugin的xml数据
 		public static const REMOVE_PLUGIN:String="PluginMediator.REMOVE_PLUGIN";
 		
-		protected var plugin_obj:Object=new Object;
-		protected var position_setters:Object=new Object;
+		protected var plugin_map:HashMap=new HashMap;
+		
 		public function PluginMediator(viewComponent:Object=null)
 		{
 			super(NAME, viewComponent);
@@ -42,7 +43,7 @@ package mediators
 			switch(notification.getName()){
 				case PluginMediator.SHOW_PLUGIN:
 					var xml:XML=XML(notification.getBody());
-					if(plugin_obj[xml.@id]==null){
+					if(!plugin_map.containsKey(xml.@id)){
 						showPlugin(xml);
 					}
 				break;
@@ -73,20 +74,29 @@ package mediators
 			position_obj["y"]=xml.@y.length()>0?xml.@y:undefined;
 			position_obj["horizontalCenter"]=xml.@horizontalCenter.length()>0?xml.@horizontalCenter:undefined;
 			position_obj["verticalCenter"]=xml.@verticalCenter.length()>0?xml.@verticalCenter:undefined;
+		
+			var plugin_obj:Object=new Object();
+			plugin_obj.index=xml.@index;
+			plugin_obj.loader=loader;
 			
-			plugin_container.addChild(plugin_obj[xml.@id]=loader);
-			position_setters[xml.@id]=new PositionSeter(loader,position_obj,false,true);
+			var index:Array=plugin_map.valueSet;
+			index.push(plugin_obj);
+			index.sortOn("index",Array.NUMERIC);
+			plugin_container.addChildAt(loader,index.indexOf(plugin_obj));
+			
+			plugin_obj.position=new PositionSeter(loader,position_obj,false,true);
+			plugin_map.put(xml.@id,plugin_obj);
 			
 		}
 		protected function removePlugin(xml:XML):void{
 			try{
-				IPlugin(plugin_obj[xml.@id]).dispose();
-				plugin_container.removeChild(plugin_obj[xml.@id]);
-				delete plugin_obj[xml.@id];
-				delete position_setters[xml.@id];
-				MainSystem.getInstance().removePlugin(xml.@id);
+				IPlugin(plugin_map.getValue(xml.@id).child).dispose();
+				plugin_container.removeChild(plugin_map.getValue(xml.@id).loader);
 			}catch(e:Error){
+				trace(e);
 			}
+			plugin_map.remove(xml.@id);
+			MainSystem.getInstance().removePlugin(xml.@id);
 		}
 		protected function get plugin_container():Canvas{
 			return viewComponent as Canvas;
