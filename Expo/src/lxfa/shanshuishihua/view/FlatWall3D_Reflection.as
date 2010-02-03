@@ -6,7 +6,8 @@ package lxfa.shanshuishihua.view{
     import flash.utils.getQualifiedClassName;
     
     import lxfa.milkmidi.papervision3d.materials.ReflectionFileMaterial;
-    import lxfa.shanshuishihua.view.NormalWindow;
+    import lxfa.shanshuishihua.model.PictureUrl;
+    
     import mx.managers.PopUpManager;
     
     import org.papervision3d.core.proto.MaterialObject3D;
@@ -16,17 +17,34 @@ package lxfa.shanshuishihua.view{
 	//匯入筆者所撰寫的MiniSlider類別。
     public class FlatWall3D_Reflection extends Sprite 	{
 		private var view			:BasicView;
-		private var itemOfNumber	:int = 14;		//圖片數量
-		public var cameraX			:Number = 900;	//camera的目標x軸
+		private var itemOfNumber	:int = 1;		//圖片數量
+		public  var cameraX			:Number = 900;	//camera的目標x軸
 		private var cameraY			:Number = 200;	//camera的目標y軸
 		private var cameraZ			:Number = -1500;//camera的目標z軸
 		private var cameraZMin		:Number = -1500;//cameraZ軸的最小值
 		private var cameraZMax		:Number = -150;	//cameraZ軸的最大值
 		private var secondLineHeight:int=   400;    //第二行的高度
-		private var fp:NormalWindow;
+		private var fp:NormalWindow;                //标准窗
+		private var rubbishArray:Array;             //垃圾回收数组
+		private var pictureUrl:PictureUrl;    //
         public function FlatWall3D_Reflection(){
+        	initPictureUrlCtr();
+        }
+        private function initPictureUrlCtr():void
+        {
+        	pictureUrl=new PictureUrl();
+        	pictureUrl.addEventListener(Event.COMPLETE,onPictureUrlCtrComplete);
+        }
+        private function onPictureUrlCtrComplete(e:Event):void
+        {
+        	itemOfNumber=1;
+        	initRubbishArray();
 			init3DEngine();
 			initObject();
+        }
+        private function initRubbishArray():void
+        {
+        	rubbishArray=new Array();
         }
 		private function init3DEngine():void{
 			view = new BasicView(771, 224, false , true, "FREECAMERA3D");
@@ -74,7 +92,8 @@ package lxfa.shanshuishihua.view{
 					//使用本來的點陣圖材質和高度
 				}				
 				bmpMat.interactive = true;
-				bmpMat.smooth = true;				
+				bmpMat.smooth = true;		
+				rubbishArray.push(bmpMat);		
 				var plane:NumberPlane=new NumberPlane(bmpMat, 320, planeHeight, 4, 4);
 				plane.x =Math.floor(i/2)* 360;
 				plane.y = i % 2 * secondLineHeight;	
@@ -84,6 +103,7 @@ package lxfa.shanshuishihua.view{
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, onEvent3DOut);
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK, onEvent3DClick);
 				view.scene.addChild(plane);
+				rubbishArray.push(plane);	
 			}
 		}
 		private function onMouseWheel(e:MouseEvent):void {
@@ -154,6 +174,17 @@ package lxfa.shanshuishihua.view{
 			view.camera.z += (cameraZ - view.camera.z) / 20;
 			// z 軸的漸進公式
         	view.singleRender();
+        }
+        public function dispose():void
+        {
+        	view.renderer.destory();
+        	view=null;
+        	fp=null;
+        	var i:int=0;
+        	for(i=0;i<rubbishArray.length;i++)
+        	{
+        		rubbishArray[i]=null;
+        	}
         }
     }
 }

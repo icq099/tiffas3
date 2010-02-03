@@ -10,7 +10,7 @@ package lxfa.shanshuishihua.model
 		private var xmlLoader:URLLoader;
 		private var xmlRequest:URLRequest;
 		private const path:String="xml/shanshishuihua.xml";
-		private var xmlData:XML;
+		public var xmlData:XML;
 		public function PictureUrl()
 		{
 			xmlRequest=new URLRequest(path);
@@ -30,9 +30,9 @@ package lxfa.shanshuishihua.model
 		{
 			
 		}
-		public function getPictureCount():int
+		public function fuck():int
 		{
-			
+			return xmlData.Items.Item.length;
 		}
 	}
 }
