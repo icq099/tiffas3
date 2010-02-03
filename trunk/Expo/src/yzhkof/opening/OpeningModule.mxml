@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PluginModule creationComplete="init()" xmlns="plugin.*" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300">
+	<mx:Script>
+		<![CDATA[
+			import yzhkof.flow.IFlowModule;
+		PluginModule
+			import communication.MainSystem;
+			import yzhkof.Toolyzhkof;
+			private var opening:Opening=new Opening();
+			private function init():void{
+				addChild(Toolyzhkof.mcToUI(opening));
+				opening.enter_btn.addEventListener(MouseEvent.CLICK,onClick);
+			}
+			private function onClick(e:Event):void{
+				IFlowModule(MainSystem.getInstance().getPlugin("FlowModule")).nextStep();
+			}
+			public override function dispose():void{
+				opening.dispose();
+			} 
+		]]>
+	</mx:Script>
+</PluginModule>

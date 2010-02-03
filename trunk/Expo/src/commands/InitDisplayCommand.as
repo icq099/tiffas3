@@ -1,8 +1,5 @@
 package commands
 {
-	import communication.Event.MainSystemEvent;
-	import communication.MainSystem;
-	
 	import facades.FacadePv;
 	
 	import flash.display.Sprite;
@@ -98,7 +95,7 @@ package commands
 			}
 			var scene:Pv3d360Scene=facade.retrieveMediator(PvSceneMediator.NAME).getViewComponent() as Pv3d360Scene;
 			scene.camera=PTravel(facade.retrieveProxy(PTravel.NAME)).getCamera();
-			facade.sendNotification(FacadePv.COVER_ENABLE);
+			//facade.sendNotification(FacadePv.COVER_ENABLE);
 			
 			var p_script:PScriptRuner=PScriptRuner(facade.retrieveProxy(PScriptRunerBase.NAME));
 			var uicom:UIComponent=Toolyzhkof.mcToUI(main_scene);
@@ -109,10 +106,12 @@ package commands
 			});
 			p_script.addAPI("disable360System",function():void{
 				facade.sendNotification(FacadePv.STOP_RENDER);
-				app.removeChild(uicom);
+				try{
+					app.removeChild(uicom);
+				}catch(e:Error){
+				}
 			});
 			
-			MainSystem.getInstance().dispatchEvent(new MainSystemEvent(MainSystemEvent.INIT));
 			facade.removeCommand(FacadePv.INIT_DISPLAY);
 		
 		}
