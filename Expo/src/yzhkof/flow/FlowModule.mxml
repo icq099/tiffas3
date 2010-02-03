@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PluginModule creationComplete="init()" xmlns="plugin.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
+<PluginModule creationComplete="init()" implements="yzhkof.flow.IFlowModule" xmlns="plugin.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300">
 	<mx:Script>
 		<![CDATA[
 			import yzhkof.util.HashMap;
@@ -22,7 +22,7 @@
 				nextStep();
 			}
 			public function gotoStepByIndex(index:int):void{
-				if(!current_step<0)
+				if(!(current_step<0))
 					MainSystem.getInstance().runScript(xml.step[current_step].@scriptOut.toXMLString());
 				current_step=index;
 				MainSystem.getInstance().runScript(xml.step[index].@scriptIn.toXMLString());

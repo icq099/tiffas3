@@ -85,13 +85,15 @@ package mediators
 			plugin_container.addChildAt(loader,index.indexOf(plugin_obj));
 			
 			plugin_obj.position=new PositionSeter(loader,position_obj,false,true);
-			plugin_map.put(xml.@id,plugin_obj);
+			plugin_map.put(String(xml.@id),plugin_obj);
 			
 		}
 		protected function removePlugin(xml:XML):void{
 			try{
-				IPlugin(plugin_map.getValue(xml.@id).child).dispose();
-				plugin_container.removeChild(plugin_map.getValue(xml.@id).loader);
+				var loader:ModuleLoader=plugin_map.getValue(String(xml.@id)).loader;
+				IPlugin(loader.child).dispose();
+				plugin_container.removeChild(loader);
+				loader.unloadModule();
 			}catch(e:Error){
 				trace(e);
 			}
