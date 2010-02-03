@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="communication.IPlugin">
+	<mx:Script>
+		<![CDATA[
+			import lxfa.shanshuishihua.view.ShanShuiShiHua;
+		    import yzhkof.Toolyzhkof;
+		    private var shanshuishihua:ShanShuiShiHua;
+			private function init():void
+			{
+				shanshuishihua=new ShanShuiShiHua();
+				addChild(Toolyzhkof.mcToUI(shanshuishihua));
+			}
+			public function dispose():void
+			{
+				shanshuishihua.dispose();
+			}
+		]]>
+	</mx:Script>
+</mx:Module>
