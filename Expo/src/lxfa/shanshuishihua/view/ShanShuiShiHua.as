@@ -94,5 +94,12 @@ package lxfa.shanshuishihua.view
 		{
 			flatWall.cameraX=(shanShuiShiHuaSwc.scrubber.x-minMouseX)/(maxMouseX-minMouseX)*1000;
 		}
+		public function dispose():void
+		{
+			shanShuiShiHuaSwc=null;
+			flatWall.dispose();
+			flatWall=null;
+			this=null;
+		}
 	}
 }

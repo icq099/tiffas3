@@ -4,13 +4,15 @@
 		<![CDATA[
 			import lxfa.shanshuishihua.view.ShanShuiShiHua;
 		    import yzhkof.Toolyzhkof;
+		    private var shanshuishihua:ShanShuiShiHua;
 			private function init():void
 			{
-				addChild(Toolyzhkof.mcToUI(new ShanShuiShiHua()));
+				shanshuishihua=new ShanShuiShiHua();
+				addChild(Toolyzhkof.mcToUI(shanshuishihua));
 			}
 			public function dispose():void
 			{
-				
+				shanshuishihua.dispose();
 			}
 		]]>
 	</mx:Script>
