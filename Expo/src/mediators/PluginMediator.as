@@ -91,6 +91,7 @@ package mediators
 		protected function removePlugin(xml:XML):void{
 			try{
 				var loader:ModuleLoader=plugin_map.getValue(String(xml.@id)).loader;
+				plugin_map.remove(String(xml.@id));
 				IPlugin(loader.child).dispose();
 				plugin_container.removeChild(loader);
 				loader.unloadModule();
