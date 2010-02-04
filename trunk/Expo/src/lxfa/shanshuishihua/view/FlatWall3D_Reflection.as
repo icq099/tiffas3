@@ -145,7 +145,7 @@ package lxfa.shanshuishihua.view{
 				cameraY+=80;
 			}
 			fp = PopUpManager.createPopUp (this,NormalWindow, true) as NormalWindow;
-            fp.myPlay("video/shanshuishihua/"+_target.getID()+".flv");
+            fp.load("video/shanshuishihua/"+_target.getID()+".flv");
             PopUpManager.centerPopUp(fp);
             fp.x=0;
             fp.y=0;
