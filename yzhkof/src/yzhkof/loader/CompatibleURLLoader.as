@@ -14,6 +14,7 @@ package yzhkof.loader
 	import yzhkof.util.delayCallNextFrame;
 	
 	[Event(name="complete", type="flash.events.Event")]
+	[Event(name="PROGRESS", type="flash.events.ProgressEvent")]
 	[Event(name="io_error", type="flash.events.IOErrorEvent")]
 	
 	public class CompatibleURLLoader extends EventDispatcher
