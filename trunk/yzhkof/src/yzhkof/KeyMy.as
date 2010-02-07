@@ -10,7 +10,7 @@ package yzhkof
 		private static var listener_object:InteractiveObject;
 		private static var btn_array:Object;
 		private static var stage:Stage;
-		
+		 
 		public function KeyMy()
 		{
 			throw Error("This Class is Singleton Patton");
