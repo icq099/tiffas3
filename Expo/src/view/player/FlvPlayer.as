@@ -11,8 +11,8 @@ package view.player
 
 	public class FlvPlayer extends Sprite
 	{
-		private static const WIDTH:Number=478;
-		private static const HEIGHT:Number=289;
+		private static const WIDTH:Number=380;
+		private static const HEIGHT:Number=285;
 		
 		private var controler:PlayerBottomControler=new PlayerBottomControler();
 		private var player:Pyro=new Pyro(WIDTH,HEIGHT-43,Pyro.STAGE_EVENTS_MECHANICS_ALL_OFF);
@@ -29,7 +29,7 @@ package view.player
 			
 			player.autoPlay=false;
 			player.play(url);
-		
+			controler.x+=6;
 		}
 		public function stopAll():void{
 			try{

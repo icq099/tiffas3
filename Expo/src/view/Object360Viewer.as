@@ -1,16 +1,15 @@
 package view
 {
 	import flash.display.Bitmap;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.ProgressEvent;
 	import flash.filters.BlurFilter;
 	
-	import mx.core.UIComponent;
-	
 	import yzhkof.loadings.LoadingSimpleProgressBar;
 
-	public class Object360Viewer extends UIComponent
+	public class Object360Viewer extends Sprite
 	{
 		private var loader:ObjectPictureLoader=new ObjectPictureLoader();
 		

@@ -5,13 +5,13 @@ package lxfa.shanshuishihua.model
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
-	public class PictureUrl extends Sprite
+	public class ItemModel extends Sprite
 	{
 		private var xmlLoader:URLLoader;
 		private var xmlRequest:URLRequest;
 		private const path:String="xml/shanshishuihua.xml";
 		public var xmlData:XML;
-		public function PictureUrl()
+		public function ItemModel()
 		{
 			xmlRequest=new URLRequest(path);
 			xmlLoader=new URLLoader(xmlRequest);
@@ -30,6 +30,10 @@ package lxfa.shanshuishihua.model
 		{
 			return null;
 		}
+		public function getImgUrl(num:int):String
+		{
+			return xmlData.Item[num].@image;
+		}
 		//获取指定位置的图片
 		public function getPictureUrl(num:int):String
 		{
@@ -46,6 +50,10 @@ package lxfa.shanshuishihua.model
 		public function getText(num:int):String
 		{
 			return xmlData.Item[num].Text[0];
+		}
+		public function getSoundUrl(num:int):String
+		{
+			return xmlData.Item[num].Sound[0];
 		}
 	}
 }
