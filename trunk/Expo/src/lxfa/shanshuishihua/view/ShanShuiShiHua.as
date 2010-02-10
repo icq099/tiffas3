@@ -3,9 +3,7 @@ package lxfa.shanshuishihua.view
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	
-	import mx.core.Application;
-	
+	import view.Object360Viewer;
 	public class ShanShuiShiHua extends Sprite
 	{
 		private var shanShuiShiHuaSwc:ShanShuiShiHuaSwc;

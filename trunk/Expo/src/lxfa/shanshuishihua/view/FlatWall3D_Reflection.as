@@ -6,7 +6,7 @@ package lxfa.shanshuishihua.view{
     import flash.utils.getQualifiedClassName;
     
     import lxfa.milkmidi.papervision3d.materials.ReflectionFileMaterial;
-    import lxfa.shanshuishihua.model.PictureUrl;
+    import lxfa.shanshuishihua.model.ItemModel;
     
     import mx.managers.PopUpManager;
     
@@ -24,20 +24,20 @@ package lxfa.shanshuishihua.view{
 		private var cameraZMin		:Number = -1500;//cameraZ軸的最小值
 		private var cameraZMax		:Number = -150;	//cameraZ軸的最大值
 		private var secondLineHeight:int=   400;    //第二行的高度
-		private var fp:NormalWindow;                //标准窗
+		private var normalWindowFactory:NormalWindowFactory;                //标准窗
 		private var rubbishArray:Array;             //垃圾回收数组
-		private var pictureUrl:PictureUrl;    //
+		private var itemModel:ItemModel;    //
         public function FlatWall3D_Reflection(){
         	initPictureUrlCtr();
         }
         private function initPictureUrlCtr():void
         {
-        	pictureUrl=new PictureUrl();
-        	pictureUrl.addEventListener(Event.COMPLETE,onPictureUrlCtrComplete);
+        	itemModel=new ItemModel();
+        	itemModel.addEventListener(Event.COMPLETE,onPictureUrlCtrComplete);
         }
         private function onPictureUrlCtrComplete(e:Event):void
         {
-        	itemOfNumber=pictureUrl.getItemOfNumber();
+        	itemOfNumber=itemModel.getItemOfNumber();
         	initRubbishArray();
 			init3DEngine();
 			initObject();
@@ -55,18 +55,12 @@ package lxfa.shanshuishihua.view{
 			basicView.camera.x = -1000;
 		}
 		private function initObject():void{
-			this.addEventListener(Event.ADDED_TO_STAGE,ADDED_TO_STAGE);
 			init3DObject();
-			//监听添加到STAGE得事件
-		}
-		private function ADDED_TO_STAGE(e:Event):void
-		{
-			//slider物件的x,y座標。
 			stage.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			stage.addEventListener(MouseEvent.CLICK,onStageClick);
-			//偵聽滾輪事件。
+			//监听添加到STAGE得事件
 		}
-		private function onStageClick(e:MouseEvent):void
+        private function onStageClick(e:MouseEvent):void
 		{
 			if(getQualifiedClassName(e.target)=="ShanShuiShiHuaSwc")
 			{
@@ -78,16 +72,18 @@ package lxfa.shanshuishihua.view{
 		private function init3DObject():void {
 			var bmpMat		:MaterialObject3D;
 			var planeHeight	:int;
+			var imgUrl:String;
 			//宣告變數, 避免在判斷式時重復宣告。
-			for (var i:int = 0; i < itemOfNumber; i++) {				
+			for (var i:int = 0; i < itemOfNumber; i++) {	
+				imgUrl=itemModel.getImgUrl(i);
 				if (i % 2 == 0) {	
 					//取 3 餘數如果等於 0 的話, 表示是最下方一排					
-					bmpMat = new ReflectionFileMaterial(pictureUrl.getPictureUrl(i), true);
+					bmpMat = new ReflectionFileMaterial(imgUrl, true);
 					//反射材質
 					planeHeight = 400;
 					//因為使用反射材質, 所以高度要增加一倍					
 				}else {
-					bmpMat = new BitmapFileMaterial(pictureUrl.getPictureUrl(i));
+					bmpMat = new BitmapFileMaterial(imgUrl);
 					planeHeight = 240;
 					//使用本來的點陣圖材質和高度
 				}				
@@ -143,14 +139,13 @@ package lxfa.shanshuishihua.view{
 			if(_target.y==0)
 			{
 				cameraY+=80;
-			}
-			fp = PopUpManager.createPopUp (this,NormalWindow, true) as NormalWindow;
-            fp.load("video/shanshuishihua/"+_target.getID()+".flv");
-            PopUpManager.centerPopUp(fp);
-            fp.x=0;
-            fp.y=0;
-//			bg_mc.addEventListener(MouseEvent.CLICK, onBackGroundClick);
-			//偵聽場景上的bg_mc物件所發出的MouseEvent.CLICK事件。
+			}  
+			normalWindowFactory=new NormalWindowFactory(_target.getID());
+			PopUpManager.addPopUp(normalWindowFactory, this, true);
+            PopUpManager.centerPopUp(normalWindowFactory); 
+            normalWindowFactory.x=40;
+            normalWindowFactory.y=90;
+			basicView.stopRendering();
 		}
 		private function onBackGroundClick(e:MouseEvent):void{
 			cameraZ = -1000;
@@ -179,7 +174,7 @@ package lxfa.shanshuishihua.view{
         {
         	basicView.renderer.destroy();
         	basicView=null;
-        	fp=null;
+        	this.normalWindowFactory=null;
         	var i:int=0;
         	for(i=0;i<rubbishArray.length;i++)
         	{

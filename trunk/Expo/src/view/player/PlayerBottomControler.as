@@ -4,7 +4,7 @@ package view.player
 
 	public class PlayerBottomControler extends PlayerControlMC
 	{
-		private const RIGHT:Number=110;
+		private const RIGHT:Number=200;
 				
 		public function PlayerBottomControler()
 		{
