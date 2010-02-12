@@ -5,7 +5,7 @@ package yzhkof.loader
 	import flash.utils.Dictionary;
 	
 	import yzhkof.util.DualMap;
-
+	[Event(name="complete", type="flash.events.Event")]
 	public class SerialLoaderBase extends EventDispatcher
 	{
 		protected var LoaderClass:Class;
