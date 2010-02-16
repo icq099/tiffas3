@@ -29,7 +29,7 @@ package lxfa.shanshuishihua.view
 		private function onAdded(e:Event):void
 		{
 			this.removeEventListener(Event.ADDED,onAdded);
-			slider.width=this.parent.width-20;
+			slider.width=this.parent.width-80;
 			slider.x=20;
 			slider.alpha=0.5;
 			slider.y=this.parent.height-60;
