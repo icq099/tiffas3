@@ -7,6 +7,7 @@ package lxfa.shanshuishihua.view{
     
     import lxfa.milkmidi.papervision3d.materials.ReflectionFileMaterial;
     import lxfa.shanshuishihua.model.ItemModel;
+    import lxfa.view.normalWindow.NormalWindowFactory;
     
     import mx.managers.PopUpManager;
     

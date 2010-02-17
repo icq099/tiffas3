@@ -9,7 +9,7 @@ package lxfa.shanshuishihua.model
 	{
 		private var xmlLoader:URLLoader;
 		private var xmlRequest:URLRequest;
-		private const path:String="xml/shanshishuihua.xml";
+		private const path:String="xml/item.xml";
 		public var xmlData:XML;
 		public function ItemModel()
 		{

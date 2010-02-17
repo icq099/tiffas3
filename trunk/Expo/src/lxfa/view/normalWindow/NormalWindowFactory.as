@@ -1,4 +1,4 @@
-package lxfa.shanshuishihua.view
+package lxfa.view.normalWindow
 {
 	/****************************
 	 * 根据	ID参建标准窗
