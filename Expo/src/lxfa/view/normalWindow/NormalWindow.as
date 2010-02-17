@@ -1,4 +1,4 @@
-package lxfa.shanshuishihua.view
+package lxfa.view.normalWindow
 {
 	/************************************************************
 	 * 标准窗的内容包括：
@@ -9,9 +9,12 @@ package lxfa.shanshuishihua.view
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import lxfa.shanshuishihua.view.CustomScrollBar;
+	
 	import mx.core.UIComponent;
-	import view.player.FlvPlayer;
+	
 	import view.Object360Viewer;
+	import view.player.FlvPlayer;
 	public class NormalWindow extends UIComponent
 	{
 		private var dp:NormalWindowSwc;//标准窗的SWC

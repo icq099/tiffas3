@@ -1,4 +1,4 @@
-package lxfa.shanshuishihua.view
+package lxfa.view.normalWindow
 {
 	/************************
 	 * MP3播放器
