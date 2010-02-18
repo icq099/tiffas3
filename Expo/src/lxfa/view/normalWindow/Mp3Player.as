@@ -10,7 +10,7 @@ package lxfa.view.normalWindow
 	import flash.media.SoundTransform;
 	import flash.net.URLRequest;
 	
-	import lxfa.milkmidi.display.MiniSlider;
+	import lxfa.view.pv3dAddOn.milkmidi.display.MiniSlider;
 	
 	public class Mp3Player extends Sprite
 	{

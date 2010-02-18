@@ -28,8 +28,9 @@ package lxfa.view.normalWindow
 		private var text:String;//文本
 		public function NormalWindow(pictureUrl:String=null,videoUrl:String=null,musicUrl:String=null,text:String=null)
 		{
-			initDp();
+			initDp(pictureUrl,videoUrl,musicUrl);
             initUrls(pictureUrl,videoUrl,musicUrl,text);
+            initUI(pictureUrl,videoUrl,musicUrl);
 			initController();
 			initScrollBar();
 		}
@@ -40,6 +41,37 @@ package lxfa.view.normalWindow
 			this.videoUrl=videoUrl;
 			this.musicUrl=musicUrl;
 			this.text=text;
+		}
+		//根据链接调整布局
+		private function initUI(pictureUrl:String=null,videoUrl:String=null,musicUrl:String=null):void
+		{
+			//如果没有360图片。那么“视频”和“音频”按钮向左移动,并删除"360图片"按钮
+			if(pictureUrl=="" || pictureUrl==null)
+			{
+				dp.btn_video.x-=dp.btn_360.width;
+				dp.btn_video_text.x-=dp.btn_360.width;
+				dp.btn_music.x-=dp.btn_360.width;
+				dp.btn_music_text.x-=dp.btn_360.width;
+				dp.removeChild(dp.btn_360_text);
+				dp.removeChild(dp.btn_360);
+				dp.removeChild(dp.panel1);
+			}
+			//如果没有视频，那么“音频”按钮向左移动并删除“视频”按钮
+			if(videoUrl=="" || videoUrl==null)
+			{
+				dp.btn_music.x-=dp.btn_video.width;
+				dp.btn_music_text.x-=dp.btn_video.width;
+				dp.removeChild(dp.btn_video_text);
+				dp.removeChild(dp.btn_video);
+				dp.removeChild(dp.panel2);
+			}
+			//如果没有音频，那么就删除音频按钮
+			if(musicUrl=="" || musicUrl==null)
+			{
+				dp.removeChild(dp.btn_music_text);
+				dp.removeChild(dp.btn_music);
+				dp.removeChild(dp.panel3);
+			}
 		}
 		//加载自定义滚动条
 		private function initScrollBar():void
@@ -71,13 +103,31 @@ package lxfa.view.normalWindow
 			}
 		}
 		//加载标准窗的背景
-		private function initDp():void
+		private function initDp(pictureUrl:String=null,videoUrl:String=null,musicUrl:String=null):void
 		{
 			dp=new NormalWindowSwc();
-			dp.panel1.visible=true;
-			dp.panel2.visible=false;
-			dp.panel3.visible=false;
 			this.addChild(dp);
+			if(!(pictureUrl=="" || pictureUrl==null))
+			{
+				dp.panel1.visible=true;
+				dp.panel2.visible=false;
+				dp.panel3.visible=false;
+				return;
+			}
+			if(!(videoUrl=="" || videoUrl==null))
+			{
+				dp.panel1.visible=false;
+				dp.panel2.visible=true;
+				dp.panel3.visible=false;
+				return;
+			}
+			if(!(musicUrl=="" || musicUrl==null))
+			{
+				dp.panel1.visible=false;
+				dp.panel2.visible=false;
+				dp.panel3.visible=true;
+				return;
+			}
 		}
 		//关闭按钮的点击事件
 		private function onClick(e:MouseEvent):void
