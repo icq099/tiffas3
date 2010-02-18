@@ -5,9 +5,9 @@ package lxfa.shanshuishihua.view{
     import flash.events.*;
     import flash.utils.getQualifiedClassName;
     
-    import lxfa.milkmidi.papervision3d.materials.ReflectionFileMaterial;
-    import lxfa.shanshuishihua.model.ItemModel;
+    import lxfa.shanshuishihua.model.ShanShuiShiHuaModel;
     import lxfa.view.normalWindow.NormalWindowFactory;
+    import lxfa.view.pv3dAddOn.milkmidi.papervision3d.materials.ReflectionFileMaterial;
     
     import mx.managers.PopUpManager;
     
@@ -27,13 +27,13 @@ package lxfa.shanshuishihua.view{
 		private var secondLineHeight:int=   400;    //第二行的高度
 		private var normalWindowFactory:NormalWindowFactory;                //标准窗
 		private var rubbishArray:Array;             //垃圾回收数组
-		private var itemModel:ItemModel;    //
+		private var itemModel:ShanShuiShiHuaModel;    //
         public function FlatWall3D_Reflection(){
         	initPictureUrlCtr();
         }
         private function initPictureUrlCtr():void
         {
-        	itemModel=new ItemModel();
+        	itemModel=new ShanShuiShiHuaModel();
         	itemModel.addEventListener(Event.COMPLETE,onPictureUrlCtrComplete);
         }
         private function onPictureUrlCtrComplete(e:Event):void

@@ -5,14 +5,14 @@ package lxfa.view.normalWindow
 	 * */
 	import flash.events.Event;
 	
-	import lxfa.shanshuishihua.model.ItemModel;
+	import lxfa.shanshuishihua.model.ShanShuiShiHuaModel;
 	
 	import mx.core.UIComponent;
 	import mx.managers.PopUpManager;
 	
 	public class NormalWindowFactory extends UIComponent
 	{
-		private var itemModel:ItemModel;
+		private var itemModel:ShanShuiShiHuaModel;
 		private var ID:int;//Item的ID号
 		private var pictureUrl:String;//图片路径
 		private var videoUrl:String;//视频路径
@@ -27,7 +27,7 @@ package lxfa.view.normalWindow
 		//加载数据库
 		private function initItemModel():void
 		{
-			itemModel=new ItemModel();
+			itemModel=new ShanShuiShiHuaModel();
 			itemModel.addEventListener(Event.COMPLETE,onComplete);
 		}
 		//数据库加载完毕

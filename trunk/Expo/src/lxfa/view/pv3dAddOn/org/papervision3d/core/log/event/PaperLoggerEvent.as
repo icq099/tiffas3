@@ -1,8 +1,8 @@
-package lxfa.org.papervision3d.core.log.event
+package lxfa.view.pv3dAddOn.org.papervision3d.core.log.event
 {
 	import flash.events.Event;
 	
-	import lxfa.org.papervision3d.core.log.PaperLogVO;
+	import lxfa.view.pv3dAddOn.org.papervision3d.core.log.PaperLogVO;
 	
 	/**
 	 * @author Ralph Hauwert
