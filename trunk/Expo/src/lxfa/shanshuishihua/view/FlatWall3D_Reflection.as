@@ -8,6 +8,7 @@ package lxfa.shanshuishihua.view{
     import lxfa.shanshuishihua.model.ShanShuiShiHuaModel;
     import lxfa.view.normalWindow.NormalWindowFactory;
     import lxfa.view.pv3dAddOn.milkmidi.papervision3d.materials.ReflectionFileMaterial;
+    import lxfa.view.pv3dAddOn.org.papervision3d.objects.primitives.NumberPlane;
     
     import mx.managers.PopUpManager;
     
@@ -94,7 +95,7 @@ package lxfa.shanshuishihua.view{
 				var plane:NumberPlane=new NumberPlane(bmpMat, 320, planeHeight, 4, 4);
 				plane.x =Math.floor(i/2)* 360;
 				plane.y = i % 2 * secondLineHeight;	
-				plane.setID(i);
+				plane.setID(itemModel.getMin()+i);
 				//修正反射Plane物件的y軸。				
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, onEvent3DOver);
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, onEvent3DOut);
@@ -174,6 +175,7 @@ package lxfa.shanshuishihua.view{
         public function dispose():void
         {
         	basicView.renderer.destroy();
+        	basicView.viewport.destroy();
         	basicView=null;
         	this.normalWindowFactory=null;
         	var i:int=0;

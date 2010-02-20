@@ -17,41 +17,66 @@ package lxfa.view.normalWindow
 	import view.player.FlvPlayer;
 	public class NormalWindow extends UIComponent
 	{
-		private var dp:NormalWindowSwc;//标准窗的SWC
-		private var flvPlayer:FlvPlayer;//flv播放器
-		private var viewer360:Object360Viewer;//图片360体验窗口
+		private var dp:NormalWindowSwc;             //标准窗的SWC
+		private var flvPlayer:FlvPlayer;            //flv播放器
+		private var viewer360:Object360Viewer;      //图片360体验窗口
 		private var customScrollBar:CustomScrollBar;//自定义滚动条
-		private var sound:Mp3Player;//mp3播放器
-		private var pictureUrl:String;//图片路径
-		private var videoUrl:String;//视频路径
-		private var musicUrl:String;//音频路径
+		private var picturePlayer:PicturePlayer;                //mp3播放器
+		private var pictureUrl:String;              //图片路径
+		private var videoUrl:String;                //视频路径
+		private var pictureUrls:Array;              //音频路径
+		private var picture360Name:String;          //360图片的名字
+		private var videoName:String;               //视频的名字
+		private var pictureName:String;             //图片的名字
 		private var text:String;//文本
-		public function NormalWindow(pictureUrl:String=null,videoUrl:String=null,musicUrl:String=null,text:String=null)
+		public function NormalWindow(pictureUrl:String=null,videoUrl:String=null,pictureUrls:Array=null,text:String=null,picture360Name:String=null,videoName:String=null,pictureName:String=null)
 		{
-			initDp(pictureUrl,videoUrl,musicUrl);
-            initUrls(pictureUrl,videoUrl,musicUrl,text);
-            initUI(pictureUrl,videoUrl,musicUrl);
+			initDp(pictureUrl,videoUrl,pictureUrls);
+            initUrls(pictureUrl,videoUrl,pictureUrls,text);
+            initNames(picture360Name,videoName,pictureName);
+            initUI(pictureUrl,videoUrl,pictureUrls);
 			initController();
 			initScrollBar();
 		}
 		//加载所有的链接和文本
-		private function initUrls(pictureUrl:String=null,videoUrl:String=null,musicUrl:String=null,text:String=null):void
+		private function initUrls(pictureUrl:String=null,videoUrl:String=null,pictureUrls:Array=null,text:String=null):void
 		{
 			this.pictureUrl=pictureUrl;
 			this.videoUrl=videoUrl;
-			this.musicUrl=musicUrl;
+			this.pictureUrls=pictureUrls;
 			this.text=text;
 		}
-		//根据链接调整布局
-		private function initUI(pictureUrl:String=null,videoUrl:String=null,musicUrl:String=null):void
+		private function initNames(picture360Name:String,videoName:String,pictureName:String):void
 		{
+			this.picture360Name=picture360Name;
+			this.videoName=videoName;
+			this.pictureName=pictureName;
+			if(picture360Name!=null && picture360Name!="")
+			{
+				dp.btn_360_text.text=picture360Name;
+			}
+			if(videoName!=null && videoName!="")
+			{
+				dp.btn_video_text.text=videoName;
+			}
+			if(pictureName!=null && pictureName!="")
+			{
+				dp.btn_picture_text.text=pictureName;
+			}
+		}
+		//根据链接调整布局
+		private function initUI(pictureUrl:String=null,videoUrl:String=null,pictureUrls:Array=null):void
+		{
+			dp.btn_video_text.mouseEnabled=false;
+			dp.btn_360_text.mouseEnabled=false;
+			dp.btn_picture_text.mouseEnabled=false;
 			//如果没有360图片。那么“视频”和“音频”按钮向左移动,并删除"360图片"按钮
 			if(pictureUrl=="" || pictureUrl==null)
 			{
 				dp.btn_video.x-=dp.btn_360.width;
 				dp.btn_video_text.x-=dp.btn_360.width;
-				dp.btn_music.x-=dp.btn_360.width;
-				dp.btn_music_text.x-=dp.btn_360.width;
+				dp.btn_picture.x-=dp.btn_360.width;
+				dp.btn_picture_text.x-=dp.btn_360.width;
 				dp.removeChild(dp.btn_360_text);
 				dp.removeChild(dp.btn_360);
 				dp.removeChild(dp.panel1);
@@ -59,17 +84,17 @@ package lxfa.view.normalWindow
 			//如果没有视频，那么“音频”按钮向左移动并删除“视频”按钮
 			if(videoUrl=="" || videoUrl==null)
 			{
-				dp.btn_music.x-=dp.btn_video.width;
-				dp.btn_music_text.x-=dp.btn_video.width;
+				dp.btn_picture.x-=dp.btn_video.width;
+				dp.btn_picture_text.x-=dp.btn_video.width;
 				dp.removeChild(dp.btn_video_text);
 				dp.removeChild(dp.btn_video);
 				dp.removeChild(dp.panel2);
 			}
 			//如果没有音频，那么就删除音频按钮
-			if(musicUrl=="" || musicUrl==null)
+			if((pictureUrls!=null&&pictureUrls.length==0) || pictureUrls==null)
 			{
-				dp.removeChild(dp.btn_music_text);
-				dp.removeChild(dp.btn_music);
+				dp.removeChild(dp.btn_picture_text);
+				dp.removeChild(dp.btn_picture);
 				dp.removeChild(dp.panel3);
 			}
 		}
@@ -84,7 +109,7 @@ package lxfa.view.normalWindow
 		{
 			dp.btn_360.addEventListener(MouseEvent.CLICK,on360Click);
 			dp.btn_video.addEventListener(MouseEvent.CLICK,onVideoClick);
-			dp.btn_music.addEventListener(MouseEvent.CLICK,onMusicClick);
+			dp.btn_picture.addEventListener(MouseEvent.CLICK,onMusicClick);
 			this.addEventListener(Event.ADDED,onADDED);
 		}
 		//如果标准窗被加载进了主容器中，才加载360体验窗
@@ -93,17 +118,8 @@ package lxfa.view.normalWindow
 			this.removeEventListener(Event.ADDED,onADDED);
 				initViewer360();
 		}
-		//加载MP3
-		private function initMp3Player():void
-		{
-			if(this.musicUrl!="")
-			{
-				sound=new Mp3Player(musicUrl);
-				this.dp.panel3.addChild(sound);
-			}
-		}
 		//加载标准窗的背景
-		private function initDp(pictureUrl:String=null,videoUrl:String=null,musicUrl:String=null):void
+		private function initDp(pictureUrl:String=null,videoUrl:String=null,pictureUrls:Array=null):void
 		{
 			dp=new NormalWindowSwc();
 			this.addChild(dp);
@@ -121,7 +137,7 @@ package lxfa.view.normalWindow
 				dp.panel3.visible=false;
 				return;
 			}
-			if(!(musicUrl=="" || musicUrl==null))
+			if(!((pictureUrls!=null && pictureUrls.length==0)|| pictureUrls==null))
 			{
 				dp.panel1.visible=false;
 				dp.panel2.visible=false;
@@ -129,7 +145,7 @@ package lxfa.view.normalWindow
 				return;
 			}
 		}
-		//关闭按钮的点击事件
+		//*按钮的点击事件
 		private function onClick(e:MouseEvent):void
 		{
 			close();
@@ -137,7 +153,7 @@ package lxfa.view.normalWindow
 		//加载视频播放
 		private function initFlvPlayer():void
 		{
-			if(videoUrl!="")
+			if(videoUrl!="" || videoUrl!=null)
 			{
 				flvPlayer=new FlvPlayer();
 				flvPlayer.loadFlv(videoUrl);
@@ -155,7 +171,7 @@ package lxfa.view.normalWindow
 		    viewer360.scaleX=viewer360.scaleY=scale;
 		    viewer360.addEventListener(Event.COMPLETE,onViewer360Complete);
 		    viewer360.addEventListener(Event.CLEAR,onView360Clear);
-		    if(pictureUrl=="")//如果没有360图片。就抛出CLEAR事件，只是作为区别，并不是真正的CLEAR
+		    if(pictureUrl=="" || pictureUrl==null)//如果没有360图片。就抛出CLEAR事件，只是作为区别，并不是真正的CLEAR
 		    {
 		    	viewer360.dispatchEvent(new Event(Event.CLEAR));
 		    }
@@ -166,7 +182,15 @@ package lxfa.view.normalWindow
 			viewer360.removeEventListener(Event.CLEAR,onView360Clear);//清除事件
 			dp.Btn_Close.addEventListener(MouseEvent.CLICK,onClick);
 			initFlvPlayer();
-			initMp3Player();
+			initPicturePlayer();
+		}
+		//图片浏览器
+		private function initPicturePlayer():void
+		{
+			picturePlayer=new PicturePlayer(this.pictureUrls);
+			picturePlayer.x=25;
+			picturePlayer.y=230;
+			dp.panel3.addChild(picturePlayer);
 		}
 		//360图片加载完毕
 		private var isLoaded:Boolean;
@@ -178,7 +202,7 @@ package lxfa.view.normalWindow
 				dp.Btn_Close.addEventListener(MouseEvent.CLICK,onClick);//360图片加载完之后才能添加关闭事件
 				isLoaded=true;
 				initFlvPlayer();
-				initMp3Player();
+				initPicturePlayer();
 			}
 		}
 		//下面实现分页栏
@@ -203,10 +227,6 @@ package lxfa.view.normalWindow
 			{
 //				flvPlayer.play();//暂停播放
 			}
-			if(sound!=null)
-			{
-				sound.stop();
-			}
 		}
 		//音频按钮的点击事件
 		private function onMusicClick(e:MouseEvent):void
@@ -218,13 +238,9 @@ package lxfa.view.normalWindow
 			{
 //				flvPlayer.pause();//暂停播放
 			}
-			if(sound!=null)
-			{
-				sound.play();
-			}
 		}
 		//标准窗关闭，清除内存
-		public function close():void
+		private function close():void
 		{
 			if(viewer360!=null)
 			{
@@ -236,11 +252,12 @@ package lxfa.view.normalWindow
 				dp.panel2.removeChild(flvPlayer);
 				flvPlayer=null;
 			}
-			dp=null;
-			if(sound!=null)
+			if(picturePlayer!=null)
 			{
-				sound.close();
+				picturePlayer.close();
+				picturePlayer=null;
 			}
+			dp=null;
 			this.dispatchEvent(new Event(Event.CLOSE));
 			this.parent.removeChild(this);
 		}
