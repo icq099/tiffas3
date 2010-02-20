@@ -53,7 +53,14 @@ package lxfa.shanshuishihua.view
 		//加载文本
 		private function initText(text:String):void
 		{
-			normalWindowSwc.text.text=text;
+			if(text==null)
+			{
+				normalWindowSwc.text.text="";
+			}
+			else
+			{
+				normalWindowSwc.text.text=text;
+			}
 		}
 		private function initScrollCenter():void
 		{

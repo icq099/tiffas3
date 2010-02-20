@@ -82,11 +82,11 @@ package lxfa.shanshuishihua.view
 		       }
 		}
 		private function onMoveHandler( e : MouseEvent ):void {
-		       if( mouseX > minMouseX &&  mouseX < maxMouseX )
-		       {
-			       	shanShuiShiHuaSwc.scrubber.x = mouseX;
-			       	setCameraX();
-		       }
+	       if( mouseX > minMouseX &&  mouseX < maxMouseX )
+	       {
+		       	shanShuiShiHuaSwc.scrubber.x = mouseX;
+		       	setCameraX();
+	       }
 		}
 		private function setCameraX():void
 		{

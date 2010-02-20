@@ -1,4 +1,4 @@
-package lxfa.shanshuishihua.view
+package lxfa.view.pv3dAddOn.org.papervision3d.objects.primitives
 {
 	//"山水诗画"里面的3D平面,带ID，ID可以用来显示具体的内容
 	import org.papervision3d.core.proto.MaterialObject3D;
