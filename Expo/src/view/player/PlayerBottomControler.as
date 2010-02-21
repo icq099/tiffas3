@@ -14,7 +14,6 @@ package view.player
 			
 			back.width=value;
 			time_text.x=back.width-RIGHT;
-		
 		}
 		override public function get width():Number{
 			
@@ -31,6 +30,9 @@ package view.player
 			return back.height;
 		
 		}
-		
+		public function setLeft_ButtonsVisible(visible:Boolean):void
+		{
+			this.left_buttons.visible=visible;
+		}
 	}
 }
