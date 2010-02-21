@@ -8,6 +8,7 @@ package lxfa.view.normalWindow
 	 */
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.text.TextFieldAutoSize;
 	
 	import lxfa.shanshuishihua.view.CustomScrollBar;
 	
@@ -25,15 +26,12 @@ package lxfa.view.normalWindow
 		private var pictureUrl:String;              //图片路径
 		private var videoUrl:String;                //视频路径
 		private var pictureUrls:Array;              //音频路径
-		private var picture360Name:String;          //360图片的名字
-		private var videoName:String;               //视频的名字
-		private var pictureName:String;             //图片的名字
 		private var text:String;//文本
 		public function NormalWindow(pictureUrl:String=null,videoUrl:String=null,pictureUrls:Array=null,text:String=null,picture360Name:String=null,videoName:String=null,pictureName:String=null)
 		{
 			initDp(pictureUrl,videoUrl,pictureUrls);
             initUrls(pictureUrl,videoUrl,pictureUrls,text);
-            initNames(picture360Name,videoName,pictureName);
+            initTextsAndButton(picture360Name,videoName,pictureName);
             initUI(pictureUrl,videoUrl,pictureUrls);
 			initController();
 			initScrollBar();
@@ -46,11 +44,10 @@ package lxfa.view.normalWindow
 			this.pictureUrls=pictureUrls;
 			this.text=text;
 		}
-		private function initNames(picture360Name:String,videoName:String,pictureName:String):void
+		//根据名字，调整所有文本与按钮的位置，大小
+		private function initTextsAndButton(picture360Name:String,videoName:String,pictureName:String):void
 		{
-			this.picture360Name=picture360Name;
-			this.videoName=videoName;
-			this.pictureName=pictureName;
+			//调整文本的名字
 			if(picture360Name!=null && picture360Name!="")
 			{
 				dp.btn_360_text.text=picture360Name;
@@ -63,6 +60,25 @@ package lxfa.view.normalWindow
 			{
 				dp.btn_picture_text.text=pictureName;
 			}
+			//全部自动调整字体大小
+			dp.btn_video_text.autoSize=TextFieldAutoSize.CENTER;
+			dp.btn_360_text.autoSize=TextFieldAutoSize.CENTER;
+			dp.btn_picture_text.autoSize=TextFieldAutoSize.CENTER;
+			var add:Number=6;//按钮比所对应的字大6像素
+			//根据字体大小，调整按钮的大小
+			dp.btn_360.width=dp.btn_360_text.width+add;//6,按钮总比字体大点点
+			dp.btn_video.width=dp.btn_video_text.width+add;//6,按钮总比字体大点点
+			dp.btn_picture.width=dp.btn_picture_text.width+add;//6,按钮总比字体大点点
+			if(dp.btn_360.width<60){dp.btn_360.width=60;}
+			if(dp.btn_picture.width<60){dp.btn_picture.width=60;}
+			if(dp.btn_video.width<60){dp.btn_video.width=60;}
+			//调整按钮的位置
+			dp.btn_video.x=dp.btn_360.x+dp.btn_360.width+1;
+			dp.btn_picture.x=dp.btn_video.x+dp.btn_video.width+1;
+			//调整字体的位置,字体的位置是根据所对应的按钮的位置调整的
+			dp.btn_360_text.x=dp.btn_360.x+(dp.btn_360.width-dp.btn_360_text.width)/2;
+			dp.btn_video_text.x=dp.btn_video.x+(dp.btn_video.width-dp.btn_video_text.width)/2;
+			dp.btn_picture_text.x=dp.btn_picture.x+(dp.btn_picture.width-dp.btn_picture_text.width)/2;
 		}
 		//根据链接调整布局
 		private function initUI(pictureUrl:String=null,videoUrl:String=null,pictureUrls:Array=null):void

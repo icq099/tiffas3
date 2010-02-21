@@ -29,7 +29,6 @@ package view.player
 			
 			player.autoPlay=false;
 			player.play(url);
-			controler.x+=6;
 		}
 		public function stopAll():void{
 			try{
@@ -86,14 +85,18 @@ package view.player
 		
 		}
 		private function playClickHandler(e:Event):void{
-			
+			play();
+		}
+		public function play():void
+		{
 			player.play();	
-		
+		}
+		public function pause():void
+		{
+			player.pause();
 		}
 		private function pauseClickHandler(e:Event):void{
-			
-			player.pause();
-		
+			pause();
 		}
 		private function bufferHandler(e:Event):void{
 			
@@ -108,6 +111,15 @@ package view.player
 			controler.progressbar.position_btn.x=controler.progressbar.back_mc.width*(player.time/player.duration);
 			controler.time_text.text=player.formattedTime+"/"+player.formattedDuration;
 		
+		}
+		//设置时间文本是否显示
+		public function setTime_TextVisible(visible:Boolean):void
+		{
+			controler.time_text.visible=visible;
+		}
+		public function setLeft_ButtonsVisible(visible:Boolean):void
+		{
+			controler.left_buttons.visible=visible;
 		}
 		private function progressDragHandler(e:FlashEvent):void{
 			

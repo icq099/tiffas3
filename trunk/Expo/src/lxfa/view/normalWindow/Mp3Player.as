@@ -53,6 +53,7 @@ package lxfa.view.normalWindow
 			sound=new Sound(new URLRequest(musicUrl));
 			sound.addEventListener(Event.COMPLETE,onComplete);
 			soundChannel=sound.play();
+			stop();
 		}
 		private function onComplete(e:Event):void
 		{
