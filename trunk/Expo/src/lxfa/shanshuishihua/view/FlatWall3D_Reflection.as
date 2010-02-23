@@ -173,7 +173,6 @@ package lxfa.shanshuishihua.view{
         	basicView.renderer.destroy();
         	basicView.viewport.destroy();
         	basicView=null;
-        	this.normalWindowFactory=null;
         	var i:int=0;
         	for(i=0;i<rubbishArray.length;i++)
         	{
