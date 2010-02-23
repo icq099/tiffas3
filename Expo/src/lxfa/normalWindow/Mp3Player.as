@@ -1,4 +1,4 @@
-package lxfa.view.normalWindow
+package lxfa.normalWindow
 {
 	/************************
 	 * MP3播放器

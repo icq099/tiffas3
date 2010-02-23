@@ -29,6 +29,11 @@ package lxfa.gehaiqingyun.view
 			geHaiQingYunSwc.playList.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,onITEM_DOUBLE_CLICK);
 			geHaiQingYunSwc.btn_pre.addEventListener(MouseEvent.CLICK,onbtn_preCLICK);
 			geHaiQingYunSwc.btn_next.addEventListener(MouseEvent.CLICK,onbtn_nextCLICK);
+			geHaiQingYunSwc.btn_Close.addEventListener(MouseEvent.CLICK,onbtn_CloseClick);
+		}
+		private function onbtn_CloseClick(e:Event):void
+		{
+			this.dispatchEvent(new Event(Event.CLOSE));
 		}
 		private function onClick(e:Event):void
 		{
@@ -84,7 +89,9 @@ package lxfa.gehaiqingyun.view
 		}
 		public function dispose():void
 		{
-			
+			playListCtr.dispose();
+			geHaiQingYunSwc=null;
+			playListCtr=null;
 		}
 	}
 }

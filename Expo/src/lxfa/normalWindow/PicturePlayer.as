@@ -1,4 +1,4 @@
-package lxfa.view.normalWindow
+package lxfa.normalWindow
 {
 	import caurina.transitions.Tweener;
 	
