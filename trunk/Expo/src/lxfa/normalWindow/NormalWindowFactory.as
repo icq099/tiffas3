@@ -1,4 +1,4 @@
-package lxfa.view.normalWindow
+package lxfa.normalWindow
 {
 	/****************************
 	 * 根据	ID参建标准窗

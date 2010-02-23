@@ -1,4 +1,4 @@
-package lxfa.view.normalWindow
+package lxfa.normalWindow
 {
 	/************************************************************
 	 * 标准窗的内容包括：

@@ -4,17 +4,18 @@ package lxfa.gehaiqingyun.view
 	import flash.text.TextFormat;
 	
 	import lxfa.gehaiqingyun.model.GeHaiQingYunModel;
-	import lxfa.view.normalWindow.Mp3Player;
+	import lxfa.normalWindow.Mp3Player;
 	
 	import view.player.FlvPlayer;
 	
 	public class PlayListCtr
 	{
-		private var geHaiQingYunModel:GeHaiQingYunModel;
+		private var geHaiQingYunModel:GeHaiQingYunModel;//歌海情韵的数据库
 		private var mediaList:Array;//音频（视频）的路径
-		private var mediaNames:Array;
+		private var mediaNames:Array;//音频（视频）的名字
 		private var geHaiQingYunSwc:GeHaiQingYunSwc;
 		private var currentIndex:int=-999999;
+		private var rubbishArray:Array=new Array();
 		public function PlayListCtr(geHaiQingYunSwc:GeHaiQingYunSwc)
 		{
 			this.geHaiQingYunSwc=geHaiQingYunSwc;
@@ -24,6 +25,7 @@ package lxfa.gehaiqingyun.view
 		{
 			geHaiQingYunModel=new GeHaiQingYunModel("xml/gehaiqingyun.xml");
 			geHaiQingYunModel.addEventListener(Event.COMPLETE,onComplete);
+			rubbishArray.push(geHaiQingYunModel);
 		}
 		private function onComplete(e:Event):void
 		{
@@ -41,6 +43,7 @@ package lxfa.gehaiqingyun.view
 			{
 				geHaiQingYunSwc.playList.addItem(new PlayListButton(mediaList[i],mediaNames[i]));
 			}
+			rubbishArray.push(format);
 		}
 		public function playPre():void
 		{
@@ -59,6 +62,10 @@ package lxfa.gehaiqingyun.view
 				if(currentIndex+1<mediaList.length)
 				{
 					playMedia(++currentIndex);
+				}
+				else
+				{
+					playMedia(0);//最后一首了，就播放最前的那首
 				}
 			}
 		}
@@ -94,6 +101,7 @@ package lxfa.gehaiqingyun.view
 			{
 				mp3Player=new Mp3Player(path);
 			}
+			play();
 			geHaiQingYunSwc.playList.visible=false;
 		}
 		public function play():void
@@ -105,6 +113,22 @@ package lxfa.gehaiqingyun.view
 			if(mp3Player!=null)
 			{
 				mp3Player.play();
+			}
+		}
+		public function dispose():void
+		{
+			var i:int;
+			for(i=0;i<rubbishArray.length;i++)
+			{
+				rubbishArray[i]=null;
+			}
+			if(flvPlayer!=null)
+			{
+				flvPlayer.stopAll();
+			}
+			if(mp3Player!=null)
+			{
+				mp3Player.close();
 			}
 		}
 	}

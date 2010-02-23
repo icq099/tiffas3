@@ -1,12 +1,13 @@
 package lxfa.shanshuishihua.view{
     import caurina.transitions.*;
     
+    import communication.MainSystem;
+    
     import flash.display.*;
     import flash.events.*;
     import flash.utils.getQualifiedClassName;
     
     import lxfa.shanshuishihua.model.ShanShuiShiHuaModel;
-    import lxfa.view.normalWindow.NormalWindowFactory;
     import lxfa.view.pv3dAddOn.milkmidi.papervision3d.materials.ReflectionFileMaterial;
     import lxfa.view.pv3dAddOn.org.papervision3d.objects.primitives.NumberPlane;
     
@@ -26,7 +27,6 @@ package lxfa.shanshuishihua.view{
 		private var cameraZMin		:Number = -1500;//cameraZ軸的最小值
 		private var cameraZMax		:Number = -150;	//cameraZ軸的最大值
 		private var secondLineHeight:int=   400;    //第二行的高度
-		private var normalWindowFactory:NormalWindowFactory;                //标准窗
 		private var rubbishArray:Array;             //垃圾回收数组
 		private var itemModel:ShanShuiShiHuaModel;    //
         public function FlatWall3D_Reflection(){
@@ -142,11 +142,7 @@ package lxfa.shanshuishihua.view{
 			{
 				cameraY+=80;
 			}  
-			normalWindowFactory=new NormalWindowFactory(_target.getID());
-			PopUpManager.addPopUp(normalWindowFactory, this, true);
-            PopUpManager.centerPopUp(normalWindowFactory); 
-            normalWindowFactory.x=40;
-            normalWindowFactory.y=90;
+            MainSystem.getInstance().runAPIDirect("showNormalWindow",[_target.getID()]);
 			basicView.stopRendering();
 		}
 		private function onBackGroundClick(e:MouseEvent):void{

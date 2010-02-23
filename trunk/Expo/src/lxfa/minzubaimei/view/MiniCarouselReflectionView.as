@@ -1,12 +1,13 @@
 ﻿package lxfa.minzubaimei.view {	
 	import caurina.transitions.Tweener;
 	
+	import communication.MainSystem;
+	
 	import flash.display.*;
 	import flash.events.*;
 	import flash.filters.*;
 	
 	import lxfa.minzubaimei.model.MinZuBaiMeiModel;
-	import lxfa.view.normalWindow.NormalWindowFactory;
 	import lxfa.view.pv3dAddOn.milkmidi.papervision3d.materials.ReflectionFileMaterial;
 	import lxfa.view.pv3dAddOn.org.papervision3d.objects.primitives.NumberPlane;
 	
@@ -150,17 +151,11 @@
 			//當滑鼠離開感應區時，回復原本的大小。
 			e.displayObject3D.scale = 1;			
 		}
-		private var normalWindowFactory:NormalWindowFactory;
 		private function on3DPress(e:InteractiveScene3DEvent):void{
 			var _target:NumberPlane=NumberPlane(e.currentTarget);
-			normalWindowFactory=new NormalWindowFactory(_target.getID());
-			PopUpManager.addPopUp(normalWindowFactory, this, true);
-            PopUpManager.centerPopUp(normalWindowFactory); 
-            normalWindowFactory.x=40;
-            normalWindowFactory.y=90;
+			MainSystem.getInstance().runAPIDirect("showNormalWindow",[_target.getID()]);
             currentIndex=_target.getID()-minZuBaiMeiModel.getMin()+3;
             updateRootNodeTransform();
-            rubbishArray.push(normalWindowFactory);
 		}
 		private function onButtonClick(e:Event):void {
 			if(e.currentTarget == container.right_btn){
