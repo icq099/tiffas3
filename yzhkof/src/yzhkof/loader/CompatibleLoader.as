@@ -16,7 +16,6 @@ package yzhkof.loader
 	import flash.utils.ByteArray;
 	import flash.utils.getQualifiedClassName;
 	
-	import flashx.textLayout.elements.SubParagraphGroupElement;
 	
 	import yzhkof.util.delayCallNextFrame;
 
