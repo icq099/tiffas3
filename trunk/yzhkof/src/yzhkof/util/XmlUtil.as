@@ -11,5 +11,8 @@ package yzhkof.util
 				delete xml_list[0];
 			}
 		}
+		public static function enableSpecialCode(str:String):String{
+			return str.replace("\\n","\n");			
+		}
 	}
 }
