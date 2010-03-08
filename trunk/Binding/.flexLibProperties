@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+<includeClasses>
+<classEntry path="BindingEmbed"/>
+<classEntry path="mx.binding.BindingManager"/>
+<classEntry path="mx.utils.ObjectProxy"/>
+<classEntry path="mx.utils.UIDUtil"/>
+</includeClasses>
+<includeResources/>
+<namespaceManifests/>
+</flexLibProperties>
