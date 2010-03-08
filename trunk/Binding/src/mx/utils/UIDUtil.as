@@ -19,7 +19,7 @@ import mx.core.IPropertyChangeNotifier;
 import mx.core.IUIComponent;
 import mx.core.IUID;
 import mx.core.mx_internal;
-[ExcludeClass]
+
 use namespace mx_internal;
 
 /**
