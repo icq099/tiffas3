@@ -4,7 +4,7 @@ package lxfa.gehaiqingyun.view
 	import flash.text.TextFormat;
 	
 	import lxfa.gehaiqingyun.model.GeHaiQingYunModel;
-	import lxfa.normalWindow.Mp3Player;
+	import lxfa.view.player.Mp3Player;
 	
 	import view.player.FlvPlayer;
 	

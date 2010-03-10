@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()"  implements="communication.IPlugin">
+	<mx:Script>
+		<![CDATA[
+			import lxfa.No5.view.No5Base;
+		    private var no5Base:No5Base;
+			private function init():void
+			{
+				no5Base=new No5Base();
+			}
+			public function dispose():void
+			{
+				no5Base=null;
+			}
+		]]>
+	</mx:Script>
+</mx:Module>
