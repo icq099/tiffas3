@@ -7,6 +7,7 @@
    		{
    			normalWindowBase=new NormalWindowBase();
    		}
+   		//回收内存
    		public function dispose():void
    		{
    			normalWindowBase=null;

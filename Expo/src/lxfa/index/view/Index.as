@@ -5,8 +5,10 @@ package lxfa.index.view
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.ProgressEvent;
+	import flash.text.TextFieldAutoSize;
 	
 	import lxfa.normalWindow.SwfPlayer;
+	import lxfa.view.player.FLVPlayer;
 	
 	import mx.core.UIComponent;
 	
@@ -24,10 +26,11 @@ package lxfa.index.view
 		private function initIndexSwc():void
 		{
 			indexSwc=new IndexSwc();
-			indexSwc.btn_skip.visible=false;
 			indexSwc.btn_enter.mouseEnabled=false;
 			indexSwc.btn_enter.addEventListener(MouseEvent.CLICK,on_btn_enter_click);
-			indexSwc.btn_skip.addEventListener(MouseEvent.CLICK,on_btn_skip_click);
+			indexSwc.progressText.autoSize=TextFieldAutoSize.LEFT;
+			indexSwc.progressText.mouseEnabled=false;
+			indexSwc.btn_skip.visible=false;
 			this.addChild(indexSwc);
 		}
 		private function on_btn_enter_click(e:MouseEvent):void
@@ -37,15 +40,13 @@ package lxfa.index.view
 			flowerFlvSwf=null;
 			this.addChild(flvPlayer);
 			flvPlayer.resume();
-			indexSwc.btn_skip.visible=true;
-			this.addChild(indexSwc.btn_skip);
+			flvPlayer.addEventListener(Event.CLOSE,on_flvPlayer_close);
 		}
-		private function on_btn_skip_click(e:MouseEvent):void
+		//跳过第二个电影
+		private function on_flvPlayer_close(e:Event):void
 		{
+			MainSystem.getInstance().showPluginById("No3Module");
 			MainSystem.getInstance().removePluginById("IndexModule");
-			MainSystem.getInstance().showPluginById("MainMenuBottomModule");
-			MainSystem.getInstance().showPluginById("MainMenuTopModule");
-			MainSystem.getInstance().gotoScene(0);
 		}
 		private function initFlowerFlvSwf():void
 		{
@@ -56,17 +57,17 @@ package lxfa.index.view
 		}
 		private function initDownloadProgress():void
 		{
-			flvPlayer=new FLVPlayer();
+			flvPlayer=new FLVPlayer("video/index/index.flv",900,600);
 			flvPlayer.addEventListener(ProgressEvent.PROGRESS,downLoadprogressHandler);
 			flvPlayer.addEventListener(Event.COMPLETE,downLoadcompleteHandler);
 		}
 		private function downLoadprogressHandler(e:ProgressEvent):void
 		{
-			indexSwc.btn_enter.mouseEnabled=true;
+			indexSwc.progressText.text=String(int((e.bytesLoaded/e.bytesTotal)*100));
 		}
 		private function downLoadcompleteHandler(e:Event):void
 		{
-			
+			indexSwc.btn_enter.mouseEnabled=true;
 		}
 		private function completeHandler(e:Event):void
 		{
