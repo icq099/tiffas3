@@ -26,7 +26,7 @@ package lxfa.animation.view
 		{
 			MainSystem.getInstance().addAPI("showGuiWa",initGuiWaTextModel);
 			MainSystem.getInstance().addAPI("setAnimationLocation",setLocation);
-			MainSystem.getInstance().runAPIDirect("showGuiWa",[0]);
+			MainSystem.getInstance().runAPIDirect("showGuiWa",[15]);
 		}
 		private function initMp3Player():void
 		{
@@ -57,6 +57,7 @@ package lxfa.animation.view
 		}
 		public function initGuiWaTextModel(ID:int):void
 		{
+			this.ID=ID;
 			guiWaTextModel=new GuiWaTextModel(guiWaTextPath);
 			guiWaTextModel.addEventListener(Event.COMPLETE,onModelComplete);
 		}
