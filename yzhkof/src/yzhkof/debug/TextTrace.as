@@ -67,12 +67,14 @@ package yzhkof.debug
 		private static function scaleXMouseDownHandler(e:Event):void{
 			
 			scaleX_btn.startDrag();
+			scaleXonEnterFrame(null);
 			scaleX_btn.addEventListener(Event.ENTER_FRAME,scaleXonEnterFrame);
 		
 		}
 		private static function scaleXMouseUpHandler(e:Event):void{
 			
 			scaleX_btn.removeEventListener(Event.ENTER_FRAME,scaleXonEnterFrame);
+			scaleXonEnterFrame(null);
 			scaleX_btn.stopDrag();
 		
 		}
