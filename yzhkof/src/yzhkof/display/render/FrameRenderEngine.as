@@ -5,6 +5,9 @@ package yzhkof.display.render
 	
 	public class FrameRenderEngine extends RenderEngineBasic
 	{
+		public var renderSpeedCoefficient:Number=1;
+		
+		private var coefficientCounter:Number=1;
 		private var ticker:Sprite;
 		public function FrameRenderEngine()
 		{
@@ -20,8 +23,19 @@ package yzhkof.display.render
 			ticker.removeEventListener(Event.ENTER_FRAME,onEnterFrame);
 			super.stopRender();
 		}
+		public override function rend():void
+		{
+			if(coefficientCounter<=0)
+			{
+				super.rend();
+				coefficientCounter+=1;
+				if(coefficientCounter<=0)
+					rend();
+			}
+		}
 		private function onEnterFrame(e:Event):void
 		{
+			coefficientCounter-=renderSpeedCoefficient;
 			rend();
 		}
 		
