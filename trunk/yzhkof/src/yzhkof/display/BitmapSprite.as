@@ -5,6 +5,7 @@ package yzhkof.display
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 
 	public class BitmapSprite extends RenderSprite
 	{
@@ -69,8 +70,10 @@ package yzhkof.display
 		{
 			if(updataSizeNextRend)
 			{
-				bitmapData=new BitmapData(_width,_height,transparent,fillColor);
-				bitmap.bitmapData=bitmapData;
+				var newBitmapdata:BitmapData=new BitmapData(_width,_height,transparent,fillColor);
+				newBitmapdata.copyPixels(bitmapData,bitmapData.rect,new Point());
+				bitmapData.dispose();
+				bitmap.bitmapData=newBitmapdata;
 			}
 			updataSizeNextRend=false;
 		}
