@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" width="900" height="600">
+	<mx:Script>
+		<![CDATA[
+			import core.pluginManager.PluginManager;
+			private function init():void
+			{
+				PluginManager.getInstance();
+			}
+		]]>
+	</mx:Script>
+</mx:Application>
