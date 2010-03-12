@@ -11,6 +11,25 @@ package yzhkof.util
 				delete xml_list[0];
 			}
 		}
+		public static function sortOnXMLList(xmllist:XMLList,fieldName:Object,options:Object=null):XMLList{
+			var sort_arr:Array=new Array;
+			for each(var x:XML in xmllist){
+				sort_arr.push(x);				
+			}
+			if(fieldName)
+			{
+				sort_arr.sortOn(fieldName,options);
+			}else
+			{
+				sort_arr.sort();
+			}
+			var re_xmllist:XMLList=new XMLList;
+			for each(x in sort_arr)
+			{
+				re_xmllist+=x;
+			}
+			return re_xmllist;
+		}
 		public static function enableSpecialCode(str:String):String{
 			return str.replace("\\n","\n");			
 		}
