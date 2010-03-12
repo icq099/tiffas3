@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" implements="communication.IPlugin" creationComplete="init()">
+   <mx:Script>
+   	<![CDATA[
+   		private var normalWindowBase:NormalWindowBase;
+   		private function init():void
+   		{
+   			normalWindowBase=new NormalWindowBase();
+   		}
+   		//回收内存
+   		public function dispose():void
+   		{
+   			normalWindowBase=null;
+   		}
+   	]]>
+   </mx:Script>
+</mx:Module>
