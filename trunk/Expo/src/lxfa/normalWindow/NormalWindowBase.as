@@ -27,7 +27,7 @@ package lxfa.normalWindow
 	            PopUpManager.centerPopUp(normalWindowFactory); 
 	            normalWindowFactory.x=33;
 	            normalWindowFactory.y=80;
-	            MainSystem.getInstance().stopRender();
+//	            MainSystem.getInstance().stopRender();
 	            normalWindowFactory.addEventListener(Event.CLOSE,onnormalWindowFactoryClose);
 			}
 		}

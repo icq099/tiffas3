@@ -11,8 +11,10 @@ package view
 	
 	import gs.TweenLite;
 	import gs.easing.Cubic;
-	import gs.easing.Expo;
 	
+	import mx.core.Application;
+	
+	import yzhkof.Toolyzhkof;
 	import yzhkof.loadings.LoadingWaveRota;
 	
 	public class MovieViewer extends Sprite
@@ -36,6 +38,7 @@ package view
 			loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,onProgressHandler);
 			
 			addChild(loading_mc);
+			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
 			loading_mc.x=this.stage.stageWidth/2;
 			loading_mc.y=this.stage.stageHeight/2;
 			
@@ -71,7 +74,7 @@ package view
 				TweenLite.to(movie,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
 				
 					movie=null;
-					removeChild(loader);
+					loader.parent.removeChild(loader);
 					loader=null;
 			
 				}});
@@ -100,8 +103,8 @@ package view
 		}
 		private function onCompleteHandler(e:Event):void{
 			
-			removeChild(loading_mc);
-			addChild(loader);
+			loading_mc.parent.removeChild(loading_mc);
+			Application.application.addChild(Toolyzhkof.mcToUI(loader));
 			TweenLite.from(movie,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
 				
 				movie.play();

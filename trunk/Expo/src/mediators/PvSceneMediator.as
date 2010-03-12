@@ -128,7 +128,6 @@ package mediators
 		
 		}
 		private function onCameraUpdataed(e:Event):void{
-			
 			viewer.stage.quality=StageQuality.HIGH;
 			switch(updata_type){
 				case "movieclip":

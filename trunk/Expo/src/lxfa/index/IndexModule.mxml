@@ -2,12 +2,12 @@
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="communication.IPlugin">
 	<mx:Script>
 		<![CDATA[
-			import lxfa.index.view.Index;
+			import lxfa.index.view.IndexBase;
 			import yzhkof.Toolyzhkof;
-			private var index:Index;
+			private var index:IndexBase;
 			private function init():void
 			{
-				index=new Index();
+				index=new IndexBase();
 				this.addChild(index);
 			}
 			public function dispose():void
