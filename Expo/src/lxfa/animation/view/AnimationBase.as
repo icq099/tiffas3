@@ -108,7 +108,11 @@ package lxfa.animation.view
 		}
 		private function on_show_ENTER_FRAME(e:Event):void//一直检测到桂娃出场完毕
 		{
-			if(guiwa.show1.currentFrame==guiwa.show1.totalFrames)
+			if(guiwa==null)
+			{
+				this.removeEventListener(Event.ENTER_FRAME,on_show_ENTER_FRAME);
+			}
+			else if(guiwa.show1.currentFrame==guiwa.show1.totalFrames)
 			{
 				say();
 				mp3Player.play();

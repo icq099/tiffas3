@@ -12,6 +12,7 @@ package lxfa.view.player
 	
 	public class FLVPlayer extends Sprite
 	{
+		
 		private var netStream:NetStream;
 		private var netConnection:NetConnection;
 		private var video:Video;

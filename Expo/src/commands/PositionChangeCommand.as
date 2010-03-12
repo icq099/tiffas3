@@ -1,5 +1,7 @@
 package commands
 {
+	import communication.MainSystem;
+	
 	import facades.FacadePv;
 	
 	import flash.events.Event;
@@ -88,9 +90,9 @@ package commands
 		
 		}
 		private function sendNotificationCommand():void{
-			
+//			MainSystem.getInstance().runScript(movie);
 			facade.sendNotification(FacadePv.LOAD_MOVIE,{url:movie,goto:goto,stop_rotationX:stop_rotationX,stop_rotationY:stop_rotationY});
-			facade.sendNotification(FacadePv.STOP_RENDER);
+//			facade.sendNotification(FacadePv.STOP_RENDER);
 		
 		}
 		
