@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="communication.IPlugin">
+	<mx:Script>
+		<![CDATA[
+			import lxfa.index.view.IndexBase;
+			import yzhkof.Toolyzhkof;
+			private var index:IndexBase;
+			private function init():void
+			{
+				index=new IndexBase();
+				this.addChild(index);
+			}
+			public function dispose():void
+			{
+				index.dispose();
+				index=null;
+			}
+		]]>
+	</mx:Script>
+</mx:Module>
