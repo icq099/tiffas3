@@ -47,7 +47,7 @@ package lxfa.No3.view
 		private var swf:SwfPlayer;
 		public function step4():void
 		{
-			MainSystem.getInstance().removePluginById("No3Module");
+//			MainSystem.getInstance().removePluginById("No3Module");
 			MainSystem.getInstance().showPluginById("No3SwfModule");
 			MainSystem.getInstance().showPluginById("MainMenuBottomModule");
 			MainSystem.getInstance().showPluginById("MainMenuTopModule");
