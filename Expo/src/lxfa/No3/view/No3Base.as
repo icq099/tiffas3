@@ -10,6 +10,8 @@ package lxfa.No3.view
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.view.player.FLVPlayer;
 	
+	import mx.core.Application;
+	
 	public class No3Base extends Sprite
 	{
 		private var flvPlayer:FLVPlayer;
@@ -22,7 +24,8 @@ package lxfa.No3.view
 		}
 		private function initAnimation():void
 		{
-			MainSystem.getInstance().showPluginById("AnimationModule");
+			Application.application.addChild(MainSystem.getInstance().getPlugin("AnimationModule"));
+			MainSystem.getInstance().runAPIDirect("showGuiWa",[0]);
 		}
 		private function initFLVPlayer():void
 		{
@@ -48,10 +51,11 @@ package lxfa.No3.view
 		public function step4():void
 		{
 //			MainSystem.getInstance().removePluginById("No3Module");
+            MainSystem.getInstance().removePluginById("AnimationModule");
 			MainSystem.getInstance().showPluginById("No3SwfModule");
 			MainSystem.getInstance().showPluginById("MainMenuBottomModule");
 			MainSystem.getInstance().showPluginById("MainMenuTopModule");
-			MainSystem.getInstance().removePluginById("AnimationModule");
+//			MainSystem.getInstance().removePluginById("AnimationModule");
 		}
 		private function onClick(e:MouseEvent):void
 		{
