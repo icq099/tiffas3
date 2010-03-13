@@ -14,7 +14,7 @@ package model
 			api.addAPI(fun_name,fun);
 		}
 		public function removeAPI(fun_name:String):void{
-			api.removeAPI(fun_name);
+//			api.removeAPI(fun_name);
 		}
 	}
 }

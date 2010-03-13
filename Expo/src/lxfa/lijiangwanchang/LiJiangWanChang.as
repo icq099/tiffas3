@@ -1,5 +1,7 @@
 package lxfa.lijiangwanchang
 {
+	import communication.MainSystem;
+	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
@@ -20,7 +22,7 @@ package lxfa.lijiangwanchang
 		}
 		private function onbtn_closeClick(e:MouseEvent):void
 		{
-			
+			MainSystem.getInstance().removePluginById("LiJiangWanChangModule");
 		}
 		private function onbtn_fishingClick(e:MouseEvent):void
 		{
