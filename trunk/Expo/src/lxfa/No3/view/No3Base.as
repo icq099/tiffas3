@@ -23,7 +23,6 @@ package lxfa.No3.view
 		private function initAnimation():void
 		{
 			MainSystem.getInstance().showPluginById("AnimationModule");
-			MainSystem.getInstance().runAPIDirect("setAnimationLocation",[400,400]);
 		}
 		private function initFLVPlayer():void
 		{
@@ -35,7 +34,7 @@ package lxfa.No3.view
 		}
 		private function flvPlayer_NetStatus_handler(e:Event):void
 		{
-			step4();
+ 			step4();
 		}
 		private function on_flvPlayer_close(e:Event):void
 		{
@@ -49,9 +48,7 @@ package lxfa.No3.view
 		public function step4():void
 		{
 			MainSystem.getInstance().removePluginById("No3Module");
-			swf=new SwfPlayer("movie/test.swf",900,480);
-			swf.addEventListener(Event.COMPLETE,completeHandler);//SWF文件
-			swf.addEventListener(MouseEvent.CLICK,onClick);
+			MainSystem.getInstance().showPluginById("No3SwfModule");
 			MainSystem.getInstance().showPluginById("MainMenuBottomModule");
 			MainSystem.getInstance().showPluginById("MainMenuTopModule");
 			MainSystem.getInstance().removePluginById("AnimationModule");
@@ -60,14 +57,9 @@ package lxfa.No3.view
 		{
 			trace("dsadsa");
 		}
-		private function completeHandler(e:Event):void
-		{
-			swf.x=-200;
-			swf.y=-200;
-			this.addChild(swf);
-		}
 		public function dispose():void
 		{
+			this.removeChild(flvPlayer);
 			flvPlayer.dispose();
 			flvPlayer=null;
 		}

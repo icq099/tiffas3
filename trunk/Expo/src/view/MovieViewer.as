@@ -70,7 +70,6 @@ package view
 			if(movie!=null){
 				
 				movie.addFrameScript(movie.totalFrames-1,null);
-				
 				TweenLite.to(movie,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
 				
 					movie=null;
