@@ -20,11 +20,13 @@ package lxfa.view.player
 		private var loader:Loader;
 		private var videoWidth:int;
 		private var videoHeight:int;
-		public function FLVPlayer(path:String,width:int,height:int)
+		private var hasCloseButton:Boolean;
+		public function FLVPlayer(path:String,width:int,height:int,hasCloseButton:Boolean=true)
 		{
 			this.path=path;
 			this.videoWidth=width;
 			this.videoHeight=height;
+			this.hasCloseButton=hasCloseButton;
 			initNetConnection();
 		}
 		private function initNetConnection():void
@@ -46,7 +48,10 @@ package lxfa.view.player
 				netStream.pause();
 				netStream.addEventListener(NetStatusEvent.NET_STATUS,netStream_NetStatusHandler);
 				this.addEventListener(Event.ENTER_FRAME,on_ENTER_FRAME);
-				initBTNClose();
+				if(hasCloseButton)
+				{
+					initBTNClose();
+				}
 			}
 		}
 		private function netStream_NetStatusHandler(e:NetStatusEvent):void
