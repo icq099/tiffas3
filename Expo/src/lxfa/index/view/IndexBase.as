@@ -4,6 +4,7 @@ package lxfa.index.view
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.NetStatusEvent;
 	import flash.events.ProgressEvent;
 	import flash.text.TextFieldAutoSize;
 	
@@ -41,6 +42,13 @@ package lxfa.index.view
 			this.addChild(flvPlayer);
 			flvPlayer.resume();
 			flvPlayer.addEventListener(Event.CLOSE,on_flvPlayer_close);
+			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_NET_STATUS_change);
+		}
+		//播放完毕
+		private function on_NET_STATUS_change(e:NetStatusEvent):void
+		{
+			MainSystem.getInstance().showPluginById("No3Module");
+			MainSystem.getInstance().removePluginById("IndexModule");
 		}
 		//跳过第二个电影
 		private function on_flvPlayer_close(e:Event):void

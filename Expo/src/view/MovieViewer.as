@@ -2,15 +2,16 @@
 
 package view
 {
-	import flash.display.Loader;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.NetStatusEvent;
 	import flash.events.ProgressEvent;
-	import flash.net.URLRequest;
 	
 	import gs.TweenLite;
 	import gs.easing.Cubic;
+	
+	import lxfa.view.player.FLVPlayer;
 	
 	import mx.core.Application;
 	
@@ -19,7 +20,7 @@ package view
 	
 	public class MovieViewer extends Sprite
 	{
-		private var loader:Loader;
+		private var loader:FLVPlayer;
 		private var movie:MovieClip;
 		private var cover:Sprite;
 		private var loading_mc:LoadingWaveRota;
@@ -30,12 +31,11 @@ package view
 		}
 		public function loadMovie(URL:String):void{
 			
-			loader=new Loader()
+			loader=new FLVPlayer(URL,900,600,false);
 			loading_mc=new LoadingWaveRota();
-			loader.load(new URLRequest(URL));
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onCompleteHandler);
-			loader.contentLoaderInfo.addEventListener(Event.INIT,onInit);
-			loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,onProgressHandler);
+			loader.addEventListener(Event.COMPLETE,onCompleteHandler);
+//			loader.addEventListener(Event.INIT,onInit);
+			loader.addEventListener(ProgressEvent.PROGRESS,onProgressHandler);
 			
 			addChild(loading_mc);
 			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
@@ -67,12 +67,12 @@ package view
 		}
 		public function disappear():void{
 			
-			if(movie!=null){
+			if(loader!=null){
 				
-				movie.addFrameScript(movie.totalFrames-1,null);
-				TweenLite.to(movie,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
+//				loader.addFrameScript(loader.totalFrames-1,null);
+				TweenLite.to(loader,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
 				
-					movie=null;
+//					loader=null;
 					loader.parent.removeChild(loader);
 					loader=null;
 			
@@ -96,25 +96,25 @@ package view
 		}
 		private function onInit(e:Event):void{
 			
-			movie=MovieClip(loader.content);
-			movie.stop();
+//			movie=MovieClip(loader.content);
+//			movie.stop();
 		
 		}
 		private function onCompleteHandler(e:Event):void{
 			
 			loading_mc.parent.removeChild(loading_mc);
 			Application.application.addChild(Toolyzhkof.mcToUI(loader));
-			TweenLite.from(movie,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
-				
-				movie.play();
+			TweenLite.from(loader,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
+				loader.resume();
+//				movie.play();
 			
 			}});
-			movie.addFrameScript(movie.totalFrames-1,movieComplete);
-		
+//			movie.addFrameScript(movie.totalFrames-1,movieComplete);
+		loader.addEventListener(NetStatusEvent.NET_STATUS,movieComplete);
 		}
-		private function movieComplete():void{
+		private function movieComplete(e:NetStatusEvent):void{
 			
-			movie.stop();
+			loader.pause();
 			dispatchEvent(new Event(Event.COMPLETE));
 		
 		}
