@@ -1,7 +1,7 @@
 package lsd.ZongHengSiHai{
+	import communication.MainSystem;
+	
 	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
 	import flash.events.MouseEvent;
 	
 
@@ -148,8 +148,7 @@ package lsd.ZongHengSiHai{
 		}
 		
 		private function fzCL(e:MouseEvent):void{
-			trace("去泛珠");
-			
+			MainSystem.getInstance().showPluginById("FanZhuSanJiaoiModule");
 		}
 		
 		private function BBWOV(e:MouseEvent):void{
