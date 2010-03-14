@@ -158,7 +158,10 @@ package lxfa.animation.view
 			if(texts.length>0)
 			{
 				var currentText:String=texts.shift();
-				animationText.text.text=currentText;
+				if(animationText!=null)
+				{
+					animationText.text.text=currentText;
+				}
 			}
 		}
 		//显示说话的文本
