@@ -24,7 +24,7 @@ package lxfa.No3.view
 		}
 		private function initAnimation():void
 		{
-			Application.application.addChild(MainSystem.getInstance().getPlugin("AnimationModule"));
+//			MainSystem.getInstance().showPluginById("AnimationModule");
 			MainSystem.getInstance().runAPIDirect("showGuiWa",[0]);
 		}
 		private function initFLVPlayer():void
@@ -50,7 +50,7 @@ package lxfa.No3.view
 		private var swf:SwfPlayer;
 		public function step4():void
 		{
-//			MainSystem.getInstance().removePluginById("No3Module");
+			MainSystem.getInstance().removePluginById("No3Module");
             MainSystem.getInstance().removePluginById("AnimationModule");
 			MainSystem.getInstance().showPluginById("No3SwfModule");
 			MainSystem.getInstance().showPluginById("MainMenuBottomModule");
