@@ -28,6 +28,8 @@ package lxfa.No4.view
 		{
 			MainSystem.getInstance().enable360System();
 			MainSystem.getInstance().removePluginById("No4Module");
+			MainSystem.getInstance().showPluginById("AnimationModule");
+			MainSystem.getInstance().runAPIDirect("showGuiWa",[1]);
 		}
 		public function dispose():void
 		{

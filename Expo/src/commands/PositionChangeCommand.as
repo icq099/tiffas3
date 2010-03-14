@@ -91,7 +91,14 @@ package commands
 		}
 		private function sendNotificationCommand():void{
 //			MainSystem.getInstance().runScript(movie);
-			facade.sendNotification(FacadePv.LOAD_MOVIE,{url:movie,goto:goto,stop_rotationX:stop_rotationX,stop_rotationY:stop_rotationY});
+            if(movie.charAt(0)=="m" && movie.charAt(1)=="o" && movie.charAt(2)=="v" && movie.charAt(3)=="i" && movie.charAt(4)=="e")
+            {
+            	facade.sendNotification(FacadePv.LOAD_MOVIE,{url:movie,goto:goto,stop_rotationX:stop_rotationX,stop_rotationY:stop_rotationY});
+            }
+            else
+            {
+            	MainSystem.getInstance().runScript(movie);
+            }
 //			facade.sendNotification(FacadePv.STOP_RENDER);
 		
 		}

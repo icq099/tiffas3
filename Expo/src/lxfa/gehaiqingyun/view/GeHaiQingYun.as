@@ -1,5 +1,7 @@
 package lxfa.gehaiqingyun.view
 {
+	import communication.MainSystem;
+	
 	import fl.events.ListEvent;
 	
 	import flash.display.Sprite;
@@ -34,6 +36,7 @@ package lxfa.gehaiqingyun.view
 		private function onbtn_CloseClick(e:Event):void
 		{
 			this.dispatchEvent(new Event(Event.CLOSE));
+			MainSystem.getInstance().removePluginById("GeHaiQingYunModule");
 		}
 		private function onClick(e:Event):void
 		{

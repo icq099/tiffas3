@@ -3,12 +3,33 @@
 <compiler additionalCompilerArguments="-locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="10.0.0" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
 <compilerSourcePath/>
 <libraryPath defaultLinkType="1">
-<libraryPathEntry kind="4" path=""/>
+<libraryPathEntry kind="4" path="">
+<modifiedEntries>
+<libraryPathEntry kind="3" linkType="4" path="${PROJECT_FRAMEWORKS}/libs/flex4.swc" useDefaultLinkType="true">
+<crossDomainRsls>
+<crossDomainRslEntry autoExtract="true" policyFileUrl="http://fpdownload.adobe.com/pub/swz/crossdomain.xml" rslUrl="http://fpdownload.adobe.com/pub/swz/flex/4.0.0.7219/flex4_4.0.0.7219.swz"/>
+<crossDomainRslEntry autoExtract="true" policyFileUrl="" rslUrl="flex4_4.0.0.7219.swz"/>
+</crossDomainRsls>
+</libraryPathEntry>
+<libraryPathEntry kind="3" linkType="4" path="${PROJECT_FRAMEWORKS}/libs/framework.swc" useDefaultLinkType="true">
+<crossDomainRsls>
+<crossDomainRslEntry autoExtract="true" policyFileUrl="http://fpdownload.adobe.com/pub/swz/crossdomain.xml" rslUrl="http://fpdownload.adobe.com/pub/swz/flex/4.0.0.7219/framework_4.0.0.7219.swz"/>
+<crossDomainRslEntry autoExtract="true" policyFileUrl="" rslUrl="framework_4.0.0.7219.swz"/>
+</crossDomainRsls>
+</libraryPathEntry>
+<libraryPathEntry kind="3" linkType="4" path="${PROJECT_FRAMEWORKS}/libs/rpc.swc" useDefaultLinkType="true">
+<crossDomainRsls>
+<crossDomainRslEntry autoExtract="true" policyFileUrl="http://fpdownload.adobe.com/pub/swz/crossdomain.xml" rslUrl="http://fpdownload.adobe.com/pub/swz/flex/4.0.0.7219/rpc_4.0.0.7219.swz"/>
+<crossDomainRslEntry autoExtract="true" policyFileUrl="" rslUrl="rpc_4.0.0.7219.swz"/>
+</crossDomainRsls>
+</libraryPathEntry>
+</modifiedEntries>
+</libraryPathEntry>
 <libraryPathEntry kind="1" linkType="1" path="libs"/>
-<libraryPathEntry kind="3" linkType="1" path="/pv360flexllib/bin/pv360flexllib.swc" useDefaultLinkType="false"/>
-<libraryPathEntry kind="3" linkType="1" path="/yzhkof/bin/yzhkof.swc" useDefaultLinkType="false"/>
 <libraryPathEntry kind="3" linkType="1" path="/ScriptSimple/bin/ScriptSimple.swc" useDefaultLinkType="false"/>
 <libraryPathEntry kind="3" linkType="1" path="/pv360flexpluginframework/bin/pv360flexpluginframework.swc" useDefaultLinkType="false"/>
+<libraryPathEntry kind="3" linkType="1" path="/pv360flexllib/bin/pv360flexllib.swc" useDefaultLinkType="false"/>
+<libraryPathEntry kind="3" linkType="1" path="/yzhkof/bin/yzhkof.swc" useDefaultLinkType="false"/>
 </libraryPath>
 <sourceAttachmentPath/>
 </compiler>
