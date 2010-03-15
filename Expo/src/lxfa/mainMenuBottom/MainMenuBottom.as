@@ -12,7 +12,7 @@ package lxfa.mainMenuBottom
 	
 	public class MainMenuBottom extends Sprite
 	{
-		private var bottom:MainMenuSwcBottom;
+		private var bottom:MainMenuBottomSwc;
 		private const cameraRotateSpeed:int=8;
 		private const focusMaxRange:int=130;
 		private const focusMinRange:int=60;
@@ -26,7 +26,7 @@ package lxfa.mainMenuBottom
 		{
 			if(bottom==null)
 			{
-				bottom=new MainMenuSwcBottom();
+				bottom=new MainMenuBottomSwc();
 				initEvent();
 			}
 			Application.application.addChild(Toolyzhkof.mcToUI(bottom));
