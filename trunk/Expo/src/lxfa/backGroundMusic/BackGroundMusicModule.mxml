@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="communication.IPlugin">
+	<mx:Script>
+		<![CDATA[
+		    import yzhkof.Toolyzhkof;
+			private function init():void
+			{
+				new BackGroundBase();
+			}
+			public function dispose():void
+			{
+				
+			}
+		]]>
+	</mx:Script>
+</mx:Module>

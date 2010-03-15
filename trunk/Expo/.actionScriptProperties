@@ -55,6 +55,7 @@
 <module application="src/Expo.mxml" destPath="lsd/FanZhuSanJiao/FanzhuSanJiaoModule.swf" optimize="true" sourcePath="src/lsd/FanZhuSanJiao/FanzhuSanJiaoModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/index/IndexModule.swf" optimize="true" sourcePath="src/lxfa/index/IndexModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/yangmengbagui/YangMengBaGuiModule.swf" optimize="true" sourcePath="src/lxfa/yangmengbagui/YangMengBaGuiModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/backGroundMusic/BackGroundMusicModule.swf" optimize="true" sourcePath="src/lxfa/backGroundMusic/BackGroundMusicModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>

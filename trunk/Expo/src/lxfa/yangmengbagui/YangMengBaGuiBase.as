@@ -2,7 +2,6 @@ package lxfa.yangmengbagui
 {
 	import communication.MainSystem;
 	
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	
@@ -41,19 +40,14 @@ package lxfa.yangmengbagui
 		}
 		private function refreshBottomLocation():void
 		{
-   			var dis:DisplayObject=MainSystem.getInstance().getPlugin("MainMenuBottomModule");
-   			if(dis!=null)
-   			{
-	   			addChild(dis);
-	   			dis.y=480;
-	   			dis.x=1;
-   			}
+			MainSystem.getInstance().runAPIDirect("updateBottomMenu",[]);
 		}
 		private var flowerFlvSwf:SwfPlayer;
 		public function initSwf()
 		{
 			flowerFlvSwf=new SwfPlayer("movie/扬梦八桂.swf",900,480);
 			flowerFlvSwf.addEventListener(Event.COMPLETE,onComplete);
+			flowerFlvSwf.y=70;
 //			flowerFlvSwf.x=-200;
 //			flowerFlvSwf.y=-100;
 		}
