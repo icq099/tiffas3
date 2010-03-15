@@ -75,7 +75,10 @@ package lxfa.utils
 		}
 		public function removeCollision(id:String):void
 		{
-			rootAr.splice(rootObj[id].id,1);
+			if(rootObj[id]!=null)
+			{
+				rootAr.splice(rootObj[id].id,1);
+			}
 		}
 		public function showCollision():void
 		{
