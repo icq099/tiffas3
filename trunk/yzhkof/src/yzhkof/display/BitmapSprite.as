@@ -56,14 +56,21 @@ package yzhkof.display
 			_height=height;
 			updataSizeNextRend;
 		}
+		public override function dispose():void
+		{
+			super.dispose();
+			bitmapData.dispose();
+		}
 		protected override function onRend():void
 		{
 			updataSize();
-			if(drawNew)
-			{
-				bitmapData.fillRect(bitmapData.rect,fillColor);
+			if(stage!=null){
+				if(drawNew)
+				{
+					bitmapData.fillRect(bitmapData.rect,fillColor);
+				}
+				drawContent();
 			}
-			drawContent();
 			super.onRend();
 		}
 		private function updataSize():void
