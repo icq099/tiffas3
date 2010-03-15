@@ -34,6 +34,15 @@ package yzhkof.display
 		{
 			
 		}
+		/**
+		 *	停止所有渲染 
+		 * 
+		 */		
+		public function dispose():void
+		{
+			removeDefaultRender();
+			removeSelfRenderListener();
+		}
 		public function setRenderDefault():void
 		{
 			RenderDispatcher.getInstance().addEventListener(RenderEvent.ON_REND,onRendDefault,false,0,true);
@@ -51,7 +60,10 @@ package yzhkof.display
 		}
 		private function removeSelfRenderListener():void
 		{
-			_engineSelf.removeEventListener(RenderEvent.ON_REND,onRendSelf);
+			if(_engineSelf)
+			{
+				_engineSelf.removeEventListener(RenderEvent.ON_REND,onRendSelf);
+			}
 		}
 		private function onRendSelf(e:Event):void
 		{
