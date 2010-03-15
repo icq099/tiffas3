@@ -10,8 +10,6 @@ package lxfa.No3.view
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.view.player.FLVPlayer;
 	
-	import mx.core.Application;
-	
 	public class No3Base extends Sprite
 	{
 		private var flvPlayer:FLVPlayer;
@@ -29,7 +27,8 @@ package lxfa.No3.view
 		}
 		private function initFLVPlayer():void
 		{
-			flvPlayer=new FLVPlayer("video/no3/no3.flv",900,600);
+			flvPlayer=new FLVPlayer("video/no3/no3.flv",900,480);
+			flvPlayer.y=70;
 			flvPlayer.addEventListener(Event.CLOSE,on_flvPlayer_close);
 			this.addChild(flvPlayer);
 			flvPlayer.resume();

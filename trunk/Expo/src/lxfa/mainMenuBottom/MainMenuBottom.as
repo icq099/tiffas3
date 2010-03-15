@@ -8,6 +8,8 @@ package lxfa.mainMenuBottom
 	
 	import mx.core.Application;
 	
+	import yzhkof.Toolyzhkof;
+	
 	public class MainMenuBottom extends Sprite
 	{
 		private var bottom:MainMenuSwcBottom;
@@ -17,13 +19,18 @@ package lxfa.mainMenuBottom
 		private var focusSpeed:int=10;
 		public function MainMenuBottom()
 		{
-			initbottom();
-			initEvent();
+			MainSystem.getInstance().addAPI("updateBottomMenu",initbottom);
+			MainSystem.getInstance().runAPIDirect("updateBottomMenu",[]);
 		}
 		private function initbottom():void
 		{
-			bottom=new MainMenuSwcBottom();
-			this.addChild(bottom);
+			if(bottom==null)
+			{
+				bottom=new MainMenuSwcBottom();
+				initEvent();
+			}
+			Application.application.addChild(Toolyzhkof.mcToUI(bottom));
+			bottom.y=551;
 		}
 		private function initEvent():void
 		{

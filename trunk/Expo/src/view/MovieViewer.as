@@ -2,6 +2,8 @@
 
 package view
 {
+	import communication.MainSystem;
+	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -31,13 +33,12 @@ package view
 		}
 		public function loadMovie(URL:String):void{
 			
-			loader=new FLVPlayer(URL,900,600,false);
+			loader=new FLVPlayer(URL,900,480,false);
 			loading_mc=new LoadingWaveRota();
 			loader.addEventListener(Event.COMPLETE,onCompleteHandler);
 //			loader.addEventListener(Event.INIT,onInit);
 			loader.addEventListener(ProgressEvent.PROGRESS,onProgressHandler);
-			
-			addChild(loading_mc);
+			loader.y=70;
 			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
 			loading_mc.x=this.stage.stageWidth/2;
 			loading_mc.y=this.stage.stageHeight/2;
@@ -104,6 +105,7 @@ package view
 			
 			loading_mc.parent.removeChild(loading_mc);
 			Application.application.addChild(Toolyzhkof.mcToUI(loader));
+			MainSystem.getInstance().runAPIDirect("updateBottomMenu",[]);
 			TweenLite.from(loader,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
 				loader.resume();
 //				movie.play();

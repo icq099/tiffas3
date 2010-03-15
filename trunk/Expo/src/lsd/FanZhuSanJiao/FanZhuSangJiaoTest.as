@@ -2,7 +2,6 @@ package lsd.FanZhuSanJiao
 {
 	import communication.MainSystem;
 	
-	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.events.NetStatusEvent;
@@ -41,10 +40,7 @@ package lsd.FanZhuSanJiao
 		}
 		private function refreshBottomLocation():void
 		{
-   			var dis:DisplayObject=MainSystem.getInstance().getPlugin("MainMenuBottomModule");
-   			addChild(dis);
-   			dis.y=480;
-   			dis.x=1;
+			MainSystem.getInstance().runAPIDirect("updateBottomMenu",[]);
 		}
 		private function init():void{
 			

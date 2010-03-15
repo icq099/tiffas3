@@ -138,6 +138,7 @@ package lxfa.animation.view
 			}
 			if(animationIn!=null)
 			{
+				animationIn.stop();
 				animationIn.parent.removeChild(animationIn);
 				animationIn=null;
 			}
@@ -167,12 +168,15 @@ package lxfa.animation.view
 		//显示说话的文本
 		private function showSayText():void
 		{
-			animationText.visible=true;
-			animationText.x=50+xOffset;
-			animationText.y=20+yOffset;
-			Tweener.addTween(animationText,{x:animationText.x-animationText.width+230,time:1});
-			animationText.addEventListener(MouseEvent.MOUSE_OVER,onMouseOver);
-			animationText.addEventListener(MouseEvent.MOUSE_OUT,onMouseOut);
+			if(animationText!=null)
+			{
+				animationText.visible=true;
+				animationText.x=50+xOffset;
+				animationText.y=20+yOffset;
+				Tweener.addTween(animationText,{x:animationText.x-animationText.width+230,time:1});
+				animationText.addEventListener(MouseEvent.MOUSE_OVER,onMouseOver);
+				animationText.addEventListener(MouseEvent.MOUSE_OUT,onMouseOut);
+			}
 		}
 		//出场完毕
 		private function getInComplete():void
@@ -186,15 +190,18 @@ package lxfa.animation.view
 		//说话
 		private function say():void
 		{
-			animationIn.stop();
-			animationIn.parent.removeChild(animationIn);
-			animationIn=null;
-			animationSay=new AnimationSay();
-			Application.application.addChild(Toolyzhkof.mcToUI(animationSay));
-			animationSay.x=122+xOffset;
-			animationSay.y=141+yOffset;
-			animationSay.addEventListener(MouseEvent.MOUSE_OVER,onMouseOver);
-			animationSay.addEventListener(MouseEvent.MOUSE_OUT,onMouseOut);
+			if(animationIn!=null)
+			{
+				animationIn.stop();
+				animationIn.parent.removeChild(animationIn);
+				animationIn=null;
+				animationSay=new AnimationSay();
+				Application.application.addChild(Toolyzhkof.mcToUI(animationSay));
+				animationSay.x=122+xOffset;
+				animationSay.y=141+yOffset;
+				animationSay.addEventListener(MouseEvent.MOUSE_OVER,onMouseOver);
+				animationSay.addEventListener(MouseEvent.MOUSE_OUT,onMouseOut);
+			}
 		}
 		private function onMouseOver(e:MouseEvent):void
 		{

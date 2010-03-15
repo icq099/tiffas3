@@ -13,7 +13,7 @@ package lsd.ZongHengSiHai{
 		{
 			init();
 		}
-		
+
 		private function init():void{
 			
 			zongHengSiHaiSwc=new ZongHengSiHaiSwc();
@@ -60,7 +60,7 @@ package lsd.ZongHengSiHai{
             
             zongHengSiHaiSwc.nnButton.addEventListener(MouseEvent.MOUSE_OVER,nnOV);
             zongHengSiHaiSwc.nnButton.addEventListener(MouseEvent.MOUSE_OUT,nnOU);
-            
+            zongHengSiHaiSwc.nnButton.addEventListener(MouseEvent.CLICK,onClick);
        
             zongHengSiHaiSwc.czButton.addEventListener(MouseEvent.MOUSE_OVER,czOV);
             zongHengSiHaiSwc.czButton.addEventListener(MouseEvent.MOUSE_OUT,czOU);
@@ -102,7 +102,10 @@ package lsd.ZongHengSiHai{
             zongHengSiHaiSwc.bhButton.addEventListener(MouseEvent.MOUSE_OUT,bhOU);
             
 		}
-		
+		private function onClick(e:MouseEvent):void
+		{
+			MainSystem.getInstance().showPluginById("YangMengBaGuiModule");
+		}
 		
 		private function gomOV(e:MouseEvent):void{
 		
@@ -148,7 +151,9 @@ package lsd.ZongHengSiHai{
 		}
 		
 		private function fzCL(e:MouseEvent):void{
-			MainSystem.getInstance().showPluginById("FanZhuSanJiaoiModule");
+			MainSystem.getInstance().showPluginById("FanzhuSanJiaoModule");
+			MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
+			MainSystem.getInstance().removePluginById("ZongHengSiHaiWithMovieModule");
 		}
 		
 		private function BBWOV(e:MouseEvent):void{
