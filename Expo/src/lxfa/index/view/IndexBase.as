@@ -65,7 +65,7 @@ package lxfa.index.view
 		}
 		private function initDownloadProgress():void
 		{
-			flvPlayer=new FLVPlayer("video/index/index.flv",900,600);
+			flvPlayer=new FLVPlayer("video/index/index.flv",900,480);
 			flvPlayer.addEventListener(ProgressEvent.PROGRESS,downLoadprogressHandler);
 			flvPlayer.addEventListener(Event.COMPLETE,downLoadcompleteHandler);
 		}
