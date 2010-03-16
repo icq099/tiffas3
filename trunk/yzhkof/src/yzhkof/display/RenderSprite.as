@@ -9,6 +9,11 @@ package yzhkof.display
 
 	public class RenderSprite extends Sprite
 	{
+		/**
+		 *	是否只在stage不为null时渲染 
+		 */		
+		public var rendAtStage:Boolean=false;
+		
 		private var _engineSelf:RenderEngineBasic;
 		public function RenderSprite()
 		{
@@ -65,13 +70,25 @@ package yzhkof.display
 				_engineSelf.removeEventListener(RenderEvent.ON_REND,onRendSelf);
 			}
 		}
+		private function onRending():void
+		{
+			if(rendAtStage)
+			{
+				if(stage!=null)
+					onRend();
+			}
+			else
+			{
+				onRend();	
+			}
+		}
 		private function onRendSelf(e:Event):void
 		{
-			onRend();
+			onRending();
 		}
 		private function onRendDefault(e:Event):void
 		{
-			onRend();
+			onRending();
 		}
 		
 	}
