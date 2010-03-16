@@ -23,6 +23,7 @@
 <classEntry path="yzhkof.PositionSeter"/>
 <classEntry path="yzhkof.util.delayCallNextFrame"/>
 <classEntry path="yzhkof.debug.TextTrace"/>
+<classEntry path="yzhkof.display.event.DisplayEvent"/>
 <classEntry path="yzhkof.loader.proxy.CompatibleLoaderProxy"/>
 <classEntry path="yzhkof.CamereaControlerEvent"/>
 <classEntry path="yzhkof.AddToStageSetter"/>
@@ -31,6 +32,7 @@
 <classEntry path="yzhkof.loader.SeriaCompatibleLoader"/>
 <classEntry path="yzhkof.loader.LoaderMap"/>
 <classEntry path="yzhkof.tiff.TiffDecoder"/>
+<classEntry path="yzhkof.display.DisplacementMapSprite"/>
 <classEntry path="yzhkof.FPSfromA3d"/>
 <classEntry path="yzhkof.loader.proxy.NormalLoaderProxy"/>
 <classEntry path="yzhkof.file.SimpleEncoder"/>
