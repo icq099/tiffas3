@@ -54,6 +54,14 @@ package lxfa.view.player
 				}
 			}
 		}
+		//重新播放
+		public function restart():void{
+			if(netStream!=null)
+			{
+				netStream.seek(0);
+				resume();
+			}
+		}
 		private function netStream_NetStatusHandler(e:NetStatusEvent):void
 		{
 			if(e.info.code=="NetStream.Play.Stop")

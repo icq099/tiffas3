@@ -11,6 +11,7 @@
    		public function dispose():void
    		{
    			normalWindowBase=null;
+   			dispatchEvent(new Event(Event.CLOSE));
    		}
    	]]>
    </mx:Script>

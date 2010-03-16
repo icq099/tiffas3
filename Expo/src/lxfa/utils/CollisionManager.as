@@ -1,6 +1,5 @@
 package lxfa.utils
 {
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
@@ -46,20 +45,35 @@ package lxfa.utils
 						{
 							trace("区域节点的坐标重叠");
 						}
-						else if((e.stageX>pointLeftTop[0] && e.stageX<pointRightBottom[0]) && (e.stageY>pointLeftTop[1]&&e.stageY<pointRightBottom[1]))
+						else if(pointLeftTop[0]<pointRightBottom[0])
 						{
-							var fun:Function=obj.fun;
-							if(fun==null){
-								trace(fun+"碰撞体方法当前为空！");
+							if((e.stageX>pointLeftTop[0] && e.stageX<pointRightBottom[0]) && (e.stageY>pointLeftTop[1]&&e.stageY<pointRightBottom[1]))
+							{
+								excuteFunction(obj);
+								break;//点到了，就开始检测其他区域
 							}
-							var re:*;
-							re=fun.apply(NaN,[]);
-							break;//点到了，就开始检测其他区域
+						}
+						else if(pointLeftTop[0]>pointRightBottom[0])
+						{
+							if((e.stageX<pointLeftTop[0] && e.stageX>pointRightBottom[0]) && (e.stageY<pointLeftTop[1]&&e.stageY>pointRightBottom[1]))
+							{
+								excuteFunction(obj);
+								break;//点到了，就开始检测其他区域
+							}
 						}
 					}
 				}
 			}
 			return false;
+		}
+		private function excuteFunction(obj:Object)
+		{
+			var fun:Function=obj.fun;
+			if(fun==null){
+				trace(fun+"碰撞体方法当前为空！");
+			}
+			var re:*;
+			re=fun.apply(NaN,[]);
 		}
 		public static function getInstance():CollisionManager
 		{
@@ -116,6 +130,7 @@ package lxfa.utils
 					}
 				}
 			}
+			Application.application.addChild(this);
 		}
 	}
 }

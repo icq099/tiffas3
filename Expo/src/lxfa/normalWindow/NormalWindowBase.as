@@ -34,7 +34,7 @@ package lxfa.normalWindow
 		private function onnormalWindowFactoryClose(e:Event):void
 		{
 			isPoped=false;
-			MainSystem.getInstance().startRender();
+//			MainSystem.getInstance().startRender();
 		}
 	}
 }
