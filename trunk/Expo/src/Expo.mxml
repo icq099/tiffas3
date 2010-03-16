@@ -3,6 +3,7 @@
 	<mx:Style source="css/TabNavigatorCSS.css"/>
 	<mx:Script>
 		<![CDATA[
+			import lxfa.utils.CollisionManager;
 			import yzhkof.AddToStageSetter;
 			import mx.core.UIComponent;
 			import yzhkof.FPSfromA3d;
