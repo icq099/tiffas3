@@ -56,6 +56,10 @@
 <module application="src/Expo.mxml" destPath="lxfa/mainMenuBottom/MainMenuBottomModule.swf" optimize="true" sourcePath="src/lxfa/mainMenuBottom/MainMenuBottomModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/flvModule/FlvModule.swf" optimize="true" sourcePath="src/lxfa/flvModule/FlvModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/inquire/InquireModule.swf" optimize="true" sourcePath="src/lxfa/inquire/InquireModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lsd/FanZhuSanJiao/FanZhuSanJiaoModule.swf" optimize="true" sourcePath="src/lsd/FanZhuSanJiao/FanZhuSanJiaoModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lsd/ZongHengSiHai/ZongHengSiHaiModule.swf" optimize="true" sourcePath="src/lsd/ZongHengSiHai/ZongHengSiHaiModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lsd/DaMeiGongHe/DaMeiGongHeModule.swf" optimize="true" sourcePath="src/lsd/DaMeiGongHe/DaMeiGongHeModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lsd/DongMeng/DongMengModule.swf" optimize="true" sourcePath="src/lsd/DongMeng/DongMengModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>
