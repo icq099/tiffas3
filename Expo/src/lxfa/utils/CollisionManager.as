@@ -66,7 +66,7 @@ package lxfa.utils
 			}
 			return false;
 		}
-		private function excuteFunction(obj:Object)
+		private function excuteFunction(obj:Object):void
 		{
 			var fun:Function=obj.fun;
 			if(fun==null){
@@ -83,9 +83,13 @@ package lxfa.utils
 		public function addCollision(array:Array,f:Function,ID:String):void
 		{
 			if(ID==null) throw new Error("碰撞体的名字不能为空");
-			var obj:Object={areas:array,fun:f,id:rootAr.length-1,name:ID};
+			var obj:Object={areas:array,fun:f,id:rootAr.length,name:ID};
 			rootObj[ID]=obj;//以OBJ的形式存储，用于索引
 			rootAr.push(obj);//以数组的形式存储，用于遍历
+		}
+		public function removeAllCollision():void
+		{
+			rootAr=new Array();
 		}
 		public function removeCollision(id:String):void
 		{
