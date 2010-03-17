@@ -33,6 +33,7 @@ package lxfa.normalWindow
 		}
 		private function onnormalWindowFactoryClose(e:Event):void
 		{
+			this.dispatchEvent(e);
 			isPoped=false;
 //			MainSystem.getInstance().startRender();
 		}

@@ -36,10 +36,12 @@ package lxfa.index.view
 		}
 		private function on_btn_enter_click(e:MouseEvent):void
 		{
+			MainSystem.getInstance().runAPIDirect("gotoScene",[0]);
+			indexSwc.mouseEnabled=false;
 			this.removeChild(indexSwc);
 			this.removeChild(flowerFlvSwf);
-			flowerFlvSwf=null;
 			this.addChild(flvPlayer);
+			flowerFlvSwf=null;
 			flvPlayer.resume();
 			flvPlayer.addEventListener(Event.CLOSE,on_flvPlayer_close);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_NET_STATUS_change);
@@ -53,8 +55,8 @@ package lxfa.index.view
 		//跳过第二个电影
 		private function on_flvPlayer_close(e:Event):void
 		{
-			MainSystem.getInstance().showPluginById("No3Module");
 			MainSystem.getInstance().removePluginById("IndexModule");
+			MainSystem.getInstance().showPluginById("No3Module");
 		}
 		private function initFlowerFlvSwf():void
 		{
@@ -84,6 +86,7 @@ package lxfa.index.view
 		public function dispose():void
 		{
 			flvPlayer.dispose();
+			flvPlayer.parent.removeChild(flvPlayer);
 			flvPlayer=null;
 		}
 	}

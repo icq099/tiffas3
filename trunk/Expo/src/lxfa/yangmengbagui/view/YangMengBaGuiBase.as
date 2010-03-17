@@ -1,7 +1,9 @@
 package lxfa.yangmengbagui.view
 {
+	import communication.Event.ScriptAPIAddEvent;
 	import communication.MainSystem;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.NetStatusEvent;
@@ -13,7 +15,6 @@ package lxfa.yangmengbagui.view
 	
 	public class YangMengBaGuiBase extends UIComponent
 	{
-		private var flvPlayer:FLVPlayer;
 		private var yangMengBaGuiSwc:YangMengBaGuiSwc;
 		private var LED:FLVPlayer;
 		private var view3d:MiniCarouselReflectionView=new MiniCarouselReflectionView();
@@ -21,7 +22,7 @@ package lxfa.yangmengbagui.view
 		{
 			MainSystem.getInstance().disable360System();
 			MainSystem.getInstance().addAPI("showYangMengBaGui",showYangMengBaGui);
-			MainSystem.getInstance().runAPIDirect("showYangMengBaGui",[false]);
+			MainSystem.getInstance().runAPIDirect("showYangMengBaGui",[true]);
 		}
 		public function showYangMengBaGui(withMovie:Boolean):void
 		{
@@ -36,24 +37,16 @@ package lxfa.yangmengbagui.view
 		//过场动画
 		private function initPlayer():void
 		{
-			flvPlayer=new FLVPlayer("movie/zonghengsihai-yangmengbagui.flv",900,480,false);
-			this.addChild(flvPlayer);
-			flvPlayer.y=70;
-			refreshBottomLocation();
-			flvPlayer.resume();
-			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_play_complete);
+			MainSystem.getInstance().runAPIDirect("addFlv",["movie/zonghengsihai-yangmengbagui.flv"]);
+			MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.CLOSE,on_complete);
 		}
-		private function on_play_complete(e:NetStatusEvent):void
+		private function on_complete(e:Event):void
 		{
 			initSwf();
 		}
-		private function refreshBottomLocation():void
-		{
-			MainSystem.getInstance().runAPIDirect("updateBottomMenu",[]);
-		}
 		//背景SWF
 		private var flowerFlvSwf:SwfPlayer;
-		public function initSwf()
+		public function initSwf():void
 		{
 			flowerFlvSwf=new SwfPlayer("swf/yangmengbagui.swf",900,480);
 			flowerFlvSwf.addEventListener(Event.COMPLETE,onComplete);
@@ -67,14 +60,8 @@ package lxfa.yangmengbagui.view
 			this.addChild(view3d);
 			initYangMengBaGuiSwc();
 			initLED();
-			refreshBottomLocation();
-			if(flvPlayer!=null)
-			{
-				MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
-				flvPlayer.parent.removeChild(flvPlayer);
-				flvPlayer.dispose();
-				flvPlayer=null;
-			}
+			MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
+			MainSystem.getInstance().runAPIDirect("removeFlv",[]);
 		}
 		//添加杨梦八桂的建筑
 		private function initYangMengBaGuiSwc():void
@@ -82,6 +69,7 @@ package lxfa.yangmengbagui.view
 			yangMengBaGuiSwc=new YangMengBaGuiSwc();
 			yangMengBaGuiSwc.x=460;
 			yangMengBaGuiSwc.y=120;
+			yangMengBaGuiSwc.buttonMode=true;
 			this.addChild(yangMengBaGuiSwc);
 		}
 		//添加LED墙
@@ -96,23 +84,6 @@ package lxfa.yangmengbagui.view
 			LED.addEventListener(MouseEvent.CLICK,on_LED_Click);
 			LED.resume();
 			LED.addEventListener(NetStatusEvent.NET_STATUS,on_LED_play_complete);
-			if(!this.hasEventListener(Event.DEACTIVATE))//失去焦点
-			{
-				this.addEventListener(Event.MOUSE_LEAVE,on_this_deactive);
-			}
-			if(!this.hasEventListener(Event.ACTIVATE))//获得焦点
-			{
-//				this.addEventListener(Event.,on_this_active);
-			}
-		}
-		private function on_this_deactive(e:Event):void
-		{
-			LED.pause();
-			trace("失去焦点");
-		}
-		private function on_this_active(e:Event):void
-		{
-			LED.resume();
 		}
 		//播放完毕就重播
 		private function on_LED_play_complete(e:NetStatusEvent):void
@@ -123,14 +94,24 @@ package lxfa.yangmengbagui.view
 		private function on_LED_Click(e:MouseEvent):void
 		{
 			LED.pause();//暂停LED播放
+			LED.mouseEnabled=false;
 			//显示标准窗
 			MainSystem.getInstance().showPluginById("NormalWindowModule");
-			MainSystem.getInstance().runAPIDirect("showNormalWindow",[0]);
-			MainSystem.getInstance().getPlugin("NormalWindowModule").addEventListener(Event.CLOSE,on_click);
+			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,ADD_API);
 		}
-		private function on_click(e:Event):void//标准窗关闭的时候
+		private function ADD_API(e:ScriptAPIAddEvent):void
+		{
+			if(e.fun_name=="showNormalWindow")
+			{
+				var s:DisplayObject=MainSystem.getInstance().getPlugin("NormalWindowModule");
+				MainSystem.getInstance().getPlugin("NormalWindowModule").addEventListener(Event.CLOSE,on_normalwindow_close);
+				MainSystem.getInstance().runAPIDirect("showNormalWindow",[0]);
+			}
+		}
+		private function on_normalwindow_close(e:Event):void//标准窗关闭的时候
 		{
 			LED.resume();
+			LED.mouseEnabled=true;
 		}
 	}
 }

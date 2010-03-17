@@ -1,5 +1,8 @@
 package lxfa.No3Swf.view
 {
+	import caurina.transitions.Tweener;
+	
+	import communication.Event.MainSystemEvent;
 	import communication.MainSystem;
 	
 	import flash.events.Event;
@@ -26,8 +29,20 @@ package lxfa.No3Swf.view
 		}
 		private function onClick(e:MouseEvent):void
 		{
-			MainSystem.getInstance().removePluginById("No3SwfModule");
 			MainSystem.getInstance().showPluginById("No4Module");
+			MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,No4ModuleLoaded);
+		}
+		private function No4ModuleLoaded(e:MainSystemEvent):void
+		{
+			MainSystem.getInstance().removePluginById("No3SwfModule");
+		}
+		public function dispose():void
+		{
+			if(flowerFlvSwf!=null)
+			{
+				flowerFlvSwf.parent.removeChild(flowerFlvSwf);
+				flowerFlvSwf=null;
+			}
 		}
 	}
 }

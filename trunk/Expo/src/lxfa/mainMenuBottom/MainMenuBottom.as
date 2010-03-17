@@ -19,8 +19,9 @@ package lxfa.mainMenuBottom
 		private var focusSpeed:int=10;
 		public function MainMenuBottom()
 		{
-			MainSystem.getInstance().addAPI("updateBottomMenu",initbottom);
-			MainSystem.getInstance().runAPIDirect("updateBottomMenu",[]);
+			initbottom();
+//			MainSystem.getInstance().addAPI("updateBottomMenu",initbottom);
+//			MainSystem.getInstance().runAPIDirect("updateBottomMenu",[]);
 		}
 		private function initbottom():void
 		{
@@ -29,8 +30,7 @@ package lxfa.mainMenuBottom
 				bottom=new MainMenuBottomSwc();
 				initEvent();
 			}
-			Application.application.addChild(Toolyzhkof.mcToUI(bottom));
-			bottom.y=551;
+			this.addChild(bottom);
 		}
 		private function initEvent():void
 		{

@@ -17,11 +17,19 @@ package proxys
 		
 		private var _position_changing:Boolean=false;
 		
+		private var _old_position:int=0;
 		public function PTravel()
 		{
 			data=new Travel();
 			super(NAME, data);
 			
+		}
+		public function set oldPosition(value:int):void
+		{
+			_old_position=value;
+		}
+		public function get oldPosition():int{
+			return _old_position;
 		}
 		public function get currentPosition():int{
 			
@@ -56,11 +64,10 @@ package proxys
 		
 		}
 		public function changePosition(postition:int):void{
-			
 			if((travel.current_scene!=postition)&&(travel.menu_count<=0)&&(!_position_changing)){
-				
 				_position_changing=true;
 				facade.sendNotification(FacadePv.POSITION_CHANGE_COMMAND,postition);
+				oldPosition=travel.current_scene;
 				travel.current_scene=postition;
 				BrowserManager.getInstance().setFragment("scene="+postition);
 				

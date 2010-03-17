@@ -21,23 +21,23 @@ package lxfa.No4.view
 			flvPlayer=new FLVPlayer("video/no4/no4.flv",900,480);
 			flvPlayer.y=70;
 			this.addChild(flvPlayer);
-			MainSystem.getInstance().runAPIDirect("updateBottomMenu",[]);
 			flvPlayer.resume();
-			MainSystem.getInstance().showPluginById("No5Module");
+//			MainSystem.getInstance().showPluginById("No5Module");
 			MainSystem.getInstance().gotoScene(0);//跑到绿色家园
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,flvPlayer_NetStatusHandler);
 		}
 		private function flvPlayer_NetStatusHandler(e:NetStatusEvent):void
 		{
-			MainSystem.getInstance().enable360System();
+//			MainSystem.getInstance().enable360System();
 			MainSystem.getInstance().removePluginById("No4Module");
-			MainSystem.getInstance().showPluginById("MainMenuBottomModule");
 //			MainSystem.getInstance().showPluginById("AnimationModule");
 //			MainSystem.getInstance().runAPIDirect("showGuiWa",[1]);
 		}
 		public function dispose():void
 		{
+			flvPlayer.parent.removeChild(flvPlayer);
 			flvPlayer.dispose();
+//			flvPlayer.dispose();
 			flvPlayer=null;
 		}
 	}

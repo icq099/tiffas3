@@ -4,7 +4,10 @@ package view.struct
 	import com.as3dmod.modifiers.Bend;
 	import com.as3dmod.plugins.pv3d.LibraryPv3d;
 	
+	import communication.MainSystem;
+	
 	import org.papervision3d.core.proto.MaterialObject3D;
+	import org.papervision3d.events.InteractiveScene3DEvent;
 	import org.papervision3d.objects.primitives.Plane;
 
 	public class BendPlane extends Plane
@@ -41,6 +44,12 @@ package view.struct
 		}
 		public function get angle():Number{
 			return bend.angle;
+		}
+		public function set onClick(detail:String):void
+		{
+			this.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK,function(e:InteractiveScene3DEvent):void{
+				MainSystem.getInstance().runScript(detail);
+			});
 		}
 	}
 }

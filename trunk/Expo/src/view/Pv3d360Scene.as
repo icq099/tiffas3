@@ -1,6 +1,8 @@
 ﻿package view{
 	import flash.display.*;
 	import flash.events.*;
+	import flash.filters.BitmapFilterQuality;
+	import flash.filters.DropShadowFilter;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	
@@ -33,6 +35,7 @@
 	
 		private var compassBitmapdata:BitmapData=ToolBitmapData.getInstance().drawDisplayObject(new CompassSkin);
 		private var arrow_bitmapdata:BitmapData=ToolBitmapData.getInstance().drawDisplayObject(new ArrowSkin);
+		private var arrow_bitmapdata1:BitmapData=ToolBitmapData.getInstance().drawDisplayObject(new ArrowSkin1);
 		
 		private var this_stage:Stage;
 		private var URLpath:URLRequest;
@@ -104,9 +107,9 @@
 			var material_compass:BitmapMaterial=new BitmapMaterial(compassBitmapdata.clone());
 			//material_compass.smooth=true;
 			material_compass.doubleSided=true;
-			compass_plane=new Plane(material_compass,35,35,5,5);
+			compass_plane=new Plane(material_compass,25,25,5,5);
 			compass_plane.rotationX=-90;
-			compass_plane.y=-30;
+			compass_plane.y=-28;
 			compass_plane.z=1;
 			layer_compass=viewport.getChildLayer(compass_plane);
 			
@@ -114,6 +117,7 @@
 			viewport.containerSprite.sortMode=ViewportLayerSortMode.INDEX_SORT;
 			
 			layer_animate=viewport.getChildLayer(new DisplayObject3D());
+			layer_animate.buttonMode=true;
 			layer_hot_points=viewport.getChildLayer(new DisplayObject3D());
 			layer_arrows=viewport.getChildLayer(new DisplayObject3D());
 			layer_arrows.buttonMode=true;
@@ -233,57 +237,57 @@
 			compass_plane.rotationY=rota;
 			
 		}
+		private var arrowMaterials:Array=new Array();
 		public function addArrow(rota:Number=0,tip_text:String=""):Plane{
-			
 			var material_arrow:BitmapMaterial=new BitmapMaterial(arrow_bitmapdata.clone());
 			material_arrow.smooth=true;
 			material_arrow.doubleSided=true;
 			material_arrow.interactive=true;
-			var plane:Plane=new Plane(material_arrow,1.5,9,2,4)
+			arrowMaterials.push(material_arrow);
+			var material_arrow1:BitmapMaterial=new BitmapMaterial(arrow_bitmapdata1.clone());
+			material_arrow1.smooth=true;
+			material_arrow1.doubleSided=true;
+			material_arrow1.interactive=true;
+			arrowMaterials.push(material_arrow1);//存起来，用于回收
+			var plane:Plane=new Plane(material_arrow,1.4,8.4,2,4)
 			arrows.push(plane);
 			plane.rotationX=-90;
 			plane.rotationY=rota;
-			plane.moveUp(7);
-			plane.y=-30
+			plane.moveUp(5);
+			plane.y=-28;
 			scene.addChild(plane);
 			layer_arrows.addDisplayObject3D(plane);
-			
 			if(tip_text.length>0){
 				
 				plane.extra={text:tip_text};
-				
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER,function(e:Event):void{
-					
 					addChild(tip_sprite);
 					tip_sprite.text=e.currentTarget.extra.text;
-				
+					plane.material=material_arrow1;
 				});
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT,function(e:Event):void{
-					
 					removeChild(tip_sprite);
-				
+				    plane.material=material_arrow;
 				});
-			
 			}
-			
-			
 			draw();
 			return plane;
-		
 		}
 		public function cleanAllArrow():void{
 			
 			if(arrows.length>0){
+				for each(var material:BitmapMaterial in arrowMaterials)
+				{
+					material.bitmap.dispose();
+					material=null;
+				}
 				for each(var item:Plane in arrows){
 					
 					layer_arrows.removeDisplayObject3D(item)
 					scene.removeChild(item)
-					item.material.bitmap.dispose();
-					item.material.destroy();
 				}
 				arrows=new Array();
 			}
-		
 		}
 		//增加动画
 		public function addAminate(URL:String,init_obj:Object,cache:Boolean=false):Plane{
@@ -298,12 +302,12 @@
 			var height:Number=init_obj["height"]?init_obj["height"]:100;
 			var segmentsW:Number=init_obj["segmentsW"]?init_obj["segmentsW"]:2;
 			var segmentsH:Number=init_obj["segmentsH"]?init_obj["segmentsH"]:2;
-			
-			
-			var plane_animate:BendPlane=new BendPlane(new ColorMaterial(0xffffff),width,height,segmentsW,segmentsH,init_obj);
+			var visible:Number=init_obj["visible"]?init_obj["visible"]:0;
+			var plane_animate:BendPlane=new BendPlane(new ColorMaterial(0xffffff,0),width,height,segmentsW,segmentsH,init_obj);
 			plane_animate.offset=init_obj["offset"]?init_obj["offset"]:0;
 			plane_animate.angle=init_obj["angle"]?init_obj["angle"]:0;
 			plane_animate.force=init_obj["force"]?init_obj["force"]:0;
+			plane_animate.onClick=init_obj["onClick"];
 			/* plane_animate.x=x;
 			plane_animate.y=y;
 			plane_animate.z=z;
@@ -314,7 +318,6 @@
 			animates.push(plane_animate);
 			
 			scene.addChild(plane_animate);
-				
 			layer_animate.addDisplayObject3D(plane_animate);
 			
 			var loader:Loader=new Loader();
@@ -324,20 +327,30 @@
 				if(animates.indexOf(plane_animate)>-1){
 					
 					var content:MovieClip=e.currentTarget.content
-					var material:MovieMaterial;
-					if(cache){
+					if(visible==1)//如果是可见的就是LED墙
+					{
+						var material:MovieMaterial;
+						if(cache){
+							
+							material=new MovieCacheMaterial(content,true,true,true,new Rectangle(0,0,content.width,content.height));					
 						
-						material=new MovieCacheMaterial(content,true,true,true,new Rectangle(0,0,content.width,content.height));					
-					
-					}else{
-						
-						material=new MovieMaterial(content,true,true,true,new Rectangle(0,0,content.width,content.height));
-					
+						}else{
+							
+							material=new MovieMaterial(content,true,true,true,new Rectangle(0,0,content.width,content.height));
+						}
+						material.allowAutoResize=false;
+						material.smooth=true;
+						material.interactive=true;
+						plane_animate.material=material;
 					}
-					material.allowAutoResize=false;
-					material.smooth=true;
-					plane_animate.material=material;
-				
+					else
+					{
+						var colorMat:ColorMaterial = new ColorMaterial(0xA7C520, 0);
+						colorMat.doubleSided = true;
+						colorMat.interactive = true;
+						//開啟材質的互動模式。
+						plane_animate.material=colorMat;
+					}
 				}
 			});
 			return plane_animate;
@@ -351,14 +364,19 @@
 					layer_animate.removeDisplayObject3D(item);
 					scene.removeChild(item)
 					if(item.material!=null){
-						item.material.bitmap.dispose();
-						item.material.destroy();
+						if(item.material.bitmap!=null)
+						{
+							item.material.bitmap.dispose();
+							item.material.destroy();
+						}else
+						{
+							item.material.destroy();
+						}
 					}
 				}
 				
 				animates=new Array();
 			}
-		
 		}
 		private function addToStageHandler(e:Event):void{
 			

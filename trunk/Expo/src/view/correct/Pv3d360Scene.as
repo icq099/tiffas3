@@ -261,7 +261,7 @@
 		
 		}
 		//增加动画
-		public function addAminate(URL:String,init_obj:Object,cache:Boolean=false):void{
+		public function addAminate(URL:String,init_obj:Object,cache:Boolean=false):Plane{
 			
 			/* var x:Number=init_obj["x"]?init_obj["x"]:0;
 			var y:Number=init_obj["y"]?init_obj["y"]:0;
@@ -310,10 +310,13 @@
 					material.allowAutoResize=false;
 					material.smooth=true;
 					plane_animate.material=material;
+			plane_animate.addEventListener(InteractiveScene3DEvent.OBJECT_ADDED,function(e:Event):void{
+					
 				
+				});
 				}
 			});
-		
+			return plane_animate;
 		}
 		public function cleanAllAnimate():void{
 			

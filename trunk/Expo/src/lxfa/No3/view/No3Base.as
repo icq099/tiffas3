@@ -51,9 +51,9 @@ package lxfa.No3.view
 		{
 			MainSystem.getInstance().removePluginById("No3Module");
             MainSystem.getInstance().removePluginById("AnimationModule");
-			MainSystem.getInstance().showPluginById("No3SwfModule");
-			MainSystem.getInstance().showPluginById("MainMenuBottomModule");
+            MainSystem.getInstance().showPluginById("MainMenuBottomModule");
 			MainSystem.getInstance().showPluginById("MainMenuTopModule");
+            MainSystem.getInstance().showPluginById("No3SwfModule");
 //			MainSystem.getInstance().removePluginById("AnimationModule");
 		}
 		private function onClick(e:MouseEvent):void
