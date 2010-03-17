@@ -157,7 +157,7 @@ package mediators
 				//手动回收
 				MyGC.gc();
 				facade.sendNotification(FacadePv.REMOVE_MOVIE);
-				
+				updataGuiWa(goto);
 			};
 			var url:String=String(xml.Travel.Scene.@picture[goto]);
 			var type:String=String(xml.Travel.Scene[goto].@type);
@@ -197,6 +197,18 @@ package mediators
 			
 			}
 		
+		}
+		private function updataGuiWa(position:int):void
+		{
+			var id:int;
+			if(xml.Travel.Scene[position].@guiwaId=="" || xml.Travel.Scene[position].@guiwaId==null)
+			{
+				id=0;
+			}else
+			{
+				id=xml.Travel.Scene[position].@guiwaId;
+			}
+			MainSystem.getInstance().runAPIDirect("showGuiWa",[id]);
 		}
 		private function updataAnimates(position:int):void{
 			

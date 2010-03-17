@@ -47,6 +47,7 @@ package lsd.ZongHengSiHai
 		private function fanZhuClick():void
 		{
 				trace("fanzhu");
+				
 				MainSystem.getInstance().showPluginById("FanZhuSanJiaoModule");
 			    removeAreas();
 				

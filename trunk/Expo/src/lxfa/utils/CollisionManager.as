@@ -91,15 +91,33 @@ package lxfa.utils
 		{
 			if(rootObj[id]!=null)
 			{
-				rootAr.splice(rootObj[id].id,1);
+				rootAr[rootObj[id].id]=null;
 			}
 		}
+		private function clearAllText():void
+		{
+			if(textFieldArr!=null)
+			{
+				for each(var t:TextField in textFieldArr)
+				{
+					if(t!=null)
+					{
+						t.parent.removeChild(t);
+						t=null;
+					}
+				}
+			}
+			textFieldArr=new Array();
+		}
+		private var textFieldArr:Array=new Array();
 		public function showCollision():void
 		{
+			clearAllText();
 			var obj:Object;//节点
 			var array:Array;
 			var pointLeftTop:Array;//左上角的点
 			var pointRightBottom:Array;//右下角的点
+			graphics.clear();
 			graphics.lineStyle(1,0,100);
 			for(var i:int=0;i<rootAr.length;i++)
 			{
@@ -115,6 +133,7 @@ package lxfa.utils
 						var height:int=pointRightBottom[1]-pointLeftTop[1];
 						graphics.drawRect(pointLeftTop[0],pointLeftTop[1],width,height);
 						var t:TextField=new TextField();
+						textFieldArr.push(t);
 						t.mouseEnabled=false;
 						if(obj.name==null)
 						{

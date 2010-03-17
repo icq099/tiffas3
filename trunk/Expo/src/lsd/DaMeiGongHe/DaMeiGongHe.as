@@ -13,7 +13,6 @@ package lsd.DaMeiGongHe
 			init();
 		}
 		private function init():void{
-			
 			swfPlayer=new SwfPlayer("swf/dameigonghe.swf",900,480);
 			this.addChild(swfPlayer);
 			var guangXiArea:Array=[[[485,129],[610,183]]];

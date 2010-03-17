@@ -21,6 +21,7 @@ package lsd.FanZhuSanJiao
 		}
 		private function initPlayer():void{
 			flvPlayer=new FLVPlayer("movie/gx-fz1.flv",900,480,false);
+			MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
 			addChild(flvPlayer);
 			flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
@@ -29,7 +30,6 @@ package lsd.FanZhuSanJiao
       	    
       	    flvRemove();
       	    init();
-      	    MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
       	    
       	    
       }
@@ -67,6 +67,7 @@ package lsd.FanZhuSanJiao
 			 var fanZhuWindowArea:Array=[[[680,153],[892,192]]]
 			 swfPlayer=new SwfPlayer("swf/fanZhuSanJiao.swf",980,490);
 			 this.addChild(swfPlayer);
+			 
 			 CollisionManager.getInstance().addCollision(guangXiArea,guangXiClick,"fz_gx");
 			 CollisionManager.getInstance().addCollision(fanZhuWindowArea,fanZhuWindowClick,"fanZhuWindow");
 			 CollisionManager.getInstance().showCollision();
