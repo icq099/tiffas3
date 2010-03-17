@@ -20,6 +20,7 @@ package lsd.FanZhuSanJiao
 			
 		}
 		private function initPlayer():void{
+			
 			flvPlayer=new FLVPlayer("movie/gx-fz1.flv",900,480,false);
 			MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
 			addChild(flvPlayer);
@@ -27,11 +28,16 @@ package lsd.FanZhuSanJiao
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
       }
       private function on_Complete(e:NetStatusEvent):void{
-      	    
+      	    init();
       	    flvRemove();
+<<<<<<< .mine
+      	    //MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
+
+=======
       	    init();
       	    
       	    
+>>>>>>> .r513
       }
       private function flvRemove():void
 		{
@@ -44,7 +50,7 @@ package lsd.FanZhuSanJiao
 		}	
 		private function guangXiClick():void{
 			backGuangXi();
-			
+		    removeAreas();
 		}
 		private function backGuangXi():void{
 			flvPlayer=new FLVPlayer("movie/fz-gx1.flv",900,480);
@@ -66,13 +72,23 @@ package lsd.FanZhuSanJiao
 			 var guangXiArea:Array=[[[272,299],[394,377]],[[297,377],[347,410]]];
 			 var fanZhuWindowArea:Array=[[[680,153],[892,192]]]
 			 swfPlayer=new SwfPlayer("swf/fanZhuSanJiao.swf",980,490);
+             CollisionManager.getInstance().addCollision(guangXiArea,guangXiClick,"fz_gx");
+			 CollisionManager.getInstance().addCollision(fanZhuWindowArea,fanZhuWindowClick,"fanZhuWindow");
 			 this.addChild(swfPlayer);
+
 			 
 			 CollisionManager.getInstance().addCollision(guangXiArea,guangXiClick,"fz_gx");
 			 CollisionManager.getInstance().addCollision(fanZhuWindowArea,fanZhuWindowClick,"fanZhuWindow");
+
 			 CollisionManager.getInstance().showCollision();
 
 		}
+		private function removeAreas():void{
+			
+			CollisionManager.getInstance().removeCollision("fz_gx");
+			CollisionManager.getInstance().removeCollision("fanZhuWindow"); 
+		}
+	    
 		
 		private function fanZhuWindowClick():void{
 			trace("fanzhuwindow");

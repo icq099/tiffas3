@@ -19,7 +19,6 @@ package lsd.ZongHengSiHai
 			
 			 MainSystem.getInstance().stopRender();
 			 swfPlayer=new SwfPlayer("swf/zongHengSiHai.swf",980,490);
-			 this.addChild(swfPlayer);
 			 var daMeiGongHeArea:Array=[[[43,220],[157,301]]];
 			 var dongMengArea:Array=[[[163,325],[282,395]]];
 			 var fanZhuArea:Array=[[[580,296],[689,360]]];
@@ -30,7 +29,7 @@ package lsd.ZongHengSiHai
 			 CollisionManager.getInstance().addCollision(fanZhuArea,fanZhuClick,"fanzhu");
 			 CollisionManager.getInstance().addCollision(beiBuWanArea,beiBuWanClick,"beiBuWan");
 			 CollisionManager.getInstance().addCollision(xiJiangArea,xiJiangClick,"xiJiang");
-			 
+			 this.addChild(swfPlayer);
 			 CollisionManager.getInstance().showCollision();
 				
 	          
