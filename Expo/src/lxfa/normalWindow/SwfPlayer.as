@@ -20,5 +20,9 @@ package lxfa.normalWindow
 			this.scaleContent=false;//关键
 			this.load(path);
 		}
+		public function dispose():void
+		{
+			this.unloadAndStop();
+		}
 	}
 }
