@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="communication.IPlugin">
+	<mx:Script>
+		<![CDATA[
+			import yzhkof.Toolyzhkof;
+			  
+			  private var zongHengSiHai:ZongHenSiHai;
+			  private function init():void{
+			  	zongHengSiHai=new ZongHenSiHai();
+			  	addChild(Toolyzhkof.mcToUI(zongHengSiHai));
+			  	  
+			  }	
+			  
+			  public function dispose():void{
+			  	  
+			  	  zongHengSiHai.dispose();
+			  	  zongHengSiHai=null;
+			  }		
+			
+			
+		]]>
+	</mx:Script>
+	
+	
+</mx:Module>

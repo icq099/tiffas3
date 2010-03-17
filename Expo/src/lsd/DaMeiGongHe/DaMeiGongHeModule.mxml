@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()"
+		   implements="communication.IPlugin">
+		 <mx:Script>
+		 	<![CDATA[
+		 		
+		    import yzhkof.Toolyzhkof;
+			private var daMeiGongHe:DaMeiGongHe;
+
+			private function init():void
+			{
+
+				daMeiGongHe=new DaMeiGongHe();
+				addChild(Toolyzhkof.mcToUI(daMeiGongHe));
+			}
+
+			public function dispose():void
+			{
+
+				daMeiGongHe.dispose();
+				daMeiGongHe=null;
+			}
+		 		
+		 	]]>
+		 </mx:Script>
+	
+</mx:Module>
