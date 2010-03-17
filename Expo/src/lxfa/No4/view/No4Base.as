@@ -22,6 +22,7 @@ package lxfa.No4.view
 			flvPlayer.y=70;
 			this.addChild(flvPlayer);
 			flvPlayer.resume();
+			MainSystem.getInstance().startRender();
 //			MainSystem.getInstance().showPluginById("No5Module");
 			MainSystem.getInstance().gotoScene(0);//跑到绿色家园
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,flvPlayer_NetStatusHandler);

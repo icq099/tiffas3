@@ -112,7 +112,6 @@ package view
 		}
 		private function movieComplete(e:Event):void{
 			MainSystem.getInstance().startRender();
-			MainSystem.getInstance().runAPIDirect("removeFlv",[]);
 			dispatchEvent(new Event(Event.COMPLETE));
 		
 		}

@@ -40,10 +40,12 @@ package lxfa.animation.view
 		public function AnimationBase()
 		{
 			MainSystem.getInstance().addAPI("showGuiWa",initGuiWaTextModel);
+			MainSystem.getInstance().addAPI("removeGuiWa",getOut);
 //			MainSystem.getInstance().runAPIDirect("showGuiWa",[2,true]);
 		}
-		public function initGuiWaTextModel(ID:int,willPop:Boolean=false):void
+		public function initGuiWaTextModel(ID:int,willPop:Boolean=false):UIComponent
 		{
+			guiwaContainer=new UIComponent();//初始化桂娃存储的容器
 			open=false;//默认不开启下一个场景
 			isClosing=false;
 			this.ID=ID;
@@ -51,10 +53,10 @@ package lxfa.animation.view
 			guiWaTextModel=new GuiWaTextModel(guiWaTextPath);
 			guiWaTextModel.addEventListener(Event.COMPLETE,onModelComplete);
 			addCloseButton();
+			return guiwaContainer;
 		}
 		private function addCloseButton():void
 		{
-			guiwaContainer=new UIComponent();//初始化桂娃存储的容器
 			animationClose=new AnimationClose();
 			guiwaContainer.addChild(animationClose);
 			animationClose.x=200+xOffset;

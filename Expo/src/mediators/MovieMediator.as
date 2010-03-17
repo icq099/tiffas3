@@ -1,5 +1,7 @@
 package mediators
 {
+	import communication.MainSystem;
+	
 	import facades.FacadePv;
 	
 	import flash.events.Event;
@@ -69,7 +71,7 @@ package mediators
 				break;
 				case FacadePv.REMOVE_MOVIE:
 				
-					movie_viewer.disappear();
+					MainSystem.getInstance().runAPIDirect("removeFlv",[]);
 				
 				break;
 			

@@ -50,7 +50,7 @@ package lxfa.No3.view
 		public function step4():void
 		{
 			MainSystem.getInstance().removePluginById("No3Module");
-            MainSystem.getInstance().removePluginById("AnimationModule");
+            MainSystem.getInstance().runAPIDirect("removeGuiWa",[]);
             MainSystem.getInstance().showPluginById("MainMenuBottomModule");
 			MainSystem.getInstance().showPluginById("MainMenuTopModule");
             MainSystem.getInstance().showPluginById("No3SwfModule");
