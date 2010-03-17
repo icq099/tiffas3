@@ -7,11 +7,9 @@ package view
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.NetStatusEvent;
 	import flash.events.ProgressEvent;
 	
 	import gs.TweenLite;
-	import gs.easing.Cubic;
 	
 	import lxfa.view.player.FLVPlayer;
 	
@@ -33,12 +31,11 @@ package view
 		}
 		public function loadMovie(URL:String):void{
 			
-			loader=new FLVPlayer(URL,900,480,false);
 			loading_mc=new LoadingWaveRota();
-			loader.addEventListener(Event.COMPLETE,onCompleteHandler);
+			MainSystem.getInstance().runAPIDirect("addFlv",[URL]);
+			MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.COMPLETE,onCompleteHandler);
 //			loader.addEventListener(Event.INIT,onInit);
-			loader.addEventListener(ProgressEvent.PROGRESS,onProgressHandler);
-			loader.y=70;
+			MainSystem.getInstance().getPlugin("FlvModule").addEventListener(ProgressEvent.PROGRESS,onProgressHandler);
 			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
 			loading_mc.x=this.stage.stageWidth/2;
 			loading_mc.y=this.stage.stageHeight/2;
@@ -68,17 +65,17 @@ package view
 		}
 		public function disappear():void{
 			
-			if(loader!=null){
-				
-//				loader.addFrameScript(loader.totalFrames-1,null);
-				TweenLite.to(loader,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
-				
+//			if(loader!=null){
+//				
+////				loader.addFrameScript(loader.totalFrames-1,null);
+//				TweenLite.to(loader,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
+//				
+////					loader=null;
+//					loader.parent.removeChild(loader);
 //					loader=null;
-					loader.parent.removeChild(loader);
-					loader=null;
-			
-				}});
-			}
+//			
+//				}});
+//			}
 		
 		}
 		private function onProgressHandler(e:ProgressEvent):void{
@@ -104,19 +101,18 @@ package view
 		private function onCompleteHandler(e:Event):void{
 			
 			loading_mc.parent.removeChild(loading_mc);
-			Application.application.addChild(Toolyzhkof.mcToUI(loader));
-			MainSystem.getInstance().runAPIDirect("updateBottomMenu",[]);
-			TweenLite.from(loader,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
-				loader.resume();
-//				movie.play();
-			
-			}});
+//			Application.application.addChild(Toolyzhkof.mcToUI(loader));
+//			TweenLite.from(loader,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
+//				loader.resume();
+////				movie.play();
+//			
+//			}});
 //			movie.addFrameScript(movie.totalFrames-1,movieComplete);
-		loader.addEventListener(NetStatusEvent.NET_STATUS,movieComplete);
+		MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.CLOSE,movieComplete);
 		}
-		private function movieComplete(e:NetStatusEvent):void{
-			
-			loader.pause();
+		private function movieComplete(e:Event):void{
+			MainSystem.getInstance().startRender();
+			MainSystem.getInstance().runAPIDirect("removeFlv",[]);
 			dispatchEvent(new Event(Event.COMPLETE));
 		
 		}

@@ -2,17 +2,15 @@
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="communication.IPlugin">
 	<mx:Script>
 		<![CDATA[
-			import lxfa.No3Swf.view.No3SwfBase;
+			import lxfa.index.view.IndexBase;
 			import yzhkof.Toolyzhkof;
-			private var no3swf:No3SwfBase;
+			private var inquire:InquireBase;
 			private function init():void
 			{
-				no3swf=new No3SwfBase();
-				this.addChild(no3swf);
+				inquire=new InquireBase();
 			}
 			public function dispose():void
 			{
-				no3swf.dispose();
 			}
 		]]>
 	</mx:Script>

@@ -4,7 +4,6 @@ package lxfa.animation.view
 	
 	import communication.MainSystem;
 	
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
@@ -13,18 +12,17 @@ package lxfa.animation.view
 	import lxfa.view.event.Mp3PlayerEvent;
 	import lxfa.view.player.Mp3Player;
 	
-	import mx.core.Application;
+	import mx.core.UIComponent;
+	import mx.managers.PopUpManager;
 	
-	import yzhkof.Toolyzhkof;
-	
-	public class AnimationBase  extends Sprite
+	public class AnimationBase  extends UIComponent
 	{
-		private var animationIn:AnimationIn;
-		private var animationText:SayText;
-		private var animationSay:AnimationSay;
-		private var animationOut:AnimationOut;
+		private var animationIn:AnimationIn;//进场动画
+		private var animationText:SayText;//说话的文本
+		private var animationSay:AnimationSay;//说话的动画
+		private var animationOut:AnimationOut;//退场的动画
 		private var animationClose:AnimationClose;//桂娃的关闭按钮
-		private var guiWaTextModel:GuiWaTextModel;
+		private var guiWaTextModel:GuiWaTextModel;//数据库
 		private var myTimerWithTask:MyTimerWithTask;
 		private var texts:Array=new Array;
 		private var times:Array=new Array();
@@ -32,23 +30,33 @@ package lxfa.animation.view
 		private var ID:int;
 		private var mp3Player:Mp3Player;//说话的内容
 		private var guiWaTextPath:String="xml/GuiWaText.xml";//model的路径
-		private const xOffset:int=680;
+		private const xOffset:int=680;//X偏移量,用于调整整个桂娃的位置，毕竟桂娃的组件很多,可以一次性调
 		private const yOffset:int=300;
+		private var guiwaContainer:UIComponent;//桂娃的容器,桂娃的所有部件都在这
+		private var willPop:Boolean=false;//是否需要POP出来
+		private var inquireSwc:InquireSwc;
+		private var open:Boolean=false;//是否开启下一个场景
+		private var isClosing:Boolean=false;//桂娃是否处于关闭状态
 		public function AnimationBase()
 		{
 			MainSystem.getInstance().addAPI("showGuiWa",initGuiWaTextModel);
+//			MainSystem.getInstance().runAPIDirect("showGuiWa",[2,true]);
 		}
-		public function initGuiWaTextModel(ID:int):void
+		public function initGuiWaTextModel(ID:int,willPop:Boolean=false):void
 		{
+			open=false;//默认不开启下一个场景
+			isClosing=false;
 			this.ID=ID;
+			this.willPop=willPop;
 			guiWaTextModel=new GuiWaTextModel(guiWaTextPath);
 			guiWaTextModel.addEventListener(Event.COMPLETE,onModelComplete);
 			addCloseButton();
 		}
 		private function addCloseButton():void
 		{
+			guiwaContainer=new UIComponent();//初始化桂娃存储的容器
 			animationClose=new AnimationClose();
-			Application.application.addChild(Toolyzhkof.mcToUI(animationClose));
+			guiwaContainer.addChild(animationClose);
 			animationClose.x=200+xOffset;
 			animationClose.y=0+yOffset;
 			animationClose.alpha=0;
@@ -56,6 +64,8 @@ package lxfa.animation.view
 		}
 		private function onCloseButtonClick(e:MouseEvent):void
 		{
+			animationClose.mouseEnabled=false;
+			dispatchEvent(new Event(Event.CLOSE));
 			getOut();
 		}
 		private function onModelComplete(e:Event):void
@@ -80,8 +90,30 @@ package lxfa.animation.view
 			animationIn=new AnimationIn();
 			animationText=new SayText();
 			animationText.visible=false;
-			Application.application.addChild(Toolyzhkof.mcToUI(animationText));
-			Application.application.addChild(Toolyzhkof.mcToUI(animationIn));
+			if(willPop)
+			{
+				inquireSwc=new InquireSwc();//询问是否前进的窗口
+				guiwaContainer.addChild(inquireSwc);
+				inquireSwc.x=300;inquireSwc.y=150;
+				inquireSwc.no.addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void{
+					dispatchEvent(new Event(Event.CLOSE));
+					open=false;
+					inquireSwc.no.mouseEnabled=false;
+					getOut();//NO就退出
+				});
+				inquireSwc.yes.addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void{
+					open=true;
+					inquireSwc.yes.mouseEnabled=false;
+					getOut();//yes也退出
+				});
+				PopUpManager.addPopUp(guiwaContainer,this, true);
+		        PopUpManager.centerPopUp(guiwaContainer); 
+			}else
+			{
+				this.addChild(guiwaContainer);
+			}
+			guiwaContainer.addChild(animationText);
+			guiwaContainer.addChild(animationIn);
 			animationIn.x=-200+xOffset;
 			animationIn.y=50+yOffset;
 			initMyTimerWithTask();
@@ -95,17 +127,34 @@ package lxfa.animation.view
 		//退出
 		private function getOut():void
 		{
-			animationClose.parent.removeChild(animationClose);
-			animationClose=null;
-			animationText.parent.removeChild(animationText);
-			animationText=null;
-			animationSay.parent.removeChild(animationSay);
-			animationSay=null;
+			isClosing=true;
 			animationOut=new AnimationOut();
-			Application.application.addChild(Toolyzhkof.mcToUI(animationOut));
+			guiwaContainer.addChild(animationOut);
 			animationOut.x=-190+xOffset;
 			animationOut.y=50+yOffset;
 			animationOut.addFrameScript(animationOut.totalFrames-1,dispose);
+			if(animationClose!=null)
+			{
+				animationClose.parent.removeChild(animationClose);
+				animationClose=null;
+			}
+			if(animationText!=null)
+			{
+				animationText.parent.removeChild(animationText);
+				animationText=null;
+			}
+			if(animationSay!=null)
+			{
+				animationSay.stop();
+				animationSay.parent.removeChild(animationSay);
+				animationSay=null;
+			}
+			if(animationIn!=null)
+			{
+				animationIn.stop();
+				animationIn.parent.removeChild(animationIn);
+				animationIn=null
+			}
 		}
 		public function dispose():void
 		{
@@ -136,18 +185,28 @@ package lxfa.animation.view
 				animationClose.parent.removeChild(animationClose);
 				animationClose=null;
 			}
-			if(animationIn!=null)
-			{
-				animationIn.stop();
-				animationIn.parent.removeChild(animationIn);
-				animationIn=null;
-			}
 			if(animationSay!=null)
 			{
 				animationSay.parent.removeChild(animationSay);
 				animationSay=null;
 			}
-			MainSystem.getInstance().removePluginById("AnimationModule");
+			if(inquireSwc!=null)
+			{
+				inquireSwc=null;
+			}
+			if(willPop)
+			{
+				PopUpManager.removePopUp(guiwaContainer);
+			}
+			if(open)
+			{
+				dispatchEvent(new Event(Event.OPEN));
+			}
+			if(guiwaContainer!=null)
+			{
+				guiwaContainer=null;
+			}
+//			MainSystem.getInstance().removePluginById("AnimationModule");
 		}
 		private function initMyTimerWithTask():void
 		{
@@ -195,8 +254,11 @@ package lxfa.animation.view
 				animationIn.stop();
 				animationIn.parent.removeChild(animationIn);
 				animationIn=null;
+			}
+			if(!isClosing)
+			{
 				animationSay=new AnimationSay();
-				Application.application.addChild(Toolyzhkof.mcToUI(animationSay));
+				guiwaContainer.addChild(animationSay);
 				animationSay.x=122+xOffset;
 				animationSay.y=141+yOffset;
 				animationSay.addEventListener(MouseEvent.MOUSE_OVER,onMouseOver);

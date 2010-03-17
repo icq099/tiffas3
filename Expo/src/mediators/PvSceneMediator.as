@@ -1,5 +1,7 @@
 package mediators
 {
+	import communication.MainSystem;
+	
 	import facades.FacadePv;
 	
 	import flash.display.BitmapData;
@@ -188,7 +190,6 @@ package mediators
 				var arrow:Plane=viewer.addArrow(xml_compass.Arrow.@rotation[i],xml_compass.Arrow[i].@tip);
 				
 				arrow.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK,function(e:InteractiveScene3DEvent):void{
-					
 					var travel:PTravel=facade.retrieveProxy(PTravel.NAME) as PTravel;
 					travel.changePosition(xml_compass.Arrow.@destination[viewer.arrows.indexOf(e.currentTarget)]);
 				
@@ -205,9 +206,8 @@ package mediators
 			for(var i:int=0;i<xml_animate.length();i++){
 				
 				cache=xml_animate[i].@cache==1?true:false;				
-				viewer.addAminate(xml_animate[i].@url,{x:xml_animate[i].@x,y:xml_animate[i].@y,z:xml_animate[i].@z,rotationX:xml_animate[i].@rotationX,rotationY:xml_animate[i].@rotationY,rotationZ:xml_animate[i].@rotationZ,width:xml_animate[i].@width,height:xml_animate[i].@height,segmentsW:xml_animate[i].@segmentsW,segmentsH:xml_animate[i].@segmentsH,offset:xml_animate[i].@offset,angle:xml_animate[i].@angle,force:xml_animate[i].@force},cache);
+				var plane:Plane=viewer.addAminate(xml_animate[i].@url,{x:xml_animate[i].@x,y:xml_animate[i].@y,z:xml_animate[i].@z,rotationX:xml_animate[i].@rotationX,rotationY:xml_animate[i].@rotationY,rotationZ:xml_animate[i].@rotationZ,width:xml_animate[i].@width,height:xml_animate[i].@height,segmentsW:xml_animate[i].@segmentsW,segmentsH:xml_animate[i].@segmentsH,offset:xml_animate[i].@offset,angle:xml_animate[i].@angle,force:xml_animate[i].@force,onClick:xml_animate[i].@onClick,visible:xml_animate[i].@visble},cache);
 			}
-		
 		}
 		private function updataHotPoints(position:int):void{
 			

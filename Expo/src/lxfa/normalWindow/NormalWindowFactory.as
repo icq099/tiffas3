@@ -3,8 +3,6 @@ package lxfa.normalWindow
 	/****************************
 	 * 根据	ID参建标准窗
 	 * */
-	import communication.MainSystem;
-	
 	import flash.events.Event;
 	
 	import lxfa.shanshuishihua.model.ShanShuiShiHuaModel;
@@ -54,9 +52,10 @@ package lxfa.normalWindow
 		//标准窗关闭的时候
 		private function onnormalWindowClose(e:Event):void
 		{
+			this.dispatchEvent(new Event(Event.CLOSE));
 			normalWindow=null;
 			PopUpManager.removePopUp(this);
-			MainSystem.getInstance().removePluginById("NormalWindowModule");
+//			MainSystem.getInstance().removePluginById("NormalWindowModule");
 		}
 	}
 }

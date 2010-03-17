@@ -8,7 +8,13 @@
 			private function init():void
 			{
 				animationBase=new AnimationBase();
-				this.addChild(Toolyzhkof.mcToUI(animationBase));
+				this.addChild(animationBase);
+				animationBase.addEventListener(Event.OPEN,function(e:Event):void{//需要打开下一个场景
+					dispatchEvent(new Event(Event.OPEN));
+				});
+				animationBase.addEventListener(Event.CLOSE,function(e:Event):void{//不需要打开下一个场景
+					dispatchEvent(new Event(Event.CLOSE));
+				});
 			}
 			public function dispose():void
 			{
