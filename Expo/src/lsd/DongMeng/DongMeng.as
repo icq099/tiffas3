@@ -21,6 +21,7 @@ package lsd.DongMeng
 			
 			flvPlayer=new FLVPlayer("movie/dm-fz1.flv",900,480);
 			addChild(flvPlayer);
+			
 			flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
        }
