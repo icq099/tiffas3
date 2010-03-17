@@ -36,7 +36,6 @@ package lxfa.index.view
 		}
 		private function on_btn_enter_click(e:MouseEvent):void
 		{
-			MainSystem.getInstance().runAPIDirect("gotoScene",[0]);
 			indexSwc.mouseEnabled=false;
 			this.removeChild(indexSwc);
 			this.removeChild(flowerFlvSwf);
