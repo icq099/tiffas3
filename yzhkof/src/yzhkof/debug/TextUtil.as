@@ -67,7 +67,7 @@ package yzhkof.debug
 		{
 			var method_xmllist:XMLList;
 			if(!isClass)
-			{
+			{ 
 				method_xmllist=xml.factory.method;
 			}
 			else
