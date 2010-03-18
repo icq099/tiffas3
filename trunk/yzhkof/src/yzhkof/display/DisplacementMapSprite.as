@@ -15,16 +15,21 @@ package yzhkof.display
 		{
 			super(width, height, transparent, fillColor);
 			//drawNew=false;
-			yOffset=-5;
+			offset=new Point(0,-5);
 			maskBitmapdata=new BitmapData(width,height);
 			filter = new DisplacementMapFilter(maskBitmapdata,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN,9,9,DisplacementMapFilterMode.IGNORE);
 		}
 		protected override function onRend():void
 		{
-			maskBitmapdata.perlinNoise(16, 16, 1, getTimer(), false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [new Point(0,-4)]);
+			maskBitmapdata.perlinNoise(10, 10, 1, getTimer(), false, true, BitmapDataChannel.RED | BitmapDataChannel.GREEN, false, [offset]);
 			bitmapData.applyFilter(bitmapData,clipRect,new Point(),filter);
 			super.onRend();
 		}
 		
+		public override function dispose():void
+		{
+			maskBitmapdata.dispose();
+			super.dispose();
+		}
 	}
 }

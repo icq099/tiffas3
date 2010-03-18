@@ -6,17 +6,15 @@ package yzhkof.display
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import yzhkof.debug.traceObject;
 	import yzhkof.display.event.DisplayEvent;
 	
 	public class TailSprite extends BitmapSprite
 	{
 		public var blurFilter:BlurFilter=new BlurFilter(10,10);
-		public var colorTransForm:ColorTransform=new ColorTransform(1,1,1,1,0,0,0,-1);
+		public var colorTransForm:ColorTransform=new ColorTransform(1,1,1,1,0,0,0,0);
 		public var filterSlef:Boolean=false;
 		
-		private var _xOffset:Number=0;
-		private var _yOffset:Number=0;
+		private var _offset:Point=new Point();
 		private var upDataClipRectNextRend:Boolean=false;
 		
 		public function TailSprite(width:Number, height:Number, transparent:Boolean=true, fillColor:uint=0)
@@ -25,23 +23,16 @@ package yzhkof.display
 			drawNew=false;
 			addEventListener(DisplayEvent.SIZE_UPDATA,onSizeUpdata);
 		}
-		public function set xOffset(value:Number):void
+		public function set offset(value:Point):void
 		{
-			_xOffset=value;
-			upDataClipRectNextRend=true;
+			if((value.x!=_offset.x)||(value.y!=_offset.y)){
+				_offset=value;
+				upDataClipRectNextRend=true;
+			}
 		}
-		public function get xOffset():Number
+		public function get offset():Point
 		{
-			return _xOffset;
-		}
-		public function set yOffset(value:Number):void
-		{
-			_yOffset=value;
-			upDataClipRectNextRend=true;
-		}
-		public function get yOffset():Number
-		{
-			return _yOffset;
+			return _offset;
 		}
 		protected override function onRend():void
 		{
@@ -55,13 +46,13 @@ package yzhkof.display
 //				}
 			if(colorTransForm)
 				bitmapData.colorTransform(bitmapData.rect,colorTransForm);
-			if((xOffset!=0)||(yOffset!=0))
+			if((_offset.x!=0)||(_offset.y!=0))
 			{
-				bitmapData.scroll(xOffset,yOffset);
-				if(xOffset!=0)
-					bitmapData.fillRect(new Rectangle(xOffset>0?0:(bitmapData.width+xOffset),0,Math.abs(xOffset),bitmapData.height),fillColor);
-				if(yOffset!=0)
-					bitmapData.fillRect(new Rectangle(0,yOffset>0?0:(bitmapData.height+yOffset),bitmapData.width,Math.abs(yOffset)),fillColor);
+				bitmapData.scroll(_offset.x,_offset.y);
+				if(_offset.x!=0)
+					bitmapData.fillRect(new Rectangle(_offset.x>0?0:(bitmapData.width+_offset.x),0,Math.abs(_offset.x),bitmapData.height),fillColor);
+				if(_offset.y!=0)
+					bitmapData.fillRect(new Rectangle(0,_offset.y>0?0:(bitmapData.height+_offset.y),bitmapData.width,Math.abs(_offset.y)),fillColor);
 			}	
 			
 			super.onRend();
@@ -75,7 +66,7 @@ package yzhkof.display
 		}
 		private function updataClip():void
 		{
-			clipRect=new Rectangle(xOffset>0?xOffset:0,yOffset>0?yOffset:0,bitmapData.width-Math.abs(xOffset),bitmapData.height-Math.abs(yOffset));
+			clipRect=new Rectangle(_offset.x>0?_offset.x:0,_offset.y>0?_offset.y:0,bitmapData.width-Math.abs(_offset.x),bitmapData.height-Math.abs(_offset.y));
 			upDataClipRectNextRend=false;
 		}
 		private function onSizeUpdata(e:Event):void
