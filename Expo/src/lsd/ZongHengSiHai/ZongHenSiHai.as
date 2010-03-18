@@ -17,7 +17,7 @@ package lsd.ZongHengSiHai
 		
 		private function init():void{
 			
-			 MainSystem.getInstance().stopRender();
+			 MainSystem.getInstance().disable360System();
 			 swfPlayer=new SwfPlayer("swf/zongHengSiHai.swf",980,490);
 			 var daMeiGongHeArea:Array=[[[43,220],[157,301]]];
 			 var dongMengArea:Array=[[[163,325],[282,395]]];
@@ -30,7 +30,7 @@ package lsd.ZongHengSiHai
 			 CollisionManager.getInstance().addCollision(beiBuWanArea,beiBuWanClick,"beiBuWan");
 			 CollisionManager.getInstance().addCollision(xiJiangArea,xiJiangClick,"xiJiang");
 			 this.addChild(swfPlayer);
-			 CollisionManager.getInstance().showCollision();
+			// CollisionManager.getInstance().showCollision();
 				
 	          
 		}
@@ -38,10 +38,14 @@ package lsd.ZongHengSiHai
 		private function daMeiGongHeClick():void
 		{
 				trace("daMeiGongHe");
+				MainSystem.getInstance().showPluginById("DaMeiGongHeModule");
+			    removeAreas();
 		}
 		private function dongMengClick():void
 		{
 				trace("dongmeng");
+				MainSystem.getInstance().showPluginById("DongMengModule")
+				removeAreas();
 		}
 		private function fanZhuClick():void
 		{
@@ -61,17 +65,15 @@ package lsd.ZongHengSiHai
 		}
 		private function removeAreas():void{
 			
-			CollisionManager.getInstance().removeCollision("dongMeng");
-			CollisionManager.getInstance().removeCollision("daMeiGongHe");
-			CollisionManager.getInstance().removeCollision("fanzhu");
-			CollisionManager.getInstance().removeCollision("beiBuWan");
-			CollisionManager.getInstance().removeCollision("xiJiang");
+			
+			CollisionManager.getInstance().removeAllCollision();
 			
 		}
 		public function dispose():void{
-			swfPlayer.parent.removeChild(swfPlayer);
-			swfPlayer=null;
-			trace("");
+			
+				swfPlayer.parent.removeChild(swfPlayer);
+				swfPlayer.dispose();
+		        swfPlayer=null;
 		}
 		
 		

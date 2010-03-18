@@ -16,7 +16,7 @@
 
 			public function dispose():void
 			{
-
+                daMeiGongHe.parent.removeChild(daMeiGongHe);
 				daMeiGongHe.dispose();
 				daMeiGongHe=null;
 			}

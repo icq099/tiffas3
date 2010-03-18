@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()"
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml"
+		   layout="absolute"
+		   width="400"
+		   height="300"
+		   creationComplete="init()"
 		   implements="communication.IPlugin">
-		   <mx:Script>
-		   	<![CDATA[
-		   		import yzhkof.Toolyzhkof;
-		   		   private var fanZhuSanJiao:FanZhuSanJiao;
-		   		   private function init():void{
-		   		   	    
-		   		   	    fanZhuSanJiao=new FanZhuSanJiao();
-		   		   	    addChild(Toolyzhkof.mcToUI(fanZhuSanJiao));
-		   		   }
-		   		  public  function dispose():void{
-		   		  	   
-		   		  	   fanZhuSanJiao.dispose();
-		   		  	   fanZhuSanJiao=null;
-		   		  }
-		   		
-		   		
-		   	]]>
-		   </mx:Script>
-	
+	<mx:Script>
+		<![CDATA[
+			import yzhkof.Toolyzhkof;
+			private var fanZhuSanJiao:FanZhuSanJiao;
+
+			private function init():void
+			{
+
+				fanZhuSanJiao=new FanZhuSanJiao();
+				addChild(Toolyzhkof.mcToUI(fanZhuSanJiao));
+			}
+
+			public function dispose():void
+			{
+				
+					fanZhuSanJiao.dispose();
+					fanZhuSanJiao.parent.removeChild(fanZhuSanJiao);
+					fanZhuSanJiao=null;
+			
+				
+			}
+		]]>
+	</mx:Script>
+
 </mx:Module>

@@ -19,7 +19,7 @@
 
 			public function dispose():void
 			{
-
+                dongMeng.parent.removeChild(dongMeng);
 				dongMeng.dispose();
 				dongMeng=null;
 			}
