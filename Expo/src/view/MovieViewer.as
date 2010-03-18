@@ -2,6 +2,7 @@
 
 package view
 {
+	import communication.Event.ScriptAPIAddEvent;
 	import communication.MainSystem;
 	
 	import flash.display.MovieClip;
@@ -24,24 +25,32 @@ package view
 		private var movie:MovieClip;
 		private var cover:Sprite;
 		private var loading_mc:LoadingWaveRota;
-		
+		private var URL:String;
 		public function MovieViewer()
 		{
 			
 		}
 		public function loadMovie(URL:String):void{
-			
+			this.URL=URL;
 			loading_mc=new LoadingWaveRota();
-			MainSystem.getInstance().runAPIDirect("addFlv",[URL]);
-			MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.COMPLETE,onCompleteHandler);
-//			loader.addEventListener(Event.INIT,onInit);
-			MainSystem.getInstance().getPlugin("FlvModule").addEventListener(ProgressEvent.PROGRESS,onProgressHandler);
+			MainSystem.getInstance().showPluginById("FlvModule");
+			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,on_add_api);
 			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
 			loading_mc.x=this.stage.stageWidth/2;
 			loading_mc.y=this.stage.stageHeight/2;
 			
 			TweenLite.from(loading_mc,0.5,{alpha:0});
 		
+		}
+		private function on_add_api(e:ScriptAPIAddEvent):void
+		{
+			if(e.fun_name=="addFlv")
+			{
+				MainSystem.getInstance().runAPIDirect("addFlv",[URL]);
+				MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.COMPLETE,onCompleteHandler);
+				MainSystem.getInstance().getPlugin("FlvModule").addEventListener(ProgressEvent.PROGRESS,onProgressHandler);
+			}
+			MainSystem.getInstance().removeEventListener(ScriptAPIAddEvent.ADD_API,on_add_api);
 		}
 		public function enableCover():void{
 			
@@ -113,7 +122,6 @@ package view
 		private function movieComplete(e:Event):void{
 			MainSystem.getInstance().startRender();
 			dispatchEvent(new Event(Event.COMPLETE));
-		
 		}
 
 	}

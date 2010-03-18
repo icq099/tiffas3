@@ -22,6 +22,7 @@ package lxfa.yangmengbagui.view
 		{
 			MainSystem.getInstance().disable360System();
 			MainSystem.getInstance().addAPI("showYangMengBaGui",showYangMengBaGui);
+			MainSystem.getInstance().addAPI("removeMengBaGui",showYangMengBaGui);
 			MainSystem.getInstance().runAPIDirect("showYangMengBaGui",[true]);
 		}
 		public function showYangMengBaGui(withMovie:Boolean):void

@@ -127,22 +127,7 @@ package mediators
 				var loader:ModuleLoader=plugin_map.getValue(String(xml.@id)).loader;
 				plugin_map.remove(String(xml.@id));
 				IPlugin(loader.child).dispose();
-			    if(xml.@layer==null || xml.@layer=="")
-			    {
-			    	currentPluginLayer=1;
-			    }else if(xml.@layer>3)
-			    {
-			    	currentPluginLayer=3;
-			    }
-			    else if(xml.@layer<0)
-			    {
-			    	currentPluginLayer=0;
-			    }
-			    else
-			    {
-			    	currentPluginLayer=xml.@layer;
-			    }
-				cs[currentPluginLayer].removeChild(loader);
+				plugin_container.removeChild(loader);
 				loader.unloadModule();
 			}catch(e:Error){
 				trace(e);

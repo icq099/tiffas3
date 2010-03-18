@@ -44,6 +44,8 @@ package lxfa.flvModule
 		private function onClose(e:Event):void
 		{
 			this.dispatchEvent(new Event(Event.CLOSE));
+			flvPlayer.removeEventListener(Event.CLOSE,onClose);
+			flvPlayer.removeEventListener(NetStatusEvent.NET_STATUS,on_play_complete);
 		}
 		public function dispose():void
 		{

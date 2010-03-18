@@ -31,11 +31,11 @@ package lxfa.inquire
 			inquireContainer=new UIComponent();
 			inquireContainer.addChild(inquireSwc);
 	        //显示桂娃
-	        MainSystem.getInstance().runAPIDirect("showGuiWa",[id]);
-	        var ui:UIComponent=new UIComponent();
-	        ui.addChild(MainSystem.getInstance().getPlugin("AnimationModule"));
-	        PopUpManager.addPopUp(ui,DisplayObject(Application.application),true);
-	        PopUpManager.centerPopUp(ui); 
+	        MainSystem.getInstance().runAPIDirect("addAnimate",[id]);
+//	        var ui:UIComponent=new UIComponent();
+//	        ui.addChild(MainSystem.getInstance().getPlugin("AnimateModule"));
+//	        PopUpManager.addPopUp(ui,DisplayObject(Application.application),true);
+//	        PopUpManager.centerPopUp(ui); 
 			//POP出来
 			PopUpManager.addPopUp(inquireContainer,DisplayObject(Application.application), true);
 	        PopUpManager.centerPopUp(inquireContainer); 

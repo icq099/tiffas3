@@ -201,14 +201,14 @@ package mediators
 		private function updataGuiWa(position:int):void
 		{
 			var id:int;
-			if(xml.Travel.Scene[position].@guiwaId=="" || xml.Travel.Scene[position].@guiwaId==null)
+			if(xml.Travel.Scene[position].@animateId=="" || xml.Travel.Scene[position].@animateId==null)
 			{
 				id=0;
 			}else
 			{
-				id=xml.Travel.Scene[position].@guiwaId;
+				id=xml.Travel.Scene[position].@animateId;
 			}
-			MainSystem.getInstance().runAPIDirect("showGuiWa",[id]);
+			MainSystem.getInstance().runAPIDirect("addAnimate",[id,true]);
 		}
 		private function updataAnimates(position:int):void{
 			

@@ -1,13 +1,12 @@
 package commands
 {
+	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
 	import facades.FacadePv;
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
-	
-	import gs.TweenMax;
 	
 	import mediators.PvSceneMediator;
 	
@@ -98,6 +97,8 @@ package commands
 		}
 		private function handleNotificationCommand():void
 		{
+			//罗盘旋转完毕就开始抛出插件刷新的事件
+			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新的事件
 			if(inquire==1)
 			{
 				facade.sendNotification(FacadePv.STOP_RENDER);
@@ -105,10 +106,12 @@ package commands
 				var dis:DisplayObject=MainSystem.getInstance().getPlugin("AnimationModule");
 				if(dis!=null)
 				{
+					//要打开下一个场景
 					dis.addEventListener(Event.OPEN,function(e:Event):void{
 						facade.sendNotification(FacadePv.START_RENDER);
 						sendNotificationCommand();
 					});
+					//不打开下一个场景
 					dis.addEventListener(Event.CLOSE,function(e:Event):void{
 						facade.sendNotification(FacadePv.START_RENDER);
 						var travel:PTravel=facade.retrieveProxy(PTravel.NAME) as PTravel;
