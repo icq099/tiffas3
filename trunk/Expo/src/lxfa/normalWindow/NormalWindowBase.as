@@ -1,5 +1,6 @@
 package lxfa.normalWindow
 {
+	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
 	import flash.display.DisplayObject;
@@ -29,6 +30,7 @@ package lxfa.normalWindow
 	            normalWindowFactory.y=80;
 //	            MainSystem.getInstance().stopRender();
 	            normalWindowFactory.addEventListener(Event.CLOSE,onnormalWindowFactoryClose);
+//	            MainSystem.getInstance().addEventListener(PluginEvent.UPDATE,on_plugin_update);
 			}
 		}
 		private function onnormalWindowFactoryClose(e:Event):void

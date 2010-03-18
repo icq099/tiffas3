@@ -1,11 +1,10 @@
 package lxfa.mainMenuTop
 {
+	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	
-	import lxfa.normalWindow.SwfPlayer;
 	
 	public class MainMenuTop extends Sprite
 	{
@@ -37,6 +36,11 @@ package lxfa.mainMenuTop
 				hasBackGround=true;
 				MainSystem.getInstance().runAPIDirect("playSound",[]);
 			}
+		}
+		public function dispose():void
+		{
+			top.parent.removeChild(top);
+			top=null;
 		}
 	}
 }

@@ -23,7 +23,7 @@ package lxfa.No3.view
 		private function initAnimation():void
 		{
 //			MainSystem.getInstance().showPluginById("AnimationModule");
-			MainSystem.getInstance().runAPIDirect("showGuiWa",[0]);
+			MainSystem.getInstance().runAPIDirect("addAnimate",[0]);
 		}
 		private function initFLVPlayer():void
 		{
@@ -50,7 +50,7 @@ package lxfa.No3.view
 		public function step4():void
 		{
 			MainSystem.getInstance().removePluginById("No3Module");
-            MainSystem.getInstance().runAPIDirect("removeGuiWa",[]);
+            MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
             MainSystem.getInstance().showPluginById("MainMenuBottomModule");
 			MainSystem.getInstance().showPluginById("MainMenuTopModule");
             MainSystem.getInstance().showPluginById("No3SwfModule");

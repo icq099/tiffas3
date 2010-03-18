@@ -71,7 +71,7 @@ package mediators
 				break;
 				case FacadePv.REMOVE_MOVIE:
 				
-					MainSystem.getInstance().runAPIDirect("removeFlv",[]);
+					MainSystem.getInstance().removePluginById("FlvModule");
 				
 				break;
 			

@@ -4,6 +4,7 @@ package lxfa.view.player
 	 * MP3播放器
 	 * */
 	import flash.display.Sprite;
+	import flash.errors.IOError;
 	import flash.events.Event;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
@@ -26,7 +27,8 @@ package lxfa.view.player
 		}
 		private function initSound():void
 		{
-			sound=new Sound(new URLRequest(musicUrl));
+			sound=new Sound();
+			sound.load(new URLRequest(musicUrl));
 			sound.addEventListener(Event.COMPLETE,onComplete);
 			if(loop)
 			{
@@ -71,6 +73,13 @@ package lxfa.view.player
 		public function close():void
 		{
 			soundChannel.stop();
+			try
+			{
+				sound.close();
+			}catch(e:IOError)
+			{
+				
+			}
 			sound=null;
 			soundChannel=null;
 		}

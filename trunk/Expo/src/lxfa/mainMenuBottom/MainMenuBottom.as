@@ -1,5 +1,6 @@
 package lxfa.mainMenuBottom
 {
+	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
 	import flash.display.Sprite;
@@ -7,8 +8,6 @@ package lxfa.mainMenuBottom
 	import flash.events.MouseEvent;
 	
 	import mx.core.Application;
-	
-	import yzhkof.Toolyzhkof;
 	
 	public class MainMenuBottom extends Sprite
 	{
