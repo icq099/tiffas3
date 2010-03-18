@@ -1,6 +1,9 @@
 package yzhkof.debug
 {
+	import flash.sampler.getMemberNames;
 	import flash.utils.describeType;
+	import flash.utils.getDefinitionByName;
+	import flash.utils.getQualifiedClassName;
 	
 	import yzhkof.util.XmlUtil;
 	
@@ -9,22 +12,21 @@ package yzhkof.debug
 		public function TextUtil()
 		{
 		}
-		public static function objToTextTrace(obj:Object):String
+		public static function objToTextTrace(obj:Object,showFunctionReturn:Boolean=false):String
 		{
 			var final_text:String="";
 			var title_text:String="";
 			var objname:String;
-			var xml:XML=describeType(obj);
+			var xml:XML=describeType(getDefinitionByName(getQualifiedClassName(obj)));
+			var isClass:Boolean=obj is Class;
 			
 			if(!isSimple(obj))
 			{
-				var accessor_xmllist:XMLList;
-				accessor_xmllist=xml.accessor.(@access!="writeonly");
-				accessor_xmllist=XmlUtil.sortOnXMLList(accessor_xmllist,"@name");
+				var accessor_xmllist:XMLList=getAccessProperty(xml,isClass);				
 				
 				for each(var x:XML in accessor_xmllist)
 				{
-					final_text+=addSpace("<"+x.@name+"> : "+obj[x.@name])+"\n";
+					final_text+=addSpace("{"+x.@name+"} : "+obj[x.@name])+"\n";
 					if(x.@name=="name")
 						objname=obj.name;
 				}
@@ -33,8 +35,19 @@ package yzhkof.debug
 				{
 					for(var ob_p:Object in obj)
 					{
-						final_text+=addSpace("<"+ob_p+"> : "+obj[ob_p])+"\n";	
+						final_text+=addSpace("{"+ob_p+"} : "+obj[ob_p])+"\n";	
 					}
+				}
+				if(showFunctionReturn)
+				{
+					var method_xmllist:XMLList=getReturnOnlyMethod(xml,isClass);
+					for each(var xx:XML in method_xmllist)
+					{
+						final_text+=addSpace("["+xx.@name+"()] : "+obj[xx.@name]())+"\n";
+					}
+				}else
+				{
+					final_text+=addSpace("[toString()] : "+obj.toString())+"\n";
 				}
 			}else
 			{
@@ -49,6 +62,46 @@ package yzhkof.debug
 			final_text=title_text+final_text;
 			
 			return final_text;
+		}
+		public static function getMethod(xml:XML,isClass:Boolean=false):XMLList
+		{
+			var method_xmllist:XMLList;
+			if(!isClass)
+			{
+				method_xmllist=xml.factory.method;
+			}
+			else
+			{
+				method_xmllist=xml.method;
+			}
+			return method_xmllist;
+		}
+		public static function getReturnOnlyMethod(xml:XML,isClass:Boolean=false):XMLList
+		{
+			var method_xmllist:XMLList=getMethod(xml,isClass);
+			var return_only_method_xmllist:XMLList=new XMLList();
+			for each(var x:XML in method_xmllist.(@returnType!="void"))
+			{
+				if(!x.hasOwnProperty("parameter"))
+					return_only_method_xmllist+=x;
+			}
+			return return_only_method_xmllist;
+		}
+		public static function getAccessProperty(xml:XML,isClass:Boolean=false):XMLList
+		{
+			var accessor_xmllist:XMLList;
+			if(!isClass)
+			{
+				accessor_xmllist=xml.factory.accessor.(@access!="writeonly");
+				accessor_xmllist+=xml.factory.variable;
+			}
+			else
+			{
+				accessor_xmllist=xml.accessor.(@access!="writeonly")
+				accessor_xmllist+=xml.variable;
+			}
+			accessor_xmllist=XmlUtil.sortOnXMLList(accessor_xmllist,"@name");
+			return accessor_xmllist;
 		}
 		private static function isSimple(obj:Object):Boolean
 		{
