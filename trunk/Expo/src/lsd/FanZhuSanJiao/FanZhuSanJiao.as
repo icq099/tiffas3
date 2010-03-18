@@ -24,33 +24,42 @@ package lsd.FanZhuSanJiao
 			flvPlayer=new FLVPlayer("movie/gx-fz1.flv",900,480,false);
 			MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
 			addChild(flvPlayer);
+			trace("A")
 			flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
       }
       private function on_Complete(e:NetStatusEvent):void{
       	    init();
       	    flvRemove();
+<<<<<<< .mine
+=======
       	    //MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
 
       	    init();
       	    
       	    
+>>>>>>> .r520
       }
-      private function flvRemove():void
-		{
+     private function flvRemove():void
+	{
 			if (flvPlayer!=null)
-			{
-				flvPlayer.parent.removeChild(flvPlayer);
+			{   
+				if(flvPlayer.hasEventListener(NetStatusEvent.NET_STATUS))
+				{
+					flvPlayer.removeEventListener(NetStatusEvent.NET_STATUS,on_Complete);
+					flvPlayer.removeEventListener(NetStatusEvent.NET_STATUS,gx_Complete);
+				}
+                flvPlayer.parent.removeChild(flvPlayer);
 				flvPlayer.dispose();
-				flvPlayer=null;
+                flvPlayer=null;
 			}
-		}	
+		}		
 		private function guangXiClick():void{
 			backGuangXi();
 		    removeAreas();
 		}
 		private function backGuangXi():void{
-			flvPlayer=new FLVPlayer("movie/fz-gx1.flv",900,480);
+			flvPlayer=new FLVPlayer("movie/fz-gx1.flv",900,480,false);
 			addChild(flvPlayer);
 			flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,gx_Complete);	
@@ -58,8 +67,8 @@ package lsd.FanZhuSanJiao
 		private function gx_Complete(e:NetStatusEvent):void{
       	    
       	    MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
-      	    flvRemove();
-      	    MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");   
+      	    MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");  
+      	    flvRemove(); 
       }
 		
 		
@@ -77,13 +86,12 @@ package lsd.FanZhuSanJiao
 			 CollisionManager.getInstance().addCollision(guangXiArea,guangXiClick,"fz_gx");
 			 CollisionManager.getInstance().addCollision(fanZhuWindowArea,fanZhuWindowClick,"fanZhuWindow");
 
-			 CollisionManager.getInstance().showCollision();
+			 //CollisionManager.getInstance().showCollision();
 
 		}
 		private function removeAreas():void{
 			
-			CollisionManager.getInstance().removeCollision("fz_gx");
-			CollisionManager.getInstance().removeCollision("fanZhuWindow"); 
+			CollisionManager.getInstance().removeAllCollision();
 		}
 	    
 		
@@ -91,8 +99,10 @@ package lsd.FanZhuSanJiao
 			trace("fanzhuwindow");
 		}
 		public function dispose():void{
+		  
 				swfPlayer.parent.removeChild(swfPlayer);
-				swfPlayer=null;
+				swfPlayer.dispose();
+		        swfPlayer=null;
 			}
 		}
 		
