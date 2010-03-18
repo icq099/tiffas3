@@ -72,7 +72,7 @@ package yzhkof.display
 		}
 		private function onRending():void
 		{
-			if(rendAtStage)
+			if(rendAtStage&&visible)
 			{
 				if(stage!=null)
 					onRend();
