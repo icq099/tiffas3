@@ -1,11 +1,11 @@
 package commands
 {
 	import communication.Event.PluginEvent;
+	import communication.Event.ScriptAPIAddEvent;
 	import communication.MainSystem;
 	
 	import facades.FacadePv;
 	
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
 	import mediators.PvSceneMediator;
@@ -102,27 +102,37 @@ package commands
 			if(inquire==1)
 			{
 				facade.sendNotification(FacadePv.STOP_RENDER);
-				MainSystem.getInstance().runAPIDirect("showGuiWa",[animationId,true]);
-				var dis:DisplayObject=MainSystem.getInstance().getPlugin("AnimationModule");
-				if(dis!=null)
-				{
-					//要打开下一个场景
-					dis.addEventListener(Event.OPEN,function(e:Event):void{
-						facade.sendNotification(FacadePv.START_RENDER);
-						sendNotificationCommand();
-					});
-					//不打开下一个场景
-					dis.addEventListener(Event.CLOSE,function(e:Event):void{
-						facade.sendNotification(FacadePv.START_RENDER);
-						var travel:PTravel=facade.retrieveProxy(PTravel.NAME) as PTravel;
-						travel.position_changing=false;
-						travel.currentPosition=travel.oldPosition;
-					});
-				}
+				MainSystem.getInstance().showPluginById("InquireModule");
+				MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,added);
 			}else
 			{
 				sendNotificationCommand();
 			}
+		}
+		private function added(e:ScriptAPIAddEvent):void//showInquire指令添加完毕就显示询问窗口并添加窗口的监听事件
+		{
+			if(e.fun_name=="showInquire")
+			{
+				MainSystem.getInstance().runAPIDirect("showInquire",[animationId]);
+				MainSystem.getInstance().getPlugin("InquireModule").addEventListener(Event.OPEN,open);
+				MainSystem.getInstance().getPlugin("InquireModule").addEventListener(Event.CLOSE,close);
+				MainSystem.getInstance().removeEventListener(ScriptAPIAddEvent.ADD_API,added);
+			}
+		}
+		private function open(e:Event):void
+		{
+			sendNotificationCommand();
+			MainSystem.getInstance().getPlugin("InquireModule").removeEventListener(Event.CLOSE,close);//删除监听关闭东西的事件
+			MainSystem.getInstance().getPlugin("InquireModule").removeEventListener(Event.OPEN,open);//删除监听打开东西的事件
+		}
+		private function close(e:Event):void
+		{
+			MainSystem.getInstance().startRender();
+			var travel:PTravel=facade.retrieveProxy(PTravel.NAME) as PTravel;
+			travel.position_changing=false;
+			travel.currentPosition=travel.oldPosition;
+			MainSystem.getInstance().getPlugin("InquireModule").removeEventListener(Event.CLOSE,close);//删除监听关闭东西的事件
+			MainSystem.getInstance().getPlugin("InquireModule").removeEventListener(Event.OPEN,open);//删除监听打开东西的事件
 		}
 		private function sendNotificationCommand():void{
 			facade.sendNotification(FacadePv.STOP_RENDER);

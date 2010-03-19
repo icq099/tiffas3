@@ -1,5 +1,6 @@
 package mediators
 {
+	import communication.Event.SceneChangeEvent;
 	import communication.MainSystem;
 	
 	import facades.FacadePv;
@@ -157,6 +158,7 @@ package mediators
 				//手动回收
 				MyGC.gc();
 				facade.sendNotification(FacadePv.REMOVE_MOVIE);
+				MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGED,goto));
 				updataGuiWa(goto);
 			};
 			var url:String=String(xml.Travel.Scene.@picture[goto]);

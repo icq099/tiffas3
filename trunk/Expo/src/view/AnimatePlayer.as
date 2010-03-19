@@ -10,6 +10,8 @@ package view
 	
 	import gs.TweenLite;
 	
+	import mx.core.Application;
+	
 	public class AnimatePlayer extends Sprite
 	{
 		
@@ -72,23 +74,17 @@ package view
 		    loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
 			closeButton.addEventListener(MouseEvent.CLICK,closeAnimate);
             openButton.addEventListener(MouseEvent.CLICK,openAnimate);
-                        	
             addChild(loader);
             addChild(closeButton);
             is_open=true;
-	    
 	    }
 	    private function completeHandler(e:Event):void{
 	    	
 	    	loader.x=-offsetWidth;
 	    	MovieClip(loader.content).addFrameScript(MovieClip(loader.content).totalFrames-1,movieCompleteHandler);
 	    	if(!is_open){
-	    		
 	    		MovieClip(loader.content).stop();
-	    		
 	    	}
-	    	
-	    
 	    }
 		private function animatevalue():String{
 			

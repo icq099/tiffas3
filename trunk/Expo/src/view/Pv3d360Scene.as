@@ -374,7 +374,7 @@
 			});
 			var distance:int=10;
 			var rotateSpeed:int=5;
-			var scaleSpeed=0.01;
+			var scaleSpeed:Number=0.1;
 			Application.application.stage.addEventListener(KeyboardEvent.KEY_DOWN,function(e:KeyboardEvent):void{
 				if(e.keyCode==87)
 				{
