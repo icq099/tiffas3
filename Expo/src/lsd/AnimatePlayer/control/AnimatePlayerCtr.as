@@ -54,8 +54,11 @@ package lsd.AnimatePlayer.control
 		}
 		public function dispose():void
 		{
-			animatePlayer.dispose();
-			animatePlayer=null;
+			if(animatePlayer!=null)
+			{
+				animatePlayer.dispose();
+				animatePlayer=null;
+			}
 		}
 	}
 }

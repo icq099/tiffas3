@@ -1,20 +1,23 @@
 package lxfa.inquire
 {
-	import communication.Event.ScriptAPIAddEvent;
 	import communication.MainSystem;
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import mx.containers.Canvas;
 	import mx.core.Application;
 	import mx.core.UIComponent;
 	import mx.managers.PopUpManager;
+	import mx.modules.ModuleLoader;
 	
 	public class InquireBase extends UIComponent
 	{
 		private var inquireSwc:InquireSwc;
 		private var inquireContainer:UIComponent;//仅仅是为了把能扔进PopManager
+		private var animateParent:ModuleLoader;//桂娃的父亲容器
+		private var animate:DisplayObject//桂娃
 		public function InquireBase()
 		{
 			MainSystem.getInstance().addAPI("showInquire",initInquireSwc);
@@ -26,8 +29,10 @@ package lxfa.inquire
 			inquireContainer.addChild(inquireSwc);
 	        //显示桂娃
 	        MainSystem.getInstance().runAPIDirect("addAnimate",[id]);
-	        var dis:DisplayObject=MainSystem.getInstance().getPlugin("AnimateModule");
-	        inquireContainer.addChild(dis);
+	        animate=MainSystem.getInstance().getPlugin("AnimateModule");
+	        animateParent=ModuleLoader(animate.parent);
+	        animate.x=-300;
+	        inquireContainer.addChild(animate);
 			//POP出来
 			PopUpManager.addPopUp(inquireContainer,DisplayObject(Application.application), true);
 	        PopUpManager.centerPopUp(inquireContainer); 
@@ -42,13 +47,22 @@ package lxfa.inquire
 		private function on_yes_click(e:MouseEvent):void
 		{
 			this.dispatchEvent(new Event(Event.OPEN));
-			PopUpManager.removePopUp(inquireContainer);
+			e.currentTarget.mouseEnabled=false;
+			dispose();
 		}
 		//抛出关闭界面的事件
 		private function on_no_click(e:MouseEvent):void
 		{
 			this.dispatchEvent(new Event(Event.CLOSE));
+			e.currentTarget.mouseEnabled=false;
+			dispose();
+		}
+		public function dispose():void
+		{
 			PopUpManager.removePopUp(inquireContainer);
+			inquireContainer=null;
+			MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
+			animateParent.addChild(animate);
 		}
 	}
 }

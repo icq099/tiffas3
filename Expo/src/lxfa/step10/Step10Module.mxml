@@ -4,19 +4,16 @@
 		<![CDATA[
 			import lxfa.index.view.IndexBase;
 			import yzhkof.Toolyzhkof;
-			private var inquire:InquireBase;
+			private var step10:Step10Base;
 			private function init():void
 			{
-				inquire=new InquireBase();
-				inquire.addEventListener(Event.OPEN,function(e:Event):void{
-					dispatchEvent(e);
-				});
-				inquire.addEventListener(Event.CLOSE,function(e:Event):void{
-					dispatchEvent(e);
-				});
+				step10=new Step10Base();
+				this.addChild(step10);
 			}
 			public function dispose():void
 			{
+				step10.dispose();
+				step10=null;
 			}
 		]]>
 	</mx:Script>

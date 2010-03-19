@@ -31,14 +31,13 @@ package lsd.FanZhuSanJiao
       private function on_Complete(e:NetStatusEvent):void{
       	    init();
       	    flvRemove();
-<<<<<<< .mine
-=======
+
+
       	    //MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
 
       	    init();
       	    
       	    
->>>>>>> .r520
       }
      private function flvRemove():void
 	{
