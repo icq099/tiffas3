@@ -5,25 +5,19 @@ package lxfa.inquire
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
 	
 	import mx.core.Application;
 	import mx.core.UIComponent;
 	import mx.managers.PopUpManager;
 	
-	public class InquireBase extends EventDispatcher
+	public class InquireBase extends UIComponent
 	{
 		private var inquireSwc:InquireSwc;
 		private var inquireContainer:UIComponent;//仅仅是为了把能扔进PopManager
 		public function InquireBase()
 		{
 			MainSystem.getInstance().addAPI("showInquire",initInquireSwc);
-			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,on_api_add);
-		}
-		private function on_api_add(e:ScriptAPIAddEvent):void
-		{
-			MainSystem.getInstance().runAPIDirect("showInquire",[0]);
 		}
 		private function initInquireSwc(id:int):void
 		{
@@ -32,10 +26,8 @@ package lxfa.inquire
 			inquireContainer.addChild(inquireSwc);
 	        //显示桂娃
 	        MainSystem.getInstance().runAPIDirect("addAnimate",[id]);
-//	        var ui:UIComponent=new UIComponent();
-//	        ui.addChild(MainSystem.getInstance().getPlugin("AnimateModule"));
-//	        PopUpManager.addPopUp(ui,DisplayObject(Application.application),true);
-//	        PopUpManager.centerPopUp(ui); 
+	        var dis:DisplayObject=MainSystem.getInstance().getPlugin("AnimateModule");
+	        inquireContainer.addChild(dis);
 			//POP出来
 			PopUpManager.addPopUp(inquireContainer,DisplayObject(Application.application), true);
 	        PopUpManager.centerPopUp(inquireContainer); 
@@ -50,11 +42,13 @@ package lxfa.inquire
 		private function on_yes_click(e:MouseEvent):void
 		{
 			this.dispatchEvent(new Event(Event.OPEN));
+			PopUpManager.removePopUp(inquireContainer);
 		}
 		//抛出关闭界面的事件
 		private function on_no_click(e:MouseEvent):void
 		{
 			this.dispatchEvent(new Event(Event.CLOSE));
+			PopUpManager.removePopUp(inquireContainer);
 		}
 	}
 }

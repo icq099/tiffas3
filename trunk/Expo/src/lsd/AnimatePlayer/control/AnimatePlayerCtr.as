@@ -23,18 +23,21 @@ package lsd.AnimatePlayer.control
 		}
 		private function init(id:int,controlRender:Boolean=false):AnimatePlayer
 		{
-			this.ID=id;
 			animatePlayer=new AnimatePlayer();
-			this.addChild(animatePlayer);
-			xml=new XmlLoaderModel("xml/animate.xml");
-			xml.addEventListener(Event.COMPLETE,on_xml_loaded);
-			MainSystem.getInstance().addEventListener(PluginEvent.UPDATE,on_update);
-			animatePlayer.addEventListener("startRender",function(e:Event):void{
-				if(controlRender)
-				{
-					MainSystem.getInstance().startRender();
-				}
-			});
+			if(id!=-1)//-1就不显示桂娃了
+			{
+				this.ID=id;
+				this.addChild(animatePlayer);
+				xml=new XmlLoaderModel("xml/animate.xml");
+				xml.addEventListener(Event.COMPLETE,on_xml_loaded);
+				MainSystem.getInstance().addEventListener(PluginEvent.UPDATE,on_update);
+				animatePlayer.addEventListener("startRender",function(e:Event):void{
+					if(controlRender)
+					{
+						MainSystem.getInstance().startRender();
+					}
+				});
+			}
 			return animatePlayer;
 		}
 		private function on_update(e:PluginEvent):void
@@ -44,7 +47,10 @@ package lsd.AnimatePlayer.control
 		}
 		private function on_xml_loaded(e:Event):void
 		{
-			animatePlayer.load(xml.xmlData.Animate[ID].@url);
+			if(xml.xmlData!=null)
+			{
+				animatePlayer.load(xml.xmlData.Animate[ID].@url);
+			}
 		}
 		public function dispose():void
 		{

@@ -46,7 +46,7 @@ package view
 		{
 			if(e.fun_name=="addFlv")
 			{
-				MainSystem.getInstance().runAPIDirect("addFlv",[URL]);
+				MainSystem.getInstance().runAPIDirect("addFlv",[URL,false]);
 				MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.COMPLETE,onCompleteHandler);
 				MainSystem.getInstance().getPlugin("FlvModule").addEventListener(ProgressEvent.PROGRESS,onProgressHandler);
 			}

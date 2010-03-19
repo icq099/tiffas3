@@ -1,12 +1,12 @@
 ﻿package view{
 	import flash.display.*;
 	import flash.events.*;
-	import flash.filters.BitmapFilterQuality;
-	import flash.filters.DropShadowFilter;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	
 	import gs.TweenLite;
+	
+	import mx.core.Application;
 	
 	import org.papervision3d.cameras.FreeCamera3D;
 	import org.papervision3d.core.proto.MaterialObject3D;
@@ -21,7 +21,6 @@
 	import org.papervision3d.scenes.Scene3D;
 	import org.papervision3d.view.Viewport3D;
 	import org.papervision3d.view.layer.ViewportLayer;
-	import org.papervision3d.view.layer.util.ViewportLayerSortMode;
 	import org.papervision3d.view.stats.StatsView;
 	
 	import view.struct.BendPlane;
@@ -78,7 +77,6 @@
 		public var hot_points:Array=new Array();
 		public var camera:FreeCamera3D;
 		public var render_type:String=REND_ALL;
-
 		public function Pv3d360Scene(czoom:Number=11,pdetail:Number=50){
 			
 			this.pdetail=pdetail;
@@ -98,11 +96,9 @@
 			pLoader.addEventListener(ProgressEvent.PROGRESS,loadProgessHandler);			
 			
 			addChild(viewport);
-
-			camera.z=0;
-			sphere=new Sphere(material,5000,pdetail,pdetail/2);
+			camera.z=20;
+			sphere=new Sphere(material,5000,20,20);
 			sphere.scaleX*=-1
-			
 			//设置罗盘
 			var material_compass:BitmapMaterial=new BitmapMaterial(compassBitmapdata.clone());
 			//material_compass.smooth=true;
@@ -114,8 +110,7 @@
 			layer_compass=viewport.getChildLayer(compass_plane);
 			
 			//设置viewportlayer
-			viewport.containerSprite.sortMode=ViewportLayerSortMode.INDEX_SORT;
-			
+//			viewport.containerSprite.sortMode=ViewportLayerSortMode.INDEX_SORT;
 			layer_animate=viewport.getChildLayer(new DisplayObject3D());
 			layer_animate.buttonMode=true;
 			layer_hot_points=viewport.getChildLayer(new DisplayObject3D());
@@ -302,11 +297,28 @@
 			var height:Number=init_obj["height"]?init_obj["height"]:100;
 			var segmentsW:Number=init_obj["segmentsW"]?init_obj["segmentsW"]:2;
 			var segmentsH:Number=init_obj["segmentsH"]?init_obj["segmentsH"]:2;
-			var visible:Number=init_obj["visible"]?init_obj["visible"]:0;
+			var visible:Number=init_obj["visible"]?init_obj["visible"]:1;
+			var tip:String=init_obj["tip"]?init_obj["tip"]:"";
 			var plane_animate:BendPlane=new BendPlane(new ColorMaterial(0xffffff,0),width,height,segmentsW,segmentsH,init_obj);
 			plane_animate.offset=init_obj["offset"]?init_obj["offset"]:0;
 			plane_animate.angle=init_obj["angle"]?init_obj["angle"]:0;
 			plane_animate.force=init_obj["force"]?init_obj["force"]:0;
+			if(Number(init_obj["scaleX"])==0 || Number(init_obj["scaleX"])<0)
+			{
+				plane_animate.scaleX=1;
+			}
+			else
+			{
+				plane_animate.scaleX=Number(init_obj["scaleX"]);
+			}
+			if(Number(init_obj["scaleY"])==0 || Number(init_obj["scaleY"])<0)
+			{
+				plane_animate.scaleY=1;
+			}
+			else
+			{
+				plane_animate.scaleY=Number(init_obj["scaleY"]);
+			}
 			plane_animate.onClick=init_obj["onClick"];
 			/* plane_animate.x=x;
 			plane_animate.y=y;
@@ -318,8 +330,7 @@
 			animates.push(plane_animate);
 			
 			scene.addChild(plane_animate);
-			layer_animate.addDisplayObject3D(plane_animate);
-			
+//			layer_animate.addDisplayObject3D(plane_animate);
 			var loader:Loader=new Loader();
 			loader.load(new URLRequest(URL));
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,function(e:Event):void{
@@ -343,7 +354,7 @@
 						material.interactive=true;
 						plane_animate.material=material;
 					}
-					else
+					else//不可见就是透明可点击的区域
 					{
 						var colorMat:ColorMaterial = new ColorMaterial(0xA7C520, 0);
 						colorMat.doubleSided = true;
@@ -352,6 +363,68 @@
 						plane_animate.material=colorMat;
 					}
 				}
+			});
+			//添加事件
+			plane_animate.addEventListener(InteractiveScene3DEvent.OBJECT_OVER,function(e:InteractiveScene3DEvent):void{
+				tip_sprite.text=tip
+				addChild(tip_sprite);
+			});
+			plane_animate.addEventListener(InteractiveScene3DEvent.OBJECT_OUT,function(e:InteractiveScene3DEvent):void{
+				removeChild(tip_sprite);
+			});
+			var distance:int=10;
+			var rotateSpeed:int=5;
+			var scaleSpeed=0.01;
+			Application.application.stage.addEventListener(KeyboardEvent.KEY_DOWN,function(e:KeyboardEvent):void{
+				if(e.keyCode==87)
+				{
+					plane_animate.z+=distance;
+				}
+				if(e.keyCode==83)
+				{
+					plane_animate.z-=distance;
+				}
+				if(e.keyCode==65)
+				{
+					plane_animate.x+=distance;
+				}
+				if(e.keyCode==68)
+				{
+					plane_animate.x-=distance;
+				}
+				if(e.keyCode==189)
+				{
+					plane_animate.y+=distance;
+				}
+				if(e.keyCode==187)
+				{
+					plane_animate.y-=distance;
+				}
+				if(e.keyCode==81)
+				{
+					plane_animate.rotationY+=rotateSpeed;
+				}
+				if(e.keyCode==69)
+				{
+					plane_animate.rotationY-=rotateSpeed;
+				}
+				if(e.keyCode==90)
+				{
+					plane_animate.scaleX+=scaleSpeed;
+				}
+				if(e.keyCode==88)
+				{
+					plane_animate.scaleX-=scaleSpeed;
+				}
+				if(e.keyCode==67)
+				{
+					plane_animate.scaleY+=scaleSpeed;
+				}
+				if(e.keyCode==86)
+				{
+					plane_animate.scaleY-=scaleSpeed;
+				}
+				trace("x=\""+plane_animate.x+"\" y=\""+plane_animate.y+"\" z=\""+plane_animate.z+"\" rotationY=\""+plane_animate.rotationY+"\""+" scaleX=\""+plane_animate.scaleX+"\" scaleY=\""+plane_animate.scaleY+"\"");
 			});
 			return plane_animate;
 		
@@ -432,9 +505,11 @@
 			}
 			
 			material.smooth=true;
-			//material.opposite=true;
+			material.interactive=false;
+//			material.interactive=true;
+//			material.opposite=true;
 			//material.doubleSided=true;
-			
+//			material.doubleSided=true;
 			sphere.material=material;
 			
 			//手动回收
@@ -470,16 +545,16 @@
 		
 		}
 		private function onEnterFrameHandler(e:Event):void{
-			
-			switch (render_type){
-			
-			case REND_ALL: 
-					draw();
-			break;
-			case REND_ANIMATE:
-				 	draw_layer();
-			break;
-			}
+			draw();
+//			switch (render_type){
+//			
+//			case REND_ALL: 
+//					draw();
+//			break;
+//			case REND_ANIMATE:
+//				 	draw_layer();
+//			break;
+//			}
 		
 		}
 		private function _startRend():void{
@@ -509,13 +584,10 @@
 		public function draw():void {
 			
 			renderer.renderScene(scene, camera, viewport);
-			updateHotpoints();
-
+//			updateHotpoints();
 		}
 		public function draw_layer():void{
-			
-			renderer.renderLayers(scene,camera,viewport,[layer_arrows,layer_animate,layer_hot_points]);
-			
+//			renderer.renderLayers(scene,camera,viewport,[layer_arrows,layer_animate,layer_hot_points]);
 		}
 	}
 }
