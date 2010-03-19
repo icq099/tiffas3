@@ -5,6 +5,7 @@ package communication.Event
 	public class SceneChangeEvent extends Event
 	{
 		public static const CHANGE:String="SceneChangeEvent.CHANGE";
+		public static const CHANGED:String="SceneChangeEvent.CHANGED";
 		public var id:int;
 		public function SceneChangeEvent(type:String,scene_id:int, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
