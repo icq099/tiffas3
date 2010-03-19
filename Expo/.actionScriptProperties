@@ -60,6 +60,7 @@
 <module application="src/Expo.mxml" destPath="lsd/ZongHengSiHai/ZongHengSiHaiModule.swf" optimize="true" sourcePath="src/lsd/ZongHengSiHai/ZongHengSiHaiModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/DaMeiGongHe/DaMeiGongHeModule.swf" optimize="true" sourcePath="src/lsd/DaMeiGongHe/DaMeiGongHeModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/DongMeng/DongMengModule.swf" optimize="true" sourcePath="src/lsd/DongMeng/DongMengModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lsd/AnimatePlayer/AnimateModule.swf" optimize="true" sourcePath="src/lsd/AnimatePlayer/AnimateModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>
