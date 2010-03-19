@@ -19,6 +19,7 @@ package communication
 */	
 	[Event(name="init_display", type="communication.Event.MainSystemEvent")]
 	[Event(name="on_plugin_ready", type="communication.Event.MainSystemEvent")]
+	[Event(name="update", type="communication.Event.PluginEvent")]
 	[Event(name="add_api", type="communication.Event.ScriptAPIAddEvent")]
 	[Event(name="remove_api", type="communication.Event.ScriptAPIAddEvent")]
 	[Event(name="run", type="communication.Event.ScriptEvent")]

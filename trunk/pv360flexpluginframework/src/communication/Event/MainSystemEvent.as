@@ -12,6 +12,7 @@ package communication.Event
 		public static var INIT:String="MainSystemEvent.INIT";
 		public static var INIT_DISPLAY:String="MainSystemEvent.INIT_DISPLAY";
 		public static var ON_PLUGIN_READY:String="MainSystemEvent.ON_PLUGIN_READY";
+		public static var ON_SCRIPT_READY:String="MainSystemEvent.ON_SCRIPT_READY";
 		public var camera:CameraProxy;
 		public var script_runer:ScriptSimple;
 		public var id:String;
