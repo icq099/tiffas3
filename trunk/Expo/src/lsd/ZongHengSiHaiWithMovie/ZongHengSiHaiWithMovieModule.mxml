@@ -7,6 +7,7 @@
 		   implements="communication.IPlugin">
 	<mx:Script>
 		<![CDATA[
+			import lsd.ZongHengSiHai.ZongHengSiHaiStatic;
 			import lsd.ZongHengSiHai.ZongHenSiHai;
 			import yzhkof.Toolyzhkof;
 
@@ -16,7 +17,7 @@
 			{
 				zongHengSiHai=new ZongHenSiHai(true);
 				addChild(Toolyzhkof.mcToUI(zongHengSiHai));
-
+				ZongHengSiHaiStatic.getInstance().currentModuleName=this.className;
 			}
 
 			public function dispose():void

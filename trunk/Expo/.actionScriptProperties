@@ -51,7 +51,6 @@
 <module application="src/Expo.mxml" destPath="lxfa/normalWindow/NormalWindowModule.swf" optimize="true" sourcePath="src/lxfa/normalWindow/NormalWindowModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/WithMovie/ZongHengSiHaiWithMovieModule.swf" optimize="true" sourcePath="src/lsd/WithMovie/ZongHengSiHaiWithMovieModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/DongMeng/DongMengModule.swf" optimize="true" sourcePath="src/lsd/DongMeng/DongMengModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lxfa/zonghengsihaiWithMovie/ZongHengSiHaiWithMovieModule.swf" optimize="true" sourcePath="src/lxfa/zonghengsihaiWithMovie/ZongHengSiHaiWithMovieModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/DaMeiGongHe/DaMeiGongHeModule.swf" optimize="true" sourcePath="src/lsd/DaMeiGongHe/DaMeiGongHeModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/index/IndexModule.swf" optimize="true" sourcePath="src/lxfa/index/IndexModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/lijiangwanchang/LiJiangWanChangModule.swf" optimize="true" sourcePath="src/lxfa/lijiangwanchang/LiJiangWanChangModule.mxml"/>
@@ -62,6 +61,7 @@
 <module application="src/Expo.mxml" destPath="lxfa/No3/No3Module.swf" optimize="true" sourcePath="src/lxfa/No3/No3Module.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/minzubaimei/MinZuBaiMeiModule.swf" optimize="true" sourcePath="src/lxfa/minzubaimei/MinZuBaiMeiModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/FanZhuSanJiao/FanZhuSanJiaoModule.swf" optimize="true" sourcePath="src/lsd/FanZhuSanJiao/FanZhuSanJiaoModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lsd/ZongHengSiHaiWithMovie/ZongHengSiHaiWithMovieModule.swf" optimize="true" sourcePath="src/lsd/ZongHengSiHaiWithMovie/ZongHengSiHaiWithMovieModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>
