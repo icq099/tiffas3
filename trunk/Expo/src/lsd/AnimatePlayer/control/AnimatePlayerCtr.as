@@ -31,12 +31,6 @@ package lsd.AnimatePlayer.control
 				xml=new XmlLoaderModel("xml/animate.xml");
 				xml.addEventListener(Event.COMPLETE,on_xml_loaded);
 				MainSystem.getInstance().addEventListener(PluginEvent.UPDATE,on_update);
-				animatePlayer.addEventListener("startRender",function(e:Event):void{
-					if(controlRender)
-					{
-						MainSystem.getInstance().startRender();
-					}
-				});
 			}
 			return animatePlayer;
 		}
