@@ -1,6 +1,6 @@
 package yzhkof.debug
 {
-	import flash.sampler.getMemberNames;
+	import flash.utils.ByteArray;
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
@@ -26,16 +26,29 @@ package yzhkof.debug
 				
 				for each(var x:XML in accessor_xmllist)
 				{
-					final_text+=addSpace("{"+x.@name+"} : "+obj[x.@name])+"\n";
-					if(x.@name=="name")
-						objname=obj.name;
+					if(x.@returnType!="ByteArray")
+					{
+						final_text+=addSpace("{"+x.@name+"} = "+obj[x.@name])+"\n";
+						if(x.@name=="name")
+							objname=obj.name;
+					}else
+					{
+						final_text+=addSpace("{"+x.@name+"} = [Type ByteArray]\n");
+					}
+					
 				}
 				
 				if(xml.@isDynamic=="true")
 				{
 					for(var ob_p:Object in obj)
 					{
-						final_text+=addSpace("{"+ob_p+"} : "+obj[ob_p])+"\n";	
+						if(!(obj[ob_p] is ByteArray))
+						{
+							final_text+=addSpace("{"+ob_p+"} = "+obj[ob_p])+"\n";
+						}else
+						{
+							final_text+=addSpace("{"+ob_p+"} = [Type ByteArray]\n");
+						}
 					}
 				}
 				if(showFunctionReturn)
