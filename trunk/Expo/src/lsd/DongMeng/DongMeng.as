@@ -2,6 +2,7 @@ package lsd.DongMeng
 {
 	import communication.MainSystem;
 	
+	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	
 	import lxfa.normalWindow.SwfPlayer;
@@ -9,8 +10,6 @@ package lsd.DongMeng
 	import lxfa.view.player.FLVPlayer;
 	
 	import mx.core.UIComponent;
-	
-	import org.papervision3d.objects.primitives.Plane;
 	public class DongMeng extends UIComponent
 	{
 		private var swfPlayer:SwfPlayer;
@@ -22,15 +21,15 @@ package lsd.DongMeng
 		private function initPlayer():void{
 			
 			flvPlayer=new FLVPlayer("movie/gx-dm1.flv",900,480,false);
-		    MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
 			addChild(flvPlayer);
+			MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
 	        flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
        }
        private function on_Complete(e:NetStatusEvent):void{
       	
       	    init();
-      	    flvRemove();   	    
+      	   
       }
        private function flvRemove():void
 		{
@@ -60,9 +59,15 @@ package lsd.DongMeng
 	   private function gx_Complete(e:NetStatusEvent):void{
       	    
       	    MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
-      	    MainSystem.getInstance().removePluginById("DongMengModule");  
-      	    flvRemove(); 
+      	    MainSystem.getInstance().addEventListener("zonghengsihai.complete",zongHengSiHai_fun);
+      
       }
+       private function zongHengSiHai_fun(e:Event):void{
+       	
+      	  MainSystem.getInstance().removePluginById("DongMengModule");   
+	      flvRemove(); 
+      	
+       }
 	  private function dongMengWindowClick():void{
 			trace("dongMeng");
 		}
@@ -72,11 +77,17 @@ package lsd.DongMeng
 		 	 var dongMengWindowArea:Array=[[[660,110],[870,148]]];
 		 	 swfPlayer=new SwfPlayer("swf/dongMeng.swf",900,480);
 		 	 this.addChild(swfPlayer);
+		 	 swfPlayer.addEventListener(Event.COMPLETE,on_swf_complete);
 		 	 CollisionManager.getInstance().addCollision(guangXiArea,guangXiClick,"dm_gx")
 		 	 CollisionManager.getInstance().addCollision(dongMengWindowArea,dongMengWindowClick,"dongMengWindow");
              //CollisionManager.getInstance().showCollision();
 
 		 }
+		private function on_swf_complete(e:Event):void
+		{
+			flvRemove();
+		}
+		 
 	  private function removeAreas():void{
 			
 			CollisionManager.getInstance().removeAllCollision();
@@ -84,6 +95,8 @@ package lsd.DongMeng
 	     
 	   public function dispose():void{
 	   	    swfPlayer.parent.removeChild(swfPlayer);
+	   	    MainSystem.getInstance().removeEventListener("zonghengsihai.complete",zongHengSiHai_fun);
+	   	    swfPlayer.removeEventListener(Event.COMPLETE,on_swf_complete);
 	   	    swfPlayer.dispose();
 	   	    swfPlayer=null;
 	   	

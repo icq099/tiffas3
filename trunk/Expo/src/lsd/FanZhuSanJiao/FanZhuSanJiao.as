@@ -29,6 +29,7 @@ package lsd.FanZhuSanJiao
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
       }
       private function on_Complete(e:NetStatusEvent):void{
+      	   
       	    init();
       }
      private function flvRemove():void
@@ -58,15 +59,19 @@ package lsd.FanZhuSanJiao
 		private function gx_Complete(e:NetStatusEvent):void{
       	    
       	    MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
-      	    MainSystem.getInstance().addEventListener("zonghengsihai.complete",function(e:Event):void{
-	      	    MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");  
-	      	    flvRemove(); 
-      	    });
-      }
+        
+            MainSystem.getInstance().addEventListener("zonghengsihai.complete",zongHengSiHai_fun);
+      	    //MainSystem.getInstance().removeEventListener("zonghengsihai.complete",zongHengSiHai_fun);
+       }
+      
+       private function zongHengSiHai_fun(e:Event):void{
+      	   
+      	    MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");  
+	        flvRemove(); 
+      	
+       }
 		
-		
-		
-		 private function init():void{
+       private function init():void{
 			
 			 var guangXiArea:Array=[[[272,299],[394,377]],[[297,377],[347,410]]];
 			 var fanZhuWindowArea:Array=[[[680,153],[892,192]]]
@@ -74,7 +79,8 @@ package lsd.FanZhuSanJiao
              CollisionManager.getInstance().addCollision(guangXiArea,guangXiClick,"fz_gx");
 			 CollisionManager.getInstance().addCollision(fanZhuWindowArea,fanZhuWindowClick,"fanZhuWindow");
 			 this.addChild(swfPlayer);
-			 swfPlayer.addEventListener(Event.COMPLETE,on_swf_complete);
+             swfPlayer.addEventListener(Event.COMPLETE,on_swf_complete);
+
 			 CollisionManager.getInstance().addCollision(guangXiArea,guangXiClick,"fz_gx");
 			 CollisionManager.getInstance().addCollision(fanZhuWindowArea,fanZhuWindowClick,"fanZhuWindow");
 
@@ -97,6 +103,8 @@ package lsd.FanZhuSanJiao
 		public function dispose():void{
 		  
 				swfPlayer.parent.removeChild(swfPlayer);
+				MainSystem.getInstance().removeEventListener("zonghengsihai.complete",zongHengSiHai_fun);
+				swfPlayer.removeEventListener(Event.COMPLETE,on_swf_complete);
 				swfPlayer.dispose();
 		        swfPlayer=null;
 			}

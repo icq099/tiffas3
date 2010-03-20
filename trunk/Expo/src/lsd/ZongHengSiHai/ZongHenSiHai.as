@@ -3,11 +3,10 @@ package lsd.ZongHengSiHai
 	import communication.MainSystem;
 	
 	import flash.events.Event;
-	
+	import flash.events.Event;
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
-	
-	import mx.core.UIComponent;
+    import mx.core.UIComponent;
 
 	public class ZongHenSiHai extends UIComponent
 	{
@@ -32,15 +31,15 @@ package lsd.ZongHengSiHai
 			 CollisionManager.getInstance().addCollision(beiBuWanArea,beiBuWanClick,"beiBuWan");
 			 CollisionManager.getInstance().addCollision(xiJiangArea,xiJiangClick,"xiJiang");
 			 this.addChild(swfPlayer);
-			 swfPlayer.addEventListener(Event.COMPLETE,function(e:Event):void{
-				 MainSystem.getInstance().dispatchEvent(new Event("zonghengsihai.complete"));
-			 });
-			// CollisionManager.getInstance().showCollision();
-				
+			 swfPlayer.addEventListener(Event.COMPLETE,zongHengSiHai_complete);
 	          
 		}
+		private function zongHengSiHai_complete(e:Event):void{
+			
+			 MainSystem.getInstance().dispatchEvent(new Event("zonghengsihai.complete"));
+		}
 		
-		private function daMeiGongHeClick():void
+       private function daMeiGongHeClick():void
 		{
 				trace("daMeiGongHe");
 				MainSystem.getInstance().showPluginById("DaMeiGongHeModule");
@@ -77,6 +76,7 @@ package lsd.ZongHengSiHai
 		public function dispose():void{
 			
 				swfPlayer.parent.removeChild(swfPlayer);
+				swfPlayer.removeEventListener(Event.COMPLETE,zongHengSiHai_complete);
 				swfPlayer.dispose();
 		        swfPlayer=null;
 		}

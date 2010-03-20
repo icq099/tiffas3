@@ -5,7 +5,7 @@ package lsd.DaMeiGongHe
     import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
 	import lxfa.view.player.FLVPlayer;
-	
+	import flash.events.Event;
 	import mx.core.UIComponent;
 	
 	public class DaMeiGongHe extends UIComponent
@@ -26,8 +26,7 @@ package lsd.DaMeiGongHe
 		}
 		  private function on_Complete(e:NetStatusEvent):void{
       	
-      	    init();
-      	    flvRemove();    
+      	    init();   
         }  
          private function flvRemove():void
 		{
@@ -56,9 +55,14 @@ package lsd.DaMeiGongHe
 	  private function gx_Complete(e:NetStatusEvent):void{
       	    
       	    MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
-      	    MainSystem.getInstance().removePluginById("DaMeiGongHeModule");  
-      	    flvRemove(); 
+      	    MainSystem.getInstance().addEventListener("zonghengsihai.complete",zongHengSiHai_fun);
       }
+       private function zongHengSiHai_fun(e:Event):void{
+      	   
+      	    MainSystem.getInstance().removePluginById("DaMeiGongHeModule");  
+	        flvRemove(); 
+      	
+       }
        private function removeAreas():void{
 			
 			CollisionManager.getInstance().removeAllCollision();
@@ -71,16 +75,22 @@ package lsd.DaMeiGongHe
 		private function init():void{
 			swfPlayer=new SwfPlayer("swf/dameigonghe.swf",900,480);
 			this.addChild(swfPlayer);
+			swfPlayer.addEventListener(Event.COMPLETE,on_swf_complete);
 			var guangXiArea:Array=[[[485,129],[610,183]]];
 			var daMeiGongHeWindowArea:Array=[[[670,185],[880,222]]];
 			CollisionManager.getInstance().addCollision(guangXiArea,guangXiClick,"dmg_gx");
 			CollisionManager.getInstance().addCollision(daMeiGongHeWindowArea,daMeiGongHeWindowClick,"daMeiGongHeWindow");
 			//CollisionManager.getInstance().showCollision();
-			
-		 }
+         }
+        private function on_swf_complete(e:Event):void
+		{
+			flvRemove();
+		}
 		
 		public function dispose():void{
 			swfPlayer.parent.removeChild(swfPlayer);
+			MainSystem.getInstance().removeEventListener("zonghengsihai.complete",zongHengSiHai_fun);
+			swfPlayer.removeEventListener(Event.COMPLETE,on_swf_complete);
 	   	    swfPlayer.dispose();
 	   	    swfPlayer=null;
 		  }
