@@ -68,10 +68,6 @@ package lsd.AnimatePlayer.view
 		    	}
 	    	}
 	    }
-	    private function startRender():void
-	    {
-	    	this.dispatchEvent(new Event("startRender"));
-	    }
 		private function movieCompleteHandler():void{
 			removeChild(closeButton);closeButton=null;
        	 	removeChild(loader);

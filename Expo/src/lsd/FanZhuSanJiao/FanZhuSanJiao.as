@@ -33,11 +33,13 @@ package lsd.FanZhuSanJiao
       	    flvRemove();
 
 
+
       	    //MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
 
       	    init();
       	    
       	    
+
       }
      private function flvRemove():void
 	{
