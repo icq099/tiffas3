@@ -10,10 +10,10 @@
 			<![CDATA[
 				import yzhkof.Toolyzhkof;
 				
-				  private var sldingPuzzle:SlidingPuzzle;
+				  private var sldingPuzzle:SlidingPuzzleGame;
 				  private function init():void{
 				  	   
-				  	   sldingPuzzle=new SlidingPuzzle();
+				  	   sldingPuzzle=new SlidingPuzzleGame();
 				  	   addChild(Toolyzhkof.mcToUI(sldingPuzzle));
 				  	
 				  }
