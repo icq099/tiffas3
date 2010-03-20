@@ -43,7 +43,6 @@ package lsd.AnimatePlayer.view
 	    	if(!isClose)
 	    	{
 		    	clearMC();
-				MainSystem.getInstance().stopRender();
 				loader=new Loader();
 				request=new URLRequest(_urlanimte);
 				loader.load(request);
@@ -61,7 +60,6 @@ package lsd.AnimatePlayer.view
 		    	initOut();
 		    	loader.x=0;
 		    	MovieClip(loader.content).addFrameScript(MovieClip(loader.content).totalFrames-1,movieCompleteHandler);
-		    	MovieClip(loader.content).addFrameScript(30,startRender)
 		    	if(!is_open){
 		    		
 		    		MovieClip(loader.content).stop();

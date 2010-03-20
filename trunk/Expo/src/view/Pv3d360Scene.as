@@ -6,6 +6,8 @@
 	
 	import gs.TweenLite;
 	
+	import lxfa.utils.movement.UpDownMovement;
+	
 	import mx.core.Application;
 	
 	import org.papervision3d.cameras.FreeCamera3D;
@@ -299,6 +301,10 @@
 			var segmentsH:Number=init_obj["segmentsH"]?init_obj["segmentsH"]:2;
 			var visible:Number=init_obj["visible"]?init_obj["visible"]:1;
 			var tip:String=init_obj["tip"]?init_obj["tip"]:"";
+			var movement:int=init_obj["movement"]?init_obj["movement"]:0;
+			var maxHeight:Number=init_obj["maxHeight"]?init_obj["maxHeight"]:0;
+			var minHeight:Number=init_obj["minHeight"]?init_obj["minHeight"]:0;
+			var speed:Number=init_obj["speed"]?init_obj["speed"]:0;
 			var plane_animate:BendPlane=new BendPlane(new ColorMaterial(0xffffff,0),width,height,segmentsW,segmentsH,init_obj);
 			plane_animate.offset=init_obj["offset"]?init_obj["offset"]:0;
 			plane_animate.angle=init_obj["angle"]?init_obj["angle"]:0;
@@ -320,17 +326,14 @@
 				plane_animate.scaleY=Number(init_obj["scaleY"]);
 			}
 			plane_animate.onClick=init_obj["onClick"];
-			/* plane_animate.x=x;
-			plane_animate.y=y;
-			plane_animate.z=z;
-			plane_animate.rotationX=rotationX;			
-			plane_animate.rotationY=rotationY;
-			plane_animate.rotationZ=rotationZ; */			
-			
+			//添加运动
+			if(movement==1)
+			{
+				new UpDownMovement(plane_animate,maxHeight,minHeight,speed);
+			}
 			animates.push(plane_animate);
 			
 			scene.addChild(plane_animate);
-//			layer_animate.addDisplayObject3D(plane_animate);
 			var loader:Loader=new Loader();
 			loader.load(new URLRequest(URL));
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,function(e:Event):void{
