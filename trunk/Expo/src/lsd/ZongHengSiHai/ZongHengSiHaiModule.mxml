@@ -20,12 +20,14 @@
 
 			public function dispose():void
 			{
-
-				zongHengSiHai.dispose();
-				zongHengSiHai.parent.removeChild(zongHengSiHai);
-			    zongHengSiHai=null;
-			
-			}
+                if(zongHengSiHai!=null){
+                	if(zongHengSiHai.parent!=null){
+                		zongHengSiHai.dispose();
+						zongHengSiHai.parent.removeChild(zongHengSiHai);
+					    zongHengSiHai=null;
+                	}
+                }
+             }
 		]]>
 	</mx:Script>
 

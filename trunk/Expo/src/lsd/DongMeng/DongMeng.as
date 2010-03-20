@@ -40,10 +40,12 @@ package lsd.DongMeng
 					flvPlayer.removeEventListener(NetStatusEvent.NET_STATUS,on_Complete);
 					flvPlayer.removeEventListener(NetStatusEvent.NET_STATUS,gx_Complete);
 				}
+				if(flvPlayer.parent!=null){
                 flvPlayer.parent.removeChild(flvPlayer);
 				flvPlayer.dispose();
                 flvPlayer=null;
-			}
+              }
+		   }
 		}	
 
 	  private function guangXiClick():void{
@@ -94,14 +96,17 @@ package lsd.DongMeng
 		}
 	     
 	   public function dispose():void{
-	   	    swfPlayer.parent.removeChild(swfPlayer);
-	   	    MainSystem.getInstance().removeEventListener("zonghengsihai.complete",zongHengSiHai_fun);
-	   	    swfPlayer.removeEventListener(Event.COMPLETE,on_swf_complete);
-	   	    swfPlayer.dispose();
-	   	    swfPlayer=null;
-	   	
+	   	    
+	   	    if(swfPlayer!=null){
+	   	    	if(swfPlayer.parent!=null){
+	   	    		swfPlayer.parent.removeChild(swfPlayer);
+			   	    MainSystem.getInstance().removeEventListener("zonghengsihai.complete",zongHengSiHai_fun);
+			   	    swfPlayer.removeEventListener(Event.COMPLETE,on_swf_complete);
+			   	    swfPlayer.dispose();
+			   	    swfPlayer=null;
+	   	    		
+	   	    	}
+	   	   }  	
 	   }
-       
-		
-	}
+    }
 }

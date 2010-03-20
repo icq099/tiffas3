@@ -18,14 +18,16 @@
 			}
 
 			public function dispose():void
-			{
-				
-					fanZhuSanJiao.dispose();
-					fanZhuSanJiao.parent.removeChild(fanZhuSanJiao);
-					fanZhuSanJiao=null;
-			
-				
-			}
+			{  
+				if(fanZhuSanJiao!=null){
+					if(fanZhuSanJiao.parent!=null){
+						fanZhuSanJiao.dispose();
+						fanZhuSanJiao.parent.removeChild(fanZhuSanJiao);
+						fanZhuSanJiao=null;
+						
+					}
+				}
+             }
 		]]>
 	</mx:Script>
 
