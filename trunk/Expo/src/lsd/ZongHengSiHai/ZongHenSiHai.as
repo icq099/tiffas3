@@ -2,6 +2,8 @@ package lsd.ZongHengSiHai
 {
 	import communication.MainSystem;
 	
+	import flash.events.Event;
+	
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
 	
@@ -30,6 +32,9 @@ package lsd.ZongHengSiHai
 			 CollisionManager.getInstance().addCollision(beiBuWanArea,beiBuWanClick,"beiBuWan");
 			 CollisionManager.getInstance().addCollision(xiJiangArea,xiJiangClick,"xiJiang");
 			 this.addChild(swfPlayer);
+			 swfPlayer.addEventListener(Event.COMPLETE,function(e:Event):void{
+				 MainSystem.getInstance().dispatchEvent(new Event("zonghengsihai.complete"));
+			 });
 			// CollisionManager.getInstance().showCollision();
 				
 	          
