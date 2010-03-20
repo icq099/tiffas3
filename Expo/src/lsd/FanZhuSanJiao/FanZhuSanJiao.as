@@ -58,8 +58,10 @@ package lsd.FanZhuSanJiao
 		private function gx_Complete(e:NetStatusEvent):void{
       	    
       	    MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
-      	    MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");  
-      	    flvRemove(); 
+      	    MainSystem.getInstance().addEventListener("zonghengsihai.complete",function(e:Event):void{
+	      	    MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");  
+	      	    flvRemove(); 
+      	    });
       }
 		
 		
