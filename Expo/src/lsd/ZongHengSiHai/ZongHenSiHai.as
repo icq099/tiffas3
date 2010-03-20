@@ -1,8 +1,9 @@
 package lsd.ZongHengSiHai
 {
 	import communication.MainSystem;
-	import flash.events.NetStatusEvent;
+	
 	import flash.events.Event;
+	import flash.events.NetStatusEvent;
 	
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
@@ -14,11 +15,10 @@ package lsd.ZongHengSiHai
 	{
 		private var swfPlayer:SwfPlayer;
 		private var flvPlayer:FLVPlayer;
-		public function ZongHenSiHai()
+		public function ZongHenSiHai(withMovie:Boolean)
 		{
 			MainSystem.getInstance().stopRender();
-			MainSystem.getInstance().addAPI("addZongHengSiHai",addZongHengSiHai);
-			
+			addZongHengSiHai(withMovie);
 		}
 		public function addZongHengSiHai(withMovie:Boolean):void{
 			if(withMovie)
