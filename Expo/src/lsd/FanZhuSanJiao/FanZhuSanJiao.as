@@ -41,10 +41,12 @@ package lsd.FanZhuSanJiao
 					flvPlayer.removeEventListener(NetStatusEvent.NET_STATUS,on_Complete);
 					flvPlayer.removeEventListener(NetStatusEvent.NET_STATUS,gx_Complete);
 				}
+				if(flvPlayer.parent!=null){
                 flvPlayer.parent.removeChild(flvPlayer);
 				flvPlayer.dispose();
                 flvPlayer=null;
-			}
+              }
+		   }
 		}		
 		private function guangXiClick():void{
 			backGuangXi();
@@ -70,9 +72,7 @@ package lsd.FanZhuSanJiao
 	        flvRemove(); 
       	
        }
-		
        private function init():void{
-			
 			 var guangXiArea:Array=[[[272,299],[394,377]],[[297,377],[347,410]]];
 			 var fanZhuWindowArea:Array=[[[680,153],[892,192]]]
 			 swfPlayer=new SwfPlayer("swf/fanZhuSanJiao.swf",980,490);
@@ -100,15 +100,19 @@ package lsd.FanZhuSanJiao
 		private function fanZhuWindowClick():void{
 			trace("fanzhuwindow");
 		}
-		public function dispose():void{
-		  
-				swfPlayer.parent.removeChild(swfPlayer);
-				MainSystem.getInstance().removeEventListener("zonghengsihai.complete",zongHengSiHai_fun);
-				swfPlayer.removeEventListener(Event.COMPLETE,on_swf_complete);
-				swfPlayer.dispose();
-		        swfPlayer=null;
-			}
-		}
-		
-		
+	    
+	    public function dispose():void{
+	   	    
+	   	    if(swfPlayer!=null){
+	   	    	if(swfPlayer.parent!=null){
+	   	    		swfPlayer.parent.removeChild(swfPlayer);
+			   	    MainSystem.getInstance().removeEventListener("zonghengsihai.complete",zongHengSiHai_fun);
+			   	    swfPlayer.removeEventListener(Event.COMPLETE,on_swf_complete);
+			   	    swfPlayer.dispose();
+			   	    swfPlayer=null;
+	   	    		
+	   	      }
+	   	   }  	
+	   }
 	}
+ }

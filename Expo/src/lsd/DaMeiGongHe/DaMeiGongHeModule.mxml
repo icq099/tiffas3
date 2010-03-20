@@ -15,11 +15,15 @@
 			}
 
 			public function dispose():void
-			{
-                daMeiGongHe.parent.removeChild(daMeiGongHe);
-				daMeiGongHe.dispose();
-				daMeiGongHe=null;
+			{   if(daMeiGongHe!=null){
+				if(daMeiGongHe.parent!=null){
+					daMeiGongHe.parent.removeChild(daMeiGongHe);
+				    daMeiGongHe.dispose();
+				    daMeiGongHe=null;
+					
+				}
 			}
+        }
 		 		
 		 	]]>
 		 </mx:Script>
