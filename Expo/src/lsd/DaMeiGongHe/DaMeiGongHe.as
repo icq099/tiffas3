@@ -1,11 +1,16 @@
 package lsd.DaMeiGongHe
 {
 	import communication.MainSystem;
-    import flash.events.NetStatusEvent;
-    import lxfa.normalWindow.SwfPlayer;
+	
+	import flash.events.Event;
+	import flash.events.NetStatusEvent;
+	
+	import lsd.ZongHengSiHai.ZongHengSiHaiStatic;
+	
+	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
 	import lxfa.view.player.FLVPlayer;
-	import flash.events.Event;
+	
 	import mx.core.UIComponent;
 	
 	public class DaMeiGongHe extends UIComponent
@@ -18,12 +23,20 @@ package lsd.DaMeiGongHe
 		}
 		private function initPlayer():void{
 			flvPlayer=new FLVPlayer("movie/gx-mgh1.flv",900,480,false);
-		    MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
+			flvPlayer.addEventListener(Event.COMPLETE,on_flv_complete);
 			addChild(flvPlayer);
 	        flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
 			
 		}
+	      private function on_flv_complete(e:Event):void
+	      {
+	      	  MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
+	      	  if(flvPlayer!=null && flvPlayer.hasEventListener(Event.COMPLETE))
+	      	  {
+	      	  	flvPlayer.removeEventListener(Event.COMPLETE,on_flv_complete);
+	      	  }
+	      }
 		  private function on_Complete(e:NetStatusEvent):void{
       	
       	    init();   

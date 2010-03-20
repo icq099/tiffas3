@@ -15,7 +15,7 @@
 			{
 				zongHengSiHai=new ZongHenSiHai(false);
 				addChild(Toolyzhkof.mcToUI(zongHengSiHai));
-
+				ZongHengSiHaiStatic.getInstance().currentModuleName=this.className;
 			}
 
 			public function dispose():void

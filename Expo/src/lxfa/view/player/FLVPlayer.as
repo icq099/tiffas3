@@ -108,7 +108,8 @@ package lxfa.view.player
 			var close:BTNClose=new BTNClose();
 			close.addEventListener(MouseEvent.CLICK,on_close_click);
 			close.y=10;
-			close.x=850;
+			close.x=780;
+			close.buttonMode=true;
 			this.addChild(close);
 		}
 		//关闭按钮的点击事件

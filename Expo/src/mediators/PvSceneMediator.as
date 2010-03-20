@@ -92,13 +92,16 @@ package mediators
 				case FacadePv.CAMERA_ROTA_DIRECT:
 				
 				if(notification.getBody().tween){
-					
-					controler.setGotoRotation(notification.getBody().x,notification.getBody().y);
+					if(controler!=null)
+					{
+						controler.setGotoRotation(notification.getBody().x,notification.getBody().y);
+					}
 					
 				}else{
-					
-					controler.setRotation(notification.getBody().x,notification.getBody().y);
-				
+					if(controler!=null)
+					{
+						controler.setRotation(notification.getBody().x,notification.getBody().y);
+					}
 				}
 				
 				break;
