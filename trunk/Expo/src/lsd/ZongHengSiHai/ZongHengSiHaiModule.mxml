@@ -13,7 +13,7 @@
 
 			private function init():void
 			{
-				zongHengSiHai=new ZongHenSiHai();
+				zongHengSiHai=new ZongHenSiHai(false);
 				addChild(Toolyzhkof.mcToUI(zongHengSiHai));
 
 			}
