@@ -1,8 +1,8 @@
 package lxfa.No4.view
 {
+	import communication.Event.SceneChangeEvent;
 	import communication.MainSystem;
 	
-	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.NetStatusEvent;
 	
@@ -18,28 +18,37 @@ package lxfa.No4.view
 		//初始化播放器
 		private function initFLVPlayer():void
 		{
-			flvPlayer=new FLVPlayer("video/no4/no4.flv",900,480);
+			flvPlayer=new FLVPlayer("video/no4/no4.flv",900,480,false);
 			flvPlayer.y=70;
 			this.addChild(flvPlayer);
 			flvPlayer.resume();
-			MainSystem.getInstance().startRender();
-//			MainSystem.getInstance().showPluginById("No5Module");
-			MainSystem.getInstance().gotoScene(0);//跑到绿色家园
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,flvPlayer_NetStatusHandler);
 		}
 		private function flvPlayer_NetStatusHandler(e:NetStatusEvent):void
 		{
-//			MainSystem.getInstance().enable360System();
-			MainSystem.getInstance().removePluginById("No4Module");
-//			MainSystem.getInstance().showPluginById("AnimationModule");
-//			MainSystem.getInstance().runAPIDirect("showGuiWa",[1]);
+			MainSystem.getInstance().enable360System();
+			MainSystem.getInstance().gotoScene(0);//跑到绿色家园
+			MainSystem.getInstance().addEventListener(SceneChangeEvent.CHANGED,on_scenechanged);
+		}
+		private function on_scenechanged(e:SceneChangeEvent):void
+		{
+			MainSystem.getInstance().startRender();
+			dispose();
 		}
 		public function dispose():void
 		{
-			flvPlayer.parent.removeChild(flvPlayer);
-			flvPlayer.dispose();
-//			flvPlayer.dispose();
-			flvPlayer=null;
+			if(flvPlayer!=null)
+			{
+				flvPlayer.visible=false;
+				flvPlayer.dispose();
+				if(flvPlayer.parent!=null)
+				{
+					flvPlayer.parent.removeChild(flvPlayer);
+				}
+	//			flvPlayer.dispose();
+//				flvPlayer=null;
+//				MainSystem.getInstance().removePluginById("No4Module");
+			}
 		}
 	}
 }

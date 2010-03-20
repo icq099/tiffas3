@@ -13,7 +13,7 @@ package lxfa.mainMenuBottom
 	{
 		private var bottom:MainMenuBottomSwc;
 		private const cameraRotateSpeed:int=8;
-		private const focusMaxRange:int=130;
+		private const focusMaxRange:int=110;
 		private const focusMinRange:int=60;
 		private var focusSpeed:int=10;
 		public function MainMenuBottom()
@@ -84,18 +84,22 @@ package lxfa.mainMenuBottom
 		private function cameraUpClickEvent(e:MouseEvent):void
 		{
 			MainSystem.getInstance().camera.rotationX+=cameraRotateSpeed;
+			trace("x:"+MainSystem.getInstance().camera.rotationX);
 		}
 		private function cameraDownClickEvent(e:MouseEvent):void
 		{
 			MainSystem.getInstance().camera.rotationX-=cameraRotateSpeed;
+			trace("x:"+MainSystem.getInstance().camera.rotationX);
 		}
 		private function cameraLeftClickEvent(e:MouseEvent):void
 		{
 			MainSystem.getInstance().camera.rotationY-=cameraRotateSpeed;
+			trace("y:"+MainSystem.getInstance().camera.rotationY);
 		}
 		private function cameraRightClickEvent(e:MouseEvent):void
 		{
 			MainSystem.getInstance().camera.rotationY+=cameraRotateSpeed;
+			trace("y:"+MainSystem.getInstance().camera.rotationY);
 		}
 	}
 }

@@ -110,6 +110,7 @@ package view
 		private function onCompleteHandler(e:Event):void{
 			
 			loading_mc.parent.removeChild(loading_mc);
+			MainSystem.getInstance().getPlugin("FlvModule").removeEventListener(Event.COMPLETE,onCompleteHandler);
 //			Application.application.addChild(Toolyzhkof.mcToUI(loader));
 //			TweenLite.from(loader,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
 //				loader.resume();
@@ -120,6 +121,7 @@ package view
 		MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.CLOSE,movieComplete);
 		}
 		private function movieComplete(e:Event):void{
+			MainSystem.getInstance().getPlugin("FlvModule").removeEventListener(Event.CLOSE,movieComplete);
 			MainSystem.getInstance().startRender();
 			dispatchEvent(new Event(Event.COMPLETE));
 		}

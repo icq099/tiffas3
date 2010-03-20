@@ -28,6 +28,7 @@ package mediators
 	import yzhkof.CameraRotationControler;
 	import yzhkof.CamereaControlerEvent;
 	import yzhkof.MyGC;
+	import yzhkof.PositionSeter;
 
 	public class PvSceneMediator extends Mediator implements IMediator
 	{
@@ -73,7 +74,7 @@ package mediators
 					pxml=facade.retrieveProxy(PXml.NAME) as PXml;
 					//var current_scene:int=xml.Travel.@start_scene;
 					var compas_rota:Number=xml.Compass.@rotation;
-					viewer.setCompassRotation(compas_rota);
+					viewer.setCompassRotation(compas_rota);	
 					AddToStageSetter.delayExcuteAfterAddToStage(viewer,function():void{
 						controler=new CameraRotationControler(viewer,PTravel(facade.retrieveProxy("PTravel")).getCamera());
 						controler.addEventListener(CamereaControlerEvent.UPDATA,onCameraUpdata);

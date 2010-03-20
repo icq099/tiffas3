@@ -10,6 +10,8 @@ package lxfa.view.player
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
 	
+	import yzhkof.PositionSeter;
+	
 	public class FLVPlayer extends Sprite
 	{
 		
@@ -116,8 +118,11 @@ package lxfa.view.player
 		}
 		public function dispose():void
 		{
+			if(netStream!=null)
+			{
+				netStream.pause();	
+			}
 			this.removeEventListener(Event.ENTER_FRAME,on_ENTER_FRAME);//不再对外抛出进度事件
-			netStream.close();
 			video=null;
 			netStream=null;
 		}

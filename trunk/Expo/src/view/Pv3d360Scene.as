@@ -89,7 +89,7 @@
 			renderer = new BasicRenderEngine();
 			scene = new Scene3D();
 			camera = new FreeCamera3D();
-			viewport=new Viewport3D(0,0,true,true);
+			viewport=new Viewport3D(900,600,false,true);
 			pLoader=new CompatibleLoader();
 			
 			pLoader.addEventListener(Event.COMPLETE,chageCompleteHandler);

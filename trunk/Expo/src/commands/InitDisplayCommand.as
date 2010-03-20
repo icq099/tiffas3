@@ -43,7 +43,7 @@ package commands
 			
 			}
 			//debug设置
-			var main_scene:Pv3d360SceneHotPoint=new Pv3d360SceneHotPoint();
+			var main_scene:Pv3d360SceneCompass=new Pv3d360SceneCompass();
 			main_scene.compass_visible=true;
 			main_scene.stopRend();
 			//
