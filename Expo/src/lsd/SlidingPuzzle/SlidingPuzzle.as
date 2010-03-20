@@ -10,24 +10,22 @@ package lsd.SlidingPuzzle {
 	import flash.net.URLRequest;
 	import flash.utils.Timer;
 	
-	import mx.core.UIComponent;
-	
-	public class SlidingPuzzle extends UIComponent {
+	public class SlidingPuzzle extends Sprite {
 		// space between pieces and offset
-		static const pieceSpace:Number = 1;
-		static const horizOffset:Number = 0;
-		static const vertOffset:Number = 0;
+		private static const pieceSpace:Number = 1;
+		private static const horizOffset:Number = 0;
+		private static const vertOffset:Number = 0;
 		
 		// number of pieces
-		static const numPiecesHoriz:int = 4;
-		static const numPiecesVert:int = 3;
+		private static const numPiecesHoriz:int = 4;
+		private static const numPiecesVert:int = 3;
 		
 		// random shuffle steps
-		static const numShuffle:int = 200;
+		private static const numShuffle:int = 200;
 		
 		// animation steps and time
-		static const slideSteps:int = 10;
-		static const slideTime:int = 250;
+		private static const slideSteps:int = 10;
+		private static const slideTime:int = 250;
 		
 		// size of pieces
 		private var pieceWidth:Number;
@@ -44,7 +42,7 @@ package lsd.SlidingPuzzle {
 		
 		public function SlidingPuzzle(){
 			
-            loadBitmap("img/百里柳江.jpg");
+          //  loadBitmap("img/百里柳江.jpg");
 		}
 		
 		

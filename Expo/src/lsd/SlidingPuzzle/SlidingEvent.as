@@ -4,8 +4,8 @@ package lsd.SlidingPuzzle
 
 	public class SlidingEvent extends Event
 	{
-		public static const PUZZLE_CHANG:String="SlidingEvent:puzzle_change";
-		public static const PUZZLE_END:String="SlidingEvent:puzzle_end";
+		public static const PUZZLE_CHANG:String="puzzle_change";
+		public static const PUZZLE_END:String="puzzle_end";
 
 
 		public function SlidingEvent(type:String)

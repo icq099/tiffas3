@@ -18,9 +18,15 @@ package lsd.FanZhuSanJiao
 		private var swfPlayer:SwfPlayer;
 		private var flvPlayer:FLVPlayer;
 		public function FanZhuSanJiao()
-		{
+		{   
+			MainSystem.getInstance().addEventListener(PluginEvent.UPDATE,on_plugin_update);//场景切换时，系统抛出的插件更新事件
 			initPlayer();
 			
+		}
+		private function on_plugin_update(e:PluginEvent):void
+		{
+			MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
+			MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,on_plugin_update);
 		}
 		private function initPlayer():void{
 			
