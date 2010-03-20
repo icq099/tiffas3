@@ -43,7 +43,7 @@ package commands
 			var p_travel:PTravel=PTravel(facade.retrieveProxy(PTravel.NAME));
 			p_travel.getCamera().rotationY=p_xml.xml.Travel.@stop_rotationY;
 			p_travel.getCamera().rotationX=p_xml.xml.Travel.@stop_rotationX;
-			
+			p_travel.getCamera().focus=p_xml.xml.Travel.@focus;
 			loader.clear();
 			
 			facade.sendNotification(FacadePv.INIT_DISPLAY);

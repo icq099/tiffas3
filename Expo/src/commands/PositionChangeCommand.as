@@ -143,7 +143,7 @@ package commands
             else
             {
             	MainSystem.getInstance().runScript(movie);
-            }
+            } 
 //			facade.sendNotification(FacadePv.STOP_RENDER);
 		}
 		
