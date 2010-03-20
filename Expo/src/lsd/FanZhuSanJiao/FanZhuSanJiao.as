@@ -2,6 +2,7 @@ package lsd.FanZhuSanJiao
 {
 	import communication.MainSystem;
 	
+	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	
 	import lxfa.normalWindow.SwfPlayer;
@@ -22,24 +23,13 @@ package lsd.FanZhuSanJiao
 		private function initPlayer():void{
 			
 			flvPlayer=new FLVPlayer("movie/gx-fz1.flv",900,480,false);
-			MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
 			addChild(flvPlayer);
-			trace("A")
+			MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
 			flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
       }
       private function on_Complete(e:NetStatusEvent):void{
       	    init();
-      	    flvRemove();
-
-
-
-      	    //MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
-
-      	    init();
-      	    
-      	    
-
       }
      private function flvRemove():void
 	{
@@ -82,13 +72,16 @@ package lsd.FanZhuSanJiao
              CollisionManager.getInstance().addCollision(guangXiArea,guangXiClick,"fz_gx");
 			 CollisionManager.getInstance().addCollision(fanZhuWindowArea,fanZhuWindowClick,"fanZhuWindow");
 			 this.addChild(swfPlayer);
-
-			 
+			 swfPlayer.addEventListener(Event.COMPLETE,on_swf_complete);
 			 CollisionManager.getInstance().addCollision(guangXiArea,guangXiClick,"fz_gx");
 			 CollisionManager.getInstance().addCollision(fanZhuWindowArea,fanZhuWindowClick,"fanZhuWindow");
 
 			 //CollisionManager.getInstance().showCollision();
 
+		}
+		private function on_swf_complete(e:Event):void
+		{
+			flvRemove();
 		}
 		private function removeAreas():void{
 			
