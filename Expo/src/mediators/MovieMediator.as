@@ -6,6 +6,8 @@ package mediators
 	
 	import flash.events.Event;
 	
+	import lxfa.utils.MemoryRecovery;
+	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.mediator.Mediator;
 	
@@ -70,9 +72,13 @@ package mediators
 				
 				break;
 				case FacadePv.REMOVE_MOVIE:
-				
+				    MainSystem.getInstance().isBusy=false;
 					MainSystem.getInstance().removePluginById("FlvModule");
-				
+					MainSystem.getInstance().isBusy=true;
+//				    MainSystem.getInstance().addEventListener("guiwaready",function guiwaready(e:Event):void{
+//				    	MemoryRecovery.getInstance().gcFun(MainSystem.getInstance(),"guiwaready",guiwaready);
+//				    	MainSystem.getInstance().isBusy=false;
+//				    });
 				break;
 			
 			

@@ -1,5 +1,7 @@
 package lsd.ZongHengSiHai
 {
+	import caurina.transitions.Tweener;
+	
 	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
@@ -19,14 +21,23 @@ package lsd.ZongHengSiHai
 		public function ZongHenSiHai(withMovie:Boolean)
 		{
 			MainSystem.getInstance().stopRender();
-			MainSystem.getInstance().addAPI("addZongHengSiHai",addZongHengSiHai);
 			addZongHengSiHai(withMovie);
 			MainSystem.getInstance().isBusy=true;
 		}
 		private function on_plugin_update():void
 		{
-			MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
-			MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,on_plugin_update);
+			if(MainSystem.getInstance().isBusy==true)
+			{
+				MainSystem.getInstance().isBusy==false
+				dispose();
+				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
+				MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,on_plugin_update);
+				MainSystem.getInstance().isBusy=true;
+			}else
+			{
+				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
+				MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,on_plugin_update);
+			}
 		}
 		public function addZongHengSiHai(withMovie:Boolean):void{
 			if(withMovie)
@@ -49,8 +60,7 @@ package lsd.ZongHengSiHai
 		}
 		private function on_flv_complete(e:Event):void
 		{
-			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().addEventListener(PluginEvent.UPDATE,on_plugin_update);//场景切换时，系统抛出的插件更新事件
+			MainSystem.getInstance().addAutoClose(on_plugin_update,[]);
 		}
 		private function flvRemove():void
 		{
@@ -69,6 +79,7 @@ package lsd.ZongHengSiHai
 		}
 		private function on_Complete(e:Event):void
 		{
+			MainSystem.getInstance().isBusy=false;
 			init();
 		}
         private function init():void{
@@ -92,7 +103,10 @@ package lsd.ZongHengSiHai
 		private function on_swf_complete(e:Event):void
 		{
 			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
+			if(ZongHengSiHaiStatic.getInstance().currentModuleName=="ZongHengSiHaiModule")
+			{
+				MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
+			}
 			MainSystem.getInstance().addAutoClose(on_plugin_update,[]);
 			flvRemove();
 		}
@@ -137,7 +151,7 @@ package lsd.ZongHengSiHai
 			
 		}
 		public function dispose():void{
-//			Tweener.addTween(this,{alpha:0,time:5,onComplete:close});
+			Tweener.addTween(this,{alpha:0,time:1,onComplete:close});
         }
          private function close():void
          {

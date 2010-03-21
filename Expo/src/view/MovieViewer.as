@@ -5,6 +5,7 @@ package view
 	import communication.Event.ScriptAPIAddEvent;
 	import communication.MainSystem;
 	
+	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -12,6 +13,7 @@ package view
 	
 	import gs.TweenLite;
 	
+	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	
 	import mx.core.Application;
@@ -123,7 +125,8 @@ package view
 		MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.CLOSE,movieComplete);
 		}
 		private function movieComplete(e:Event):void{
-			MainSystem.getInstance().getPlugin("FlvModule").removeEventListener(Event.CLOSE,movieComplete);
+			var dis:DisplayObject=MainSystem.getInstance().getPlugin("FlvModule");
+			MemoryRecovery.getInstance().gcFun(dis,Event.CLOSE,movieComplete);
 			MainSystem.getInstance().startRender();
 			dispatchEvent(new Event(Event.COMPLETE));
 		}

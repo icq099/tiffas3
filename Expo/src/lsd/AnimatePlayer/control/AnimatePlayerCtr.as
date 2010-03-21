@@ -8,6 +8,7 @@ package lsd.AnimatePlayer.control
 	import lsd.AnimatePlayer.view.AnimatePlayer;
 	
 	import lxfa.model.XmlLoaderModel;
+	import lxfa.utils.MemoryRecovery;
 	
 	import mx.core.UIComponent;
 	
@@ -16,6 +17,7 @@ package lsd.AnimatePlayer.control
 		private var xml:XmlLoaderModel;
 		private var animatePlayer:AnimatePlayer
 		private var ID:int;
+		private var isClose:Boolean=false;
 		public function AnimatePlayerCtr()
 		{
 			MainSystem.getInstance().addAPI("addAnimate",init);
@@ -23,7 +25,9 @@ package lsd.AnimatePlayer.control
 		}
 		private function init(id:int,controlRender:Boolean=false):AnimatePlayer
 		{
+			MainSystem.getInstance().isBusy=true
 			animatePlayer=new AnimatePlayer();
+			isClose=false;
 			if(id!=-1)//-1就不显示桂娃了
 			{
 				this.ID=id;
@@ -49,10 +53,10 @@ package lsd.AnimatePlayer.control
 		}
 		public function dispose():void
 		{
-			if(animatePlayer!=null)
+			if(!isClose)
 			{
-				animatePlayer.dispose();
-				animatePlayer=null;
+				isClose=true;
+				MemoryRecovery.getInstance().gcObj(animatePlayer,true);
 			}
 		}
 	}

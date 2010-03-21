@@ -53,12 +53,12 @@ package lxfa.yangmengbagui.view
 		}
 		private function on_flv_complete(e:Event):void
 		{
-			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
 			MainSystem.getInstance().addAutoClose(close,[]);
 		}
 		private function on_complete(e:Event):void
 		{
+			MainSystem.getInstance().isBusy=false;
 			initSwf();
 		}
 		//背景SWF

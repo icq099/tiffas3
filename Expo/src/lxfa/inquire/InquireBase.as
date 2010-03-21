@@ -6,7 +6,6 @@ package lxfa.inquire
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
-	import mx.containers.Canvas;
 	import mx.core.Application;
 	import mx.core.UIComponent;
 	import mx.managers.PopUpManager;
@@ -61,7 +60,9 @@ package lxfa.inquire
 		{
 			PopUpManager.removePopUp(inquireContainer);
 			inquireContainer=null;
+			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
+			MainSystem.getInstance().isBusy=true;
 			animateParent.addChild(animate);
 		}
 	}

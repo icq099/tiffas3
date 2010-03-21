@@ -26,7 +26,10 @@ package lxfa.No4.view
 		}
 		private function flvPlayer_NetStatusHandler(e:NetStatusEvent):void
 		{
-			MainSystem.getInstance().enable360System();
+			if(!MainSystem.getInstance().is360Ready)
+			{
+				MainSystem.getInstance().enable360System();
+			}
 			MainSystem.getInstance().gotoScene(0);//跑到绿色家园
 			MainSystem.getInstance().addEventListener(SceneChangeEvent.CHANGED,on_scenechanged);
 		}

@@ -63,8 +63,8 @@ package commands
 				
 			}
 			if(movie==null){
-				
-				facade.sendNotification(FacadePv.POSITION_CHANGE,MainSystem.getInstance().currentScene);
+
+				facade.sendNotification(FacadePv.POSITION_CHANGE, MainSystem.getInstance().currentScene);
 			
 			}else{
 				
@@ -122,15 +122,16 @@ package commands
 		}
 		private function close(e:Event):void
 		{
+			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().startRender();
 			var travel:PTravel=facade.retrieveProxy(PTravel.NAME) as PTravel;
-			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().currentScene=travel.oldPosition;
 			MainSystem.getInstance().getPlugin("InquireModule").removeEventListener(Event.CLOSE,close);//删除监听关闭东西的事件
 			MainSystem.getInstance().getPlugin("InquireModule").removeEventListener(Event.OPEN,open);//删除监听打开东西的事件
 		}
 		private function sendNotificationCommand():void{
 			facade.sendNotification(FacadePv.STOP_RENDER);
+			MainSystem.getInstance().isBusy=true;
             if(movie.charAt(0)=="m" && movie.charAt(1)=="o" && movie.charAt(2)=="v" && movie.charAt(3)=="i" && movie.charAt(4)=="e")
             {
             	facade.sendNotification(FacadePv.LOAD_MOVIE,{url:movie,goto:MainSystem.getInstance().currentScene,stop_rotationX:stop_rotationX,stop_rotationY:stop_rotationY});
