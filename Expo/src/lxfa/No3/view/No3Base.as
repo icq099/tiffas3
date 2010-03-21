@@ -46,10 +46,10 @@ package lxfa.No3.view
 		}
 		public function step4():void
 		{
-            MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
             MainSystem.getInstance().showPluginById("MainMenuBottomModule");
 			MainSystem.getInstance().showPluginById("MainMenuTopModule");
             MainSystem.getInstance().showPluginById("No3SwfModule");
+            MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
             MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,on_plugin_ready);
 		}
 		private function on_plugin_ready(e:MainSystemEvent):void

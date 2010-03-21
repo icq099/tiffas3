@@ -7,6 +7,7 @@
 	import flash.events.*;
 	import flash.filters.*;
 	
+	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.pv3dAddOn.milkmidi.papervision3d.materials.ReflectionFileMaterial;
 	import lxfa.view.pv3dAddOn.org.papervision3d.objects.primitives.NumberPlane;
 	import lxfa.yangmengbagui.model.YangMengBaGuiModel;
@@ -148,12 +149,15 @@
 				time		:0.5
 			} );
 		}
-		private function onEventRender3D(e:Event):void {			
-			basicView.singleRender();
-			//運算。
+		private function onEventRender3D(e:Event):void {	
+			if(basicView!=null)
+			{
+				basicView.singleRender();
+			}		
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
 			basicView.renderer.destroy();
 			basicView.viewport.destroy();
 			var i:int=0;

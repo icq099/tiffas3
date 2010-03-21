@@ -46,7 +46,7 @@ package lsd.AnimatePlayer.view
 				loader=new Loader();
 				request=new URLRequest(_urlanimte);
 				loader.load(request);
-			     
+			    loader.cacheAsBitmap=true;
 			    loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
 				closeButton.addEventListener(MouseEvent.CLICK,closeAnimate);
 	            addChild(loader);
@@ -93,6 +93,7 @@ package lsd.AnimatePlayer.view
 		{
 			outLoader=new Loader();
 			outLoader.load(new URLRequest("swf/animate/animateOut.swf"));
+			outLoader.cacheAsBitmap=true;
 			outLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,out_complete);
 		}
 		//退出的效果加载完毕的时候
@@ -134,7 +135,10 @@ package lsd.AnimatePlayer.view
 				}
 				if(loader!=null)
 				{
-					removeChild(loader);
+					if(loader.parent!=null)
+					{
+						removeChild(loader);
+					}
 					if(loader.content!=null)
 					{
 						MovieClip(loader.content).stop();

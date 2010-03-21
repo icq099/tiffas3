@@ -1,14 +1,8 @@
 package lxfa.mainMenuBottom
 {
-	import caurina.transitions.Tweener;
-	
-	import communication.Event.MainSystemEvent;
-	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
-	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	
@@ -48,33 +42,89 @@ package lxfa.mainMenuBottom
 			bottom.cameraLeft.addEventListener(MouseEvent.CLICK,cameraLeftClickEvent);
 			bottom.cameraRight.addEventListener(MouseEvent.CLICK,cameraRightClickEvent);
 			Application.application.stage.addEventListener(KeyboardEvent.KEY_DOWN,stageKeyEvent);
+			bottom.lvsejiayuan.addEventListener(MouseEvent.CLICK,on_lvsejiayuan_click);
+			bottom.lansemengxiang.addEventListener(MouseEvent.CLICK,on_lansemengxiang_click);
+			bottom.meiguantianxia.addEventListener(MouseEvent.CLICK,on_meiguantianxia_click);
+			bottom.jingxiuhuazhang.addEventListener(MouseEvent.CLICK,on_jingxiuhuazhang_click);
+			bottom.shengshihexie.addEventListener(MouseEvent.CLICK,on_shengshihexie_click);
 			bottom.zonghengsihai.addEventListener(MouseEvent.CLICK,on_zonghengsihai_click);
 			bottom.yangmengbagui.addEventListener(MouseEvent.CLICK,on_yangmengbagui_click);
 		}
 		//场景按钮事件
+		private function on_lvsejiayuan_click(e:MouseEvent):void
+		{
+			if(MainSystem.getInstance().is360Ready && !MainSystem.getInstance().isBusy)
+			{
+				MainSystem.getInstance().gotoScene(0);
+			}
+			else
+			{
+				MainSystem.getInstance().enable360System()
+				MainSystem.getInstance().gotoScene(0);
+			}
+		}
+		private function on_lansemengxiang_click(e:MouseEvent):void
+		{
+			if(MainSystem.getInstance().is360Ready && !MainSystem.getInstance().isBusy)
+			{
+				MainSystem.getInstance().gotoScene(1);
+			}
+			else
+			{
+				MainSystem.getInstance().enable360System()
+				MainSystem.getInstance().gotoScene(1);
+			}
+		}
+		private function on_meiguantianxia_click(e:MouseEvent):void
+		{
+			if(MainSystem.getInstance().is360Ready && !MainSystem.getInstance().isBusy)
+			{
+				MainSystem.getInstance().gotoScene(2);
+			}
+			else
+			{
+				MainSystem.getInstance().enable360System()
+				MainSystem.getInstance().gotoScene(2);
+			}
+		}
+		private function on_jingxiuhuazhang_click(e:MouseEvent):void
+		{
+			if(MainSystem.getInstance().is360Ready && !MainSystem.getInstance().isBusy)
+			{
+				MainSystem.getInstance().gotoScene(3);
+			}
+			else
+			{
+				MainSystem.getInstance().enable360System()
+				MainSystem.getInstance().gotoScene(3);
+			}
+		}
+		private function on_shengshihexie_click(e:MouseEvent):void
+		{
+			if(MainSystem.getInstance().is360Ready && !MainSystem.getInstance().isBusy)
+			{
+				MainSystem.getInstance().gotoScene(4);
+			}
+			else
+			{
+				MainSystem.getInstance().enable360System()
+				MainSystem.getInstance().gotoScene(4);
+			}
+		}
 		private function on_zonghengsihai_click(e:MouseEvent):void//纵横四海
 		{
-			if(currentSceneId!=5 && !isBusy)
+			if(MainSystem.getInstance().currentScene!=5 && !MainSystem.getInstance().isBusy)
 			{
-				isBusy=true;
-				currentSceneId=5;
+				MainSystem.getInstance().currentScene=5;
 				MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
-				MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
-				isBusy=false;
-				MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,function(e:MainSystemEvent):void{
-					var dis:DisplayObject=MainSystem.getInstance().getPlugin("ZongHengSiHaiModule");
-					dis.alpha=0;
-					Tweener.addTween(dis,{alpha:1,time:1});
-				});
 			}
 		}
 		private function on_yangmengbagui_click(e:MouseEvent):void//杨梦八桂
 		{
-			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
-			if(currentSceneId!=6 &&  !isBusy)
+			if(MainSystem.getInstance().currentScene!=6 &&  !MainSystem.getInstance().isBusy)
 			{
-				currentSceneId=6;
-//				MainSystem.getInstance().showPluginById("YangMengBaGuiModule");
+				MainSystem.getInstance().currentScene=6;
+				MainSystem.getInstance().showPluginById("YangMengBaGuiModule");
 			}
 		}
 		//下面的没BUG，可以不用看

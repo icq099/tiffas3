@@ -1,5 +1,8 @@
 package lxfa.yangmengbagui.view
 {
+	import caurina.transitions.Tweener;
+	
+	import communication.Event.PluginEvent;
 	import communication.Event.ScriptAPIAddEvent;
 	import communication.MainSystem;
 	
@@ -26,6 +29,7 @@ package lxfa.yangmengbagui.view
 			MainSystem.getInstance().addAPI("showYangMengBaGui",showYangMengBaGui);
 			MainSystem.getInstance().addAPI("removeMengBaGui",showYangMengBaGui);
 			MainSystem.getInstance().runAPIDirect("showYangMengBaGui",[true]);
+			MainSystem.getInstance().isBusy=true;
 		}
 		public function showYangMengBaGui(withMovie:Boolean):void
 		{
@@ -42,9 +46,16 @@ package lxfa.yangmengbagui.view
 		{
 			flvPlayer=new FLVPlayer("movie/zonghengsihai-yangmengbagui.flv",900,480,false);
 			addChild(flvPlayer);
+			flvPlayer.addEventListener(Event.COMPLETE,on_flv_complete);
 	        flvPlayer.resume();
 	        flvPlayer.y=70;
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_complete);
+		}
+		private function on_flv_complete(e:Event):void
+		{
+			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
+			MainSystem.getInstance().addAutoClose(close,[]);
 		}
 		private function on_complete(e:Event):void
 		{
@@ -57,13 +68,14 @@ package lxfa.yangmengbagui.view
 			flowerFlvSwf=new SwfPlayer("swf/yangmengbagui.swf",900,480);
 			flowerFlvSwf.addEventListener(Event.COMPLETE,onComplete);
 			flowerFlvSwf.y=70;
-//			flowerFlvSwf.x=-200;
-//			flowerFlvSwf.y=-100;
 		}
 		private function onComplete(e:Event):void
 		{
 			this.addChild(flowerFlvSwf);
-			this.addChild(view3d);
+			if(view3d!=null)
+			{
+				this.addChild(view3d);
+			}
 			initYangMengBaGuiSwc();
 			initLED();
 			MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
@@ -119,14 +131,18 @@ package lxfa.yangmengbagui.view
 			LED.resume();
 			LED.mouseEnabled=true;
 		}
+		private function close():void
+		{
+			Tweener.addTween(this,{alpha:0,time:1.5,onComplete:dispose});
+		}
 		//清除内存
 		public function dispose():void
 		{
-			MemoryRecovery.getInstance().gc(flvPlayer,true);
-			MemoryRecovery.getInstance().gc(flowerFlvSwf,true);
-			MemoryRecovery.getInstance().gc(yangMengBaGuiSwc);
-			MemoryRecovery.getInstance().gc(LED);
-			MemoryRecovery.getInstance().gc(view3d,true);
+			MemoryRecovery.getInstance().gcObj(flvPlayer,true);
+			MemoryRecovery.getInstance().gcObj(flowerFlvSwf,true);
+			MemoryRecovery.getInstance().gcObj(yangMengBaGuiSwc);
+			MemoryRecovery.getInstance().gcObj(LED,true);
+			MemoryRecovery.getInstance().gcObj(view3d,true);
 		}
 	}
 }

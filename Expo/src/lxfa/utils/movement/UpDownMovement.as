@@ -25,7 +25,13 @@ package lxfa.utils.movement
 		{
 			if(obj!=null)
 			{
-				Tweener.addTween(obj,{y:maxHeight+this.sourceHeight,time:speed,onComplete:moveUpComplete,delay:2});
+				if(Math.random()>0.5)
+				{
+					moveUpComplete();
+				}else
+				{
+					moveDownComplete();
+				}
 			}
 		}
 		//向上运动

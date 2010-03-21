@@ -10,6 +10,7 @@ package lxfa.No3Swf.view
 	import flash.events.MouseEvent;
 	
 	import lxfa.normalWindow.SwfPlayer;
+	import lxfa.utils.MemoryRecovery;
 	
 	import mx.core.UIComponent;
 	
@@ -52,11 +53,7 @@ package lxfa.No3Swf.view
 		}
 		private function on_dispose_complete():void
 		{
-			if(flowerFlvSwf!=null)
-			{
-				flowerFlvSwf.parent.removeChild(flowerFlvSwf);
-				flowerFlvSwf=null;
-			}
+			MemoryRecovery.getInstance().gcObj(flowerFlvSwf,true);
 		}
 	}
 }

@@ -33,6 +33,7 @@ package view
 		public function loadMovie(URL:String):void{
 			this.URL=URL;
 			loading_mc=new LoadingWaveRota();
+			MainSystem.getInstance().isBusy=false;//让电影能够播放
 			MainSystem.getInstance().showPluginById("FlvModule");
 			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,on_add_api);
 			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
@@ -47,6 +48,7 @@ package view
 			if(e.fun_name=="addFlv")
 			{
 				MainSystem.getInstance().runAPIDirect("addFlv",[URL,false]);
+				MainSystem.getInstance().isBusy=true;//让其他插件不能中断它
 				MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.COMPLETE,onCompleteHandler);
 				MainSystem.getInstance().getPlugin("FlvModule").addEventListener(ProgressEvent.PROGRESS,onProgressHandler);
 			}
