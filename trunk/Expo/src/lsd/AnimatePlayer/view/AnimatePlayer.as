@@ -26,17 +26,23 @@ package lsd.AnimatePlayer.view
 		{
 		}
 		public function load(url_swf:String):void{
-			
-			if(url_swf!=null){
-				if(url_swf!=this._urlanimte){
-					
-					this._urlanimte=url_swf;
-					load_is_null=false;
-					loadAnimate();
+			if(!isClose)
+			{
+				if(url_swf!=null){
+					if(url_swf!=this._urlanimte){
+						
+						this._urlanimte=url_swf;
+						load_is_null=false;
+						loadAnimate();
+					}
+				}else{
+					//设置空	
+					load_is_null=true;		
 				}
-			}else{
-				//设置空	
-				load_is_null=true;		
+			}else
+			{
+				isClose=false;
+				dispose();
 			}
 	    }
 	    private function loadAnimate():void{
@@ -52,57 +58,93 @@ package lsd.AnimatePlayer.view
 	            addChild(loader);
 	            addChild(closeButton);closeButton.x=850;closeButton.y=60;
 	            is_open=true;
-	    	}
+	    	}else
+			{
+				isClose=false;
+				dispose();
+			}
 	    }
 	    private function completeHandler(e:Event):void{
 	    	if(!isClose)
 	    	{
 		    	initOut();
 		    	loader.x=0;
+		    	MainSystem.getInstance().isBusy=false
 		    	MovieClip(loader.content).addFrameScript(MovieClip(loader.content).totalFrames-1,movieCompleteHandler);
 		    	if(!is_open){
 		    		
 		    		MovieClip(loader.content).stop();
 		    	}
-	    	}
+	    	}else
+			{
+				isClose=false;
+				dispose();
+			}
 	    }
 		private function movieCompleteHandler():void{
-			removeChild(closeButton);closeButton=null;
-       	 	removeChild(loader);
-			MovieClip(loader.content).stop();loader=null;
+			if(!isClose)
+			{
+				removeChild(closeButton);closeButton=null;
+	       	 	removeChild(loader);
+				MovieClip(loader.content).stop();loader=null;
+			}else
+			{
+				isClose=false;
+				dispose();
+			}
 		}
 		public function closeAnimate(e:MouseEvent=null):void{
-			
-			if(is_open){
-				
-				try{
-					removeChild(closeButton);closeButton=null;
-	           	 	removeChild(loader);
-					MovieClip(loader.content).stop();loader=null;
-					this.addChild(outLoader);
-					MovieClip(outLoader.content).gotoAndPlay(0);
-					MovieClip(outLoader.content).addFrameScript(MovieClip(outLoader.content).totalFrames-1,dispose);
-				}catch(e:Error){
-					trace(e);
-				}
-	            is_open=false;
-	  		}
+			if(!isClose)
+			{
+				if(is_open){
+					
+					try{
+						removeChild(closeButton);closeButton=null;
+		           	 	removeChild(loader);
+						MovieClip(loader.content).stop();loader=null;
+						this.addChild(outLoader);
+						MovieClip(outLoader.content).gotoAndPlay(0);
+						MovieClip(outLoader.content).addFrameScript(MovieClip(outLoader.content).totalFrames-1,dispose);
+					}catch(e:Error){
+						trace(e);
+					}
+		            is_open=false;
+		  		}
+			}else
+			{
+				isClose=false;
+				dispose();
+			}
 		}
 		//初始化退出的效果
 		private function initOut():void
 		{
-			outLoader=new Loader();
-			outLoader.load(new URLRequest("swf/animate/animateOut.swf"));
-			outLoader.cacheAsBitmap=true;
-			outLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,out_complete);
+			if(!isClose)
+			{
+				outLoader=new Loader();
+				outLoader.load(new URLRequest("swf/animate/animateOut.swf"));
+				outLoader.cacheAsBitmap=true;
+				outLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,out_complete);
+			}else
+			{
+				isClose=false;
+				dispose();
+			}
 		}
 		//退出的效果加载完毕的时候
 	    private function out_complete(e:Event):void{
-	    	if(outLoader!=null)
+	    	if(!isClose)
 	    	{
-		    	outLoader.x=200;
-		    	outLoader.y=-330;
-		    	MovieClip(outLoader.content).stop();
+		    	if(outLoader!=null)
+		    	{
+			    	outLoader.x=200;
+			    	outLoader.y=-330;
+			    	MovieClip(outLoader.content).stop();
+		    	}
+	    	}else
+	    	{
+	    		isClose=false;
+	    		dispose();
 	    	}
 	    }
 		private function clearMC():void{

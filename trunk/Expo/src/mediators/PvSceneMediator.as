@@ -90,7 +90,7 @@ package mediators
 				
 				break;
 				case FacadePv.CAMERA_ROTA_DIRECT:
-				
+				MainSystem.getInstance().isBusy=true;
 				if(notification.getBody().tween){
 					if(controler!=null)
 					{
@@ -215,6 +215,7 @@ package mediators
 			{
 				id=xml.Travel.Scene[position].@animateId;
 			}
+			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().runAPIDirect("addAnimate",[id,true]);
 		}
 		private function updataAnimates(position:int):void{

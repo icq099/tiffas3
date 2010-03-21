@@ -53,77 +53,47 @@ package lxfa.mainMenuBottom
 		//场景按钮事件
 		private function on_lvsejiayuan_click(e:MouseEvent):void
 		{
-			if(MainSystem.getInstance().is360Ready && !MainSystem.getInstance().isBusy)
-			{
-				MainSystem.getInstance().gotoScene(0);
-			}
-			else
-			{
-				MainSystem.getInstance().enable360System()
-				MainSystem.getInstance().gotoScene(0);
-			}
+			customGotoScene(0);
 		}
 		private function on_lansemengxiang_click(e:MouseEvent):void
 		{
-			if(MainSystem.getInstance().is360Ready && !MainSystem.getInstance().isBusy)
-			{
-				MainSystem.getInstance().gotoScene(1);
-			}
-			else
-			{
-				MainSystem.getInstance().enable360System()
-				MainSystem.getInstance().gotoScene(1);
-			}
+			customGotoScene(1);
 		}
 		private function on_meiguantianxia_click(e:MouseEvent):void
 		{
-			if(MainSystem.getInstance().is360Ready && !MainSystem.getInstance().isBusy)
-			{
-				MainSystem.getInstance().gotoScene(2);
-			}
-			else
-			{
-				MainSystem.getInstance().enable360System()
-				MainSystem.getInstance().gotoScene(2);
-			}
+			customGotoScene(2);
 		}
 		private function on_jingxiuhuazhang_click(e:MouseEvent):void
 		{
-			if(MainSystem.getInstance().is360Ready && !MainSystem.getInstance().isBusy)
-			{
-				MainSystem.getInstance().gotoScene(3);
-			}
-			else
-			{
-				MainSystem.getInstance().enable360System()
-				MainSystem.getInstance().gotoScene(3);
-			}
+			customGotoScene(3);
 		}
 		private function on_shengshihexie_click(e:MouseEvent):void
 		{
-			if(MainSystem.getInstance().is360Ready && !MainSystem.getInstance().isBusy)
+			customGotoScene(4);
+		}
+		private function customGotoScene(id:int):void
+		{
+			if(!MainSystem.getInstance().isBusy && currentSceneId!=id)
 			{
-				MainSystem.getInstance().gotoScene(4);
-			}
-			else
-			{
-				MainSystem.getInstance().enable360System()
-				MainSystem.getInstance().gotoScene(4);
+				currentSceneId=id;
+				MainSystem.getInstance().enable360System();
+				MainSystem.getInstance().startRender();
+				MainSystem.getInstance().gotoScene(id);
 			}
 		}
 		private function on_zonghengsihai_click(e:MouseEvent):void//纵横四海
 		{
-			if(MainSystem.getInstance().currentScene!=5 && !MainSystem.getInstance().isBusy)
+			if(currentSceneId!=5 && !MainSystem.getInstance().isBusy)
 			{
-				MainSystem.getInstance().currentScene=5;
+				currentSceneId=5;
 				MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
 			}
 		}
 		private function on_yangmengbagui_click(e:MouseEvent):void//杨梦八桂
 		{
-			if(MainSystem.getInstance().currentScene!=6 &&  !MainSystem.getInstance().isBusy)
+			if(currentSceneId!=6 &&  !MainSystem.getInstance().isBusy)
 			{
-				MainSystem.getInstance().currentScene=6;
+				currentSceneId=6;
 				MainSystem.getInstance().showPluginById("YangMengBaGuiModule");
 			}
 		}
