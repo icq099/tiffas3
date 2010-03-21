@@ -1,6 +1,8 @@
 package lsd.SlidingPuzzle
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	import gs.TweenLite;
 	
@@ -18,7 +20,6 @@ package lsd.SlidingPuzzle
 		
 		private function init():void{
 			
-		
 			slidingPuzzle=new SlidingPuzzle();
 			puzzleGameClose=new PuzzleGameClose();
 			addChild(slidingPuzzle);
@@ -26,25 +27,46 @@ package lsd.SlidingPuzzle
 			puzzleGameClose.x=800;
 			slidingPuzzle.loadBitmap(url[i]);
 			slidingPuzzle.addEventListener(SlidingEvent.PUZZLE_CHANG,next_fun);
+			puzzleGameClose.close_btn.addEventListener(MouseEvent.CLICK,end_fun);
+			this.addEventListener(SlidingEvent.PUZZLE_END,end_fun);
 		}
 		private function next_fun(e:SlidingEvent):void{
 			
-			 if(i<5){
-			 i=i+1;
-			 TweenLite.to(slidingPuzzle,0.5,{alpha:0});
-             slidingPuzzle.clearPuzzle();
+			 if(url[i].toString()!="img/南宁机场.jpg")
+			 {	
+			 i++;
+			 TweenLite.from(slidingPuzzle,1,{alpha:0});
+			 
+             
 
-			 TweenLite.to(slidingPuzzle,0.5,{alpha:1,onStart: function():void{
+			 TweenLite.to(slidingPuzzle,1,{alpha:1,onStart: function():void{
 			 	 
+			 	 slidingPuzzle.clearPuzzle();
 			 	 slidingPuzzle.loadBitmap(url[i]);
 			
 			 }});
 			 }
 			 else{
-			 	slidingPuzzle.clearPuzzle();
+			 	
+			 	dispatchEvent(new SlidingEvent(SlidingEvent.PUZZLE_END));
+			 	
+			 	trace("game over")
 			 }
 			 
 		}
+		private function end_fun(e:Event):void{
+			
+			 TweenLite.to(slidingPuzzle,1,{alpha:0,onComplete:function():void{
+			          
+			         //removeChild(slidingPuzzle);
+			        // slidingPuzzle.parent.removeChild(slidingPuzzle);
+			        
+			        trace("wangjie");
+			 	
+			 	}});
+		}
+		
+		
 		
 		
 

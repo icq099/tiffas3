@@ -17,8 +17,8 @@ package lsd.SlidingPuzzle {
 		private static const vertOffset:Number = 0;
 		
 		// number of pieces
-		private static const numPiecesHoriz:int = 3;
-		private static const numPiecesVert:int = 3;
+		private static const numPiecesHoriz:int = 2;
+		private static const numPiecesVert:int = 2;
 		
 		// random shuffle steps
 		private static const numShuffle:int = 200;
@@ -45,11 +45,6 @@ package lsd.SlidingPuzzle {
           //  loadBitmap("img/百里柳江.jpg");
 		}
 		
-		
-			
-			
-	
-		
 		// get the bitmap from an external source
 		public function loadBitmap(bitmapFile:String) {
 			blankPoint = new Point(numPiecesHoriz-1,numPiecesVert-1);
@@ -60,7 +55,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// bitmap done loading, cut into pieces
-		public function loadingDone(event:Event):void {
+		private function loadingDone(event:Event):void {
 			// create new image to hold loaded bitmap
 			var image:Bitmap = Bitmap(event.target.loader.content);
 			pieceWidth = image.width/numPiecesHoriz;
@@ -74,7 +69,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// cut bitmap into pieces
-		public function makePuzzlePieces(bitmapData:BitmapData) {
+		private function makePuzzlePieces(bitmapData:BitmapData) {
 			puzzleObjects = new Array();
 			for(var x:uint=0;x<numPiecesHoriz;x++) {
 				for (var y:uint=0;y<numPiecesVert;y++) {
@@ -104,14 +99,14 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// make a number of random moves
-		public function shufflePuzzlePieces() {
+		private function shufflePuzzlePieces() {
 			for(var i:int=0;i<numShuffle;i++) {
 				shuffleRandom();
 			}
         }
 		
 		// random move
-		public function shuffleRandom() {
+		private function shuffleRandom() {
 			// loop to find valid moves
 			var validPuzzleObjects:Array = new Array();
 			for(var i:uint=0;i<puzzleObjects.length;i++) {
@@ -124,7 +119,7 @@ package lsd.SlidingPuzzle {
 			movePiece(validPuzzleObjects[pick],false);
 		}
 
-		public function validMove(puzzleObject:Object): String {
+		private function validMove(puzzleObject:Object): String {
 			// is the blank spot above
 			if ((puzzleObject.currentLoc.x == blankPoint.x) &&
 				(puzzleObject.currentLoc.y == blankPoint.y+1)) {
@@ -150,7 +145,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// puzzle piece clicked
-		public function clickPuzzlePiece(event:MouseEvent) {
+		private function clickPuzzlePiece(event:MouseEvent) {
 			// find piece clicked and move it
 			for(var i:int=0;i<puzzleObjects.length;i++) {
 				if (puzzleObjects[i].piece == event.currentTarget) {
@@ -161,7 +156,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// move a piece into the blank space
-		public function movePiece(puzzleObject:Object, slideEffect:Boolean) {
+		private function movePiece(puzzleObject:Object, slideEffect:Boolean) {
 			// get direction of blank space
 			switch (validMove(puzzleObject)) {
 				case "up":
@@ -180,7 +175,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// move the piece into the blank spot
-		public function movePieceInDirection(puzzleObject:Object, dx,dy:int, slideEffect:Boolean) {
+		private function movePieceInDirection(puzzleObject:Object, dx,dy:int, slideEffect:Boolean) {
 			puzzleObject.currentLoc.x += dx;
 			puzzleObject.currentLoc.y += dy;
 			blankPoint.x -= dx;
@@ -198,7 +193,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// set up a slide
-		public function startSlide(puzzleObject:Object, dx, dy:Number) {
+		private function startSlide(puzzleObject:Object, dx, dy:Number) {
 			if (slideAnimation != null) slideDone(null);
 			slidingPiece = puzzleObject;
 			slideDirection = new Point(dx,dy);
@@ -215,7 +210,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// complete slide
-		public function slideDone(event:Event) {
+		private function slideDone(event:Event) {
 			slidingPiece.piece.x = slidingPiece.currentLoc.x*(pieceWidth+pieceSpace) + horizOffset;
 			slidingPiece.piece.y = slidingPiece.currentLoc.y*(pieceHeight+pieceSpace) + vertOffset;
 			slideAnimation.stop();
@@ -228,7 +223,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// check to see if all pieces are in place
-		public function puzzleComplete():Boolean {
+		private function puzzleComplete():Boolean {
 			for(var i:int=0;i<puzzleObjects.length;i++) {
 				if (!puzzleObjects[i].currentLoc.equals(puzzleObjects[i].homeLoc)) {
 					return false;
@@ -245,6 +240,11 @@ package lsd.SlidingPuzzle {
 			}
 			puzzleObjects = null;
 		}
+	   public function dispose():void{
+	   	  this.parent.removeChild(this);
+	   	  
+	   	
+	   }
 		
 	}
 }
