@@ -42,7 +42,6 @@
 <module application="src/Expo.mxml" destPath="lxfa/animation/AnimationModule.swf" optimize="true" sourcePath="src/lxfa/animation/AnimationModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/flvModule/FlvModule.swf" optimize="true" sourcePath="src/lxfa/flvModule/FlvModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/gehaiqingyun/GeHaiQingYunModule.swf" optimize="true" sourcePath="src/lxfa/gehaiqingyun/GeHaiQingYunModule.mxml"/>
-<module application="src/Expo.mxml" destPath="yzhkof/opening/OpeningModule.swf" optimize="true" sourcePath="src/yzhkof/opening/OpeningModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/AnimatePlayer/AnimateModule.swf" optimize="true" sourcePath="src/lsd/AnimatePlayer/AnimateModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/mainMenuBottom/MainMenuBottomModule.swf" optimize="true" sourcePath="src/lxfa/mainMenuBottom/MainMenuBottomModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/inquire/InquireModule.swf" optimize="true" sourcePath="src/lxfa/inquire/InquireModule.mxml"/>
@@ -62,6 +61,7 @@
 <module application="src/Expo.mxml" destPath="lxfa/minzubaimei/MinZuBaiMeiModule.swf" optimize="true" sourcePath="src/lxfa/minzubaimei/MinZuBaiMeiModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/FanZhuSanJiao/FanZhuSanJiaoModule.swf" optimize="true" sourcePath="src/lsd/FanZhuSanJiao/FanZhuSanJiaoModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/ZongHengSiHaiWithMovie/ZongHengSiHaiWithMovieModule.swf" optimize="true" sourcePath="src/lsd/ZongHengSiHaiWithMovie/ZongHengSiHaiWithMovieModule.mxml"/>
+<module application="src/Expo.mxml" destPath="yzhkof/opening/OpeningModule.swf" optimize="true" sourcePath="src/yzhkof/opening/OpeningModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>

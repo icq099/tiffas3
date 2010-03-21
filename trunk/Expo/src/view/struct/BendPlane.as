@@ -47,7 +47,7 @@ package view.struct
 		}
 		public function set onClick(detail:String):void
 		{
-			this.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK,function(e:InteractiveScene3DEvent):void{
+			this.addEventListener(InteractiveScene3DEvent.OBJECT_PRESS,function(e:InteractiveScene3DEvent):void{
 				MainSystem.getInstance().runScript(detail);
 			});
 		}

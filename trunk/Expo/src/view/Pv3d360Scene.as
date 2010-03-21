@@ -1,6 +1,7 @@
 ﻿package view{
 	import flash.display.*;
 	import flash.events.*;
+	import flash.filters.GlowFilter;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	
@@ -253,18 +254,20 @@
 			plane.moveUp(5);
 			plane.y=-28;
 			scene.addChild(plane);
-			layer_arrows.addDisplayObject3D(plane);
+//			layer_arrows.addDisplayObject3D(plane);
+			plane.useOwnContainer=true;
+			var glowFilter:GlowFilter= new GlowFilter(0x000055, 1, 16, 16, 2, 1, false, false);   
 			if(tip_text.length>0){
 				
 				plane.extra={text:tip_text};
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER,function(e:Event):void{
 					addChild(tip_sprite);
 					tip_sprite.text=e.currentTarget.extra.text;
-					plane.material=material_arrow1;
+					plane.filters=[glowFilter];
 				});
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT,function(e:Event):void{
 					removeChild(tip_sprite);
-				    plane.material=material_arrow;
+				    plane.filters=[];
 				});
 			}
 			draw();
@@ -305,6 +308,7 @@
 			var maxHeight:Number=init_obj["maxHeight"]?init_obj["maxHeight"]:0;
 			var minHeight:Number=init_obj["minHeight"]?init_obj["minHeight"]:0;
 			var speed:Number=init_obj["speed"]?init_obj["speed"]:0;
+			var filter:int=init_obj["filter"]?init_obj["filter"]:0;
 			var plane_animate:BendPlane=new BendPlane(new ColorMaterial(0xffffff,0),width,height,segmentsW,segmentsH,init_obj);
 			plane_animate.offset=init_obj["offset"]?init_obj["offset"]:0;
 			plane_animate.angle=init_obj["angle"]?init_obj["angle"]:0;
@@ -367,13 +371,21 @@
 					}
 				}
 			});
+			if(filter==1)
+			{
+				var glowFilter:GlowFilter= new GlowFilter(0x009900, 1, 16, 16, 1, 1, false, false);   
+				plane_animate.useOwnContainer=true; //一定要为true才能发光
+			}
+//			plane_animate.filters=[glowFilter];
 			//添加事件
 			plane_animate.addEventListener(InteractiveScene3DEvent.OBJECT_OVER,function(e:InteractiveScene3DEvent):void{
 				tip_sprite.text=tip
 				addChild(tip_sprite);
+				plane_animate.filters=[glowFilter];
 			});
 			plane_animate.addEventListener(InteractiveScene3DEvent.OBJECT_OUT,function(e:InteractiveScene3DEvent):void{
 				removeChild(tip_sprite);
+				plane_animate.filters=[];
 			});
 			var distance:int=10;
 			var rotateSpeed:int=5;
