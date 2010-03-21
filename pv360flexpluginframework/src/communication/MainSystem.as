@@ -81,8 +81,8 @@ package communication
 		 * @return 
 		 * 
 		 */		
-		public function getPlugin(id:String):DisplayObject{
-			return _plugin_map.getValue(id) as DisplayObject;
+		public function getPlugin(id:String):*{
+			return _plugin_map.getValue(id);
 		}
 		main_system function addPlugin(name:String,plugin:DisplayObject):void{
 			_plugin_map.put(name,plugin);
