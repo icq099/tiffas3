@@ -1,5 +1,7 @@
 package proxys
 {
+	import communication.MainSystem;
+	
 	import facades.FacadePv;
 	
 	import model.Travel;
@@ -15,7 +17,6 @@ package proxys
 		
 		public static const NAME:String="PTravel"
 		
-		private var _position_changing:Boolean=false;
 		
 		private var _old_position:int=0;
 		public function PTravel()
@@ -64,25 +65,13 @@ package proxys
 		
 		}
 		public function changePosition(postition:int):void{
-			if((travel.current_scene!=postition)&&(travel.menu_count<=0)&&(!_position_changing)){
-				_position_changing=true;
-				facade.sendNotification(FacadePv.POSITION_CHANGE_COMMAND,postition);
-				oldPosition=travel.current_scene;
-				travel.current_scene=postition;
+			if((MainSystem.getInstance().currentScene!=postition)&&(travel.menu_count<=0)&&(!MainSystem.getInstance().isBusy)){
+				MainSystem.getInstance().isBusy=true;
+				oldPosition=MainSystem.getInstance().currentScene;
+				MainSystem.getInstance().currentScene=postition;
+				facade.sendNotification(FacadePv.POSITION_CHANGE_COMMAND,oldPosition);
 				BrowserManager.getInstance().setFragment("scene="+postition);
-				
 			}
-		
-		}
-		public function set position_changing(value:Boolean):void{
-			
-			_position_changing=value;
-		
-		}
-		public function get position_changing():Boolean{
-			
-			return _position_changing;
-		
 		}
 		public function get travel():Travel{
 			

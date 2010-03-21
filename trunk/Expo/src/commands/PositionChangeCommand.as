@@ -26,7 +26,7 @@ package commands
 		private var movie:String;
 		private var inquire:int;
 		private var animationId:int;
-		private var goto:int;
+		private var oldPosition:int;
 		private var stop_rotationX:Number;
 		private var stop_rotationY:Number;
 		
@@ -34,24 +34,20 @@ package commands
 		{
 			super();
 		}
+		private static var num:int=0;
 		override public function execute(notification:INotification):void{
 			
 			setValue(notification);
-			
 			var xml_movie:XMLList;
 			var camera_rota:Object;
-			
-			goto=notification.getBody() as int;
-			
-			if(travel.currentPosition!=-1){
-				
-				xml_movie=xml.Travel.Scene[travel.currentPosition].Movie
+			oldPosition=notification.getBody() as int;
+			if(MainSystem.getInstance().currentScene!=-1 && oldPosition<xml.Travel.Scene.length()){
+				xml_movie=xml.Travel.Scene[oldPosition].Movie
 				//for each (var item:int in str){
 				for(var i:int=0;i<xml_movie.length();i++){
 					
 					var d_num:int=xml_movie[i].@destination;
-					
-					if(d_num==notification.getBody()){
+					if(d_num==MainSystem.getInstance().currentScene){
 						
 						movie=xml_movie[i].@url;
 						inquire=xml_movie[i].@inquire;
@@ -66,12 +62,9 @@ package commands
 				}
 				
 			}
-			
-			
-			
 			if(movie==null){
 				
-				facade.sendNotification(FacadePv.POSITION_CHANGE,notification.getBody());
+				facade.sendNotification(FacadePv.POSITION_CHANGE,MainSystem.getInstance().currentScene);
 			
 			}else{
 				
@@ -102,6 +95,7 @@ package commands
 			if(inquire==1)
 			{
 				facade.sendNotification(FacadePv.STOP_RENDER);
+				MainSystem.getInstance().isBusy=false;
 				MainSystem.getInstance().showPluginById("InquireModule");
 				MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,added);
 			}else
@@ -114,6 +108,7 @@ package commands
 			if(e.fun_name=="showInquire")
 			{
 				MainSystem.getInstance().runAPIDirect("showInquire",[animationId]);
+				MainSystem.getInstance().isBusy=true;
 				MainSystem.getInstance().getPlugin("InquireModule").addEventListener(Event.OPEN,open);
 				MainSystem.getInstance().getPlugin("InquireModule").addEventListener(Event.CLOSE,close);
 				MainSystem.getInstance().removeEventListener(ScriptAPIAddEvent.ADD_API,added);
@@ -129,8 +124,8 @@ package commands
 		{
 			MainSystem.getInstance().startRender();
 			var travel:PTravel=facade.retrieveProxy(PTravel.NAME) as PTravel;
-			travel.position_changing=false;
-			travel.currentPosition=travel.oldPosition;
+			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().currentScene=travel.oldPosition;
 			MainSystem.getInstance().getPlugin("InquireModule").removeEventListener(Event.CLOSE,close);//删除监听关闭东西的事件
 			MainSystem.getInstance().getPlugin("InquireModule").removeEventListener(Event.OPEN,open);//删除监听打开东西的事件
 		}
@@ -138,13 +133,12 @@ package commands
 			facade.sendNotification(FacadePv.STOP_RENDER);
             if(movie.charAt(0)=="m" && movie.charAt(1)=="o" && movie.charAt(2)=="v" && movie.charAt(3)=="i" && movie.charAt(4)=="e")
             {
-            	facade.sendNotification(FacadePv.LOAD_MOVIE,{url:movie,goto:goto,stop_rotationX:stop_rotationX,stop_rotationY:stop_rotationY});
+            	facade.sendNotification(FacadePv.LOAD_MOVIE,{url:movie,goto:MainSystem.getInstance().currentScene,stop_rotationX:stop_rotationX,stop_rotationY:stop_rotationY});
             }
             else
             {
             	MainSystem.getInstance().runScript(movie);
             } 
-//			facade.sendNotification(FacadePv.STOP_RENDER);
 		}
 		
 	}

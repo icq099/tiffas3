@@ -1,5 +1,7 @@
 package commands
 {
+	import communication.MainSystem;
+	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
@@ -15,8 +17,7 @@ package commands
 			var p_travel:PTravel=facade.retrieveProxy(PTravel.NAME) as PTravel;
 			var p_runer:PScriptRuner=facade.retrieveProxy(PScriptRunerBase.NAME) as PScriptRuner;
 			p_runer.onSceneChangeComplete(p_travel.currentPosition);
-			p_travel.position_changing=false;
-		
+			MainSystem.getInstance().isBusy=false;
 		}
 		
 	}

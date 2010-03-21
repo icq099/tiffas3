@@ -18,7 +18,8 @@ package lxfa.utils
 			if(instance==null) return new MemoryRecovery();
 			return instance;
 		}
-		public function gc(obj:*,hasDispose:Boolean=false):void
+		//回收对象
+		public function gcObj(obj:*,hasDispose:Boolean=false):void
 		{
 			if(obj!=null)
 			{
@@ -31,6 +32,17 @@ package lxfa.utils
 					obj.parent.removeChild(obj);
 				}
 				obj=null;
+			}
+		}
+		//回收事件
+		public function gcFun(obj:*,eventname:String,fun:Function):void
+		{
+			if(obj!=null)
+			{
+				if(obj.hasEventListener(eventname))
+				{
+					obj.removeEventListener(eventname,fun);
+				}
 			}
 		}
 	}

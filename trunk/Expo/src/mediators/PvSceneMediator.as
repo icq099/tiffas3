@@ -1,5 +1,6 @@
 package mediators
 {
+	import communication.Event.PluginEvent;
 	import communication.Event.SceneChangeEvent;
 	import communication.MainSystem;
 	
@@ -28,7 +29,6 @@ package mediators
 	import yzhkof.CameraRotationControler;
 	import yzhkof.CamereaControlerEvent;
 	import yzhkof.MyGC;
-	import yzhkof.PositionSeter;
 
 	public class PvSceneMediator extends Mediator implements IMediator
 	{
@@ -158,11 +158,12 @@ package mediators
 				
 				facade.sendNotification(PvSceneMediator.PICTURE_LOAD_COMPLETE,goto);
 				facade.sendNotification(FacadePv.COVER_DISABLE);
-				//facade.sendNotification(FacadePv.START_RENDER);
+				facade.sendNotification(FacadePv.START_RENDER);
 				//手动回收
 				MyGC.gc();
 				facade.sendNotification(FacadePv.REMOVE_MOVIE);
 				MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGED,goto));
+				MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 				updataGuiWa(goto);
 			};
 			var url:String=String(xml.Travel.Scene.@picture[goto]);
