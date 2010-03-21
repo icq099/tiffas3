@@ -1,6 +1,7 @@
 package communication
 {
 	import communication.Event.MainSystemEvent;
+	import communication.Event.PluginEvent;
 	import communication.Event.SceneChangeEvent;
 	import communication.Event.ScriptAPIAddEvent;
 	import communication.Event.ScriptEvent;
@@ -27,6 +28,7 @@ package communication
 * 当场景切换完毕时发送此事件
 */	
 	[Event(name="change", type="communication.Event.SceneChangeEvent")]
+	[Event(name="changed", type="communication.Event.SceneChangeEvent")]
 	[Event(name="run_by_function", type="communication.Event.ScriptEvent")]
 	/**
 	 * 此类封装对全景主系统的所有操作
@@ -38,9 +40,10 @@ package communication
 		private static var instance:MainSystem;
 		private var _camera:CameraProxy;
 		private var _script_runer:ScriptSimple;
-		private var _currentScene:int;
+		private var _currentScene:int=-1;
 		private var _plugin_map:HashMap=new HashMap();
-				
+	    private var _isBusy:Boolean=false;
+	    private var _360SystemIsReady:Boolean=false;
 		public function MainSystem()
 		{
 			if(instance==null){
@@ -60,7 +63,8 @@ package communication
 			_script_runer=e.script_runer;
 		}
 		private function onSceneChange(e:SceneChangeEvent):void{
-			_currentScene=e.id;
+//			trace(e.id);
+//			_currentScene=e.id;
 		}
 		/**
 		 * 获得主系统的操作接口实例 
@@ -135,6 +139,7 @@ package communication
 		 * 
 		 */		
 		public function runAPIDirect(function_name:String,parm:Array=null):*{
+			if(isBusy)return null;
 			return _script_runer.runFunctionDirect(function_name,parm);
 		}
 		/**
@@ -143,6 +148,7 @@ package communication
 		 * 
 		 */		
 		public function gotoScene(scene_id:int):void{
+			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 			runAPIDirect("gotoScene",[scene_id]);
 		}
 		/**
@@ -199,6 +205,10 @@ package communication
 		public function get currentScene():int{
 			return _currentScene;
 		}
+		public function set currentScene(val:int):void
+		{
+			_currentScene=val;
+		}
 		/**
 		 * 开始渲染场景 
 		 * 
@@ -225,14 +235,53 @@ package communication
 		 * 
 		 */		
 		public function enable360System():void{
-			runAPIDirect("enable360System");
+			if(!_360SystemIsReady)
+			{
+				runAPIDirect("enable360System");
+				_360SystemIsReady=true;
+			}
 		}
 		/**
 		 * 关闭全景系统; 
 		 * 
 		 */		
 		public function disable360System():void{
-			runAPIDirect("disable360System");
+			if(_360SystemIsReady)
+			{
+				runAPIDirect("disable360System");
+				_360SystemIsReady=false;
+			}
+		}
+		//全景系统是否准备好的标志
+		public function get is360Ready():Boolean
+		{
+			return _360SystemIsReady;
+		}
+		public function set is360Ready(val:Boolean):void
+		{
+			_360SystemIsReady=val
+		}
+		//主系统繁忙的情况
+		public function get isBusy():Boolean{
+			return _isBusy;
+		}
+		public function set isBusy(val:Boolean):void
+		{
+			_isBusy=val;
+		}
+		//给插件添加自动关闭的事件
+		public function addAutoClose(fun:Function,param:Array=null):void
+		{
+			if(fun==null){
+				throw new Error("自动关闭的方法不能为空");
+			}else
+			{
+				getInstance().addEventListener(PluginEvent.UPDATE,function on_plugin_update(e:PluginEvent):void{
+					var re:*;
+					re=fun.apply(NaN,param);	
+					if(getInstance().hasEventListener(PluginEvent.UPDATE)) getInstance().removeEventListener(PluginEvent.UPDATE,on_plugin_update);
+				});
+			}
 		}
 	}
 }
