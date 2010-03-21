@@ -17,7 +17,7 @@ package lsd.SlidingPuzzle {
 		private static const vertOffset:Number = 0;
 		
 		// number of pieces
-		private static const numPiecesHoriz:int = 4;
+		private static const numPiecesHoriz:int = 3;
 		private static const numPiecesVert:int = 3;
 		
 		// random shuffle steps
@@ -223,8 +223,7 @@ package lsd.SlidingPuzzle {
 			
 			// check to see if puzzle is complete now
 			if (puzzleComplete()) {
-				clearPuzzle();
-                trace("win");
+				dispatchEvent(new SlidingEvent(SlidingEvent.PUZZLE_CHANG));
 			}
 		}
 		
