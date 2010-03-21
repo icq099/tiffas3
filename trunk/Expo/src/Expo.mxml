@@ -14,4 +14,6 @@
 			}
 		]]>
 	</mx:Script>
+	<mx:Panel x="0" y="70" width="900" height="480" layout="absolute" borderStyle="outset" themeColor="#000000" borderColor="#000000" backgroundColor="#030303">
+	</mx:Panel>
 </mx:Application>

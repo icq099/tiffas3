@@ -1,10 +1,14 @@
 package lxfa.mainMenuBottom
 {
+	import caurina.transitions.Tweener;
+	
 	import communication.Event.MainSystemEvent;
 	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	
@@ -54,10 +58,13 @@ package lxfa.mainMenuBottom
 			{
 				isBusy=true;
 				currentSceneId=5;
-				MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
 				MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
+				MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
+				isBusy=false;
 				MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,function(e:MainSystemEvent):void{
-					isBusy=false;
+					var dis:DisplayObject=MainSystem.getInstance().getPlugin("ZongHengSiHaiModule");
+					dis.alpha=0;
+					Tweener.addTween(dis,{alpha:1,time:1});
 				});
 			}
 		}
