@@ -37,9 +37,9 @@ package lxfa.index.view
 		private function on_btn_enter_click(e:MouseEvent):void
 		{
 			indexSwc.mouseEnabled=false;
+			this.addChild(flvPlayer);
 			this.removeChild(indexSwc);
 			this.removeChild(flowerFlvSwf);
-			this.addChild(flvPlayer);
 			flowerFlvSwf=null;
 			flvPlayer.resume();
 			flvPlayer.addEventListener(Event.CLOSE,on_flvPlayer_close);

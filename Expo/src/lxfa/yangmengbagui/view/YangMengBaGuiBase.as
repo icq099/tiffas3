@@ -9,6 +9,7 @@ package lxfa.yangmengbagui.view
 	import flash.events.NetStatusEvent;
 	
 	import lxfa.normalWindow.SwfPlayer;
+	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	
 	import mx.core.UIComponent;
@@ -18,9 +19,10 @@ package lxfa.yangmengbagui.view
 		private var yangMengBaGuiSwc:YangMengBaGuiSwc;
 		private var LED:FLVPlayer;
 		private var view3d:MiniCarouselReflectionView=new MiniCarouselReflectionView();
+		private var flvPlayer:FLVPlayer;
 		public function YangMengBaGuiBase()
 		{
-			MainSystem.getInstance().disable360System();
+			MainSystem.getInstance().stopRender();
 			MainSystem.getInstance().addAPI("showYangMengBaGui",showYangMengBaGui);
 			MainSystem.getInstance().addAPI("removeMengBaGui",showYangMengBaGui);
 			MainSystem.getInstance().runAPIDirect("showYangMengBaGui",[true]);
@@ -38,8 +40,11 @@ package lxfa.yangmengbagui.view
 		//过场动画
 		private function initPlayer():void
 		{
-			MainSystem.getInstance().runAPIDirect("addFlv",["movie/zonghengsihai-yangmengbagui.flv"]);
-			MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.CLOSE,on_complete);
+			flvPlayer=new FLVPlayer("movie/zonghengsihai-yangmengbagui.flv",900,480,false);
+			addChild(flvPlayer);
+	        flvPlayer.resume();
+	        flvPlayer.y=70;
+			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_complete);
 		}
 		private function on_complete(e:Event):void
 		{
@@ -68,8 +73,8 @@ package lxfa.yangmengbagui.view
 		private function initYangMengBaGuiSwc():void
 		{
 			yangMengBaGuiSwc=new YangMengBaGuiSwc();
-			yangMengBaGuiSwc.x=460;
-			yangMengBaGuiSwc.y=120;
+			yangMengBaGuiSwc.x=461;
+			yangMengBaGuiSwc.y=115;
 			yangMengBaGuiSwc.buttonMode=true;
 			this.addChild(yangMengBaGuiSwc);
 		}
@@ -113,6 +118,15 @@ package lxfa.yangmengbagui.view
 		{
 			LED.resume();
 			LED.mouseEnabled=true;
+		}
+		//清除内存
+		public function dispose():void
+		{
+			MemoryRecovery.getInstance().gc(flvPlayer,true);
+			MemoryRecovery.getInstance().gc(flowerFlvSwf,true);
+			MemoryRecovery.getInstance().gc(yangMengBaGuiSwc);
+			MemoryRecovery.getInstance().gc(LED);
+			MemoryRecovery.getInstance().gc(view3d,true);
 		}
 	}
 }

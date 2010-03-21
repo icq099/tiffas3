@@ -1,5 +1,6 @@
 package lsd.DongMeng
 {
+	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
 	import flash.events.Event;

@@ -107,7 +107,6 @@ package mediators
 			var index:Array=plugin_map.valueSet;
 			index.push(plugin_obj);
 			index.sortOn("index",Array.NUMERIC);
-			trace(xml.@near);
 			if(xml.@near=="1" || xml.@near=="" || xml.@near==null)
 			{
 				plugin_container.addChildAt(loader,plugin_container.numChildren-1);

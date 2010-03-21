@@ -1,5 +1,6 @@
 package lxfa.No3.view
 {
+	import communication.Event.MainSystemEvent;
 	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
@@ -7,7 +8,6 @@ package lxfa.No3.view
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	
-	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.view.player.FLVPlayer;
 	
 	public class No3Base extends Sprite
@@ -46,11 +46,18 @@ package lxfa.No3.view
 		}
 		public function step4():void
 		{
-			MainSystem.getInstance().removePluginById("No3Module");
             MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
             MainSystem.getInstance().showPluginById("MainMenuBottomModule");
 			MainSystem.getInstance().showPluginById("MainMenuTopModule");
             MainSystem.getInstance().showPluginById("No3SwfModule");
+            MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,on_plugin_ready);
+		}
+		private function on_plugin_ready(e:MainSystemEvent):void
+		{
+			if(e.id=="No3SwfModule")
+			{
+				MainSystem.getInstance().removePluginById("No3Module");
+			}
 		}
 		public function dispose():void
 		{
