@@ -23,7 +23,6 @@ package lsd.ZongHengSiHai
 		public function ZongHenSiHai(withMovie:Boolean)
 		{   
 			MainSystem.getInstance().stopRender();
-			MainSystem.getInstance().isBusy=true;
 			addZongHengSiHai(withMovie);
 			
 		}
@@ -46,7 +45,7 @@ package lsd.ZongHengSiHai
 		}
 		public function addZongHengSiHai(withMovie:Boolean):void{
 			if(withMovie)
-			{   
+			{   MainSystem.getInstance().isBusy=true;
 				initPlayer();
 			}else
 			{   
@@ -66,7 +65,7 @@ package lsd.ZongHengSiHai
 		}
 		private function on_flv_complete(e:FLVPlayerEvent):void
 		{   
-			//MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().addAutoClose(on_plugin_update,[]);
 		}
 		private function flvRemove():void
@@ -79,8 +78,8 @@ package lsd.ZongHengSiHai
 		}
 		private function on_Complete(e:Event):void
 		{     
-			 MainSystem.getInstance().isBusy=false;
-			  //MainSystem.getInstance().isBusy=true;
+			
+			  MainSystem.getInstance().isBusy=true;
 			  init();
 		}
         private function init():void{
@@ -135,7 +134,9 @@ package lsd.ZongHengSiHai
 				trace("fanzhu");
 				
 				MainSystem.getInstance().showPluginById("FanZhuSanJiaoModule");
+				 MainSystem.getInstance().isBusy=true;
 			    removeAreas();
+			    
 				
 		}
 		private function beiBuWanClick():void
