@@ -92,6 +92,7 @@ package lxfa.utils
 			rootAr=new Array();
 			clearAllText();
 			graphics.clear();
+			showCollision();
 		}
 		public function removeCollision(id:String):void
 		{
@@ -99,6 +100,8 @@ package lxfa.utils
 			{
 				rootAr[rootObj[id].id]=null;
 			}
+			graphics.clear();
+			showCollision();
 		}
 		private function clearAllText():void
 		{
