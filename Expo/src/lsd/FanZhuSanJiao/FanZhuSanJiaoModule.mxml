@@ -7,6 +7,7 @@
 		   implements="communication.IPlugin">
 	<mx:Script>
 		<![CDATA[
+			import lxfa.utils.MemoryRecovery;
 			import yzhkof.Toolyzhkof;
 			private var fanZhuSanJiao:FanZhuSanJiao;
 
@@ -19,14 +20,8 @@
 
 			public function dispose():void
 			{  
-				if(fanZhuSanJiao!=null){
-					if(fanZhuSanJiao.parent!=null){
-						fanZhuSanJiao.dispose();
-						fanZhuSanJiao.parent.removeChild(fanZhuSanJiao);
-						fanZhuSanJiao=null;
-						
-					}
-				}
+				MemoryRecovery.getInstance().gcObj(fanZhuSanJiao);
+			
              }
 		]]>
 	</mx:Script>

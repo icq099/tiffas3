@@ -10,6 +10,7 @@ package lsd.ZongHengSiHai
 	
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
+	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
 	
@@ -20,10 +21,11 @@ package lsd.ZongHengSiHai
 		private var swfPlayer:SwfPlayer;
 		private var flvPlayer:FLVPlayer;
 		public function ZongHenSiHai(withMovie:Boolean)
-		{
+		{   
 			MainSystem.getInstance().stopRender();
-			addZongHengSiHai(withMovie);
 			MainSystem.getInstance().isBusy=true;
+			addZongHengSiHai(withMovie);
+			
 		}
 		private function on_plugin_update():void
 		{
@@ -33,19 +35,22 @@ package lsd.ZongHengSiHai
 				dispose();
 				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
 				MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,on_plugin_update);
+				removeAreas();
 				MainSystem.getInstance().isBusy=true;
 			}else
 			{
 				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
 				MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,on_plugin_update);
+			    removeAreas();
 			}
 		}
 		public function addZongHengSiHai(withMovie:Boolean):void{
 			if(withMovie)
-			{
+			{   
 				initPlayer();
 			}else
-			{
+			{   
+				MainSystem.getInstance().isBusy=true;
 				init();
 			}
 			
@@ -60,28 +65,23 @@ package lsd.ZongHengSiHai
 			
 		}
 		private function on_flv_complete(e:FLVPlayerEvent):void
-		{
+		{   
+			//MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().addAutoClose(on_plugin_update,[]);
 		}
 		private function flvRemove():void
 		{
-			if (flvPlayer!=null)
-			{   
-				if(flvPlayer.hasEventListener(NetStatusEvent.NET_STATUS))
-				{
-					flvPlayer.removeEventListener(NetStatusEvent.NET_STATUS,on_Complete);
-				}
-				if(flvPlayer.parent!=null){
-                flvPlayer.parent.removeChild(flvPlayer);
-				flvPlayer.dispose();
-                flvPlayer=null;
-              }
-		   }
+		     
+		     MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS,on_Complete);
+		     MemoryRecovery.getInstance().gcObj(flvPlayer,true);
+			
+	
 		}
 		private function on_Complete(e:Event):void
-		{
-			MainSystem.getInstance().isBusy=false;
-			init();
+		{     
+			 MainSystem.getInstance().isBusy=false;
+			  //MainSystem.getInstance().isBusy=true;
+			  init();
 		}
         private function init():void{
 			
@@ -98,24 +98,25 @@ package lsd.ZongHengSiHai
 			 CollisionManager.getInstance().addCollision(xiJiangArea,xiJiangClick,"xiJiang");
 			 this.addChild(swfPlayer);
 			 swfPlayer.addEventListener(Event.COMPLETE,on_swf_complete);
-			 swfPlayer.addEventListener(Event.COMPLETE,zongHengSiHai_complete);
+			  CollisionManager.getInstance().showCollision();
+			 //swfPlayer.addEventListener(Event.COMPLETE,zongHengSiHai_complete);
 	          
 		}
 		private function on_swf_complete(e:Event):void
-		{
+		{   
+			flvRemove();
 			MainSystem.getInstance().isBusy=false;
 			if(ZongHengSiHaiStatic.getInstance().currentModuleName=="ZongHengSiHaiModule")
 			{
 				MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 			}
 			MainSystem.getInstance().addAutoClose(on_plugin_update,[]);
-			flvRemove();
 		}
 	
-		private function zongHengSiHai_complete(e:Event):void{
+		/* private function zongHengSiHai_complete(e:Event):void{
 			
 			 MainSystem.getInstance().dispatchEvent(new Event("zonghengsihai.complete"));
-		}
+		} */
 		
        private function daMeiGongHeClick():void
 		{
@@ -156,15 +157,10 @@ package lsd.ZongHengSiHai
         }
          private function close():void
          {
-			 if(swfPlayer!=null){
-			 	if(swfPlayer.parent!=null){
-			 		swfPlayer.parent.removeChild(swfPlayer);
-					swfPlayer.removeEventListener(Event.COMPLETE,on_swf_complete);
-					swfPlayer.removeEventListener(Event.COMPLETE,zongHengSiHai_complete);
-					swfPlayer.dispose();
-			        swfPlayer=null;
-			 	}
-			 }
+         	MemoryRecovery.getInstance().gcFun(swfPlayer,Event.COMPLETE,on_swf_complete);
+         	MemoryRecovery.getInstance().gcObj(swfPlayer,true);
+         	flvRemove();
+           
          }
 	}
 }
