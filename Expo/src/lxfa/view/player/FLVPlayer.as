@@ -1,6 +1,5 @@
 package lxfa.view.player
 {
-	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -19,7 +18,6 @@ package lxfa.view.player
 		private var netConnection:NetConnection;
 		private var video:Video;
 		private var path:String;
-		private var loader:Loader;
 		private var videoWidth:int;
 		private var videoHeight:int;
 		private var hasCloseButton:Boolean;
@@ -67,6 +65,7 @@ package lxfa.view.player
 				this.dispatchEvent(new NetStatusEvent(NetStatusEvent.NET_STATUS));
 			}
 		}
+		private var hasPushReadyEvent:Boolean=false;
 		//对外抛出进度事件
 		private function on_ENTER_FRAME(e:Event):void
 		{
@@ -78,6 +77,14 @@ package lxfa.view.player
 				if(hasCloseButton)
 				{
 					initBTNClose();
+				}
+			}
+			if(!hasPushReadyEvent)
+			{
+				if(netStream.bytesLoaded/netStream.bytesTotal>0.01)
+				{
+					hasPushReadyEvent=true;
+					this.dispatchEvent(new FLVPlayerEvent(FLVPlayerEvent.READY));
 				}
 			}
 		}
