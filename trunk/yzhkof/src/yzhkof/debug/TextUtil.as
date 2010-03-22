@@ -26,7 +26,7 @@ package yzhkof.debug
 				
 				for each(var x:XML in accessor_xmllist)
 				{
-					if(x.@returnType!="ByteArray")
+					if(!(obj[x.@name] is ByteArray))
 					{
 						final_text+=addSpace("{"+x.@name+"} = "+obj[x.@name])+"\n";
 						if(x.@name=="name")
