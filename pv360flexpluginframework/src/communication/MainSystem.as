@@ -10,6 +10,8 @@ package communication
 	import flash.display.DisplayObject;
 	import flash.events.EventDispatcher;
 	
+	import mx.managers.CursorManager;
+	
 	import scripsimple.ScriptSimple;
 	
 	import yzhkof.util.HashMap;
@@ -265,9 +267,17 @@ package communication
 		public function get isBusy():Boolean{
 			return _isBusy;
 		}
+		private var oldBusyState:Boolean=false;
 		public function set isBusy(val:Boolean):void
 		{
 			_isBusy=val;
+			if(_isBusy && oldBusyState==false)
+			{
+				CursorManager.setBusyCursor();
+			}else if(!_isBusy && oldBusyState==true)
+			{
+				CursorManager.removeBusyCursor();
+			}
 		}
 		//给插件添加自动关闭的事件
 		public function addAutoClose(fun:Function,param:Array=null):void
