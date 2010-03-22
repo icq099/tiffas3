@@ -128,6 +128,7 @@ package commands
 			MainSystem.getInstance().currentScene=travel.oldPosition;
 			MainSystem.getInstance().getPlugin("InquireModule").removeEventListener(Event.CLOSE,close);//删除监听关闭东西的事件
 			MainSystem.getInstance().getPlugin("InquireModule").removeEventListener(Event.OPEN,open);//删除监听打开东西的事件
+			MainSystem.getInstance().isBusy=false;
 		}
 		private function sendNotificationCommand():void{
 			facade.sendNotification(FacadePv.STOP_RENDER);
