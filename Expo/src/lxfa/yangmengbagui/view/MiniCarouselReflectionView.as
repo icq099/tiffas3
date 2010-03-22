@@ -24,7 +24,7 @@
 		private var rootNode	:DisplayObject3D;
 		//DisplayObject3D物件，可以想像是PV3D裡的空白MovieClip。
 		//本身是個容器,可以透過addChild加入任何繼承DisplayObject3D的物件。
-		private var radius		:Number = 650;//半徑
+		private var radius		:Number = 800;//半徑
 		private var angleUnit	:Number ;
 		//360徑度 = Math.PI * 2 弧度
 		//除以數量即可得到單位弧度。
@@ -39,6 +39,7 @@
 
 		private function initMinZuBaiMeiModel():void
 		{
+			MainSystem.getInstance().isBusy=true;
 			yangMengBaGuiModel=new YangMengBaGuiModel();
 			yangMengBaGuiModel.addEventListener(Event.COMPLETE,onModelComplete);
 			rubbishArray.push(yangMengBaGuiModel);
@@ -46,18 +47,20 @@
 		private function onModelComplete(e:Event):void
 		{
 			itemOfNumber=yangMengBaGuiModel.getItemOfNumber();//读取图片的数目,正常是12个
-			angleUnit = (Math.PI * 2/3) / itemOfNumber;//角度的偏移量
+			angleUnit = (Math.PI ) / itemOfNumber;//角度的偏移量
 			init3DEngine();
 			init3DObject();
-			initObject();		
+			initObject();	
+			MainSystem.getInstance().isBusy=false;	
 		}
 		private function init3DEngine():void{
 			this.x=200;
 			this.y=200;
 			basicView = new BasicView(600, 600, false, true, "Target");			
 			//設定反射面的 y 軸方向高度
-			basicView.camera.y = 1200;
-			basicView.camera.z = -3800;
+			basicView.camera.y = 400;
+			basicView.camera.z = -3000;
+			basicView.camera.focus=80;
 			basicView.viewport.buttonMode = true;
 			//PV3D物件預設都不會有滑鼠指標手示，
 			//BasicBiew是繼承Sprite，
@@ -134,20 +137,20 @@
 			//當滑鼠離開感應區時，回復原本的大小。
 			e.displayObject3D.scale = 1;			
 		}
+		private var currentTarget:NumberPlane;//当前选择的平面
 		private function on3DPress(e:InteractiveScene3DEvent):void{
-			var _target:NumberPlane=NumberPlane(e.currentTarget);
-			MainSystem.getInstance().runAPIDirect("showNormalWindow",[_target.getID()]);
-            currentIndex=_target.getID()-yangMengBaGuiModel.getMin()+3;
-            updateRootNodeTransform();
+			currentTarget=NumberPlane(e.currentTarget);
+            currentIndex=currentTarget.getID()-yangMengBaGuiModel.getMin()+3;
+            updateRootNodeTransform(true);
 		}
-		private function updateRootNodeTransform():void {
+		private function updateRootNodeTransform(isPress:Boolean=false):void {
 			//更新rootNode的rotationY值
-			Tweener.addTween(rootNode,{
-				rotationY   :currentIndex * angleUnit * 180 / Math.PI,
-				//目前的currentIndex值，乘上單位弧度
-				//rotation用的單位是徑度,所以要將弧度轉換成徑度。				
-				time		:0.5
-			} );
+			Tweener.addTween(rootNode,{rotationY:currentIndex*angleUnit*180/Math.PI-180,time:0.5,onComplete:function():void{
+				if(isPress)//只有用户点击才能触发
+				{
+					MainSystem.getInstance().runAPIDirect("showNormalWindow",[currentTarget.getID()]);
+				}
+			}});
 		}
 		private function onEventRender3D(e:Event):void {	
 			if(basicView!=null)
