@@ -45,16 +45,22 @@ package lxfa.inquire
 		//抛出打开下个场景的事件
 		private function on_yes_click(e:MouseEvent):void
 		{
-			this.dispatchEvent(new Event(Event.OPEN));
-			e.currentTarget.mouseEnabled=false;
-			dispose();
+			if(!MainSystem.getInstance().isBusy)
+			{
+				this.dispatchEvent(new Event(Event.OPEN));
+				e.currentTarget.mouseEnabled=false;
+				dispose();
+			}
 		}
 		//抛出关闭界面的事件
 		private function on_no_click(e:MouseEvent):void
 		{
-			this.dispatchEvent(new Event(Event.CLOSE));
-			e.currentTarget.mouseEnabled=false;
-			dispose();
+			if(!MainSystem.getInstance().isBusy)
+			{
+				this.dispatchEvent(new Event(Event.CLOSE));
+				e.currentTarget.mouseEnabled=false;
+				dispose();
+			}
 		}
 		public function dispose():void
 		{
