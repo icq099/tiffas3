@@ -26,9 +26,7 @@ package lxfa.yangmengbagui.view
 		public function YangMengBaGuiBase()
 		{
 			MainSystem.getInstance().stopRender();
-			MainSystem.getInstance().addAPI("showYangMengBaGui",showYangMengBaGui);
-			MainSystem.getInstance().addAPI("removeMengBaGui",showYangMengBaGui);
-			MainSystem.getInstance().runAPIDirect("showYangMengBaGui",[true]);
+			showYangMengBaGui(false);
 			MainSystem.getInstance().isBusy=true;
 		}
 		public function showYangMengBaGui(withMovie:Boolean):void
@@ -78,8 +76,9 @@ package lxfa.yangmengbagui.view
 			}
 			initYangMengBaGuiSwc();
 			initLED();
-			MainSystem.getInstance().removePluginById("ZongHengSiHaiModule");
-			MainSystem.getInstance().runAPIDirect("removeFlv",[]);
+			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
+			MainSystem.getInstance().addAutoClose(close,[]);
 		}
 		//添加杨梦八桂的建筑
 		private function initYangMengBaGuiSwc():void
