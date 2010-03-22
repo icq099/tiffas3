@@ -3,6 +3,7 @@ package lxfa.mainMenuBottom
 	import communication.MainSystem;
 	
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	
@@ -20,8 +21,6 @@ package lxfa.mainMenuBottom
 		public function MainMenuBottom()
 		{
 			initbottom();
-//			MainSystem.getInstance().addAPI("updateBottomMenu",initbottom);
-//			MainSystem.getInstance().runAPIDirect("updateBottomMenu",[]);
 		}
 		private function initbottom():void
 		{

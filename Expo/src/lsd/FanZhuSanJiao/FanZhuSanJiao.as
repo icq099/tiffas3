@@ -12,6 +12,7 @@ package lsd.FanZhuSanJiao
 	import lxfa.utils.CollisionManager;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
+	import lxfa.view.player.FLVPlayerEvent;
 	
 	import mx.core.UIComponent;
 
@@ -35,11 +36,11 @@ package lsd.FanZhuSanJiao
 			
 			flvPlayer=new FLVPlayer("movie/gx-fz1.flv",900,480,false);
 			addChild(flvPlayer);
-			flvPlayer.addEventListener(Event.COMPLETE,on_flv_complete);
+			flvPlayer.addEventListener(FLVPlayerEvent.READY,on_flv_complete);
 			flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
       }
-      private function on_flv_complete(e:Event):void
+      private function on_flv_complete(e:FLVPlayerEvent):void
       {
       	  MainSystem.getInstance().isBusy=false;
       	  MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));

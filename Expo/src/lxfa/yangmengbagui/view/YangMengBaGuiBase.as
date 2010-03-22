@@ -14,6 +14,7 @@ package lxfa.yangmengbagui.view
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
+	import lxfa.view.player.FLVPlayerEvent;
 	
 	import mx.core.UIComponent;
 	
@@ -44,12 +45,12 @@ package lxfa.yangmengbagui.view
 		{
 			flvPlayer=new FLVPlayer("movie/zonghengsihai-yangmengbagui.flv",900,480,false);
 			addChild(flvPlayer);
-			flvPlayer.addEventListener(Event.COMPLETE,on_flv_complete);
+			flvPlayer.addEventListener(FLVPlayerEvent.READY,on_flv_complete);
 	        flvPlayer.resume();
 	        flvPlayer.y=70;
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_complete);
 		}
-		private function on_flv_complete(e:Event):void
+		private function on_flv_complete(e:FLVPlayerEvent):void
 		{
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
 			MainSystem.getInstance().addAutoClose(close,[]);

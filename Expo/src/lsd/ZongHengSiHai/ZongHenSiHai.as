@@ -11,6 +11,7 @@ package lsd.ZongHengSiHai
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
 	import lxfa.view.player.FLVPlayer;
+	import lxfa.view.player.FLVPlayerEvent;
 	
 	import mx.core.UIComponent;
 
@@ -53,12 +54,12 @@ package lsd.ZongHengSiHai
 		{
 			flvPlayer=new FLVPlayer("movie/donggu.flv",900,480,false);
 			addChild(flvPlayer);
-			flvPlayer.addEventListener(Event.COMPLETE,on_flv_complete);
+			flvPlayer.addEventListener(FLVPlayerEvent.READY,on_flv_complete);
 	        flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
 			
 		}
-		private function on_flv_complete(e:Event):void
+		private function on_flv_complete(e:FLVPlayerEvent):void
 		{
 			MainSystem.getInstance().addAutoClose(on_plugin_update,[]);
 		}
