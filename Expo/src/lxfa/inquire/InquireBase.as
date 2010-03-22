@@ -60,9 +60,15 @@ package lxfa.inquire
 		{
 			PopUpManager.removePopUp(inquireContainer);
 			inquireContainer=null;
-			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
-			MainSystem.getInstance().isBusy=true;
+			if(MainSystem.getInstance().isBusy==true)
+			{
+				MainSystem.getInstance().isBusy=false;
+				MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
+				MainSystem.getInstance().isBusy=true;
+			}else
+			{
+				MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
+			}
 			animateParent.addChild(animate);
 		}
 	}
