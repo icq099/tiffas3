@@ -278,6 +278,7 @@ package communication
 			{
 				CursorManager.removeBusyCursor();
 			}
+			oldBusyState=_isBusy;
 		}
 		//给插件添加自动关闭的事件
 		public function addAutoClose(fun:Function,param:Array=null):void
