@@ -44,7 +44,7 @@ package lsd.FanZhuSanJiao
 
 		private function on_flv_complete(e:FLVPlayerEvent):void
 		{
-			MainSystem.getInstance().isBusy=false;
+			
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 			MainSystem.getInstance().addAutoClose(disposeMySelf, []);
 
@@ -60,7 +60,7 @@ package lsd.FanZhuSanJiao
 
 		private function on_Complete(e:NetStatusEvent):void
 		{
-            MainSystem.getInstance().isBusy=true;
+            
 			init();
 		}
 
