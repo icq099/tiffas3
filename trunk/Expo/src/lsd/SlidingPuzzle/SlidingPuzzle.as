@@ -46,7 +46,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// get the bitmap from an external source
-		public function loadBitmap(bitmapFile:String) {
+		public function loadBitmap(bitmapFile:String):void{
 			blankPoint = new Point(numPiecesHoriz-1,numPiecesVert-1);
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadingDone);
@@ -69,7 +69,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// cut bitmap into pieces
-		private function makePuzzlePieces(bitmapData:BitmapData) {
+		private function makePuzzlePieces(bitmapData:BitmapData):void{
 			puzzleObjects = new Array();
 			for(var x:uint=0;x<numPiecesHoriz;x++) {
 				for (var y:uint=0;y<numPiecesVert;y++) {
@@ -99,14 +99,14 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// make a number of random moves
-		private function shufflePuzzlePieces() {
+		private function shufflePuzzlePieces():void{
 			for(var i:int=0;i<numShuffle;i++) {
 				shuffleRandom();
 			}
         }
 		
 		// random move
-		private function shuffleRandom() {
+		private function shuffleRandom():void{
 			// loop to find valid moves
 			var validPuzzleObjects:Array = new Array();
 			for(var i:uint=0;i<puzzleObjects.length;i++) {
@@ -145,7 +145,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// puzzle piece clicked
-		private function clickPuzzlePiece(event:MouseEvent) {
+		private function clickPuzzlePiece(event:MouseEvent):void{
 			// find piece clicked and move it
 			for(var i:int=0;i<puzzleObjects.length;i++) {
 				if (puzzleObjects[i].piece == event.currentTarget) {
@@ -156,7 +156,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// move a piece into the blank space
-		private function movePiece(puzzleObject:Object, slideEffect:Boolean) {
+		private function movePiece(puzzleObject:Object, slideEffect:Boolean):void{
 			// get direction of blank space
 			switch (validMove(puzzleObject)) {
 				case "up":
@@ -175,7 +175,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// move the piece into the blank spot
-		private function movePieceInDirection(puzzleObject:Object, dx,dy:int, slideEffect:Boolean) {
+		private function movePieceInDirection(puzzleObject:Object, dx:int,dy:int, slideEffect:Boolean):void{
 			puzzleObject.currentLoc.x += dx;
 			puzzleObject.currentLoc.y += dy;
 			blankPoint.x -= dx;
@@ -193,7 +193,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// set up a slide
-		private function startSlide(puzzleObject:Object, dx, dy:Number) {
+		private function startSlide(puzzleObject:Object, dx, dy:Number):void {
 			if (slideAnimation != null) slideDone(null);
 			slidingPiece = puzzleObject;
 			slideDirection = new Point(dx,dy);
@@ -204,13 +204,13 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// move one step in slide
-		public function slidePiece(event:Event) {
+		public function slidePiece(event:Event):void{
 			slidingPiece.piece.x += slideDirection.x/slideSteps;
 			slidingPiece.piece.y += slideDirection.y/slideSteps;
 		}
 		
 		// complete slide
-		private function slideDone(event:Event) {
+		private function slideDone(event:Event):void{
 			slidingPiece.piece.x = slidingPiece.currentLoc.x*(pieceWidth+pieceSpace) + horizOffset;
 			slidingPiece.piece.y = slidingPiece.currentLoc.y*(pieceHeight+pieceSpace) + vertOffset;
 			slideAnimation.stop();
@@ -233,8 +233,8 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// remove all puzzle pieces
-		public function clearPuzzle() {
-			for (var i in puzzleObjects) {
+		public function clearPuzzle():void {
+			for (var i:Object in puzzleObjects) {
 				puzzleObjects[i].piece.addEventListener(MouseEvent.CLICK,clickPuzzlePiece);
 				removeChild(puzzleObjects[i].piece);
 			}

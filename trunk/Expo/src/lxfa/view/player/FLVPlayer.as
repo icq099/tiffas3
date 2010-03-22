@@ -10,7 +10,7 @@ package lxfa.view.player
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
 	
-	import yzhkof.PositionSeter;
+	import lxfa.utils.MemoryRecovery;
 	
 	public class FLVPlayer extends Sprite
 	{
@@ -50,10 +50,6 @@ package lxfa.view.player
 				netStream.pause();
 				netStream.addEventListener(NetStatusEvent.NET_STATUS,netStream_NetStatusHandler);
 				this.addEventListener(Event.ENTER_FRAME,on_ENTER_FRAME);
-				if(hasCloseButton)
-				{
-					initBTNClose();
-				}
 			}
 		}
 		//重新播放
@@ -79,6 +75,10 @@ package lxfa.view.player
 			{
 				this.removeEventListener(Event.ENTER_FRAME,on_ENTER_FRAME);//不再对外抛出进度事件
 				this.dispatchEvent(new Event(Event.COMPLETE));
+				if(hasCloseButton)
+				{
+					initBTNClose();
+				}
 			}
 		}
 		public function pause():void
@@ -102,10 +102,11 @@ package lxfa.view.player
 				netStream.resume();
 			}
 		}
+		private var close:BTNClose;
 		//初始化关闭按钮
 		private function initBTNClose():void
 		{
-			var close:BTNClose=new BTNClose();
+			close=new BTNClose();
 			close.addEventListener(MouseEvent.CLICK,on_close_click);
 			close.y=10;
 			close.x=780;
@@ -115,10 +116,13 @@ package lxfa.view.player
 		//关闭按钮的点击事件
 		private function on_close_click(e:MouseEvent):void
 		{
+			close.mouseEnabled=false;
+			MemoryRecovery.getInstance().gcFun(close,MouseEvent.CLICK,on_close_click);
 			this.dispatchEvent(new Event(Event.CLOSE));
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcObj(close);
 			if(netStream!=null)
 			{
 				netStream.pause();	

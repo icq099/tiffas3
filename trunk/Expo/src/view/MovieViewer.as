@@ -34,6 +34,7 @@ package view
 		}
 		public function loadMovie(URL:String):void{
 			this.URL=URL;
+			MemoryRecovery.getInstance().gcObj(loading_mc);
 			loading_mc=new LoadingWaveRota();
 			MainSystem.getInstance().isBusy=false;//让电影能够播放
 			MainSystem.getInstance().showPluginById("FlvModule");
@@ -48,11 +49,11 @@ package view
 		private function on_add_api(e:ScriptAPIAddEvent):void
 		{
 			if(e.fun_name=="addFlv")
-			{
+			{   MainSystem.getInstance().isBusy=false;
 				MainSystem.getInstance().runAPIDirect("addFlv",[URL,false]);
-				MainSystem.getInstance().isBusy=true;//让其他插件不能中断它
 				MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.COMPLETE,onCompleteHandler);
 				MainSystem.getInstance().getPlugin("FlvModule").addEventListener(ProgressEvent.PROGRESS,onProgressHandler);
+				MainSystem.getInstance().isBusy=true;//让其他插件不能中断它
 			}
 			MainSystem.getInstance().removeEventListener(ScriptAPIAddEvent.ADD_API,on_add_api);
 		}
@@ -115,14 +116,7 @@ package view
 			
 			loading_mc.parent.removeChild(loading_mc);
 			MainSystem.getInstance().getPlugin("FlvModule").removeEventListener(Event.COMPLETE,onCompleteHandler);
-//			Application.application.addChild(Toolyzhkof.mcToUI(loader));
-//			TweenLite.from(loader,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
-//				loader.resume();
-////				movie.play();
-//			
-//			}});
-//			movie.addFrameScript(movie.totalFrames-1,movieComplete);
-		MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.CLOSE,movieComplete);
+		    MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.CLOSE,movieComplete);
 		}
 		private function movieComplete(e:Event):void{
 			var dis:DisplayObject=MainSystem.getInstance().getPlugin("FlvModule");

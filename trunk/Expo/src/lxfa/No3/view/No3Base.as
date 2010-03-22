@@ -17,12 +17,8 @@ package lxfa.No3.view
 		public function No3Base()
 		{
 			super();
+			MainSystem.getInstance().isBusy=true;
 			initFLVPlayer();
-			initAnimation();
-		}
-		private function initAnimation():void
-		{
-			MainSystem.getInstance().runAPIDirect("addAnimate",[0]);
 		}
 		private function initFLVPlayer():void
 		{
@@ -30,11 +26,18 @@ package lxfa.No3.view
 			{
 				flvPlayer=new FLVPlayer("video/no3/no3.flv",900,480);
 				flvPlayer.y=70;
-				flvPlayer.addEventListener(Event.CLOSE,on_flvPlayer_close);
 				this.addChild(flvPlayer);
+				flvPlayer.addEventListener(Event.COMPLETE,on_flv_complete);
 				flvPlayer.resume();
-				flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,flvPlayer_NetStatus_handler);
 			}
+		}
+		private function on_flv_complete(e:Event):void//FLV加载完毕
+		{
+			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().removePluginById("IndexModule");
+			MainSystem.getInstance().runAPIDirect("addAnimate",[0]);
+			flvPlayer.addEventListener(Event.CLOSE,on_flvPlayer_close);
+			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,flvPlayer_NetStatus_handler);
 		}
 		private function flvPlayer_NetStatus_handler(e:Event):void
 		{

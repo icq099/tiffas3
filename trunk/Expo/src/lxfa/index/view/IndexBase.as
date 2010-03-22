@@ -49,12 +49,10 @@ package lxfa.index.view
 		private function on_NET_STATUS_change(e:NetStatusEvent):void
 		{
 			MainSystem.getInstance().showPluginById("No3Module");
-			MainSystem.getInstance().removePluginById("IndexModule");
 		}
 		//跳过第二个电影
 		private function on_flvPlayer_close(e:Event):void
 		{
-			MainSystem.getInstance().removePluginById("IndexModule");
 			MainSystem.getInstance().showPluginById("No3Module");
 		}
 		private function initFlowerFlvSwf():void
