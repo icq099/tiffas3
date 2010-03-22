@@ -94,26 +94,29 @@ package lsd.AnimatePlayer.view
 			}
 		}
 		public function closeAnimate(e:MouseEvent=null):void{
-			if(!isClose)
+			if(!MainSystem.getInstance().isBusy)
 			{
-				if(is_open){
-					
-					try{
-						removeChild(closeButton);closeButton=null;
-		           	 	removeChild(loader);
-						MovieClip(loader.content).stop();loader=null;
-						this.addChild(outLoader);
-						MovieClip(outLoader.content).gotoAndPlay(0);
-						MovieClip(outLoader.content).addFrameScript(MovieClip(outLoader.content).totalFrames-1,dispose);
-					}catch(e:Error){
-						trace(e);
-					}
-		            is_open=false;
-		  		}
-			}else
-			{
-				isClose=false;
-				dispose();
+				if(!isClose)
+				{
+					if(is_open){
+						
+						try{
+							removeChild(closeButton);closeButton=null;
+			           	 	removeChild(loader);
+							MovieClip(loader.content).stop();loader=null;
+							this.addChild(outLoader);
+							MovieClip(outLoader.content).gotoAndPlay(0);
+							MovieClip(outLoader.content).addFrameScript(MovieClip(outLoader.content).totalFrames-1,dispose);
+						}catch(e:Error){
+							trace(e);
+						}
+			            is_open=false;
+			  		}
+				}else
+				{
+					isClose=false;
+					dispose();
+				}
 			}
 		}
 		//初始化退出的效果

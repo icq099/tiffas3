@@ -19,24 +19,20 @@ package lxfa.No3Swf.view
 		private var flowerFlvSwf:SwfPlayer;
 		public function No3SwfBase()
 		{
-			MainSystem.getInstance().addEventListener(PluginEvent.UPDATE,on_plugin_update);
+			MainSystem.getInstance().isBusy=true;
 			flowerFlvSwf=new SwfPlayer("movie/外馆效果.swf",900,480);
 			flowerFlvSwf.addEventListener(Event.COMPLETE,onComplete);
 			flowerFlvSwf.x=-200;
 			flowerFlvSwf.y=-100;
 			flowerFlvSwf.addEventListener(MouseEvent.CLICK,onClick);
 		}
-		private function on_plugin_update(e:PluginEvent):void
-		{
-			if(MainSystem.getInstance().hasEventListener(PluginEvent.UPDATE))
-			{
-				MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,on_plugin_update);
-			}
-			dispose();
-		}
 		private function onComplete(e:Event):void
 		{
+			MainSystem.getInstance().isBusy=false;
 			this.addChild(flowerFlvSwf);
+			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
+			MainSystem.getInstance().addAutoClose(dispose,[]);
+			MainSystem.getInstance().removePluginById("No3Module");
 		}
 		private function onClick(e:MouseEvent):void
 		{
