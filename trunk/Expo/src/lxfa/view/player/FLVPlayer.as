@@ -74,10 +74,6 @@ package lxfa.view.player
 			{
 				this.removeEventListener(Event.ENTER_FRAME,on_ENTER_FRAME);//不再对外抛出进度事件
 				this.dispatchEvent(new Event(Event.COMPLETE));
-				if(hasCloseButton)
-				{
-					initBTNClose();
-				}
 			}
 			if(!hasPushReadyEvent)
 			{
@@ -85,6 +81,10 @@ package lxfa.view.player
 				{
 					hasPushReadyEvent=true;
 					this.dispatchEvent(new FLVPlayerEvent(FLVPlayerEvent.READY));
+					if(hasCloseButton)
+					{
+						initBTNClose();
+					}
 				}
 			}
 		}
@@ -124,8 +124,9 @@ package lxfa.view.player
 		private function on_close_click(e:MouseEvent):void
 		{
 			close.mouseEnabled=false;
-			MemoryRecovery.getInstance().gcFun(close,MouseEvent.CLICK,on_close_click);
+			netStream.pause();
 			this.dispatchEvent(new Event(Event.CLOSE));
+			MemoryRecovery.getInstance().gcFun(close,MouseEvent.CLICK,on_close_click);
 		}
 		public function dispose():void
 		{

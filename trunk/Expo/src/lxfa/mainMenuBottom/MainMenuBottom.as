@@ -17,7 +17,6 @@ package lxfa.mainMenuBottom
 		private const focusMinRange:int=60;
 		private var focusSpeed:int=10;
 		private var currentSceneId:int=-1;//当前场景的编号
-		private var isBusy:Boolean=false;
 		public function MainMenuBottom()
 		{
 			initbottom();
