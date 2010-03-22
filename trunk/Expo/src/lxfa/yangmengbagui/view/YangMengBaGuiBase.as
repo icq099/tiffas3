@@ -12,6 +12,7 @@ package lxfa.yangmengbagui.view
 	import flash.events.NetStatusEvent;
 	
 	import lxfa.normalWindow.SwfPlayer;
+	import lxfa.utils.CollisionManager;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
@@ -27,6 +28,9 @@ package lxfa.yangmengbagui.view
 		public function YangMengBaGuiBase()
 		{
 			MainSystem.getInstance().stopRender();
+			//CollisionManager.getInstance().removeAllCollision();
+			CollisionManager.getInstance().removeCollision("fz_gx");
+			CollisionManager.getInstance().removeCollision("fanZhuWindow");
 			showYangMengBaGui(false);
 			MainSystem.getInstance().isBusy=true;
 		}
