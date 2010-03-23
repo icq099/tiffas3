@@ -8,6 +8,7 @@ package lsd.FanZhuSanJiao
 	
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
+	import lxfa.utils.LoadingMcManager;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
@@ -113,12 +114,14 @@ package lsd.FanZhuSanJiao
 
 		private function init():void
 		{
+			LoadingMcManager.getInstance().loadingMcInit();
 			var guangXiArea:Array=[[[272, 299], [394, 377]], [[297, 377], [347, 410]]];
 			var fanZhuWindowArea:Array=[[[680, 153], [892, 192]]]
 			swfPlayer=new SwfPlayer("swf/fanZhuSanJiao.swf", 980, 490);
 			CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "fz_gx");
 			CollisionManager.getInstance().addCollision(fanZhuWindowArea, fanZhuWindowClick, "fanZhuWindow");
 			this.addChild(swfPlayer);
+			LoadingMcManager.getInstance().loadingMcListener(swfPlayer);
 			swfPlayer.addEventListener(Event.COMPLETE, on_swf_complete);
 			CollisionManager.getInstance().showCollision();
 
@@ -145,7 +148,7 @@ package lsd.FanZhuSanJiao
 
 		public function dispose():void
 		{
-
+            LoadingMcManager.getInstance().dispose();
 			MemoryRecovery.getInstance().gcFun(swfPlayer, Event.COMPLETE, on_swf_complete);
 			MemoryRecovery.getInstance().gcObj(swfPlayer, true);
 			removeAreas();
