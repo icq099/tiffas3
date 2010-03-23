@@ -61,6 +61,7 @@
 <module application="src/Expo.mxml" destPath="lsd/ZongHengSiHaiWithMovie/ZongHengSiHaiWithMovieModule.swf" optimize="true" sourcePath="src/lsd/ZongHengSiHaiWithMovie/ZongHengSiHaiWithMovieModule.mxml"/>
 <module application="src/Expo.mxml" destPath="yzhkof/opening/OpeningModule.swf" optimize="true" sourcePath="src/yzhkof/opening/OpeningModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/SlidingPuzzle/SlidingPuzzleModule.swf" optimize="true" sourcePath="src/lsd/SlidingPuzzle/SlidingPuzzleModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/customMusic/CustomMusicModule.swf" optimize="true" sourcePath="src/lxfa/customMusic/CustomMusicModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>

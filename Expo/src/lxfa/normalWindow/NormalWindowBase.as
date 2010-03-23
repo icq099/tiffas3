@@ -20,6 +20,7 @@ package lxfa.normalWindow
 		}
 		public function showNormalWindow(id:String):void
 		{
+			MainSystem.getInstance().stopRender();
 			if(!isPoped)
 			{
 				isPoped=true;
