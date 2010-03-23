@@ -114,19 +114,20 @@ package lsd.DongMeng
 
 		private function init():void
 		{
-
-			var guangXiArea:Array=[[[325, 103], [387, 128]]];
-			var dongMengWindowArea:Array=[[[660, 110], [870, 148]]];
 			swfPlayer=new SwfPlayer("swf/dongMeng.swf", 900, 480);
 			initLoadingMc();
 			swfPlayer.addEventListener(ProgressEvent.PROGRESS, on_flv_progress);
 			swfPlayer.addEventListener(Event.COMPLETE, on_swf_complete);
+
+		}
+        private function addAreas():void{
+        	
+        	var guangXiArea:Array=[[[325, 103], [387, 128]]];
+			var dongMengWindowArea:Array=[[[660, 110], [870, 148]]];
 			CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "dm_gx")
 			CollisionManager.getInstance().addCollision(dongMengWindowArea, dongMengWindowClick, "dongMengWindow");
 			CollisionManager.getInstance().showCollision();
-
-		}
-
+        }
 		private function initLoadingMc():void
 		{
 			loading_mc=new LoadingWaveRota();
@@ -145,6 +146,7 @@ package lsd.DongMeng
 			MemoryRecovery.getInstance().gcFun(swfPlayer, ProgressEvent.PROGRESS, on_flv_progress);
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			this.addChild(swfPlayer);
+			addAreas();
 			flvRemove();
 			MainSystem.getInstance().isBusy=false;
 		}
