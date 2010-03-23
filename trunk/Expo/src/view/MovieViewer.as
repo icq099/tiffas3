@@ -15,6 +15,7 @@ package view
 	
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
+	import lxfa.view.player.FLVPlayerEvent;
 	
 	import mx.core.Application;
 	
@@ -48,12 +49,10 @@ package view
 		}
 		private function on_add_api(e:ScriptAPIAddEvent):void
 		{
-			if(e.fun_name=="addFlv")
-			{   MainSystem.getInstance().isBusy=false;
-				MainSystem.getInstance().runAPIDirect("addFlv",[URL,false]);
-				MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.COMPLETE,onCompleteHandler);
+			if(e.fun_name=="addFlv"){
+				MainSystem.getInstance().runAPIDirectDirectly("addFlv",[URL,false]);
+				MainSystem.getInstance().getPlugin("FlvModule").addEventListener(FLVPlayerEvent.COMPLETE,onCompleteHandler);
 				MainSystem.getInstance().getPlugin("FlvModule").addEventListener(ProgressEvent.PROGRESS,onProgressHandler);
-				MainSystem.getInstance().isBusy=true;//让其他插件不能中断它
 			}
 			MainSystem.getInstance().removeEventListener(ScriptAPIAddEvent.ADD_API,on_add_api);
 		}
@@ -95,7 +94,11 @@ package view
 		private function onProgressHandler(e:ProgressEvent):void{
 			
 			loading_mc.updateByProgressEvent(e);
-		
+		    if(e.bytesLoaded==e.bytesTotal)
+		    {
+				loading_mc.parent.removeChild(loading_mc);
+			    MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.CLOSE,movieComplete);
+		    }
 		}
 		private function drawCover():void{
 			
@@ -112,10 +115,10 @@ package view
 //			movie.stop();
 		
 		}
-		private function onCompleteHandler(e:Event):void{
+		private function onCompleteHandler(e:FLVPlayerEvent):void{
 			
 			loading_mc.parent.removeChild(loading_mc);
-			MainSystem.getInstance().getPlugin("FlvModule").removeEventListener(Event.COMPLETE,onCompleteHandler);
+			MainSystem.getInstance().getPlugin("FlvModule").removeEventListener(FLVPlayerEvent.COMPLETE,onCompleteHandler);
 		    MainSystem.getInstance().getPlugin("FlvModule").addEventListener(Event.CLOSE,movieComplete);
 		}
 		private function movieComplete(e:Event):void{
