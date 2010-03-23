@@ -7,7 +7,9 @@
 		   implements="communication.IPlugin">
 	<mx:Script>
 		<![CDATA[
+			import lxfa.utils.MemoryRecovery;
 			import yzhkof.Toolyzhkof;
+			
 			private var dongMeng:DongMeng;
 
 			private function init():void
@@ -19,14 +21,7 @@
 
 			public function dispose():void
 			{   
-				if(dongMeng!=null){
-					if(dongMeng.parent!=null){
-						dongMeng.parent.removeChild(dongMeng);
-						dongMeng.dispose();
-						dongMeng=null;
-						
-					}
-				}
+				MemoryRecovery.getInstance().gcObj(dongMeng,true);
 			}
 		]]>
 	</mx:Script>

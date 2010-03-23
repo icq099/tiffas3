@@ -34,11 +34,9 @@ package lsd.ZongHengSiHai
 				MainSystem.getInstance().isBusy==false
 				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
 				removeAreas();
-				MainSystem.getInstance().isBusy==true
 				
 			}else
-			{   
-			   
+			{  
 				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
 			    removeAreas();
 			}

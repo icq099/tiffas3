@@ -46,24 +46,22 @@ package lsd.FanZhuSanJiao
 		{
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
-			MainSystem.getInstance().addAutoClose(disposeMySelf, []);
+			MainSystem.getInstance().addAutoClose(dispose_fz, []);
 			MainSystem.getInstance().isBusy=true;
 		}
 
-		private function disposeMySelf():void
+		private function dispose_fz():void
 		{
             if(MainSystem.getInstance().isBusy==true)
 			{
 				MainSystem.getInstance().isBusy==false
 				dispose();
 				MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");
-				MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,disposeMySelf);
 				removeAreas();
 				MainSystem.getInstance().isBusy==true
 			}else{
 				
 				MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");
-				MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,disposeMySelf);
 				removeAreas();
 			}
             

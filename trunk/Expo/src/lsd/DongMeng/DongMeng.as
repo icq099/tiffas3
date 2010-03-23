@@ -2,7 +2,7 @@ package lsd.DongMeng
 {
 	import communication.Event.PluginEvent;
 	import communication.MainSystem;
-	
+	import lxfa.utils.MemoryRecovery;
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	
@@ -18,57 +18,71 @@ package lsd.DongMeng
 		private var flvPlayer:FLVPlayer;
 		public function DongMeng()
 		{   
+			MainSystem.getInstance().isBusy=true;
 			initPlayer();
 		}
 		private function initPlayer():void{
-			MainSystem.getInstance().isBusy=true;
+		
 			flvPlayer=new FLVPlayer("movie/gx-dm1.flv",900,480,false);
 			addChild(flvPlayer);
-			flvPlayer.addEventListener(FLVPlayerEvent.READY,on_flv_ready);
+			flvPlayer.addEventListener(FLVPlayerEvent.READY,on_flv_complete);
 	        flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
        }
-       private function on_flv_ready(e:FLVPlayerEvent):void
+       private function on_flv_complete(e:FLVPlayerEvent):void
        {
        	MainSystem.getInstance().isBusy=false;
        	MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
+       	MainSystem.getInstance().addAutoClose(dispose_dm, []);
        	MainSystem.getInstance().isBusy=true;
+       }
+       private function dispose_dm():void{
+       	   
+       	    if(MainSystem.getInstance().isBusy==true)
+			{
+				MainSystem.getInstance().isBusy==false
+				dispose();
+				MainSystem.getInstance().removePluginById("DongMengModule");
+				removeAreas();
+				MainSystem.getInstance().isBusy==true
+			}else{
+				
+				MainSystem.getInstance().removePluginById("DongMengModule");
+				removeAreas();
+			}
+  
        }
        private function on_Complete(e:NetStatusEvent):void{
       	    init();
       }
        private function flvRemove():void
 		{
-			if (flvPlayer!=null)
-			{   
-				if(flvPlayer.hasEventListener(NetStatusEvent.NET_STATUS))
-				{
-					flvPlayer.removeEventListener(NetStatusEvent.NET_STATUS,on_Complete);
-					flvPlayer.removeEventListener(NetStatusEvent.NET_STATUS,gx_Complete);
-				}
-				if(flvPlayer.parent!=null){
-                flvPlayer.parent.removeChild(flvPlayer);
-				flvPlayer.dispose();
-                flvPlayer=null;
-              }
-		   }
+			MemoryRecovery.getInstance().gcFun(flvPlayer, NetStatusEvent.NET_STATUS, on_Complete);
+			MemoryRecovery.getInstance().gcFun(flvPlayer, NetStatusEvent.NET_STATUS, gx_Complete);
+			MemoryRecovery.getInstance().gcFun(flvPlayer, FLVPlayerEvent.READY, on_flv_complete);
+			MemoryRecovery.getInstance().gcObj(flvPlayer, true);
 		}	
 
 	  private function guangXiClick():void{
 			backGuangXi();
 		    removeAreas();
 		}
-		private function backGuangXi():void{
+	  private function backGuangXi():void{
 			MainSystem.getInstance().isBusy=true;
 			flvPlayer=new FLVPlayer("movie/dm-gx1.flv",900,480,false);
 			addChild(flvPlayer);
 			flvPlayer.resume();
+			flvPlayer.addEventListener(FLVPlayerEvent.READY, on_fz_gx_complete);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,gx_Complete);	
+		}
+		private function on_fz_gx_complete(e:Event):void //FLV已经加载到场景里面
+		{
+			
+			MainSystem.getInstance().addAutoClose(flvRemove, []);
 		}
 	   private function gx_Complete(e:NetStatusEvent):void{
       	    MainSystem.getInstance().isBusy=false;
       	    MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
-      	    MainSystem.getInstance().addAutoClose(dispose,[]);
       }
 	  private function dongMengWindowClick():void{
 			trace("dongMeng");
@@ -82,43 +96,26 @@ package lsd.DongMeng
 		 	 swfPlayer.addEventListener(Event.COMPLETE,on_swf_complete);
 		 	 CollisionManager.getInstance().addCollision(guangXiArea,guangXiClick,"dm_gx")
 		 	 CollisionManager.getInstance().addCollision(dongMengWindowArea,dongMengWindowClick,"dongMengWindow");
-             //CollisionManager.getInstance().showCollision();
+             CollisionManager.getInstance().showCollision();
 
 		 }
 		private function on_swf_complete(e:Event):void
 		{
-			MainSystem.getInstance().isBusy=false;
 			flvRemove();
+			MainSystem.getInstance().isBusy=false;
 		}
 		 
 	  private function removeAreas():void{
 			
-			CollisionManager.getInstance().removeAllCollision();
+			CollisionManager.getInstance().removeCollision("dm_gx");
+			CollisionManager.getInstance().removeCollision("dongMengWindow");
 		}
 	     
 	   public function dispose():void{
-			if (flvPlayer!=null)
-			{   
-				if(flvPlayer.hasEventListener(NetStatusEvent.NET_STATUS))
-				{
-					flvPlayer.removeEventListener(NetStatusEvent.NET_STATUS,on_Complete);
-					flvPlayer.removeEventListener(NetStatusEvent.NET_STATUS,gx_Complete);
-				}
-				if(flvPlayer.parent!=null){
-                flvPlayer.parent.removeChild(flvPlayer);
-				flvPlayer.dispose();
-                flvPlayer=null;
-              }
-		   }
-	   	    if(swfPlayer!=null){
-	   	    	if(swfPlayer.parent!=null){
-	   	    		swfPlayer.parent.removeChild(swfPlayer);
-			   	    swfPlayer.removeEventListener(Event.COMPLETE,on_swf_complete);
-			   	    swfPlayer.dispose();
-			   	    swfPlayer=null;
-	   	    		
-	   	    	}
-	   	   }  	
+	           
+	        MemoryRecovery.getInstance().gcFun(swfPlayer, Event.COMPLETE, on_swf_complete);
+			MemoryRecovery.getInstance().gcObj(swfPlayer, true);
+			removeAreas();	
 	   }
     }
 }
