@@ -34,6 +34,8 @@ package lsd.FanZhuSanJiao
 		{
 
 			flvPlayer=new FLVPlayer("movie/gx-fz1.flv", 900, 480, false);
+			addChild(flvPlayer);
+			flvPlayer.resume();
 			flvPlayer.addEventListener(FLVPlayerEvent.READY, on_flv_ready);
 			flvPlayer.addEventListener(FLVPlayerEvent.COMPLETE, on_flv_complete);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, on_Complete);
@@ -41,17 +43,19 @@ package lsd.FanZhuSanJiao
 
 		private function on_flv_ready(e:FLVPlayerEvent):void
 		{
-			
-			addChild(flvPlayer);
-			
-		}
-		private function on_flv_complete(e:FLVPlayerEvent):void
-		{
-			flvPlayer.resume();
+			/* addChild(flvPlayer);
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 			MainSystem.getInstance().addAutoClose(dispose_fz, []);
-			MainSystem.getInstance().isBusy=true;
+			MainSystem.getInstance().isBusy=true;  */
+			
+		}
+		private function on_flv_complete(e:FLVPlayerEvent):void
+		{   
+			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
+			MainSystem.getInstance().addAutoClose(dispose_fz, []);
+			MainSystem.getInstance().isBusy=true; 
 		}
 		
 
@@ -76,7 +80,6 @@ package lsd.FanZhuSanJiao
 
 		private function on_Complete(e:NetStatusEvent):void
 		{
-
 			init();
 		}
 
