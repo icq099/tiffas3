@@ -10,6 +10,7 @@ package lsd.ZongHengSiHai
 	
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
+	import lxfa.utils.LoadingMcManager;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
@@ -82,6 +83,7 @@ package lsd.ZongHengSiHai
 		}
         private function init():void{
 			
+			LoadingMcManager.getInstance().loadingMcInit();
 			swfPlayer=new SwfPlayer("swf/zongHengSiHai.swf",980,480);
 			swfPlayer.y=0;
 			 var daMeiGongHeArea:Array=[[[43,220],[157,301]]];
@@ -95,6 +97,7 @@ package lsd.ZongHengSiHai
 			 CollisionManager.getInstance().addCollision(beiBuWanArea,beiBuWanClick,"beiBuWan");
 			 CollisionManager.getInstance().addCollision(xiJiangArea,xiJiangClick,"xiJiang");
 			 this.addChild(swfPlayer);
+			 LoadingMcManager.getInstance().loadingMcListener(swfPlayer);
 			 swfPlayer.addEventListener(Event.COMPLETE,on_swf_complete);
 			  CollisionManager.getInstance().showCollision();
 			 //swfPlayer.addEventListener(Event.COMPLETE,zongHengSiHai_complete);
@@ -155,7 +158,8 @@ package lsd.ZongHengSiHai
 			Tweener.addTween(this,{alpha:0,time:1,onComplete:close});
         }
          private function close():void
-         {
+         {  
+         	LoadingMcManager.getInstance().dispose();
          	MemoryRecovery.getInstance().gcFun(swfPlayer,Event.COMPLETE,on_swf_complete);
          	MemoryRecovery.getInstance().gcObj(swfPlayer,true);
          	
