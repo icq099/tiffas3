@@ -129,18 +129,21 @@ package lsd.DaMeiGongHe
 			initLoadingMc();
 			swfPlayer.addEventListener(ProgressEvent.PROGRESS, on_flv_progress);
 			swfPlayer.addEventListener(Event.COMPLETE, on_swf_complete);
-			var guangXiArea:Array=[[[485, 129], [610, 183]]];
+		}
+       private function addAreas():void{
+       	     
+       	    var guangXiArea:Array=[[[485, 129], [610, 183]]];
 			var daMeiGongHeWindowArea:Array=[[[670, 185], [880, 222]]];
 			CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "dmg_gx");
 			CollisionManager.getInstance().addCollision(daMeiGongHeWindowArea, daMeiGongHeWindowClick, "daMeiGongHeWindow");
-			CollisionManager.getInstance().showCollision();
-		}
-
+       	    CollisionManager.getInstance().showCollision();
+       }
 		private function on_swf_complete(e:Event):void
 		{
 			MemoryRecovery.getInstance().gcFun(swfPlayer, ProgressEvent.PROGRESS, on_flv_progress);
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			this.addChild(swfPlayer);
+			addAreas();
 			flvRemove();
 			MainSystem.getInstance().isBusy=false;
 		}

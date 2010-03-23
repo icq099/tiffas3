@@ -35,8 +35,8 @@ package lsd.FanZhuSanJiao
 
 			flvPlayer=new FLVPlayer("movie/gx-fz1.flv", 900, 480, false);
 			addChild(flvPlayer);
-			flvPlayer.addEventListener(FLVPlayerEvent.READY, on_flv_complete);
 			flvPlayer.resume();
+			flvPlayer.addEventListener(FLVPlayerEvent.READY, on_flv_complete);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, on_Complete);
 		}
 
@@ -113,17 +113,20 @@ package lsd.FanZhuSanJiao
 
 		private function init():void
 		{
-			var guangXiArea:Array=[[[272, 299], [394, 377]], [[297, 377], [347, 410]]];
-			var fanZhuWindowArea:Array=[[[680, 153], [892, 192]]]
 			swfPlayer=new SwfPlayer("swf/fanZhuSanJiao.swf", 980, 490);
-			CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "fz_gx");
-			CollisionManager.getInstance().addCollision(fanZhuWindowArea, fanZhuWindowClick, "fanZhuWindow");
 			initLoadingMc();
 			swfPlayer.addEventListener(ProgressEvent.PROGRESS, on_flv_progress);
 			swfPlayer.addEventListener(Event.COMPLETE, on_swf_complete);
 			CollisionManager.getInstance().showCollision();
 		}
-
+        private function addAreas():void{
+        	
+        	var guangXiArea:Array=[[[272, 299], [394, 377]], [[297, 377], [347, 410]]];
+			var fanZhuWindowArea:Array=[[[680, 153], [892, 192]]]
+        	CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "fz_gx");
+			CollisionManager.getInstance().addCollision(fanZhuWindowArea, fanZhuWindowClick, "fanZhuWindow");
+			CollisionManager.getInstance().showCollision();
+        }
 		private function initLoadingMc():void
 		{
 			loading_mc=new LoadingWaveRota();
@@ -142,6 +145,7 @@ package lsd.FanZhuSanJiao
 			MemoryRecovery.getInstance().gcFun(swfPlayer, ProgressEvent.PROGRESS, on_flv_progress);
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			this.addChild(swfPlayer);
+			addAreas();
 			flvRemove();
 			MainSystem.getInstance().isBusy=false;
 		}

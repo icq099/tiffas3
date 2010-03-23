@@ -87,7 +87,14 @@ package lsd.ZongHengSiHai
 		}
         private function init():void{
 			
-			swfPlayer=new SwfPlayer("swf/zongHengSiHai.swf",980,480);
+			 swfPlayer=new SwfPlayer("swf/zongHengSiHai.swf",980,480);
+             initLoadingMc();
+			 swfPlayer.addEventListener(ProgressEvent.PROGRESS,on_flv_progress);
+			 swfPlayer.addEventListener(Event.COMPLETE,on_swf_complete);
+	          
+		}
+		private function addAreas():void{
+			
 			 var daMeiGongHeArea:Array=[[[43,220],[157,301]]];
 			 var dongMengArea:Array=[[[163,325],[282,395]]];
 			 var fanZhuArea:Array=[[[580,296],[689,360]]];
@@ -98,12 +105,9 @@ package lsd.ZongHengSiHai
 			 CollisionManager.getInstance().addCollision(fanZhuArea,fanZhuClick,"fanzhu");
 			 CollisionManager.getInstance().addCollision(beiBuWanArea,beiBuWanClick,"beiBuWan");
 			 CollisionManager.getInstance().addCollision(xiJiangArea,xiJiangClick,"xiJiang");
-			 initLoadingMc();
-			 swfPlayer.addEventListener(ProgressEvent.PROGRESS,on_flv_progress);
-			 swfPlayer.addEventListener(Event.COMPLETE,on_swf_complete);
-			 CollisionManager.getInstance().showCollision();
-	          
 		}
+		
+		
 		private function initLoadingMc():void
 		{
 			loading_mc=new LoadingWaveRota();
@@ -125,6 +129,8 @@ package lsd.ZongHengSiHai
 			MemoryRecovery.getInstance().gcFun(swfPlayer,ProgressEvent.PROGRESS,on_flv_progress);
 			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 			this.addChild(swfPlayer);
+			addAreas();
+		    CollisionManager.getInstance().showCollision();
 			flvRemove();
 			MainSystem.getInstance().isBusy=false;
 			if(ZongHengSiHaiStatic.getInstance().currentModuleName=="ZongHengSiHaiModule")
