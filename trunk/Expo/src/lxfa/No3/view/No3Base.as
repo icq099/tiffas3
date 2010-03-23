@@ -10,6 +10,7 @@ package lxfa.No3.view
 	
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
+	import lxfa.view.player.FLVPlayerEvent;
 	
 	import mx.core.Application;
 	
@@ -36,7 +37,7 @@ package lxfa.No3.view
 				flvPlayer.y=70;
 				this.addChild(flvPlayer);
 				flvPlayer.addEventListener(ProgressEvent.PROGRESS,on_flv_progress);
-				flvPlayer.addEventListener(Event.COMPLETE,on_flv_complete);
+				flvPlayer.addEventListener(FLVPlayerEvent.COMPLETE,on_flv_complete);
 			}
 		}
 		private function initLoadingMc():void
@@ -54,7 +55,7 @@ package lxfa.No3.view
 		{
 			loading_mc.updateByProgressEvent(e);
 		}
-		private function on_flv_complete(e:Event):void
+		private function on_flv_complete(e:FLVPlayerEvent):void
 		{
 			flvPlayer.resume();
 			MemoryRecovery.getInstance().gcObj(loading_mc);

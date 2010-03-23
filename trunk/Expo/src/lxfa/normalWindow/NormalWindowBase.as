@@ -1,6 +1,5 @@
 package lxfa.normalWindow
 {
-	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
 	import flash.display.DisplayObject;
@@ -21,6 +20,7 @@ package lxfa.normalWindow
 		public function showNormalWindow(id:String):void
 		{
 			MainSystem.getInstance().stopRender();
+			MainSystem.getInstance().runAPIDirectDirectly("removeAnimate",[]);
 			if(!isPoped)
 			{
 				isPoped=true;

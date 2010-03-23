@@ -24,7 +24,7 @@ package lxfa.No4.view
 			flvPlayer=new FLVPlayer("video/no4/no4.flv",900,480,false);
 			flvPlayer.y=70;
 			this.addChild(flvPlayer);
-			flvPlayer.addEventListener(FLVPlayerEvent.READY,on_flv_ready);
+			flvPlayer.addEventListener(FLVPlayerEvent.COMPLETE,on_flv_ready);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,flvPlayer_NetStatusHandler);
 		}
 		private function on_flv_ready(e:FLVPlayerEvent):void

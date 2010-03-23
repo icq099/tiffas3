@@ -75,7 +75,7 @@ package lxfa.view.player
 			if(netStream.bytesLoaded==netStream.bytesTotal)
 			{
 				this.removeEventListener(Event.ENTER_FRAME,on_ENTER_FRAME);//不再对外抛出进度事件
-				this.dispatchEvent(new Event(Event.COMPLETE));
+				this.dispatchEvent(new FLVPlayerEvent(FLVPlayerEvent.COMPLETE));
 			}
 			if(!hasPushReadyEvent)
 			{

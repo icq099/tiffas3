@@ -61,21 +61,20 @@ package lxfa.No3Swf.view
 			MainSystem.getInstance().addAutoClose(dispose,[]);
 			MainSystem.getInstance().removePluginById("No3Module");
 		}
+		private var hasClick:Boolean=false;
 		private function onClick(e:MouseEvent):void
 		{
-			if(!MainSystem.getInstance().isBusy)
+			if(!MainSystem.getInstance().isBusy && !hasClick)
 			{
 				flowerFlvSwf.enabled=false;
+				hasClick=true;
 				MainSystem.getInstance().showPluginById("No4Module");
-				MainSystem.getInstance().addAutoClose(dispose,[]);
+//				MainSystem.getInstance().addAutoClose(dispose,[]);
 			}
 		}
 		public function dispose():void
 		{
-			flowerFlvSwf.enabled=false;
-			Tweener.addTween(flowerFlvSwf,{alpha:0,time:3,onComplete:function():void{
-			     MemoryRecovery.getInstance().gcObj(flowerFlvSwf,true);
-			}});
+			MemoryRecovery.getInstance().gcObj(flowerFlvSwf,true);
 		}
 	}
 }

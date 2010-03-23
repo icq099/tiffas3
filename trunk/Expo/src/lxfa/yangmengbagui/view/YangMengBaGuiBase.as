@@ -11,8 +11,8 @@ package lxfa.yangmengbagui.view
 	import flash.events.MouseEvent;
 	import flash.events.NetStatusEvent;
 	
+	import lxfa.customMusic.CustomMusicManager;
 	import lxfa.normalWindow.SwfPlayer;
-	import lxfa.utils.CollisionManager;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;

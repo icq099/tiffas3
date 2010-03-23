@@ -8,6 +8,8 @@ package lsd.AnimatePlayer.view
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 	
+	import lxfa.customMusic.CustomMusicManager;
+	
 	import mx.core.UIComponent;
 	
 	public class AnimatePlayer extends UIComponent

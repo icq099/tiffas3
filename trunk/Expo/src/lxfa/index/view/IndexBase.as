@@ -10,6 +10,7 @@ package lxfa.index.view
 	
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.view.player.FLVPlayer;
+	import lxfa.view.player.FLVPlayerEvent;
 	
 	import mx.core.UIComponent;
 	
@@ -66,13 +67,13 @@ package lxfa.index.view
 		{
 			flvPlayer=new FLVPlayer("video/index/index.flv",900,480);
 			flvPlayer.addEventListener(ProgressEvent.PROGRESS,downLoadprogressHandler);
-			flvPlayer.addEventListener(Event.COMPLETE,downLoadcompleteHandler);
+			flvPlayer.addEventListener(FLVPlayerEvent.COMPLETE,downLoadcompleteHandler);
 		}
 		private function downLoadprogressHandler(e:ProgressEvent):void
 		{
 			indexSwc.progressText.text=String(int((e.bytesLoaded/e.bytesTotal)*100));
 		}
-		private function downLoadcompleteHandler(e:Event):void
+		private function downLoadcompleteHandler(e:FLVPlayerEvent):void
 		{
 			indexSwc.btn_enter.mouseEnabled=true;
 		}
