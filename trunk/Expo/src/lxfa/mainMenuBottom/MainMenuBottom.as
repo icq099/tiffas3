@@ -1,9 +1,10 @@
 package lxfa.mainMenuBottom
 {
+	import caurina.transitions.Tweener;
+	
 	import communication.MainSystem;
 	
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	
@@ -29,6 +30,8 @@ package lxfa.mainMenuBottom
 				initEvent();
 			}
 			this.addChild(bottom);
+			bottom.alpha=0;
+			Tweener.addTween(bottom,{alpha:1,time:3});
 		}
 		private function initEvent():void
 		{
