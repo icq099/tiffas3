@@ -1,20 +1,26 @@
 package lxfa.No3.view
 {
-	import communication.Event.MainSystemEvent;
 	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
+	import flash.events.ProgressEvent;
 	
+	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
-	import lxfa.view.player.FLVPlayerEvent;
+	
+	import mx.core.Application;
+	
+	import yzhkof.Toolyzhkof;
+	import yzhkof.loadings.LoadingWaveRota;
 	
 	public class No3Base extends Sprite
 	{
 		private var flvPlayer:FLVPlayer;
 		private var isClosed:Boolean=false;
+		private var loading_mc:LoadingWaveRota;
 		public function No3Base()
 		{
 			super();
@@ -25,15 +31,33 @@ package lxfa.No3.view
 		{
 			if(!isClosed)
 			{
+				initLoadingMc();
 				flvPlayer=new FLVPlayer("video/no3/no3.flv",900,480);
 				flvPlayer.y=70;
 				this.addChild(flvPlayer);
-				flvPlayer.addEventListener(FLVPlayerEvent.READY,on_flv_ready);
-				flvPlayer.resume();
+				flvPlayer.addEventListener(ProgressEvent.PROGRESS,on_flv_progress);
+				flvPlayer.addEventListener(Event.COMPLETE,on_flv_complete);
 			}
 		}
-		private function on_flv_ready(e:Event):void//FLV加载完毕
+		private function initLoadingMc():void
 		{
+			loading_mc=new LoadingWaveRota();
+			this.addEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
+		}
+		private function on_added_to_stage(e:Event):void
+		{
+			loading_mc.x=this.stage.stageWidth/2;
+			loading_mc.y=this.stage.stageHeight/2;
+			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
+		}
+		private function on_flv_progress(e:ProgressEvent):void//FLV加载完毕
+		{
+			loading_mc.updateByProgressEvent(e);
+		}
+		private function on_flv_complete(e:Event):void
+		{
+			flvPlayer.resume();
+			MemoryRecovery.getInstance().gcObj(loading_mc);
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().removePluginById("IndexModule");
 			MainSystem.getInstance().runAPIDirect("addAnimate",[0]);
@@ -55,6 +79,7 @@ package lxfa.No3.view
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcObj(loading_mc);
 			if(!isClosed)
 			{
 				isClosed=true;

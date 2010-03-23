@@ -1,6 +1,7 @@
 package lxfa.mainMenuTop
 {
-	import communication.Event.PluginEvent;
+	import caurina.transitions.Tweener;
+	
 	import communication.MainSystem;
 	
 	import flash.display.Sprite;
@@ -14,6 +15,8 @@ package lxfa.mainMenuTop
 		{
 			top=new MainMenuTopSwc();
 			this.addChild(top);
+			top.alpha=0;
+			Tweener.addTween(top,{alpha:1,time:3});
 			initLaba();
 		}
 		private function initLaba():void
