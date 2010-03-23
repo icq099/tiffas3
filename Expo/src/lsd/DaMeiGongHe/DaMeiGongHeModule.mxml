@@ -3,6 +3,7 @@
 		   implements="communication.IPlugin">
 		 <mx:Script>
 		 	<![CDATA[
+		 		import lxfa.utils.MemoryRecovery;
 		 		
 		    import yzhkof.Toolyzhkof;
 			private var daMeiGongHe:DaMeiGongHe;
@@ -11,19 +12,14 @@
 			{
 
 				daMeiGongHe=new DaMeiGongHe();
-				addChild(Toolyzhkof.mcToUI(daMeiGongHe));
+				addChild(daMeiGongHe);
 			}
 
 			public function dispose():void
-			{   if(daMeiGongHe!=null){
-				if(daMeiGongHe.parent!=null){
-					daMeiGongHe.parent.removeChild(daMeiGongHe);
-				    daMeiGongHe.dispose();
-				    daMeiGongHe=null;
-					
-				}
-			}
-        }
+			{  
+				MemoryRecovery.getInstance().gcObj(daMeiGongHe,true);
+				
+            }
 		 		
 		 	]]>
 		 </mx:Script>
