@@ -90,7 +90,6 @@ package mediators
 				
 				break;
 				case FacadePv.CAMERA_ROTA_DIRECT:
-				MainSystem.getInstance().isBusy=true;
 				if(notification.getBody().tween){
 					if(controler!=null)
 					{

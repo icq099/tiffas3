@@ -76,6 +76,10 @@ package lxfa.normalWindow
 		{
 			this.dispatchEvent(new Event(Event.CLOSE));
 			normalWindow=null;
+			if(animate!=null)
+			{
+				animateParent.addChild(animate);
+			}
 			PopUpManager.removePopUp(this);
 			if(MainSystem.getInstance().isBusy==true)
 			{
@@ -86,7 +90,6 @@ package lxfa.normalWindow
 			{
 				MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
 			}
-			animateParent.addChild(animate);
 		}
 	}
 }
