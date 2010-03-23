@@ -79,6 +79,8 @@ package lxfa.yangmengbagui.view
 		private function initLoadingMc():void
 		{
 			loading_mc=new LoadingWaveRota();
+			loading_mc.x=900/2;
+			loading_mc.y=600/2;
 			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));//添加到Application，这样才可以覆盖插件
 		}
 		private function on_progress(e:ProgressEvent):void
