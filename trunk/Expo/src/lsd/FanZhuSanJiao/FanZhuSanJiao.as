@@ -24,7 +24,7 @@ package lsd.FanZhuSanJiao
 //			MainSystem.getInstance().addEventListener(PluginEvent.UPDATE,on_plugin_update);//场景切换时，系统抛出的插件更新事件
 			MainSystem.getInstance().isBusy=true;
 			initPlayer();
-
+            
 		}
 
 		/* private function on_plugin_update(e:PluginEvent):void
@@ -52,9 +52,20 @@ package lsd.FanZhuSanJiao
 
 		private function disposeMySelf():void
 		{
-
-			MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");
-			removeAreas();
+            if(MainSystem.getInstance().isBusy==true)
+			{
+				MainSystem.getInstance().isBusy==false
+				dispose();
+				MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");
+				MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,disposeMySelf);
+				removeAreas();
+				MainSystem.getInstance().isBusy==true
+			}else{
+				
+				MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");
+				MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,disposeMySelf);
+				removeAreas();
+			}
             
 		}
 
@@ -99,7 +110,7 @@ package lsd.FanZhuSanJiao
 		private function on_fz_gx_complete(e:Event):void //FLV已经加载到场景里面
 		{
 			
-			MainSystem.getInstance().addAutoClose(dispose, []);
+			MainSystem.getInstance().addAutoClose(flvRemove, []);
 		}
 
 		private function init():void
@@ -140,7 +151,7 @@ package lsd.FanZhuSanJiao
 			MemoryRecovery.getInstance().gcFun(swfPlayer, Event.COMPLETE, on_swf_complete);
 			MemoryRecovery.getInstance().gcObj(swfPlayer, true);
 			removeAreas();
-			flvRemove();
+			
 			
 		}
 	}

@@ -16,7 +16,7 @@
 			private function init():void
 			{
 				zongHengSiHai=new ZongHenSiHai(true);
-				addChild(Toolyzhkof.mcToUI(zongHengSiHai));
+				addChild(zongHengSiHai);
 				ZongHengSiHaiStatic.getInstance().currentModuleName=this.className;
 			}
 

@@ -14,7 +14,7 @@
 			{
 
 				dongMeng=new DongMeng();
-				addChild(Toolyzhkof.mcToUI(dongMeng));
+				addChild(dongMeng);
 			}
 
 			public function dispose():void

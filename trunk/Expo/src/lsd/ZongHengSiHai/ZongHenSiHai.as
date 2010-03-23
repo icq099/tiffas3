@@ -22,6 +22,7 @@ package lsd.ZongHengSiHai
 		private var flvPlayer:FLVPlayer;
 		public function ZongHenSiHai(withMovie:Boolean)
 		{   
+			
 			MainSystem.getInstance().stopRender();
 			addZongHengSiHai(withMovie);
 			
@@ -33,13 +34,13 @@ package lsd.ZongHengSiHai
 				MainSystem.getInstance().isBusy==false
 				dispose();
 				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
-				MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,on_plugin_update);
 				removeAreas();
-				MainSystem.getInstance().isBusy=true;
+				MainSystem.getInstance().isBusy==true
+				
 			}else
-			{
+			{   
+			   
 				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
-				MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,on_plugin_update);
 			    removeAreas();
 			}
 		}
@@ -65,7 +66,7 @@ package lsd.ZongHengSiHai
 		}
 		private function on_flv_complete(e:FLVPlayerEvent):void
 		{   
-			MainSystem.getInstance().isBusy=false;
+			
 			MainSystem.getInstance().addAutoClose(on_plugin_update,[]);
 		}
 		private function flvRemove():void
@@ -79,12 +80,12 @@ package lsd.ZongHengSiHai
 		private function on_Complete(e:Event):void
 		{     
 			
-			  MainSystem.getInstance().isBusy=true;
+			 
 			  init();
 		}
         private function init():void{
 			
-			swfPlayer=new SwfPlayer("swf/zongHengSiHai.swf",980,490);
+			swfPlayer=new SwfPlayer("swf/zongHengSiHai.swf",980,480);
 			 var daMeiGongHeArea:Array=[[[43,220],[157,301]]];
 			 var dongMengArea:Array=[[[163,325],[282,395]]];
 			 var fanZhuArea:Array=[[[580,296],[689,360]]];
@@ -134,7 +135,6 @@ package lsd.ZongHengSiHai
 				trace("fanzhu");
 				
 				MainSystem.getInstance().showPluginById("FanZhuSanJiaoModule");
-				 MainSystem.getInstance().isBusy=true;
 			    removeAreas();
 			    
 				
@@ -160,7 +160,7 @@ package lsd.ZongHengSiHai
          {
          	MemoryRecovery.getInstance().gcFun(swfPlayer,Event.COMPLETE,on_swf_complete);
          	MemoryRecovery.getInstance().gcObj(swfPlayer,true);
-         	flvRemove();
+         	
            
          }
 	}
