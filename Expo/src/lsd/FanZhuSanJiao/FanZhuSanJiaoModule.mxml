@@ -15,12 +15,12 @@
 			{
 
 				fanZhuSanJiao=new FanZhuSanJiao();
-				addChild(Toolyzhkof.mcToUI(fanZhuSanJiao));
+				addChild(fanZhuSanJiao);
 			}
 
 			public function dispose():void
 			{  
-				MemoryRecovery.getInstance().gcObj(fanZhuSanJiao);
+				MemoryRecovery.getInstance().gcObj(fanZhuSanJiao,true);
 			
              }
 		]]>
