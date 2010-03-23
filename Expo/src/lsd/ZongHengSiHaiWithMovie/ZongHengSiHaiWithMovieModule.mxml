@@ -15,6 +15,7 @@
 
 			private function init():void
 			{
+				YangMengBaGuiStatic.getInstance().currentModuleName=this.className;
 				zongHengSiHai=new ZongHenSiHai(true);
 				addChild(zongHengSiHai);
 				ZongHengSiHaiStatic.getInstance().currentModuleName=this.className;
