@@ -51,10 +51,6 @@ package lxfa.No3Swf.view
 		}
 		public function dispose():void
 		{
-			Tweener.addTween(this,{alpha:0,time:2,onComplete:on_dispose_complete});
-		}
-		private function on_dispose_complete():void
-		{
 			MemoryRecovery.getInstance().gcObj(flowerFlvSwf,true);
 		}
 	}
