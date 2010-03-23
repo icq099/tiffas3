@@ -18,6 +18,7 @@ package lxfa.No4.view
 		//初始化播放器
 		private function initFLVPlayer():void
 		{
+			MainSystem.getInstance().isBusy=true;
 			flvPlayer=new FLVPlayer("video/no4/no4.flv",900,480,false);
 			flvPlayer.y=70;
 			this.addChild(flvPlayer);
@@ -26,6 +27,7 @@ package lxfa.No4.view
 		}
 		private function flvPlayer_NetStatusHandler(e:NetStatusEvent):void
 		{
+			MainSystem.getInstance().isBusy=false;
 			if(!MainSystem.getInstance().is360Ready)
 			{
 				MainSystem.getInstance().enable360System();

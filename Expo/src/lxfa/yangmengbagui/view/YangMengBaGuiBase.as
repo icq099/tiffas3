@@ -28,9 +28,6 @@ package lxfa.yangmengbagui.view
 		public function YangMengBaGuiBase()
 		{
 			MainSystem.getInstance().stopRender();
-			//CollisionManager.getInstance().removeAllCollision();
-			CollisionManager.getInstance().removeCollision("fz_gx");
-			CollisionManager.getInstance().removeCollision("fanZhuWindow");
 			showYangMengBaGui(false);
 			MainSystem.getInstance().isBusy=true;
 		}

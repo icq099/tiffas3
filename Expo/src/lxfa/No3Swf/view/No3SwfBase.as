@@ -30,14 +30,20 @@ package lxfa.No3Swf.view
 		{
 			MainSystem.getInstance().isBusy=false;
 			this.addChild(flowerFlvSwf);
+            MainSystem.getInstance().showPluginById("MainMenuBottomModule");
+			MainSystem.getInstance().showPluginById("MainMenuTopModule");
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 			MainSystem.getInstance().addAutoClose(dispose,[]);
 			MainSystem.getInstance().removePluginById("No3Module");
 		}
 		private function onClick(e:MouseEvent):void
 		{
-			MainSystem.getInstance().showPluginById("No4Module");
-			MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,No4ModuleLoaded);
+			if(!MainSystem.getInstance().isBusy)
+			{
+				flowerFlvSwf.enabled=false;
+				MainSystem.getInstance().showPluginById("No4Module");
+				MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,No4ModuleLoaded);
+			}
 		}
 		private function No4ModuleLoaded(e:MainSystemEvent):void
 		{

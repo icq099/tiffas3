@@ -1,5 +1,7 @@
 package lxfa.view.player
 {
+	import communication.MainSystem;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -123,10 +125,12 @@ package lxfa.view.player
 		//关闭按钮的点击事件
 		private function on_close_click(e:MouseEvent):void
 		{
-			close.mouseEnabled=false;
-			netStream.pause();
-			this.dispatchEvent(new Event(Event.CLOSE));
-			MemoryRecovery.getInstance().gcFun(close,MouseEvent.CLICK,on_close_click);
+			if(!MainSystem.getInstance().isBusy)
+			{
+				netStream.pause();
+				this.dispatchEvent(new Event(Event.CLOSE));
+				MemoryRecovery.getInstance().gcFun(close,MouseEvent.CLICK,on_close_click);
+			}
 		}
 		public function dispose():void
 		{

@@ -39,7 +39,6 @@
 
 		private function initMinZuBaiMeiModel():void
 		{
-			MainSystem.getInstance().isBusy=true;
 			yangMengBaGuiModel=new YangMengBaGuiModel();
 			yangMengBaGuiModel.addEventListener(Event.COMPLETE,onModelComplete);
 			rubbishArray.push(yangMengBaGuiModel);
@@ -51,7 +50,6 @@
 			init3DEngine();
 			init3DObject();
 			initObject();	
-			MainSystem.getInstance().isBusy=false;	
 		}
 		private function init3DEngine():void{
 			this.x=200;
