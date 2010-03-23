@@ -235,7 +235,7 @@ package mediators
 			for(var i:int=0;i<xml_animate.length();i++){
 				
 				cache=xml_animate[i].@cache==1?true:false;				
-				var plane:Plane=viewer.addAminate(xml_animate[i].@url,{x:xml_animate[i].@x,y:xml_animate[i].@y,z:xml_animate[i].@z,rotationX:xml_animate[i].@rotationX,rotationY:xml_animate[i].@rotationY,rotationZ:xml_animate[i].@rotationZ,width:xml_animate[i].@width,height:xml_animate[i].@height,segmentsW:xml_animate[i].@segmentsW,segmentsH:xml_animate[i].@segmentsH,offset:xml_animate[i].@offset,angle:xml_animate[i].@angle,force:xml_animate[i].@force,onClick:xml_animate[i].@onClick,visible:xml_animate[i].@visible,tip:xml_animate[i].@tip,scaleX:xml_animate[i].@scaleX,scaleY:xml_animate[i].@scaleY,movement:xml_animate[i].@movement,speed:xml_animate[i].@speed,maxHeight:xml_animate[i].@maxHeight,minHeight:xml_animate[i].@minHeight,filter:xml_animate[i].@filter},cache);
+				var plane:Plane=viewer.addAminate(xml_animate[i].@url,{x:xml_animate[i].@x,y:xml_animate[i].@y,z:xml_animate[i].@z,rotationX:xml_animate[i].@rotationX,rotationY:xml_animate[i].@rotationY,rotationZ:xml_animate[i].@rotationZ,width:xml_animate[i].@width,height:xml_animate[i].@height,segmentsW:xml_animate[i].@segmentsW,segmentsH:xml_animate[i].@segmentsH,offset:xml_animate[i].@offset,angle:xml_animate[i].@angle,force:xml_animate[i].@force,onClick:xml_animate[i].@onClick,visible:xml_animate[i].@visible,tip:xml_animate[i].@tip,scaleX:xml_animate[i].@scaleX,scaleY:xml_animate[i].@scaleY,movement:xml_animate[i].@movement,speed:xml_animate[i].@speed,maxHeight:xml_animate[i].@maxHeight,minHeight:xml_animate[i].@minHeight,filter:xml_animate[i].@filter,sign:xml_animate[i].@sign},cache);
 			}
 		}
 		private function updataHotPoints(position:int):void{
