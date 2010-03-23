@@ -10,14 +10,18 @@ package lxfa.yangmengbagui.view
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.NetStatusEvent;
+	import flash.events.ProgressEvent;
 	
-	import lxfa.customMusic.CustomMusicManager;
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
 	
+	import mx.core.Application;
 	import mx.core.UIComponent;
+	
+	import yzhkof.Toolyzhkof;
+	import yzhkof.loadings.LoadingWaveRota;
 	
 	public class YangMengBaGuiBase extends UIComponent
 	{
@@ -25,10 +29,10 @@ package lxfa.yangmengbagui.view
 		private var LED:FLVPlayer;
 		private var view3d:MiniCarouselReflectionView=new MiniCarouselReflectionView();
 		private var flvPlayer:FLVPlayer;
-		public function YangMengBaGuiBase()
+		public function YangMengBaGuiBase(withMovie:Boolean=false)
 		{
 			MainSystem.getInstance().stopRender();
-			showYangMengBaGui(false);
+			showYangMengBaGui(withMovie);
 			MainSystem.getInstance().isBusy=true;
 		}
 		public function showYangMengBaGui(withMovie:Boolean):void
@@ -63,14 +67,27 @@ package lxfa.yangmengbagui.view
 		}
 		//背景SWF
 		private var flowerFlvSwf:SwfPlayer;
+		private var loading_mc:LoadingWaveRota;//用于显示进度
 		public function initSwf():void
 		{
+			initLoadingMc();
 			flowerFlvSwf=new SwfPlayer("swf/yangmengbagui.swf",900,480);
 			flowerFlvSwf.addEventListener(Event.COMPLETE,onComplete);
+			flowerFlvSwf.addEventListener(ProgressEvent.PROGRESS,on_progress);
 			flowerFlvSwf.y=70;
+		}
+		private function initLoadingMc():void
+		{
+			loading_mc=new LoadingWaveRota();
+			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));//添加到Application，这样才可以覆盖插件
+		}
+		private function on_progress(e:ProgressEvent):void
+		{
+			loading_mc.updateByProgressEvent(e);//更新显示的进度
 		}
 		private function onComplete(e:Event):void
 		{
+			MemoryRecovery.getInstance().gcObj(loading_mc);//下载完毕的时候回收LOADING_MC
 			this.addChild(flowerFlvSwf);
 			if(view3d!=null)
 			{
@@ -134,7 +151,9 @@ package lxfa.yangmengbagui.view
 		}
 		private function close():void
 		{
-			Tweener.addTween(this,{alpha:0,time:1.5,onComplete:dispose});
+			Tweener.addTween(this,{alpha:0,time:1.5,onComplete:function():void{
+			    MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["YangMengBaGuiModule"]);
+			}});
 		}
 		//清除内存
 		public function dispose():void
