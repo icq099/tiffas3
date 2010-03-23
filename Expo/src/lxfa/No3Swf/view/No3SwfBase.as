@@ -75,7 +75,7 @@ package lxfa.No3Swf.view
 		public function dispose():void
 		{
 			flowerFlvSwf.enabled=false;
-			Tweener.addTween(flowerFlvSwf,{alpha:0,time:3,function():void{
+			Tweener.addTween(flowerFlvSwf,{alpha:0,time:3,onComplete:function():void{
 			    MemoryRecovery.getInstance().gcObj(flowerFlvSwf,true);
 			}});
 		}
