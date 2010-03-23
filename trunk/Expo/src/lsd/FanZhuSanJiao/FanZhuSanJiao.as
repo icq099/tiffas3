@@ -2,37 +2,34 @@ package lsd.FanZhuSanJiao
 {
 	import communication.Event.PluginEvent;
 	import communication.MainSystem;
-	
+	import yzhkof.loadings.LoadingWaveRota;
+	import mx.core.Application;
+	import flash.events.ProgressEvent;
+	import yzhkof.Toolyzhkof;
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
-	
+
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
-	import lxfa.utils.LoadingMcManager;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
-	
+
 	import mx.core.UIComponent;
 
 	public class FanZhuSanJiao extends UIComponent
 	{
 		private var swfPlayer:SwfPlayer;
 		private var flvPlayer:FLVPlayer;
+		private var loading_mc:LoadingWaveRota;
 
 		public function FanZhuSanJiao()
 		{
-//			MainSystem.getInstance().addEventListener(PluginEvent.UPDATE,on_plugin_update);//场景切换时，系统抛出的插件更新事件
 			MainSystem.getInstance().isBusy=true;
 			initPlayer();
-            
+
 		}
 
-		/* private function on_plugin_update(e:PluginEvent):void
-		   {
-		   MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
-		   MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,on_plugin_update);
-		 } */
 		private function initPlayer():void
 		{
 
@@ -53,24 +50,26 @@ package lsd.FanZhuSanJiao
 
 		private function dispose_fz():void
 		{
-            if(MainSystem.getInstance().isBusy==true)
+			if (MainSystem.getInstance().isBusy == true)
 			{
-				MainSystem.getInstance().isBusy==false
+				MainSystem.getInstance().isBusy == false
 				dispose();
 				MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");
 				removeAreas();
-				MainSystem.getInstance().isBusy==true
-			}else{
-				
+				MainSystem.getInstance().isBusy == true
+			}
+			else
+			{
+
 				MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");
 				removeAreas();
 			}
-            
+
 		}
 
 		private function on_Complete(e:NetStatusEvent):void
 		{
-            
+
 			init();
 		}
 
@@ -108,34 +107,47 @@ package lsd.FanZhuSanJiao
 
 		private function on_fz_gx_complete(e:Event):void //FLV已经加载到场景里面
 		{
-			
+
 			MainSystem.getInstance().addAutoClose(flvRemove, []);
 		}
 
 		private function init():void
 		{
-			LoadingMcManager.getInstance().loadingMcInit();
 			var guangXiArea:Array=[[[272, 299], [394, 377]], [[297, 377], [347, 410]]];
 			var fanZhuWindowArea:Array=[[[680, 153], [892, 192]]]
 			swfPlayer=new SwfPlayer("swf/fanZhuSanJiao.swf", 980, 490);
 			CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "fz_gx");
 			CollisionManager.getInstance().addCollision(fanZhuWindowArea, fanZhuWindowClick, "fanZhuWindow");
-			this.addChild(swfPlayer);
-			LoadingMcManager.getInstance().loadingMcListener(swfPlayer);
+			initLoadingMc();
+			swfPlayer.addEventListener(ProgressEvent.PROGRESS, on_flv_progress);
 			swfPlayer.addEventListener(Event.COMPLETE, on_swf_complete);
 			CollisionManager.getInstance().showCollision();
+		}
 
+		private function initLoadingMc():void
+		{
+			loading_mc=new LoadingWaveRota();
+			loading_mc.x=450;
+			loading_mc.y=200;
+			addChild(Toolyzhkof.mcToUI(loading_mc));
+		}
+
+		private function on_flv_progress(e:ProgressEvent):void //FLV加载完毕
+		{
+			loading_mc.updateByProgressEvent(e);
 		}
 
 		private function on_swf_complete(e:Event):void
 		{
+			MemoryRecovery.getInstance().gcFun(swfPlayer, ProgressEvent.PROGRESS, on_flv_progress);
+			MemoryRecovery.getInstance().gcObj(loading_mc);
+			this.addChild(swfPlayer);
 			flvRemove();
 			MainSystem.getInstance().isBusy=false;
 		}
 
 		private function removeAreas():void
 		{
-             //CollisionManager.getInstance().removeAllCollision();
 			CollisionManager.getInstance().removeCollision("fz_gx");
 			CollisionManager.getInstance().removeCollision("fanZhuWindow");
 		}
@@ -148,12 +160,11 @@ package lsd.FanZhuSanJiao
 
 		public function dispose():void
 		{
-            LoadingMcManager.getInstance().dispose();
 			MemoryRecovery.getInstance().gcFun(swfPlayer, Event.COMPLETE, on_swf_complete);
 			MemoryRecovery.getInstance().gcObj(swfPlayer, true);
 			removeAreas();
-			
-			
+
+
 		}
 	}
 }
