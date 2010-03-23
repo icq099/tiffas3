@@ -50,10 +50,8 @@ package lxfa.No3.view
 		}
 		public function step4():void
 		{
-            MainSystem.getInstance().showPluginById("MainMenuBottomModule");
-			MainSystem.getInstance().showPluginById("MainMenuTopModule");
             MainSystem.getInstance().showPluginById("No3SwfModule");
-//            MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
+            MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 		}
 		public function dispose():void
 		{

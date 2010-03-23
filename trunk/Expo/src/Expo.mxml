@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application clipContent="false" frameRate="30" width="900" height="600" creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundColor="#FFFFFF" backgroundGradientColors="[#FFFFFF, #FFFFFF]" viewSourceURL="srcview/index.html">
+<mx:Application clipContent="false" frameRate="30" width="900" height="600" creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundColor="#FFFFFF" backgroundGradientColors="[#FFFFFF, #FFFFFF]">
 	
 	<mx:Script>
 		<![CDATA[

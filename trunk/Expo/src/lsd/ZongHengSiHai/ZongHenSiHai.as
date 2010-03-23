@@ -32,7 +32,6 @@ package lsd.ZongHengSiHai
 			if(MainSystem.getInstance().isBusy==true)
 			{
 				MainSystem.getInstance().isBusy==false
-				dispose();
 				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
 				removeAreas();
 				MainSystem.getInstance().isBusy==true
@@ -86,6 +85,7 @@ package lsd.ZongHengSiHai
         private function init():void{
 			
 			swfPlayer=new SwfPlayer("swf/zongHengSiHai.swf",980,480);
+			swfPlayer.y=0;
 			 var daMeiGongHeArea:Array=[[[43,220],[157,301]]];
 			 var dongMengArea:Array=[[[163,325],[282,395]]];
 			 var fanZhuArea:Array=[[[580,296],[689,360]]];
