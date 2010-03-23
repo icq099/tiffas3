@@ -2,7 +2,6 @@ package lxfa.No3Swf.view
 {
 	import caurina.transitions.Tweener;
 	
-	import communication.Event.MainSystemEvent;
 	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
@@ -68,16 +67,15 @@ package lxfa.No3Swf.view
 			{
 				flowerFlvSwf.enabled=false;
 				MainSystem.getInstance().showPluginById("No4Module");
-				MainSystem.getInstance().addEventListener(MainSystemEvent.ON_PLUGIN_READY,No4ModuleLoaded);
+				MainSystem.getInstance().addAutoClose(dispose,[]);
 			}
-		}
-		private function No4ModuleLoaded(e:MainSystemEvent):void
-		{
-			MainSystem.getInstance().removePluginById("No3SwfModule");
 		}
 		public function dispose():void
 		{
-			MemoryRecovery.getInstance().gcObj(flowerFlvSwf,true);
+			flowerFlvSwf.enabled=false;
+			Tweener.addTween(flowerFlvSwf,{alpha:0,time:3,onComplete:function():void{
+			     MemoryRecovery.getInstance().gcObj(flowerFlvSwf,true);
+			}});
 		}
 	}
 }
