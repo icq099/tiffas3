@@ -41,16 +41,7 @@ package lsd.AnimatePlayer.control
 		private function on_update(e:PluginEvent):void
 		{
 			MainSystem.getInstance().removeEventListener(PluginEvent.UPDATE,on_update);
-			if(MainSystem.getInstance().isBusy==true)
-			{
-				MainSystem.getInstance().isBusy=false;
-				MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
-				MainSystem.getInstance().isBusy=true;
-			}else
-			{
-				MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
-			}
-			
+			MainSystem.getInstance().runAPIDirectDirectly("removeAnimate",[]);
 		}
 		private function on_xml_loaded(e:Event):void
 		{

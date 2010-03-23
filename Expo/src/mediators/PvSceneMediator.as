@@ -12,6 +12,8 @@ package mediators
 	
 	import gs.TweenLite;
 	
+	import lxfa.customMusic.CustomMusicManager;
+	
 	import org.papervision3d.events.InteractiveScene3DEvent;
 	import org.papervision3d.objects.primitives.Plane;
 	import org.puremvc.as3.interfaces.IMediator;
@@ -152,7 +154,7 @@ package mediators
 				updataHotPoints(goto);
 				updataAnimates(goto);
 				updataControler(goto);
-				
+				updateCustomMusic(goto);
 				viewer.draw();
 				
 				facade.sendNotification(PvSceneMediator.PICTURE_LOAD_COMPLETE,goto);
@@ -184,6 +186,14 @@ package mediators
 			
 			}
 		
+		}
+		private function updateCustomMusic(position:int):void
+		{
+			var url:String=xml.Travel.Scene[position].@customMusic;
+			if(url!=null && url!="")
+			{
+//				CustomMusicManager.getInstance().loadUrl(url,true);
+			}
 		}
 		private function updataArrows(position:int):void{
 			

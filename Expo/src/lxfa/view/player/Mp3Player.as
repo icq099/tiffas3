@@ -10,6 +10,7 @@ package lxfa.view.player
 	import flash.media.SoundChannel;
 	import flash.net.URLRequest;
 	
+	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.event.Mp3PlayerEvent;
 	
 	public class Mp3Player extends Sprite
@@ -19,7 +20,7 @@ package lxfa.view.player
 		private var musicUrl:String;
 		private var isPlaying:Boolean=true;
 		private var loop:Boolean;
-		public function Mp3Player(musicUrl:String,loop:Boolean=false)
+		public function Mp3Player(musicUrl:String=null,loop:Boolean=false)
 		{
 			this.musicUrl=musicUrl;
 			this.loop=loop;
@@ -32,7 +33,7 @@ package lxfa.view.player
 			sound.addEventListener(Event.COMPLETE,onComplete);
 			if(loop)
 			{
-				soundChannel=sound.play(0,1000);
+				soundChannel=sound.play(0,int.MAX_VALUE);
 			}else
 			{
 				soundChannel=sound.play();
@@ -43,7 +44,7 @@ package lxfa.view.player
 		private function onSOUND_COMPLETE(e:Event):void
 		{
 			this.dispatchEvent(new Mp3PlayerEvent(Mp3PlayerEvent.COMPLETE));
-			soundChannel.removeEventListener(Event.SOUND_COMPLETE,onSOUND_COMPLETE);
+			MemoryRecovery.getInstance().gcFun(soundChannel,Event.SOUND_COMPLETE,onSOUND_COMPLETE);
 		}
 		private function onComplete(e:Event):void
 		{
@@ -72,6 +73,7 @@ package lxfa.view.player
 		}
 		public function close():void
 		{
+			sound=new Sound();
 			soundChannel.stop();
 			try
 			{
