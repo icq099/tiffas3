@@ -1,17 +1,19 @@
 ﻿package view
 {
+	import communication.MainSystem;
+	
 	import flash.display.*;
 	import flash.events.*;
 	import flash.filters.GlowFilter;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
-
+	
 	import gs.TweenLite;
-
+	
 	import lxfa.utils.movement.UpDownMovement;
-
+	
 	import mx.core.Application;
-
+	
 	import org.papervision3d.cameras.FreeCamera3D;
 	import org.papervision3d.core.proto.MaterialObject3D;
 	import org.papervision3d.events.InteractiveScene3DEvent;
@@ -26,9 +28,9 @@
 	import org.papervision3d.view.Viewport3D;
 	import org.papervision3d.view.layer.ViewportLayer;
 	import org.papervision3d.view.stats.StatsView;
-
+	
 	import view.struct.BendPlane;
-
+	
 	import yzhkof.MovieCacheMaterial;
 	import yzhkof.MyGC;
 	import yzhkof.ToolBitmapData;
@@ -343,6 +345,7 @@
 			var minHeight:Number=init_obj["minHeight"] ? init_obj["minHeight"] : 0;
 			var speed:Number=init_obj["speed"] ? init_obj["speed"] : 0;
 			var filter:int=init_obj["filter"] ? init_obj["filter"] : 0;
+			var sign:int=init_obj["sign"] ? init_obj["sign"] : 0;
 			var plane_animate:BendPlane=new BendPlane(new ColorMaterial(0xffffff, 0), width, height, segmentsW, segmentsH, init_obj);
 			plane_animate.offset=init_obj["offset"] ? init_obj["offset"] : 0;
 			plane_animate.angle=init_obj["angle"] ? init_obj["angle"] : 0;
@@ -363,7 +366,13 @@
 			{
 				plane_animate.scaleY=Number(init_obj["scaleY"]);
 			}
-			plane_animate.onClick=init_obj["onClick"];
+			plane_animate.addEventListener(InteractiveScene3DEvent.OBJECT_PRESS,function(e:InteractiveScene3DEvent):void{
+				MainSystem.getInstance().runScript(init_obj["onClick"]);
+				if(sign==1)
+				{
+					plane_animate.alpha=0.5;
+				}
+			});
 			//添加运动
 			if (movement == 1)
 			{
