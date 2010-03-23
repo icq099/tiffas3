@@ -39,7 +39,6 @@
 </applications>
 <modules>
 <module application="src/Expo.mxml" destPath="lxfa/No3Swf/No3SwfModule.swf" optimize="true" sourcePath="src/lxfa/No3Swf/No3SwfModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lxfa/animation/AnimationModule.swf" optimize="true" sourcePath="src/lxfa/animation/AnimationModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/flvModule/FlvModule.swf" optimize="true" sourcePath="src/lxfa/flvModule/FlvModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/gehaiqingyun/GeHaiQingYunModule.swf" optimize="true" sourcePath="src/lxfa/gehaiqingyun/GeHaiQingYunModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/AnimatePlayer/AnimateModule.swf" optimize="true" sourcePath="src/lsd/AnimatePlayer/AnimateModule.mxml"/>
