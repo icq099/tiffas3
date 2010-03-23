@@ -3,16 +3,20 @@ package lxfa.normalWindow
 	/****************************
 	 * 根据	ID参建标准窗
 	 * */
+	import communication.MainSystem;
+	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
-	import lxfa.shanshuishihua.model.ShanShuiShiHuaModel;
+	import lxfa.normalWindow.model.NormalWindowModel;
 	
 	import mx.core.UIComponent;
 	import mx.managers.PopUpManager;
+	import mx.modules.ModuleLoader;
 	
 	public class NormalWindowFactory extends UIComponent
 	{
-		private var itemModel:ShanShuiShiHuaModel;
+		private var itemModel:NormalWindowModel;
 		private var ID:int;                        //Item的ID号
 		private var picture360Url:String;          //360图片路径
 		private var videoUrl:String;               //视频路径
@@ -21,6 +25,9 @@ package lxfa.normalWindow
 		private var videoName:String;              //视频的名字
 		private var pictureName:String;            //图片的名字
 		private var text:String;                   //文本
+		private var animateId:int;                 //桂娃的ID，-1就是没桂娃
+		private var animate:DisplayObject          //桂娃
+		private var animateParent:ModuleLoader;    //桂娃的父亲容器
 		private var normalWindow:NormalWindow;
 		public function NormalWindowFactory(ID:int)
 		{
@@ -30,7 +37,7 @@ package lxfa.normalWindow
 		//加载数据库
 		private function initItemModel():void
 		{
-			itemModel=new ShanShuiShiHuaModel();
+			itemModel=new NormalWindowModel();
 			itemModel.addEventListener(Event.COMPLETE,onComplete);
 		}
 		//数据库加载完毕
@@ -44,10 +51,25 @@ package lxfa.normalWindow
 			this.picture360Name=itemModel.getPicture360Name(ID);
 			this.pictureName=itemModel.getPictureName(ID);
 			this.videoName=itemModel.getVideoName(ID);
+			this.animateId=itemModel.getAnimateId(ID);
 			normalWindow=new NormalWindow(picture360Url,videoUrl,pictureUrls,text,picture360Name,videoName,pictureName);
 			this.addChild(normalWindow);
+			createAnimate(animateId);
 			normalWindow.addEventListener(Event.CLOSE,onnormalWindowClose);
 			this.dispatchEvent(e);
+		}
+		private function createAnimate(animateId:int):void
+		{
+			//显示桂娃
+			if(animateId!=-1)
+			{
+		        MainSystem.getInstance().runAPIDirect("addAnimate",[animateId]);
+		        animate=MainSystem.getInstance().getPlugin("AnimateModule");
+		        animateParent=ModuleLoader(animate.parent);
+		        animate.x=-20;
+		        animate.y=300;
+			    this.addChild(animate);
+			}
 		}
 		//标准窗关闭的时候
 		private function onnormalWindowClose(e:Event):void
@@ -55,7 +77,16 @@ package lxfa.normalWindow
 			this.dispatchEvent(new Event(Event.CLOSE));
 			normalWindow=null;
 			PopUpManager.removePopUp(this);
-//			MainSystem.getInstance().removePluginById("NormalWindowModule");
+			if(MainSystem.getInstance().isBusy==true)
+			{
+				MainSystem.getInstance().isBusy=false;
+				MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
+				MainSystem.getInstance().isBusy=true;
+			}else
+			{
+				MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
+			}
+			animateParent.addChild(animate);
 		}
 	}
 }

@@ -7,6 +7,8 @@ package lxfa.model
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
+	import mx.messaging.channels.StreamingHTTPChannel;
+	
 	public class ItemModel extends Sprite
 	{
 		private var xmlLoader:URLLoader;
@@ -91,6 +93,15 @@ package lxfa.model
 				return xmlData.Item[num+min].Video[0].@name;
 			}
 			return null;
+		}
+		//桂娃的ID
+		public function getAnimateId(ID:int):int{
+			var temp:String=xmlData.Item[ID+min].Animate[0];
+			if(temp==null || temp=="")
+			{
+				return -1;
+			}
+			return int(temp);
 		}
 		//获取标准窗的文本
 		public function getText(num:int):String

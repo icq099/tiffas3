@@ -1,5 +1,6 @@
 package lxfa.No4.view
 {
+	import communication.Event.PluginEvent;
 	import communication.Event.SceneChangeEvent;
 	import communication.MainSystem;
 	
@@ -7,6 +8,7 @@ package lxfa.No4.view
 	import flash.events.NetStatusEvent;
 	
 	import lxfa.view.player.FLVPlayer;
+	import lxfa.view.player.FLVPlayerEvent;
 	
 	public class No4Base extends Sprite
 	{
@@ -22,8 +24,15 @@ package lxfa.No4.view
 			flvPlayer=new FLVPlayer("video/no4/no4.flv",900,480,false);
 			flvPlayer.y=70;
 			this.addChild(flvPlayer);
-			flvPlayer.resume();
+			flvPlayer.addEventListener(FLVPlayerEvent.READY,on_flv_ready);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,flvPlayer_NetStatusHandler);
+		}
+		private function on_flv_ready(e:FLVPlayerEvent):void
+		{
+			flvPlayer.resume();
+			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
+			MainSystem.getInstance().isBusy=true;
 		}
 		private function flvPlayer_NetStatusHandler(e:NetStatusEvent):void
 		{

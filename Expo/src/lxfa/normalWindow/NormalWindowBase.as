@@ -28,16 +28,14 @@ package lxfa.normalWindow
 	            PopUpManager.centerPopUp(normalWindowFactory); 
 	            normalWindowFactory.x=33;
 	            normalWindowFactory.y=80;
-//	            MainSystem.getInstance().stopRender();
 	            normalWindowFactory.addEventListener(Event.CLOSE,onnormalWindowFactoryClose);
-//	            MainSystem.getInstance().addEventListener(PluginEvent.UPDATE,on_plugin_update);
 			}
 		}
 		private function onnormalWindowFactoryClose(e:Event):void
 		{
 			this.dispatchEvent(e);
 			isPoped=false;
-//			MainSystem.getInstance().startRender();
+			MainSystem.getInstance().startRender();
 		}
 	}
 }
