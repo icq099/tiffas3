@@ -176,7 +176,7 @@ package lsd.ZongHengSiHai
 			
 		}
 		public function dispose():void{
-			Tweener.addTween(this,{alpha:0,time:1,onComplete:close});
+			Tweener.addTween(this,{alpha:0,time:2,onComplete:close});
         }
          private function close():void
          {  
