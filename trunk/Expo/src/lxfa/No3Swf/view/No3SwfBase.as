@@ -74,7 +74,10 @@ package lxfa.No3Swf.view
 		}
 		public function dispose():void
 		{
-			MemoryRecovery.getInstance().gcObj(flowerFlvSwf,true);
+			flowerFlvSwf.enabled=false;
+			Tweener.addTween(flowerFlvSwf,{alpha:0,time:3,function():void{
+			    MemoryRecovery.getInstance().gcObj(flowerFlvSwf,true);
+			}});
 		}
 	}
 }
