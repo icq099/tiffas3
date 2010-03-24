@@ -13,6 +13,7 @@ package lxfa.yangmengbagui.view
 	import flash.events.NetStatusEvent;
 	import flash.events.ProgressEvent;
 	
+	import lxfa.mainMenuBottom.MainMenuStatic;
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
@@ -32,7 +33,7 @@ package lxfa.yangmengbagui.view
 		private var flvPlayer:FLVPlayer;
 		public function YangMengBaGuiBase(withMovie:Boolean=false)
 		{
-			MainSystem.getInstance().currentScene=6;
+			MainMenuStatic.currentSceneId=6;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
 			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.INIT,100));
 			MainSystem.getInstance().stopRender();
