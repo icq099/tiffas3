@@ -1,10 +1,14 @@
 package lsd.SlidingPuzzle
 {
+	import communication.MainSystem;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import gs.TweenLite;
+	
+	import lxfa.utils.MemoryRecovery;
 	
 	public class SlidingPuzzleGame extends Sprite
 	{
@@ -19,7 +23,9 @@ package lsd.SlidingPuzzle
 		}
 		
 		private function init():void{
-			
+			MainSystem.getInstance().dispatcherPluginUpdate();
+			MainSystem.getInstance().dispatcherSceneChangeInit(7);
+			MainSystem.getInstance().isBusy=true;
 			slidingPuzzle=new SlidingPuzzle();
 			puzzleGameClose=new PuzzleGameClose();
 			addChild(slidingPuzzle);
@@ -27,8 +33,21 @@ package lsd.SlidingPuzzle
 			puzzleGameClose.x=800;
 			slidingPuzzle.loadBitmap(url[i]);
 			slidingPuzzle.addEventListener(SlidingEvent.PUZZLE_CHANG,next_fun);
+			slidingPuzzle.addEventListener(Event.COMPLETE,on_loaded);
 			puzzleGameClose.close_btn.addEventListener(MouseEvent.CLICK,end_fun);
 			this.addEventListener(SlidingEvent.PUZZLE_END,end_fun);
+		}
+		private function on_loaded(e:Event):void
+		{
+			MainSystem.getInstance().dispatcherSceneChangeComplete(7);
+			MainSystem.getInstance().addSceneChangeCompleteHandler(function():void{
+				//删掉自己
+			},[]);
+			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
+//				/不能玩游戏
+			},[]);
+			MemoryRecovery.getInstance().gcFun(slidingPuzzle,Event.COMPLETE,on_loaded);
+			MainSystem.getInstance().isBusy=false;
 		}
 		private function next_fun(e:SlidingEvent):void{
 			

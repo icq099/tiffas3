@@ -66,6 +66,7 @@ package lsd.SlidingPuzzle {
 			
 			// shuffle them
 			shufflePuzzlePieces();
+			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		// cut bitmap into pieces
