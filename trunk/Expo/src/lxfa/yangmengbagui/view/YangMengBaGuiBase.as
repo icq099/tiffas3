@@ -3,6 +3,7 @@ package lxfa.yangmengbagui.view
 	import caurina.transitions.Tweener;
 	
 	import communication.Event.PluginEvent;
+	import communication.Event.SceneChangeEvent;
 	import communication.Event.ScriptAPIAddEvent;
 	import communication.MainSystem;
 	
@@ -49,21 +50,19 @@ package lxfa.yangmengbagui.view
 		private function initPlayer():void
 		{
 			flvPlayer=new FLVPlayer("movie/zonghengsihai-yangmengbagui.flv",900,480,false);
-			addChild(flvPlayer);
-			flvPlayer.addEventListener(FLVPlayerEvent.READY,on_flv_complete);
-	        flvPlayer.resume();
 	        flvPlayer.y=70;
-			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_complete);
+			flvPlayer.addEventListener(FLVPlayerEvent.COMPLETE,on_download_complete);
 		}
-		private function on_flv_complete(e:FLVPlayerEvent):void
+		private function on_download_complete(e:FLVPlayerEvent):void
 		{
+			if(flvPlayer!=null)
+			{
+				flvPlayer.resume();
+				addChild(flvPlayer);
+				flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_net_state_change);
+			}
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
-			MainSystem.getInstance().addSceneChangedHandler(close,[]);
-		}
-		private function on_complete(e:Event):void
-		{
-			MainSystem.getInstance().isBusy=false;
-			initSwf();
+			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGE,100));
 		}
 		//背景SWF
 		private var flowerFlvSwf:SwfPlayer;
@@ -91,12 +90,16 @@ package lxfa.yangmengbagui.view
 		{
 			MemoryRecovery.getInstance().gcObj(loading_mc);//下载完毕的时候回收LOADING_MC
 			this.addChild(flowerFlvSwf);
+			initLED();
 			if(view3d!=null)
 			{
 				this.addChild(view3d);
 			}
+			Tweener.addTween(flvPlayer,{alpha:0,time:3,onComplete:function():void{
+			   MemoryRecovery.getInstance().gcObj(flvPlayer,true);
+			}});
 			initYangMengBaGuiSwc();
-			initLED();
+			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGED,100));
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
 			MainSystem.getInstance().addSceneChangedHandler(close,[]);
@@ -105,6 +108,11 @@ package lxfa.yangmengbagui.view
 			    flowerFlvSwf.enabled=false;
 			    view3d.dispose();
 			},[]);
+		}
+		private function on_net_state_change(e:NetStatusEvent):void
+		{
+			initSwf();
+			MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS,on_net_state_change);
 		}
 		//添加杨梦八桂的建筑
 		private function initYangMengBaGuiSwc():void
@@ -166,8 +174,7 @@ package lxfa.yangmengbagui.view
 		//清除内存
 		public function dispose():void
 		{
-			MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.READY,on_flv_complete);
-			MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS,on_complete);
+			MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.COMPLETE,on_download_complete);
 			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,Event.COMPLETE,onComplete);
 			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,ProgressEvent.PROGRESS,on_progress);
 			MemoryRecovery.getInstance().gcFun(LED,MouseEvent.CLICK,on_LED_Click);

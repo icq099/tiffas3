@@ -12,6 +12,7 @@
 			private var yangMengBaGuiBase:YangMengBaGuiBase
 			private function init():void
 			{   
+				YangMengBaGuiStatic.currentName=this.className;
 				yangMengBaGuiBase=new YangMengBaGuiBase(false);
 				addChild(yangMengBaGuiBase);
 			}
