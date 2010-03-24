@@ -60,7 +60,7 @@ package lxfa.yangmengbagui.view
 			if(flvPlayer!=null)
 			{
 				flvPlayer.resume();
-				addChild(flvPlayer);
+				Application.application.addChild(Toolyzhkof.mcToUI(flvPlayer));
 				flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_net_state_change);
 			}
 		}

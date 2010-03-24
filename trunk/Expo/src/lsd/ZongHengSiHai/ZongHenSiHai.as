@@ -56,7 +56,6 @@ package lsd.ZongHengSiHai
 			flvPlayer.addEventListener(FLVPlayerEvent.COMPLETE,on_gx_complete);
 	        flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
-			
 		}
 		private function on_gx_complete(e:FLVPlayerEvent):void
 		{   
@@ -92,11 +91,6 @@ package lsd.ZongHengSiHai
 			unrealCompassSwc.y=340;
 			unrealCompassSwc.buttonMode=true;
 			unrealCompassSwc.addEventListener(MouseEvent.CLICK,on_unrealCompassSwc_click);
-		}
-		private function on_unrealCompassSwc_click(e:MouseEvent):void
-		{
-			MainSystem.getInstance().showPluginById("YangMengBaGuiWithMovieModule");
-			MemoryRecovery.getInstance().gcFun(unrealCompassSwc,MouseEvent.CLICK,on_unrealCompassSwc_click);
 		}
 		private function addAreas():void{
 			
@@ -154,20 +148,33 @@ package lsd.ZongHengSiHai
 				}
 			},[]);
 		}
-		
-       private function daMeiGongHeClick():void
+        private function daMeiGongHeClick():void
 		{
-				trace("daMeiGongHe");
 			    removeAreas();
 			    MainSystem.getInstance().isBusy=true;
-			    flvPlayer=new FLVPlayer("movie/gx-mgh1.flv", 900, 480, false);
+			    flvPlayer=new FLVPlayer("movie/zonghengsihai-yangmengbagui.flv", 900, 480, false);
+				addChild(flvPlayer);
+				flvPlayer.resume();
+				flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, gx_ymbg_Complete);
+		}
+		private function gx_ymbg_Complete(e:MouseEvent):void
+		{
+			gx_to_other_complete("YangMengBaGuiModule");
+		}
+       private function on_unrealCompassSwc_click(e:MouseEvent):void
+		{
+				trace("杨梦八桂");
+			    removeAreas();
+			    MainSystem.getInstance().isBusy=true;
+			    flvPlayer=new FLVPlayer("movie/zonghengsihai-yangmengbagui.flv", 900, 480, false);
 				addChild(flvPlayer);
 				flvPlayer.resume();
 				flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, gx_dmg_Complete);
 		}
 		private function gx_dmg_Complete(e:NetStatusEvent):void
 		{  
-		    gx_to_other_complete("DaMeiGongHeModule");
+			MemoryRecovery.getInstance().gcFun(unrealCompassSwc,MouseEvent.CLICK,on_unrealCompassSwc_click);
+		    gx_to_other_complete("YangMengBaGuiModule");
 		}
 		
         private function dongMengClick():void
