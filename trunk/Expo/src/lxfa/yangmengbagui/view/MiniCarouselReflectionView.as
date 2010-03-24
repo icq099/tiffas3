@@ -159,8 +159,10 @@
 		public function dispose():void
 		{
 			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
-			basicView.renderer.destroy();
-			basicView.viewport.destroy();
+			if(basicView.renderer!=null)
+			{
+				basicView.renderer.destroy();
+			}
 			var i:int=0;
 			for(;i<rubbishArray.length;i++)
 			{

@@ -32,6 +32,8 @@ package lxfa.yangmengbagui.view
 		private var flvPlayer:FLVPlayer;
 		public function YangMengBaGuiBase(withMovie:Boolean=false)
 		{
+			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
+			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.INIT,100));
 			MainSystem.getInstance().stopRender();
 			showYangMengBaGui(withMovie);
 			MainSystem.getInstance().isBusy=true;
@@ -61,8 +63,6 @@ package lxfa.yangmengbagui.view
 				addChild(flvPlayer);
 				flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_net_state_change);
 			}
-			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
-			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGE,100));
 		}
 		//背景SWF
 		private var flowerFlvSwf:SwfPlayer;
@@ -99,11 +99,10 @@ package lxfa.yangmengbagui.view
 			   MemoryRecovery.getInstance().gcObj(flvPlayer,true);
 			}});
 			initYangMengBaGuiSwc();
-			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGED,100));
 			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
-			MainSystem.getInstance().addSceneChangedHandler(close,[]);
-			MainSystem.getInstance().addSceneChangeHandler(function():void{
+			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.COMPLETE,100));
+			MainSystem.getInstance().addSceneChangeCompleteHandler(close,[]);
+			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
 			    LED.dispose();
 			    flowerFlvSwf.enabled=false;
 			    view3d.dispose();

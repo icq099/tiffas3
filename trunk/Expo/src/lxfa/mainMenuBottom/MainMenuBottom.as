@@ -87,6 +87,7 @@ package lxfa.mainMenuBottom
 			if(currentSceneId!=5 && !MainSystem.getInstance().isBusy)
 			{
 				currentSceneId=5;
+				MainSystem.getInstance().currentScene=5;
 				MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
 			}
 		}
@@ -95,7 +96,8 @@ package lxfa.mainMenuBottom
 			if(currentSceneId!=6 &&  !MainSystem.getInstance().isBusy)
 			{
 				currentSceneId=6;
-				MainSystem.getInstance().showPluginById("YangMengBaGuiWithMovieModule");
+				MainSystem.getInstance().currentScene=6;
+				MainSystem.getInstance().showPluginById("YangMengBaGuiModule");
 			}
 		}
 		//下面的没BUG，可以不用看
