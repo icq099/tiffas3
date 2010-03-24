@@ -4,10 +4,9 @@ package lxfa.mainMenuTop
 	
 	import communication.MainSystem;
 	
-	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
-	public class MainMenuTop extends Sprite
+	public class MainMenuTop extends MainMenu
 	{
 		private var top:MainMenuTopSwc;
 		private var hasBackGround:Boolean=true;
