@@ -5,7 +5,7 @@
 		    import yzhkof.Toolyzhkof;
 			private function init():void
 			{
-				addChild(Toolyzhkof.mcToUI(new MainMenuBottom()));
+				addChild(new MainMenuBottom());
 			}
 			public function dispose():void
 			{

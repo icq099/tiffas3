@@ -4,13 +4,14 @@ package lxfa.mainMenuBottom
 	
 	import communication.MainSystem;
 	
-	import flash.display.Sprite;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	
+	import lxfa.mainMenuTop.MainMenu;
+	
 	import mx.core.Application;
 	
-	public class MainMenuBottom extends Sprite
+	public class MainMenuBottom extends MainMenu
 	{
 		private var bottom:MainMenuBottomSwc;
 		private const cameraRotateSpeed:int=8;
@@ -72,16 +73,6 @@ package lxfa.mainMenuBottom
 		{
 			customGoto3DScene(4);
 		}
-		private function customGoto3DScene(id:int):void
-		{
-			if(!MainSystem.getInstance().isBusy && MainMenuStatic.currentSceneId!=id)
-			{
-				MainMenuStatic.currentSceneId=id;
-				MainSystem.getInstance().enable360System();
-				MainSystem.getInstance().startRender();
-				MainSystem.getInstance().gotoScene(id);
-			}
-		}
 		private function on_zonghengsihai_click(e:MouseEvent):void//纵横四海
 		{
 			customGoto2DScene(5,"ZongHengSiHaiModule");
@@ -89,14 +80,6 @@ package lxfa.mainMenuBottom
 		private function on_yangmengbagui_click(e:MouseEvent):void//杨梦八桂
 		{
 			customGoto2DScene(6,"YangMengBaGuiModule");
-		}
-		private function customGoto2DScene(id:int,moduleName:String):void
-		{
-			if(!MainSystem.getInstance().isBusy && MainMenuStatic.currentSceneId!=id)
-			{
-				MainMenuStatic.currentSceneId=id;
-				MainSystem.getInstance().showPluginById(moduleName);
-			}
 		}
 		//下面的没BUG，可以不用看
 		///////////////////////////////////键盘事件
