@@ -130,9 +130,9 @@ package lsd.ZongHengSiHai
 		}
 		private function on_swf_complete(e:Event):void
 		{   
+			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			MemoryRecovery.getInstance().gcObj(loading_mb);
-			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 			flvRemove();
 			this.addChild(swfPlayer);
 			addAreas();
