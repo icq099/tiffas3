@@ -90,7 +90,6 @@ package lxfa.index.view
 			MemoryRecovery.getInstance().gcObj(indexSwc.progressText);
 			MemoryRecovery.getInstance().gcFun(flvPlayer,ProgressEvent.PROGRESS,downLoadprogressHandler);
 			MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS,on_NET_STATUS_change);
-			MemoryRecovery.getInstance().gcFun(this,Event.ADDED_TO_STAGE,on_added_to_stage);
 			flvPlayer.dispose();
 			flvPlayer.parent.removeChild(flvPlayer);
 			flvPlayer=null;
