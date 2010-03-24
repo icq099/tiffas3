@@ -22,6 +22,7 @@ package lxfa.No3Swf.view
 	{
 		private var flowerFlvSwf:SwfPlayer;
 		private var loading_mc:LoadingWaveRota;//用于显示进度
+		private var unrealCompassSwc:UnrealCompassSwc;
 		public function No3SwfBase()
 		{
 			MainSystem.getInstance().isBusy=true;
@@ -30,8 +31,12 @@ package lxfa.No3Swf.view
 			flowerFlvSwf.addEventListener(Event.COMPLETE,onComplete);
 			flowerFlvSwf.x=-200;
 			flowerFlvSwf.y=-100;
-			flowerFlvSwf.addEventListener(MouseEvent.CLICK,onClick);
 			flowerFlvSwf.addEventListener(ProgressEvent.PROGRESS,on_progress);
+			unrealCompassSwc=new UnrealCompassSwc();
+			unrealCompassSwc.scaleX=unrealCompassSwc.scaleY=0.5;
+			unrealCompassSwc.x=170;
+			unrealCompassSwc.y=220;
+			unrealCompassSwc.buttonMode=true;
 		}
 		private function on_progress(e:ProgressEvent):void
 		{
@@ -53,6 +58,8 @@ package lxfa.No3Swf.view
 		{
 			MemoryRecovery.getInstance().gcObj(loading_mc);//下载完毕的时候回收LOADING_MC
 			this.addChild(flowerFlvSwf);
+			this.addChild(unrealCompassSwc);
+			unrealCompassSwc.addEventListener(MouseEvent.CLICK,onClick);
 			Tweener.addTween(flowerFlvSwf,{alpha:1,time:3});
 			MainSystem.getInstance().isBusy=false;
             MainSystem.getInstance().showPluginById("MainMenuBottomModule");
@@ -66,17 +73,21 @@ package lxfa.No3Swf.view
 		{
 			if(!MainSystem.getInstance().isBusy && !hasClick)
 			{
-				flowerFlvSwf.enabled=false;
-				hasClick=true;
 				MainSystem.getInstance().showPluginById("No4Module");
-//				MainSystem.getInstance().addAutoClose(dispose,[]);
+				MemoryRecovery.getInstance().gcFun(unrealCompassSwc,MouseEvent.CLICK,onClick);
+				MemoryRecovery.getInstance().gcObj(unrealCompassSwc);
 			}
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(unrealCompassSwc,MouseEvent.CLICK,onClick);
+			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,ProgressEvent.PROGRESS,on_progress);
+			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,Event.COMPLETE,onComplete);
+			MemoryRecovery.getInstance().gcFun(this,Event.ADDED_TO_STAGE,on_added_to_stage);
 			flowerFlvSwf.enabled=false;
 			Tweener.addTween(flowerFlvSwf,{alpha:0,time:3,onComplete:function():void{
 			    MemoryRecovery.getInstance().gcObj(flowerFlvSwf,true);
+			    MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["No3SwfModule"]);
 			}});
 		}
 	}

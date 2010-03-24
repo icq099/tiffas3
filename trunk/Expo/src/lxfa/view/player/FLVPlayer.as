@@ -134,14 +134,24 @@ package lxfa.view.player
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(close,MouseEvent.CLICK,on_close_click);
 			MemoryRecovery.getInstance().gcObj(close);
+			MemoryRecovery.getInstance().gcFun(netStream,NetStatusEvent.NET_STATUS,netStream_NetStatusHandler);
+			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,on_ENTER_FRAME);
 			if(netStream!=null)
 			{
 				netStream.pause();	
+				netStream.close();
+			}
+			if(netConnection!=null)
+			{
+				netConnection.close();
+				MemoryRecovery.getInstance().gcFun(netConnection,NetStatusEvent.NET_STATUS,netConnection_NetStatus_handler);
 			}
 			this.removeEventListener(Event.ENTER_FRAME,on_ENTER_FRAME);//不再对外抛出进度事件
 			video=null;
 			netStream=null;
+			netConnection=null;
 		}
 	}
 }

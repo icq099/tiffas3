@@ -9,6 +9,7 @@ package lxfa.index.view
 	import flash.text.TextFieldAutoSize;
 	
 	import lxfa.normalWindow.SwfPlayer;
+	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
 	
@@ -40,8 +41,8 @@ package lxfa.index.view
 			indexSwc.mouseEnabled=false;
 			this.addChild(flvPlayer);
 			this.removeChild(indexSwc);
-			this.removeChild(flowerFlvSwf);
-			flowerFlvSwf=null;
+			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,Event.COMPLETE,completeHandler);//SWF文件
+			MemoryRecovery.getInstance().gcObj(flowerFlvSwf);
 			flvPlayer.resume();
 			flvPlayer.addEventListener(Event.CLOSE,on_flvPlayer_close);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_NET_STATUS_change);
@@ -83,6 +84,13 @@ package lxfa.index.view
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(indexSwc.btn_enter,MouseEvent.CLICK,on_btn_enter_click);
+			MemoryRecovery.getInstance().gcObj(indexSwc.btn_enter);
+			MemoryRecovery.getInstance().gcObj(indexSwc.btn_skip);
+			MemoryRecovery.getInstance().gcObj(indexSwc.progressText);
+			MemoryRecovery.getInstance().gcFun(flvPlayer,ProgressEvent.PROGRESS,downLoadprogressHandler);
+			MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS,on_NET_STATUS_change);
+			MemoryRecovery.getInstance().gcFun(this,Event.ADDED_TO_STAGE,on_added_to_stage);
 			flvPlayer.dispose();
 			flvPlayer.parent.removeChild(flvPlayer);
 			flvPlayer=null;

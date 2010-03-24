@@ -58,7 +58,7 @@ package lxfa.yangmengbagui.view
 		private function on_flv_complete(e:FLVPlayerEvent):void
 		{
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
-			MainSystem.getInstance().addAutoClose(close,[]);
+			MainSystem.getInstance().addSceneChangedHandler(close,[]);
 		}
 		private function on_complete(e:Event):void
 		{
@@ -99,7 +99,12 @@ package lxfa.yangmengbagui.view
 			initLED();
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
-			MainSystem.getInstance().addAutoClose(close,[]);
+			MainSystem.getInstance().addSceneChangedHandler(close,[]);
+			MainSystem.getInstance().addSceneChangeHandler(function():void{
+			    LED.dispose();
+			    flowerFlvSwf.enabled=false;
+			    view3d.dispose();
+			},[]);
 		}
 		//添加杨梦八桂的建筑
 		private function initYangMengBaGuiSwc():void
@@ -144,6 +149,7 @@ package lxfa.yangmengbagui.view
 				var s:DisplayObject=MainSystem.getInstance().getPlugin("NormalWindowModule");
 				MainSystem.getInstance().getPlugin("NormalWindowModule").addEventListener(Event.CLOSE,on_normalwindow_close);
 				MainSystem.getInstance().runAPIDirect("showNormalWindow",[0]);
+				MemoryRecovery.getInstance().gcFun(MainSystem.getInstance(),ScriptAPIAddEvent.ADD_API,ADD_API);
 			}
 		}
 		private function on_normalwindow_close(e:Event):void//标准窗关闭的时候
@@ -160,6 +166,12 @@ package lxfa.yangmengbagui.view
 		//清除内存
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.READY,on_flv_complete);
+			MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS,on_complete);
+			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,Event.COMPLETE,onComplete);
+			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,ProgressEvent.PROGRESS,on_progress);
+			MemoryRecovery.getInstance().gcFun(LED,MouseEvent.CLICK,on_LED_Click);
+			MemoryRecovery.getInstance().gcFun(LED,NetStatusEvent.NET_STATUS,on_LED_play_complete);
 			MemoryRecovery.getInstance().gcObj(flvPlayer,true);
 			MemoryRecovery.getInstance().gcObj(flowerFlvSwf,true);
 			MemoryRecovery.getInstance().gcObj(yangMengBaGuiSwc);
