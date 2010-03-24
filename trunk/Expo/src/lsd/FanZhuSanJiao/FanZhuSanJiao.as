@@ -33,20 +33,7 @@ package lsd.FanZhuSanJiao
 		
 		private function dispose_fz():void
 		{
-			if (MainSystem.getInstance().isBusy == true)
-			{
-				MainSystem.getInstance().isBusy == false;
-				MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");
-				removeAreas();
-				MainSystem.getInstance().isBusy == true;
-			}
-			else
-			{
-
-				MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");
-				removeAreas();
-			}
-
+			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["FanZhuSanJiaoModule"]);
 		}
 
 		private function flvRemove():void
