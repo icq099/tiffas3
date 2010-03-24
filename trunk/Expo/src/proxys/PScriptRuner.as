@@ -34,7 +34,7 @@ package proxys
 			addAPI("stopRender",stopRender);
 		}
 		public function onSceneChangeComplete(scene_id:int):void{
-			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGE,scene_id));
+			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.COMPLETE,scene_id));
 		}
 		private function fullScreen():void{
 			facade.sendNotification(AppMediator.FULL_SCREEM);

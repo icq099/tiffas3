@@ -1,5 +1,7 @@
 package lxfa.utils
 {
+	import mx.controls.Button;
+	
 	public class MemoryRecovery
 	{
 		private static var instance:MemoryRecovery
@@ -27,7 +29,7 @@ package lxfa.utils
 				{
 					obj.dispose();
 				}
-				if(obj.parent!=null)
+				if(obj.hasOwnProperty("parent") && obj.parent!=null)
 				{
 					obj.parent.removeChild(obj);
 				}

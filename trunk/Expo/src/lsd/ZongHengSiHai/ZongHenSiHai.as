@@ -1,9 +1,5 @@
 package lsd.ZongHengSiHai
 {
-	import caurina.transitions.Tweener;
-	
-	import communication.Event.PluginEvent;
-	import communication.Event.SceneChangeEvent;
 	import communication.MainSystem;
 	
 	import flash.events.Event;
@@ -28,6 +24,7 @@ package lsd.ZongHengSiHai
 		private var flvPlayer:FLVPlayer;
 		private var loading_mc:LoadingWaveRota;
 		private var loading_mb:LoadingWaveRota;
+		private var unrealCompassSwc:UnrealCompassSwc;
 		public function ZongHenSiHai(withMovie:Boolean)
 		{   
 			MainSystem.getInstance().dispatcherPluginUpdate();
@@ -95,7 +92,15 @@ package lsd.ZongHengSiHai
              initLoadingMc();
 			 swfPlayer.addEventListener(ProgressEvent.PROGRESS,on_flv_progress);
 			 swfPlayer.addEventListener(Event.COMPLETE,on_swf_complete);
-	          
+			 initUnrealCompass();
+		}
+		private function initUnrealCompass():void
+		{
+			unrealCompassSwc=new UnrealCompassSwc();
+			unrealCompassSwc.scaleX=unrealCompassSwc.scaleY=0.5;
+			unrealCompassSwc.x=170;
+			unrealCompassSwc.y=220;
+			unrealCompassSwc.buttonMode=true;
 		}
 		private function addAreas():void{
 			
@@ -139,6 +144,7 @@ package lsd.ZongHengSiHai
 			MemoryRecovery.getInstance().gcObj(loading_mb);
 			flvRemove();
 			this.addChild(swfPlayer);
+			this.addChild(unrealCompassSwc);
 			addAreas();
 		    CollisionManager.getInstance().showCollision();
 			MainSystem.getInstance().isBusy=false;
@@ -161,11 +167,7 @@ package lsd.ZongHengSiHai
 		}
 		private function gx_dmg_Complete(e:NetStatusEvent):void
 		{  
-		     
-		    MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().addAutoClose(flvRemove, []);
-			MainSystem.getInstance().showPluginById("DaMeiGongHeModule");
-		
+		    gx_to_other_complete("DaMeiGongHeModule");
 		}
 		
         private function dongMengClick():void
@@ -181,11 +183,7 @@ package lsd.ZongHengSiHai
 		}
 		private function gx_dm_Complete(e:NetStatusEvent):void
 		{  
-		     
-		    MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().addAutoClose(flvRemove, []);
-			MainSystem.getInstance().showPluginById("DongMengModule");
-		
+			gx_to_other_complete("DongMengModule");
 		}
 		private function fanZhuClick():void
 		{
@@ -200,9 +198,14 @@ package lsd.ZongHengSiHai
 
 		private function gx_fz_Complete(e:NetStatusEvent):void
 		{  
+			gx_to_other_complete("FanZhuSanJiaoModule");
+		}
+		//纵横四海到其他子场景时，电影播放完毕的操作
+		private function gx_to_other_complete(moduleName:String):void
+		{
+			swfPlayer.visible=false;
 			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().addAutoClose(flvRemove, []);
-			MainSystem.getInstance().showPluginById("FanZhuSanJiaoModule");
+			MainSystem.getInstance().showPluginById(moduleName);
 		}
 		private function beiBuWanClick():void
 		{
@@ -215,15 +218,16 @@ package lsd.ZongHengSiHai
 		private function removeAreas():void{
 			
 			
-			CollisionManager.getInstance().removeAllCollision();
+			CollisionManager.getInstance().removeCollision("dongMeng");
+			CollisionManager.getInstance().removeCollision("daMeiGongHe");
+			CollisionManager.getInstance().removeCollision("fanzhu");
+			CollisionManager.getInstance().removeCollision("beiBuWan");
+			CollisionManager.getInstance().removeCollision("xiJiang");
 			
 		}
-		public function dispose():void{
-			close();
-        }
-         private function close():void
+	
+         public function dispose():void
          {  
-         	swfPlayer.visible=false;
          	MemoryRecovery.getInstance().gcFun(swfPlayer,ProgressEvent.PROGRESS,on_flv_progress);
          	MemoryRecovery.getInstance().gcFun(swfPlayer,Event.COMPLETE,on_swf_complete);
          	MemoryRecovery.getInstance().gcObj(swfPlayer,true);

@@ -7,7 +7,7 @@ package lxfa.model
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
-	import mx.messaging.channels.StreamingHTTPChannel;
+	import lxfa.utils.MemoryRecovery;
 	
 	public class ItemModel extends Sprite
 	{
@@ -31,6 +31,7 @@ package lxfa.model
 			min=xmlData.child(offsetName).@start;         //获取最小值
 			max=xmlData.child(offsetName).@end;           //获取最大值
 			this.dispatchEvent(new Event(Event.COMPLETE));//抛出完成的事件
+			xmlLoader.removeEventListener(Event.COMPLETE,onComplete);
 		}
 		//存储索引名字
 		private function setOffsetName(name:String):void
@@ -126,6 +127,12 @@ package lxfa.model
 				return xmlData.Item[num+min].Picture[0].@name;
 			}
 			return null;
+	    }
+	    public function dispose():void
+	    {
+	    	MemoryRecovery.getInstance().gcObj(xmlLoader);
+	    	MemoryRecovery.getInstance().gcObj(xmlRequest);
+	    	MemoryRecovery.getInstance().gcObj(xmlData);
 	    }
 	}
 }
