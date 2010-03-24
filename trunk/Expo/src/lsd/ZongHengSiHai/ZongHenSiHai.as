@@ -78,6 +78,8 @@ package lsd.ZongHengSiHai
 		     MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.COMPLETE,on_gx_complete);
 		     MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS,on_Complete);
 		     MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS, gx_fz_Complete);
+		     MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS, gx_dm_Complete);
+		     MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS, gx_dmg_Complete);
 		     MemoryRecovery.getInstance().gcObj(flvPlayer,true);
 		}
 		private function on_Complete(e:Event):void
@@ -147,14 +149,40 @@ package lsd.ZongHengSiHai
        private function daMeiGongHeClick():void
 		{
 				trace("daMeiGongHe");
-				MainSystem.getInstance().showPluginById("DaMeiGongHeModule");
 			    removeAreas();
+			    MainSystem.getInstance().isBusy=true;
+			    flvPlayer=new FLVPlayer("movie/gx-mgh1.flv", 900, 480, false);
+				addChild(flvPlayer);
+				flvPlayer.resume();
+				flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, gx_dmg_Complete);
 		}
-		private function dongMengClick():void
+		private function gx_dmg_Complete(e:NetStatusEvent):void
+		{  
+		     
+		    MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().addAutoClose(flvRemove, []);
+			MainSystem.getInstance().showPluginById("DaMeiGongHeModule");
+		
+		}
+		
+        private function dongMengClick():void
 		{
 				trace("dongmeng");
-				MainSystem.getInstance().showPluginById("DongMengModule")
 				removeAreas();
+			    MainSystem.getInstance().isBusy=true;
+			    flvPlayer=new FLVPlayer("movie/gx-dm1.flv", 900, 480, false);
+			    addChild(flvPlayer);
+			    flvPlayer.resume();
+			    flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, gx_dm_Complete);
+				
+		}
+		private function gx_dm_Complete(e:NetStatusEvent):void
+		{  
+		     
+		    MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().addAutoClose(flvRemove, []);
+			MainSystem.getInstance().showPluginById("DongMengModule");
+		
 		}
 		private function fanZhuClick():void
 		{
