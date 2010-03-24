@@ -193,7 +193,7 @@ package lsd.SlidingPuzzle {
 		}
 		
 		// set up a slide
-		private function startSlide(puzzleObject:Object, dx:Number,dy:Number):void {
+		private function startSlide(puzzleObject:Object,dx:Number,dy:Number):void {
 			if (slideAnimation != null) slideDone(null);
 			slidingPiece = puzzleObject;
 			slideDirection = new Point(dx,dy);
@@ -241,7 +241,7 @@ package lsd.SlidingPuzzle {
 			puzzleObjects = null;
 		}
 	   public function dispose():void{
-	   	  this.parent.removeChild(this);
+	   	 
 	   	  
 	   	
 	   }
