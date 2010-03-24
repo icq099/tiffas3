@@ -81,6 +81,11 @@ package lxfa.No3.view
 		public function dispose():void
 		{
 			MemoryRecovery.getInstance().gcObj(loading_mc);
+			MemoryRecovery.getInstance().gcFun(flvPlayer,Event.CLOSE,on_flvPlayer_close);
+			MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS,flvPlayer_NetStatus_handler);
+			MemoryRecovery.getInstance().gcFun(flvPlayer,ProgressEvent.PROGRESS,on_flv_progress);
+			MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.COMPLETE,on_flv_complete);
+			MemoryRecovery.getInstance().gcFun(this,Event.ADDED_TO_STAGE,on_added_to_stage);
 			if(!isClosed)
 			{
 				isClosed=true;

@@ -164,7 +164,6 @@ package mediators
 				MyGC.gc();
 				facade.sendNotification(FacadePv.REMOVE_MOVIE);
 				MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGED,goto));
-				MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 				updataGuiWa(goto);
 			};
 			var url:String=String(xml.Travel.Scene.@picture[goto]);
