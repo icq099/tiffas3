@@ -52,10 +52,10 @@ package lsd.FanZhuSanJiao
 		}
 		private function on_flv_complete(e:FLVPlayerEvent):void
 		{   
-			/* MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
-			MainSystem.getInstance().addAutoClose(dispose_fz, []);
-			MainSystem.getInstance().isBusy=true;  */
+			//MainSystem.getInstance().addAutoClose(dispose_fz, []);
+			MainSystem.getInstance().isBusy=true;
 		}
 		
 
