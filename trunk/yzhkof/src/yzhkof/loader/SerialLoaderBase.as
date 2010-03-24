@@ -14,13 +14,14 @@ package yzhkof.loader
 		protected var completeEvent:String;
 		protected var unLoadFunction:String;
 		protected var loaderContentProperty:String;
+		protected var loadParam:Array;
 		
 		protected var url_arr:Array=new Array();//记录要load的url
 		protected var item_map:Dictionary=new Dictionary();//储存所有加载的内容,非loader
 		protected var loader_url_map:DualMap=new DualMap();//url<->loader的map
 		protected var complete_count:int=0;
 		
-		public function SerialLoaderBase(loaderClass:Class,loadFunction:String=null,eventDispatcher:String=null,completeEvent:String=null,unLoadFunction:String=null,loaderContentProperty:String=null)
+		public function SerialLoaderBase(loaderClass:Class,loadFunction:String=null,eventDispatcher:String=null,completeEvent:String=null,unLoadFunction:String=null,loaderContentProperty:String=null,loadParam:Array=null)
 		{
 			LoaderClass=loaderClass;
 			this.loadFunction=loadFunction;
@@ -28,6 +29,7 @@ package yzhkof.loader
 			this.completeEvent=completeEvent;
 			this.unLoadFunction=unLoadFunction;
 			this.loaderContentProperty=loaderContentProperty;
+			this.loadParam=loadParam;
 		}
 		/**
 		 * 添加loader实例 
@@ -72,7 +74,15 @@ package yzhkof.loader
 			for(var i:int=0;i<url_arr.length;i++){
 				var loader:Object=getLoader(url_arr[i]);
 				if(loadFunction!=null){
-					loader[loadFunction](url_arr[i]);
+					if(loadParam==null)
+					{
+						loader[loadFunction](url_arr[i]);
+					}else
+					{
+						var param:Array=[url_arr[i]];
+						param=param.concat(loadParam)
+						loader[loadFunction].apply(null,param);
+					}
 				}
 				if(eventDispatcher!=null){
 					loader[eventDispatcher].addEventListener(completeEvent,onLoaderComplete);
