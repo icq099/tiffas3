@@ -7,11 +7,13 @@
 		   implements="communication.IPlugin">
 	<mx:Script>
 		<![CDATA[
+			import lxfa.yangmengbagui.YangMengBaGuiStatic;
 			import lxfa.yangmengbagui.view.YangMengBaGuiBase;
 			import yzhkof.Toolyzhkof;
 			private var yangMengBaGuiBase:YangMengBaGuiBase
 			private function init():void
 			{   
+				YangMengBaGuiStatic.currentName=this.className;
 				yangMengBaGuiBase=new YangMengBaGuiBase(true);
 				addChild(yangMengBaGuiBase);
 			}
