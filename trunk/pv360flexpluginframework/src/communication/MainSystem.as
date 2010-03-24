@@ -144,12 +144,17 @@ package communication
 			if(isBusy)return null;
 			return _script_runer.runFunctionDirect(function_name,parm);
 		}
+		//直接运行脚本，无需被系统繁忙情况限制
+		public function runAPIDirectDirectly(function_name:String,parm:Array=null):*{
+			return _script_runer.runFunctionDirect(function_name,parm);
+		}
 		/**
 		 * 转到指定场景 
 		 * @param scene_id 场景索引值
 		 * 
 		 */		
 		public function gotoScene(scene_id:int):void{
+			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGE,scene_id));
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 			runAPIDirect("gotoScene",[scene_id]);
 		}
@@ -291,6 +296,34 @@ package communication
 					var re:*;
 					re=fun.apply(NaN,param);	
 					if(getInstance().hasEventListener(PluginEvent.UPDATE)) getInstance().removeEventListener(PluginEvent.UPDATE,on_plugin_update);
+				});
+			}
+		}
+		//给插件添加自动关闭的事件
+		public function addSceneChangedHandler(fun:Function,param:Array=null):void
+		{
+			if(fun==null){
+				throw new Error("自动关闭的方法不能为空");
+			}else
+			{
+				getInstance().addEventListener(SceneChangeEvent.CHANGED,function on_scene_changed(e:SceneChangeEvent):void{
+					var re:*;
+					re=fun.apply(NaN,param);	
+					if(getInstance().hasEventListener(SceneChangeEvent.CHANGED)) getInstance().removeEventListener(SceneChangeEvent.CHANGED,on_scene_changed);
+				});
+			}
+		}
+		//给插件添加自动关闭的事件
+		public function addSceneChangeHandler(fun:Function,param:Array=null):void
+		{
+			if(fun==null){
+				throw new Error("自动关闭的方法不能为空");
+			}else
+			{
+				getInstance().addEventListener(SceneChangeEvent.CHANGE,function on_scene_change(e:SceneChangeEvent):void{
+					var re:*;
+					re=fun.apply(NaN,param);	
+					if(getInstance().hasEventListener(SceneChangeEvent.CHANGE)) getInstance().removeEventListener(SceneChangeEvent.CHANGE,on_scene_change);
 				});
 			}
 		}
