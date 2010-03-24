@@ -3,7 +3,6 @@ package lsd.FanZhuSanJiao
 	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	import flash.events.ProgressEvent;
@@ -13,7 +12,6 @@ package lsd.FanZhuSanJiao
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
-	
 	import mx.core.Application;
 	import mx.core.UIComponent;
 	
@@ -28,40 +26,10 @@ package lsd.FanZhuSanJiao
 
 		public function FanZhuSanJiao()
 		{
-			MainSystem.getInstance().isBusy=true;
-			initPlayer();
-
-		}
-
-		private function initPlayer():void
-		{
-
-			flvPlayer=new FLVPlayer("movie/gx-fz1.flv", 900, 480, false);
-			flvPlayer.addEventListener(FLVPlayerEvent.READY, on_flv_ready);
-			flvPlayer.addEventListener(FLVPlayerEvent.COMPLETE, on_flv_complete);
-			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, on_Complete);
-			//flvPlayer.resume();
-		}
-
-		private function on_flv_ready(e:FLVPlayerEvent):void
-		{
-			 
-			
-		}
-		private function on_flv_complete(e:FLVPlayerEvent):void
-		{   
-			
-			Application.application.addChild(Toolyzhkof.mcToUI(flvPlayer));;
-			flvPlayer.x=0;
-			flvPlayer.y=70;
-			flvPlayer.resume();
-			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
-			MainSystem.getInstance().addAutoClose(dispose_fz, []);
-			MainSystem.getInstance().isBusy=true;  
+		    init();
+ 
 		}
 		
-
 		private function dispose_fz():void
 		{
 			if (MainSystem.getInstance().isBusy == true)
@@ -80,17 +48,12 @@ package lsd.FanZhuSanJiao
 
 		}
 
-		private function on_Complete(e:NetStatusEvent):void
-		{
-			init();
-		}
-
 		private function flvRemove():void
 		{
 
-			MemoryRecovery.getInstance().gcFun(flvPlayer, NetStatusEvent.NET_STATUS, on_Complete);
-			MemoryRecovery.getInstance().gcFun(flvPlayer, NetStatusEvent.NET_STATUS, gx_Complete);
-			MemoryRecovery.getInstance().gcFun(flvPlayer, FLVPlayerEvent.COMPLETE, on_flv_complete);
+			MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS, gx_Complete);
+			MemoryRecovery.getInstance().gcFun(flvPlayer, FLVPlayerEvent.READY, on_fz_gx_complete);
+			//MemoryRecovery.getInstance().gcFun(flvPlayer, FLVPlayerEvent.COMPLETE, on_flv_complete);
 			MemoryRecovery.getInstance().gcObj(flvPlayer, true);
 
 		}
@@ -142,9 +105,13 @@ package lsd.FanZhuSanJiao
 		private function initLoadingMc():void
 		{
 			loading_mc=new LoadingWaveRota();
-			loading_mc.x=450;
-			loading_mc.y=200;
-			addChild(Toolyzhkof.mcToUI(loading_mc));
+			this.addEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
+		}
+		private function on_added_to_stage(e:Event):void
+		{
+			loading_mc.x=this.stage.stageWidth/2;
+			loading_mc.y=this.stage.stageHeight/2;
+			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
 		}
 
 		private function on_flv_progress(e:ProgressEvent):void //FLV加载完毕
@@ -157,8 +124,11 @@ package lsd.FanZhuSanJiao
 			MemoryRecovery.getInstance().gcFun(swfPlayer, ProgressEvent.PROGRESS, on_flv_progress);
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			this.addChild(swfPlayer);
+			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
+			MainSystem.getInstance().addAutoClose(dispose_fz, []);
+			MainSystem.getInstance().isBusy=true;  
 			addAreas();
-			flvRemove();
 			MainSystem.getInstance().isBusy=false;
 		}
 
