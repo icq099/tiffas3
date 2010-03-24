@@ -1,19 +1,21 @@
 package lsd.DaMeiGongHe
 {
-	import communication.Event.PluginEvent;
 	import communication.MainSystem;
-	import yzhkof.loadings.LoadingWaveRota;
-	import mx.core.Application;
-	import flash.events.ProgressEvent;
-	import yzhkof.Toolyzhkof;
+	
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
-    import mx.core.UIComponent;
+	import flash.events.ProgressEvent;
+	
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
-	import lxfa.view.player.FLVPlayerEvent;
+	
+	import mx.core.Application;
+	import mx.core.UIComponent;
+	
+	import yzhkof.Toolyzhkof;
+	import yzhkof.loadings.LoadingWaveRota;
 
 	public class DaMeiGongHe extends UIComponent
 	{
@@ -23,6 +25,8 @@ package lsd.DaMeiGongHe
 
 		public function DaMeiGongHe()
 		{
+			MainSystem.getInstance().dispatcherSceneChangeInit(53);
+			MainSystem.getInstance().dispatcherPluginUpdate();
 			MainSystem.getInstance().isBusy=true;
 			init();
 		}
@@ -74,7 +78,6 @@ package lsd.DaMeiGongHe
 		{
 
 			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().addAutoClose(flvRemove, []);
 			MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
 
 		}
@@ -114,12 +117,12 @@ package lsd.DaMeiGongHe
 			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 			this.addChild(swfPlayer);
 			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
-			MainSystem.getInstance().addAutoClose(dispose_dmg, []);
-			MainSystem.getInstance().isBusy=true;
+			MainSystem.getInstance().dispatcherSceneChangeComplete(53);
 			addAreas();
-			flvRemove();
-			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().addSceneChangeCompleteHandler(dispose,[]);
+			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
+				removeAreas();
+			},[]);
 		}
 
 		private function initLoadingMc():void

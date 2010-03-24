@@ -58,9 +58,9 @@ package lsd.FanZhuSanJiao
 		}
 
 		private function guangXiClick():void
-		{
-			backGuangXi();
+		{   
 			removeAreas();
+			backGuangXi();
 		}
 
 		private function backGuangXi():void
@@ -75,7 +75,6 @@ package lsd.FanZhuSanJiao
 		private function gx_Complete(e:NetStatusEvent):void
 		{ //flv播放完毕
 			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().addAutoClose(flvRemove, []);
 			MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
 		}
 		
@@ -117,11 +116,10 @@ package lsd.FanZhuSanJiao
 
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
-			addAreas();
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatcherSceneChangeComplete(51);
 			this.addChild(swfPlayer);
-			trace("抛出事件");
+			addAreas();
 			MainSystem.getInstance().addSceneChangeCompleteHandler(dispose_fz,[]);
 			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
 				removeAreas();

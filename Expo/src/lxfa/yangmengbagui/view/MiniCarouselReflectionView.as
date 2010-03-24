@@ -41,7 +41,6 @@
 		{
 			yangMengBaGuiModel=new YangMengBaGuiModel();
 			yangMengBaGuiModel.addEventListener(Event.COMPLETE,onModelComplete);
-			rubbishArray.push(yangMengBaGuiModel);
 		}
 		private function onModelComplete(e:Event):void
 		{
@@ -158,6 +157,8 @@
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(yangMengBaGuiModel,Event.COMPLETE,onModelComplete);
+			MemoryRecovery.getInstance().gcObj(yangMengBaGuiModel,true);
 			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
 			if(basicView.renderer!=null)
 			{

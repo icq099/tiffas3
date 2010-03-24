@@ -163,7 +163,7 @@ package mediators
 				//手动回收
 				MyGC.gc();
 				facade.sendNotification(FacadePv.REMOVE_MOVIE);
-				MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGED,goto));
+				MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.COMPLETE,goto));
 				updataGuiWa(goto);
 			};
 			var url:String=String(xml.Travel.Scene.@picture[goto]);

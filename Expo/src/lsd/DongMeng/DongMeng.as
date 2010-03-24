@@ -1,21 +1,21 @@
 package lsd.DongMeng
 {
-	import communication.Event.PluginEvent;
 	import communication.MainSystem;
-	import yzhkof.loadings.LoadingWaveRota;
-	import mx.core.Application;
-	import flash.events.ProgressEvent;
-	import yzhkof.Toolyzhkof;
+	
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
-
+	import flash.events.ProgressEvent;
+	
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
-	import lxfa.view.player.FLVPlayerEvent;
-
+	
+	import mx.core.Application;
 	import mx.core.UIComponent;
+	
+	import yzhkof.Toolyzhkof;
+	import yzhkof.loadings.LoadingWaveRota;
 
 	public class DongMeng extends UIComponent
 	{
@@ -24,6 +24,8 @@ package lsd.DongMeng
        	private var loading_mc:LoadingWaveRota;
 		public function DongMeng()
 		{
+			MainSystem.getInstance().dispatcherSceneChangeInit(52);
+			MainSystem.getInstance().dispatcherPluginUpdate();
 			MainSystem.getInstance().isBusy=true;
 			init();
 		}
@@ -73,7 +75,6 @@ package lsd.DongMeng
 		private function gx_Complete(e:NetStatusEvent):void
 		{
 			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().addAutoClose(flvRemove, []);
 			MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
 		}
 
@@ -119,14 +120,14 @@ package lsd.DongMeng
 			
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
+			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().dispatcherSceneChangeComplete(51);
 			this.addChild(swfPlayer);
-			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
-			MainSystem.getInstance().addAutoClose(dispose_dm, []);
-			MainSystem.getInstance().isBusy=true;
 			addAreas();
-			flvRemove();
-			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().addSceneChangeCompleteHandler(dispose,[]);
+			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
+				removeAreas();
+			},[]);
 		}
 
 		private function removeAreas():void
