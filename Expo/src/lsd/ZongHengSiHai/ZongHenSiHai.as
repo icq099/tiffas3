@@ -152,14 +152,14 @@ package lsd.ZongHengSiHai
 		{
 			    removeAreas();
 			    MainSystem.getInstance().isBusy=true;
-			    flvPlayer=new FLVPlayer("movie/zonghengsihai-yangmengbagui.flv", 900, 480, false);
+			    flvPlayer=new FLVPlayer("movie/gx-mgh1.flv", 900, 480, false);
 				addChild(flvPlayer);
 				flvPlayer.resume();
 				flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, gx_ymbg_Complete);
 		}
-		private function gx_ymbg_Complete(e:MouseEvent):void
+		private function gx_ymbg_Complete(e:NetStatusEvent):void
 		{
-			gx_to_other_complete("YangMengBaGuiModule");
+			gx_to_other_complete("DaMeiGongHeModule");
 		}
        private function on_unrealCompassSwc_click(e:MouseEvent):void
 		{
