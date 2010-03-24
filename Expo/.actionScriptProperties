@@ -38,29 +38,29 @@
 <application path="Expo.mxml"/>
 </applications>
 <modules>
-<module application="src/Expo.mxml" destPath="lxfa/No4/No4Module.swf" optimize="true" sourcePath="src/lxfa/No4/No4Module.mxml"/>
-<module application="src/Expo.mxml" destPath="lxfa/lijiangwanchang/LiJiangWanChangModule.swf" optimize="true" sourcePath="src/lxfa/lijiangwanchang/LiJiangWanChangModule.mxml"/>
-<module application="src/Expo.mxml" destPath="yzhkof/flow/FlowModule.swf" optimize="true" sourcePath="src/yzhkof/flow/FlowModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lxfa/flvModule/FlvModule.swf" optimize="true" sourcePath="src/lxfa/flvModule/FlvModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lsd/ZongHengSiHai/ZongHengSiHaiModule.swf" optimize="true" sourcePath="src/lsd/ZongHengSiHai/ZongHengSiHaiModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lsd/DaMeiGongHe/DaMeiGongHeModule.swf" optimize="true" sourcePath="src/lsd/DaMeiGongHe/DaMeiGongHeModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/gehaiqingyun/GeHaiQingYunModule.swf" optimize="true" sourcePath="src/lxfa/gehaiqingyun/GeHaiQingYunModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/No3Swf/No3SwfModule.swf" optimize="true" sourcePath="src/lxfa/No3Swf/No3SwfModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/index/IndexModule.swf" optimize="true" sourcePath="src/lxfa/index/IndexModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/mainMenuBottom/MainMenuBottomModule.swf" optimize="true" sourcePath="src/lxfa/mainMenuBottom/MainMenuBottomModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lsd/FanZhuSanJiao/FanZhuSanJiaoModule.swf" optimize="true" sourcePath="src/lsd/FanZhuSanJiao/FanZhuSanJiaoModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/yangmengbagui/YangMengBaGuiModule.swf" optimize="true" sourcePath="src/lxfa/yangmengbagui/YangMengBaGuiModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lsd/ZongHengSiHaiWithMovie/ZongHengSiHaiWithMovieModule.swf" optimize="true" sourcePath="src/lsd/ZongHengSiHaiWithMovie/ZongHengSiHaiWithMovieModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/mainMenuTop/MainMenuTopModule.swf" optimize="true" sourcePath="src/lxfa/mainMenuTop/MainMenuTopModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/inquire/InquireModule.swf" optimize="true" sourcePath="src/lxfa/inquire/InquireModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lsd/DongMeng/DongMengModule.swf" optimize="true" sourcePath="src/lsd/DongMeng/DongMengModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/SlidingPuzzle/SlidingPuzzleModule.swf" optimize="true" sourcePath="src/lsd/SlidingPuzzle/SlidingPuzzleModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/No3/No3Module.swf" optimize="true" sourcePath="src/lxfa/No3/No3Module.mxml"/>
-<module application="src/Expo.mxml" destPath="yzhkof/opening/OpeningModule.swf" optimize="true" sourcePath="src/yzhkof/opening/OpeningModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lxfa/mainMenuTop/MainMenuTopModule.swf" optimize="true" sourcePath="src/lxfa/mainMenuTop/MainMenuTopModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lsd/DongMeng/DongMengModule.swf" optimize="true" sourcePath="src/lsd/DongMeng/DongMengModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lxfa/inquire/InquireModule.swf" optimize="true" sourcePath="src/lxfa/inquire/InquireModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lxfa/gehaiqingyun/GeHaiQingYunModule.swf" optimize="true" sourcePath="src/lxfa/gehaiqingyun/GeHaiQingYunModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lsd/ZongHengSiHaiWithMovie/ZongHengSiHaiWithMovieModule.swf" optimize="true" sourcePath="src/lsd/ZongHengSiHaiWithMovie/ZongHengSiHaiWithMovieModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lsd/FanZhuSanJiao/FanZhuSanJiaoModule.swf" optimize="true" sourcePath="src/lsd/FanZhuSanJiao/FanZhuSanJiaoModule.mxml"/>
+<module application="src/Expo.mxml" destPath="yzhkof/flow/FlowModule.swf" optimize="true" sourcePath="src/yzhkof/flow/FlowModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/minzubaimei/MinZuBaiMeiModule.swf" optimize="true" sourcePath="src/lxfa/minzubaimei/MinZuBaiMeiModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/flvModule/FlvModule.swf" optimize="true" sourcePath="src/lxfa/flvModule/FlvModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lsd/AnimatePlayer/AnimateModule.swf" optimize="true" sourcePath="src/lsd/AnimatePlayer/AnimateModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/normalWindow/NormalWindowModule.swf" optimize="true" sourcePath="src/lxfa/normalWindow/NormalWindowModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/lijiangwanchang/LiJiangWanChangModule.swf" optimize="true" sourcePath="src/lxfa/lijiangwanchang/LiJiangWanChangModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/No4/No4Module.swf" optimize="true" sourcePath="src/lxfa/No4/No4Module.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/backGroundMusic/BackGroundMusicModule.swf" optimize="true" sourcePath="src/lxfa/backGroundMusic/BackGroundMusicModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lxfa/index/IndexModule.swf" optimize="true" sourcePath="src/lxfa/index/IndexModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lsd/DaMeiGongHe/DaMeiGongHeModule.swf" optimize="true" sourcePath="src/lsd/DaMeiGongHe/DaMeiGongHeModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lsd/ZongHengSiHai/ZongHengSiHaiModule.swf" optimize="true" sourcePath="src/lsd/ZongHengSiHai/ZongHengSiHaiModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lxfa/No3Swf/No3SwfModule.swf" optimize="true" sourcePath="src/lxfa/No3Swf/No3SwfModule.mxml"/>
-<module application="src/Expo.mxml" destPath="lxfa/minzubaimei/MinZuBaiMeiModule.swf" optimize="true" sourcePath="src/lxfa/minzubaimei/MinZuBaiMeiModule.mxml"/>
+<module application="src/Expo.mxml" destPath="yzhkof/opening/OpeningModule.swf" optimize="true" sourcePath="src/yzhkof/opening/OpeningModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/yangMengBaGuiWithMovie/YangMengBaGuiWithMovieModule.swf" optimize="true" sourcePath="src/lxfa/yangMengBaGuiWithMovie/YangMengBaGuiWithMovieModule.mxml"/>
 </modules>
 <buildCSSFiles/>

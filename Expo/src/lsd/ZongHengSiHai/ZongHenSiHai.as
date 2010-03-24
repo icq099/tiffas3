@@ -128,10 +128,10 @@ package lsd.ZongHengSiHai
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			MemoryRecovery.getInstance().gcFun(swfPlayer,ProgressEvent.PROGRESS,on_flv_progress);
 			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
+			flvRemove();
 			this.addChild(swfPlayer);
 			addAreas();
 		    CollisionManager.getInstance().showCollision();
-			flvRemove();
 			MainSystem.getInstance().isBusy=false;
 			if(ZongHengSiHaiStatic.getInstance().currentModuleName=="ZongHengSiHaiModule")
 			{

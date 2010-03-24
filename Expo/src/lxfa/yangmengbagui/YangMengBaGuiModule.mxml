@@ -12,7 +12,6 @@
 			private var yangMengBaGuiBase:YangMengBaGuiBase
 			private function init():void
 			{   
-				YangMengBaGuiStatic.getInstance().currentModuleName=this.className;
 				yangMengBaGuiBase=new YangMengBaGuiBase(false);
 				addChild(yangMengBaGuiBase);
 			}
