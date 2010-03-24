@@ -32,6 +32,7 @@ package lxfa.yangmengbagui.view
 		private var flvPlayer:FLVPlayer;
 		public function YangMengBaGuiBase(withMovie:Boolean=false)
 		{
+			MainSystem.getInstance().currentScene=6;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
 			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.INIT,100));
 			MainSystem.getInstance().stopRender();
