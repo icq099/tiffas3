@@ -63,12 +63,12 @@ package lsd.ZongHengSiHai
 		{
 			flvPlayer=new FLVPlayer("movie/donggu.flv",900,480,false);
 			addChild(flvPlayer);
-			flvPlayer.addEventListener(FLVPlayerEvent.READY,on_flv_complete);
+			flvPlayer.addEventListener(FLVPlayerEvent.READY,on_gx_complete);
 	        flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
 			
 		}
-		private function on_flv_complete(e:FLVPlayerEvent):void
+		private function on_gx_complete(e:FLVPlayerEvent):void
 		{   
 			
 			MainSystem.getInstance().addAutoClose(on_plugin_update,[]);
@@ -77,15 +77,13 @@ package lsd.ZongHengSiHai
 		{
 		     
 		     MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS,on_Complete);
-		     MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.COMPLETE,on_flv_complete);
-		     MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.READY,on_flv_complete);
+		     MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS, gx_fz_Complete);
+		     MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.READY,on_gx_complete);
 		     MemoryRecovery.getInstance().gcObj(flvPlayer,true);
 		}
 		private function on_Complete(e:Event):void
 		{     
-			
-			 
-			  init();
+             init();
 		}
         private function init():void{
 			
@@ -115,7 +113,7 @@ package lsd.ZongHengSiHai
 			loading_mc=new LoadingWaveRota();
 			loading_mb=new LoadingWaveRota();
 			loading_mb.x=450;
-			loading_mb.y=200;
+			loading_mb.y=180;
 			addChild(Toolyzhkof.mcToUI(loading_mb));
 			this.addEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 		}
@@ -134,7 +132,6 @@ package lsd.ZongHengSiHai
 		{   
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			MemoryRecovery.getInstance().gcObj(loading_mb);
-			MemoryRecovery.getInstance().gcFun(swfPlayer,ProgressEvent.PROGRESS,on_flv_progress);
 			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 			flvRemove();
 			this.addChild(swfPlayer);
@@ -167,7 +164,6 @@ package lsd.ZongHengSiHai
 			   MainSystem.getInstance().isBusy=true;
 			   flvPlayer=new FLVPlayer("movie/gx-fz1.flv", 900, 480, false);
 			   addChild(flvPlayer);
-			   //flvPlayer.addEventListener(FLVPlayerEvent.READY, on_gx_fz_complete);
 			   flvPlayer.resume();
 			   flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, gx_fz_Complete);	
 		}
@@ -198,6 +194,7 @@ package lsd.ZongHengSiHai
          private function close():void
          {  
          	MemoryRecovery.getInstance().gcFun(swfPlayer,Event.COMPLETE,on_swf_complete);
+         	MemoryRecovery.getInstance().gcFun(swfPlayer,ProgressEvent.PROGRESS,on_flv_progress);
          	MemoryRecovery.getInstance().gcObj(swfPlayer,true);
          	
            
