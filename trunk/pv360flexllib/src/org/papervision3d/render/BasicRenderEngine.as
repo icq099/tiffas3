@@ -59,7 +59,10 @@ package org.papervision3d.render
 			filter = null;
 			renderStatistics = null;
 			renderList = null;
-			renderSessionData.destroy();
+			if(renderSessionData!=null)
+			{
+				renderSessionData.destroy();
+			}
 			renderSessionData = null;
 			cleanRHD = null;
 			stopWatch = null;

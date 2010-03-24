@@ -76,7 +76,6 @@
 			this.segmentsH = segmentsH || this.segmentsW;   // Defaults to segmentsW
 	
 			var scale :Number = DEFAULT_SCALE;
-	
 			if( ! height )
 			{
 				if( width )
