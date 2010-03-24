@@ -4,8 +4,8 @@ package communication.Event
 
 	public class SceneChangeEvent extends Event
 	{
-		public static const CHANGE:String="SceneChangeEvent.CHANGE";
-		public static const CHANGED:String="SceneChangeEvent.CHANGED";
+		public static const INIT:String="SceneChangeEvent.INIT";
+		public static const COMPLETE:String="SceneChangeEvent.COMPLETE";
 		public var id:int;
 		public function SceneChangeEvent(type:String,scene_id:int, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
@@ -13,7 +13,7 @@ package communication.Event
 			this.id=scene_id;
 		}
 		public override function clone():Event{
-			return new SceneChangeEvent(SceneChangeEvent.CHANGE,id,bubbles,cancelable);		
+			return new SceneChangeEvent(SceneChangeEvent.COMPLETE,id,bubbles,cancelable);		
 		}
 	}
 }

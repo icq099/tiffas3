@@ -57,7 +57,7 @@ package communication
 			init();
 		}
 		private function init():void{
-			addEventListener(SceneChangeEvent.CHANGE,onSceneChange);	
+			addEventListener(SceneChangeEvent.INIT,onSceneChange);	
 			addEventListener(MainSystemEvent.INIT,onSystemInit);
 		}
 		private function onSystemInit(e:MainSystemEvent):void{
@@ -154,7 +154,7 @@ package communication
 		 * 
 		 */		
 		public function gotoScene(scene_id:int):void{
-			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.CHANGE,scene_id));
+			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.INIT,scene_id));
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 			runAPIDirect("gotoScene",[scene_id]);
 		}
@@ -300,32 +300,47 @@ package communication
 			}
 		}
 		//给插件添加自动关闭的事件
-		public function addSceneChangedHandler(fun:Function,param:Array=null):void
+		public function addSceneChangeCompleteHandler(fun:Function,param:Array=null):void
 		{
 			if(fun==null){
 				throw new Error("自动关闭的方法不能为空");
 			}else
 			{
-				getInstance().addEventListener(SceneChangeEvent.CHANGED,function on_scene_changed(e:SceneChangeEvent):void{
+				getInstance().addEventListener(SceneChangeEvent.COMPLETE,function on_scene_complete(e:SceneChangeEvent):void{
 					var re:*;
 					re=fun.apply(NaN,param);	
-					if(getInstance().hasEventListener(SceneChangeEvent.CHANGED)) getInstance().removeEventListener(SceneChangeEvent.CHANGED,on_scene_changed);
+					if(getInstance().hasEventListener(SceneChangeEvent.COMPLETE)) getInstance().removeEventListener(SceneChangeEvent.COMPLETE,on_scene_complete);
 				});
 			}
 		}
 		//给插件添加自动关闭的事件
-		public function addSceneChangeHandler(fun:Function,param:Array=null):void
+		public function addSceneChangeInitHandler(fun:Function,param:Array=null):void
 		{
 			if(fun==null){
 				throw new Error("自动关闭的方法不能为空");
 			}else
 			{
-				getInstance().addEventListener(SceneChangeEvent.CHANGE,function on_scene_change(e:SceneChangeEvent):void{
+				getInstance().addEventListener(SceneChangeEvent.INIT,function on_scene_init(e:SceneChangeEvent):void{
 					var re:*;
 					re=fun.apply(NaN,param);	
-					if(getInstance().hasEventListener(SceneChangeEvent.CHANGE)) getInstance().removeEventListener(SceneChangeEvent.CHANGE,on_scene_change);
+					if(getInstance().hasEventListener(SceneChangeEvent.INIT)) getInstance().removeEventListener(SceneChangeEvent.INIT,on_scene_init);
 				});
 			}
+		}
+		//抛出场景更换完毕的事件
+		public function dispatcherSceneChangeComplete(id:int):void
+		{
+			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.COMPLETE,id));
+		}
+		//抛出场景开始更新的事件
+		public function dispatcherSceneChangeInit(id:int):void
+		{
+			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.INIT,id));
+		}
+		//抛出插件更新事件
+		public function dispatcherPluginUpdate():void
+		{
+			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 		}
 	}
 }
