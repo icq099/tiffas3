@@ -52,7 +52,6 @@ package lsd.FanZhuSanJiao
 		{
 
 			MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS, gx_Complete);
-			MemoryRecovery.getInstance().gcFun(flvPlayer, FLVPlayerEvent.READY, on_fz_gx_complete);
 			MemoryRecovery.getInstance().gcObj(flvPlayer, true);
 
 		}
@@ -68,7 +67,6 @@ package lsd.FanZhuSanJiao
 			MainSystem.getInstance().isBusy=true;
 			flvPlayer=new FLVPlayer("movie/fz-gx1.flv", 900, 480, false);
 			addChild(flvPlayer);
-			flvPlayer.addEventListener(FLVPlayerEvent.READY, on_fz_gx_complete);
 			flvPlayer.resume();
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, gx_Complete);
 		}
@@ -76,15 +74,10 @@ package lsd.FanZhuSanJiao
 		private function gx_Complete(e:NetStatusEvent):void
 		{ //flv播放完毕
 			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().addAutoClose(flvRemove, []);
 			MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
 		}
-
-		private function on_fz_gx_complete(e:Event):void //FLV已经加载到场景里面
-		{
-
-			MainSystem.getInstance().addAutoClose(flvRemove, []);
-		}
-
+		
 		private function init():void
 		{
 			swfPlayer=new SwfPlayer("swf/fanZhuSanJiao.swf", 980, 490);
