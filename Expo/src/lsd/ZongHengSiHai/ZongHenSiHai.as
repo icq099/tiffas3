@@ -3,6 +3,7 @@ package lsd.ZongHengSiHai
 	import communication.MainSystem;
 	
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.NetStatusEvent;
 	import flash.events.ProgressEvent;
 	
@@ -35,18 +36,7 @@ package lsd.ZongHengSiHai
 		}
 		private function on_plugin_update():void
 		{
-			if(MainSystem.getInstance().isBusy==true)
-			{
-				MainSystem.getInstance().isBusy==false
-				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
-				removeAreas();
-				trace("删除1");
-			}else
-			{  
-				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
-			    removeAreas();
-			    trace("删除2");
-			}
+			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",[ZongHengSiHaiStatic.getInstance().currentModuleName]);
 		}
 		public function addZongHengSiHai(withMovie:Boolean):void{
 			if(withMovie)
@@ -98,9 +88,15 @@ package lsd.ZongHengSiHai
 		{
 			unrealCompassSwc=new UnrealCompassSwc();
 			unrealCompassSwc.scaleX=unrealCompassSwc.scaleY=0.5;
-			unrealCompassSwc.x=170;
-			unrealCompassSwc.y=220;
+			unrealCompassSwc.x=360;
+			unrealCompassSwc.y=340;
 			unrealCompassSwc.buttonMode=true;
+			unrealCompassSwc.addEventListener(MouseEvent.CLICK,on_unrealCompassSwc_click);
+		}
+		private function on_unrealCompassSwc_click(e:MouseEvent):void
+		{
+			MainSystem.getInstance().showPluginById("YangMengBaGuiWithMovieModule");
+			MemoryRecovery.getInstance().gcFun(unrealCompassSwc,MouseEvent.CLICK,on_unrealCompassSwc_click);
 		}
 		private function addAreas():void{
 			
@@ -152,6 +148,10 @@ package lsd.ZongHengSiHai
 			MainSystem.getInstance().addSceneChangeCompleteHandler(on_plugin_update,[]);
 			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
 				removeAreas();
+				if(unrealCompassSwc!=null)
+				{
+					unrealCompassSwc.visible=false;
+				}
 			},[]);
 		}
 		
@@ -228,6 +228,9 @@ package lsd.ZongHengSiHai
 	
          public function dispose():void
          {  
+         	removeAreas();
+         	MemoryRecovery.getInstance().gcFun(unrealCompassSwc,MouseEvent.CLICK,on_unrealCompassSwc_click);
+         	MemoryRecovery.getInstance().gcObj(unrealCompassSwc);
          	MemoryRecovery.getInstance().gcFun(swfPlayer,ProgressEvent.PROGRESS,on_flv_progress);
          	MemoryRecovery.getInstance().gcFun(swfPlayer,Event.COMPLETE,on_swf_complete);
          	MemoryRecovery.getInstance().gcObj(swfPlayer,true);

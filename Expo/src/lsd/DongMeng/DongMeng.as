@@ -33,22 +33,7 @@ package lsd.DongMeng
 
 		private function dispose_dm():void
 		{
-
-			if (MainSystem.getInstance().isBusy == true)
-			{
-				MainSystem.getInstance().isBusy == false
-				dispose();
-				MainSystem.getInstance().removePluginById("DongMengModule");
-				removeAreas();
-				MainSystem.getInstance().isBusy == true
-			}
-			else
-			{
-
-				MainSystem.getInstance().removePluginById("DongMengModule");
-				removeAreas();
-			}
-
+			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["DongMengModule"]);
 		}
 
 		private function flvRemove():void
@@ -124,12 +109,11 @@ package lsd.DongMeng
 			MainSystem.getInstance().dispatcherSceneChangeComplete(51);
 			this.addChild(swfPlayer);
 			addAreas();
-			MainSystem.getInstance().addSceneChangeCompleteHandler(dispose,[]);
+			MainSystem.getInstance().addSceneChangeCompleteHandler(dispose_dm,[]);
 			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
 				removeAreas();
 			},[]);
 		}
-
 		private function removeAreas():void
 		{  
 			CollisionManager.getInstance().removeCollision("dm_gx");

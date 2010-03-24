@@ -33,21 +33,7 @@ package lsd.DaMeiGongHe
 
 		private function dispose_dmg():void
 		{
-			if (MainSystem.getInstance().isBusy == true)
-			{
-				MainSystem.getInstance().isBusy == false
-				dispose();
-				MainSystem.getInstance().removePluginById("DaMeiGongHeModule");
-				removeAreas();
-				MainSystem.getInstance().isBusy == true
-			}
-			else
-			{
-
-				MainSystem.getInstance().removePluginById("DaMeiGongHeModule");
-				removeAreas();
-			}
-
+			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["DaMeiGongHeModule"]);
 		}
 
 		private function flvRemove():void
@@ -119,7 +105,7 @@ package lsd.DaMeiGongHe
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatcherSceneChangeComplete(53);
 			addAreas();
-			MainSystem.getInstance().addSceneChangeCompleteHandler(dispose,[]);
+			MainSystem.getInstance().addSceneChangeCompleteHandler(dispose_dmg,[]);
 			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
 				removeAreas();
 			},[]);
