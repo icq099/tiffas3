@@ -74,9 +74,9 @@ package lxfa.mainMenuBottom
 		}
 		private function customGotoScene(id:int):void
 		{
-			if(!MainSystem.getInstance().isBusy && currentSceneId!=id)
+			if(!MainSystem.getInstance().isBusy && MainSystem.getInstance().currentScene!=id)
 			{
-				currentSceneId=id;
+				MainSystem.getInstance().currentScene=id;
 				MainSystem.getInstance().enable360System();
 				MainSystem.getInstance().startRender();
 				MainSystem.getInstance().gotoScene(id);
@@ -84,18 +84,16 @@ package lxfa.mainMenuBottom
 		}
 		private function on_zonghengsihai_click(e:MouseEvent):void//纵横四海
 		{
-			if(currentSceneId!=5 && !MainSystem.getInstance().isBusy)
+			if(MainSystem.getInstance().currentScene!=5 && !MainSystem.getInstance().isBusy)
 			{
-				currentSceneId=5;
 				MainSystem.getInstance().currentScene=5;
 				MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
 			}
 		}
 		private function on_yangmengbagui_click(e:MouseEvent):void//杨梦八桂
 		{
-			if(currentSceneId!=6 &&  !MainSystem.getInstance().isBusy)
+			if(MainSystem.getInstance().currentScene!=6 &&  !MainSystem.getInstance().isBusy)
 			{
-				currentSceneId=6;
 				MainSystem.getInstance().currentScene=6;
 				MainSystem.getInstance().showPluginById("YangMengBaGuiModule");
 			}
