@@ -3,6 +3,7 @@ package lsd.ZongHengSiHai
 	import caurina.transitions.Tweener;
 	
 	import communication.Event.PluginEvent;
+	import communication.Event.SceneChangeEvent;
 	import communication.MainSystem;
 	
 	import flash.events.Event;
@@ -29,7 +30,8 @@ package lsd.ZongHengSiHai
 		private var loading_mb:LoadingWaveRota;
 		public function ZongHenSiHai(withMovie:Boolean)
 		{   
-			
+			MainSystem.getInstance().dispatcherPluginUpdate();
+			MainSystem.getInstance().dispatcherSceneChangeInit(5);
 			MainSystem.getInstance().stopRender();
 			addZongHengSiHai(withMovie);
 			
@@ -41,11 +43,12 @@ package lsd.ZongHengSiHai
 				MainSystem.getInstance().isBusy==false
 				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
 				removeAreas();
-				
+				trace("删除1");
 			}else
 			{  
 				MainSystem.getInstance().removePluginById(ZongHengSiHaiStatic.getInstance().currentModuleName);
 			    removeAreas();
+			    trace("删除2");
 			}
 		}
 		public function addZongHengSiHai(withMovie:Boolean):void{
@@ -139,11 +142,11 @@ package lsd.ZongHengSiHai
 			addAreas();
 		    CollisionManager.getInstance().showCollision();
 			MainSystem.getInstance().isBusy=false;
-			if(ZongHengSiHaiStatic.getInstance().currentModuleName=="ZongHengSiHaiModule")
-			{
-				MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
-			}
-			MainSystem.getInstance().addAutoClose(on_plugin_update,[]);
+			MainSystem.getInstance().dispatcherSceneChangeComplete(5);
+			MainSystem.getInstance().addSceneChangeCompleteHandler(on_plugin_update,[]);
+			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
+				removeAreas();
+			},[]);
 		}
 		
        private function daMeiGongHeClick():void
@@ -216,10 +219,11 @@ package lsd.ZongHengSiHai
 			
 		}
 		public function dispose():void{
-			Tweener.addTween(this,{alpha:0,time:2,onComplete:close});
+			close();
         }
          private function close():void
          {  
+         	swfPlayer.visible=false;
          	MemoryRecovery.getInstance().gcFun(swfPlayer,ProgressEvent.PROGRESS,on_flv_progress);
          	MemoryRecovery.getInstance().gcFun(swfPlayer,Event.COMPLETE,on_swf_complete);
          	MemoryRecovery.getInstance().gcObj(swfPlayer,true);

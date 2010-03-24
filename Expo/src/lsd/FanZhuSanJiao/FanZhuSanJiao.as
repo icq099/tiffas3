@@ -1,6 +1,5 @@
 package lsd.FanZhuSanJiao
 {
-	import communication.Event.PluginEvent;
 	import communication.MainSystem;
 	
 	import flash.events.Event;
@@ -11,7 +10,7 @@ package lsd.FanZhuSanJiao
 	import lxfa.utils.CollisionManager;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
-	import lxfa.view.player.FLVPlayerEvent;
+	
 	import mx.core.Application;
 	import mx.core.UIComponent;
 	
@@ -26,9 +25,10 @@ package lsd.FanZhuSanJiao
 
 		public function FanZhuSanJiao()
 		{   
+			MainSystem.getInstance().dispatcherSceneChangeInit(51);
+			MainSystem.getInstance().dispatcherPluginUpdate();
 			MainSystem.getInstance().isBusy=true;
 		    init();
- 
 		}
 		
 		private function dispose_fz():void
@@ -106,7 +106,7 @@ package lsd.FanZhuSanJiao
 			loading_mc.y=this.stage.stageHeight/2;
 			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
 		}
-
+		private var hasDispatcherSceneChangeComplete:Boolean;
 		private function on_flv_progress(e:ProgressEvent):void //FLV加载完毕
 		{
 			loading_mc.updateByProgressEvent(e);
@@ -117,13 +117,15 @@ package lsd.FanZhuSanJiao
 
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
-			this.addChild(swfPlayer);
-			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
-			MainSystem.getInstance().addAutoClose(dispose_fz, []);
-			MainSystem.getInstance().isBusy=true;  
 			addAreas();
 			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().dispatcherSceneChangeComplete(51);
+			this.addChild(swfPlayer);
+			trace("抛出事件");
+			MainSystem.getInstance().addSceneChangeCompleteHandler(dispose_fz,[]);
+			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
+				removeAreas();
+			},[]);
 		}
 
 		private function removeAreas():void

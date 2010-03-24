@@ -8,8 +8,6 @@ package lsd.AnimatePlayer.view
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 	
-	import lxfa.customMusic.CustomMusicManager;
-	
 	import mx.core.UIComponent;
 	
 	public class AnimatePlayer extends UIComponent
@@ -24,10 +22,12 @@ package lsd.AnimatePlayer.view
 		private var load_is_null:Boolean=true;
 		private var outLoader:Loader;
 		private var isClose:Boolean=false;
+		private var isBusy:Boolean=false;//繁忙的标志
 		public function AnimatePlayer()
 		{
 		}
 		public function load(url_swf:String):void{
+			isBusy=true;
 			if(!isClose)
 			{
 				if(url_swf!=null){
@@ -54,7 +54,6 @@ package lsd.AnimatePlayer.view
 				loader=new Loader();
 				request=new URLRequest(_urlanimte);
 				loader.load(request);
-			    loader.cacheAsBitmap=true;
 			    loader.contentLoaderInfo.addEventListener(Event.COMPLETE,completeHandler);
 				closeButton.addEventListener(MouseEvent.CLICK,closeAnimate);
 	            addChild(loader);
@@ -71,6 +70,7 @@ package lsd.AnimatePlayer.view
 	    	{
 		    	initOut();
 		    	loader.x=0;
+		    	isBusy=false;
 		    	MainSystem.getInstance().isBusy=false
 		    	MovieClip(loader.content).addFrameScript(MovieClip(loader.content).totalFrames-1,movieCompleteHandler);
 		    	if(!is_open){
@@ -168,6 +168,10 @@ package lsd.AnimatePlayer.view
 			if(!isClose)
 			{
 				isClose=true;
+				if(isBusy)
+				{
+					MainSystem.getInstance().isBusy=false;
+				}
 				if(outLoader!=null)
 				{
 					if(outLoader.parent!=null)
