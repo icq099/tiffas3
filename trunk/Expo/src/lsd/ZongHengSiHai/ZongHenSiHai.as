@@ -26,6 +26,7 @@ package lsd.ZongHengSiHai
 		private var swfPlayer:SwfPlayer;
 		private var flvPlayer:FLVPlayer;
 		private var loading_mc:LoadingWaveRota;
+		private var loading_mb:LoadingWaveRota;
 		public function ZongHenSiHai(withMovie:Boolean)
 		{   
 			
@@ -111,6 +112,10 @@ package lsd.ZongHengSiHai
 		private function initLoadingMc():void
 		{
 			loading_mc=new LoadingWaveRota();
+			loading_mb=new LoadingWaveRota();
+			loading_mb.x=450;
+			loading_mb.y=200;
+			addChild(Toolyzhkof.mcToUI(loading_mb));
 			this.addEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 		}
 		private function on_added_to_stage(e:Event):void
@@ -122,10 +127,12 @@ package lsd.ZongHengSiHai
 		private function on_flv_progress(e:ProgressEvent):void//FLV加载完毕
 		{
 			loading_mc.updateByProgressEvent(e);
+			loading_mb.updateByProgressEvent(e);
 		}
 		private function on_swf_complete(e:Event):void
 		{   
 			MemoryRecovery.getInstance().gcObj(loading_mc);
+			MemoryRecovery.getInstance().gcObj(loading_mb);
 			MemoryRecovery.getInstance().gcFun(swfPlayer,ProgressEvent.PROGRESS,on_flv_progress);
 			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 			flvRemove();

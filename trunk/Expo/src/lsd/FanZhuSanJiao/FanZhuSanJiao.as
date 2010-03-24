@@ -2,20 +2,23 @@ package lsd.FanZhuSanJiao
 {
 	import communication.Event.PluginEvent;
 	import communication.MainSystem;
-	import yzhkof.loadings.LoadingWaveRota;
-	import mx.core.Application;
-	import flash.events.ProgressEvent;
-	import yzhkof.Toolyzhkof;
+	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
-
+	import flash.events.ProgressEvent;
+	
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
-
+	
+	import mx.core.Application;
 	import mx.core.UIComponent;
+	
+	import yzhkof.Toolyzhkof;
+	import yzhkof.loadings.LoadingWaveRota;
 
 	public class FanZhuSanJiao extends UIComponent
 	{
@@ -34,24 +37,23 @@ package lsd.FanZhuSanJiao
 		{
 
 			flvPlayer=new FLVPlayer("movie/gx-fz1.flv", 900, 480, false);
-			addChild(flvPlayer);
 			flvPlayer.addEventListener(FLVPlayerEvent.READY, on_flv_ready);
 			flvPlayer.addEventListener(FLVPlayerEvent.COMPLETE, on_flv_complete);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, on_Complete);
-			flvPlayer.resume();
+			//flvPlayer.resume();
 		}
 
 		private function on_flv_ready(e:FLVPlayerEvent):void
 		{
-			flvPlayer.resume();
-			/* MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
-			MainSystem.getInstance().addAutoClose(dispose_fz, []);
-			MainSystem.getInstance().isBusy=true;   */
+			 
 			
 		}
 		private function on_flv_complete(e:FLVPlayerEvent):void
 		{   
+			
+			Application.application.addChild(Toolyzhkof.mcToUI(flvPlayer));;
+			flvPlayer.x=0;
+			flvPlayer.y=70;
 			flvPlayer.resume();
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
