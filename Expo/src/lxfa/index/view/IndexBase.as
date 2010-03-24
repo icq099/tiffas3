@@ -76,7 +76,7 @@ package lxfa.index.view
 		}
 		private function downLoadcompleteHandler(e:FLVPlayerEvent):void
 		{
-			ndexSwc.progressText.text="100";
+			indexSwc.progressText.text="100";
 			indexSwc.btn_enter.mouseEnabled=true;
 		}
 		private function completeHandler(e:Event):void
@@ -89,6 +89,7 @@ package lxfa.index.view
 			MemoryRecovery.getInstance().gcObj(indexSwc.btn_enter);
 			MemoryRecovery.getInstance().gcObj(indexSwc.btn_skip);
 			MemoryRecovery.getInstance().gcObj(indexSwc.progressText);
+			MemoryRecovery.getInstance().gcObj(indexSwc);
 			MemoryRecovery.getInstance().gcFun(flvPlayer,ProgressEvent.PROGRESS,downLoadprogressHandler);
 			MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS,on_NET_STATUS_change);
 			MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.COMPLETE,downLoadcompleteHandler);
