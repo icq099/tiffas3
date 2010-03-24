@@ -25,7 +25,8 @@ package lsd.FanZhuSanJiao
 		private var loading_mc:LoadingWaveRota;
 
 		public function FanZhuSanJiao()
-		{
+		{   
+			MainSystem.getInstance().isBusy=true;
 		    init();
  
 		}
@@ -142,6 +143,7 @@ package lsd.FanZhuSanJiao
 			MemoryRecovery.getInstance().gcFun(swfPlayer, Event.COMPLETE, on_swf_complete);
 			MemoryRecovery.getInstance().gcFun(swfPlayer, ProgressEvent.PROGRESS, on_flv_progress);
 			MemoryRecovery.getInstance().gcObj(swfPlayer, true);
+			flvRemove();
 			removeAreas();
 
         }

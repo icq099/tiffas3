@@ -25,26 +25,9 @@ package lsd.DongMeng
 		public function DongMeng()
 		{
 			MainSystem.getInstance().isBusy=true;
-			initPlayer();
+			init();
 		}
 
-		private function initPlayer():void
-		{
-
-			flvPlayer=new FLVPlayer("movie/gx-dm1.flv", 900, 480, false);
-			addChild(flvPlayer);
-			flvPlayer.addEventListener(FLVPlayerEvent.READY, on_flv_complete);
-			flvPlayer.resume();
-			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, on_Complete);
-		}
-
-		private function on_flv_complete(e:FLVPlayerEvent):void
-		{
-			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
-			MainSystem.getInstance().addAutoClose(dispose_dm, []);
-			MainSystem.getInstance().isBusy=true;
-		}
 
 		private function dispose_dm():void
 		{
@@ -66,16 +49,9 @@ package lsd.DongMeng
 
 		}
 
-		private function on_Complete(e:NetStatusEvent):void
-		{
-			init();
-		}
-
 		private function flvRemove():void
 		{
-			MemoryRecovery.getInstance().gcFun(flvPlayer, NetStatusEvent.NET_STATUS, on_Complete);
 			MemoryRecovery.getInstance().gcFun(flvPlayer, NetStatusEvent.NET_STATUS, gx_Complete);
-			MemoryRecovery.getInstance().gcFun(flvPlayer, FLVPlayerEvent.READY, on_flv_complete);
 			MemoryRecovery.getInstance().gcObj(flvPlayer, true);
 		}
 
@@ -91,19 +67,13 @@ package lsd.DongMeng
 			flvPlayer=new FLVPlayer("movie/dm-gx1.flv", 900, 480, false);
 			addChild(flvPlayer);
 			flvPlayer.resume();
-			flvPlayer.addEventListener(FLVPlayerEvent.READY, on_fz_gx_complete);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, gx_Complete);
 		}
-
-		private function on_fz_gx_complete(e:Event):void //FLV已经加载到场景里面
-		{
-
-			MainSystem.getInstance().addAutoClose(flvRemove, []);
-		}
-
+		
 		private function gx_Complete(e:NetStatusEvent):void
 		{
 			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().addAutoClose(flvRemove, []);
 			MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
 		}
 
@@ -131,11 +101,14 @@ package lsd.DongMeng
 		private function initLoadingMc():void
 		{
 			loading_mc=new LoadingWaveRota();
-			loading_mc.x=450;
-			loading_mc.y=200;
-			addChild(Toolyzhkof.mcToUI(loading_mc));
+			this.addEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 		}
-
+		private function on_added_to_stage(e:Event):void
+		{
+			loading_mc.x=this.stage.stageWidth/2;
+			loading_mc.y=this.stage.stageHeight/2;
+			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
+		}
 		private function on_flv_progress(e:ProgressEvent):void //FLV加载完毕
 		{
 			loading_mc.updateByProgressEvent(e);
@@ -143,9 +116,14 @@ package lsd.DongMeng
 
 		private function on_swf_complete(e:Event):void
 		{
-			MemoryRecovery.getInstance().gcFun(swfPlayer, ProgressEvent.PROGRESS, on_flv_progress);
+			
 			MemoryRecovery.getInstance().gcObj(loading_mc);
+			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 			this.addChild(swfPlayer);
+			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
+			MainSystem.getInstance().addAutoClose(dispose_dm, []);
+			MainSystem.getInstance().isBusy=true;
 			addAreas();
 			flvRemove();
 			MainSystem.getInstance().isBusy=false;
@@ -161,7 +139,9 @@ package lsd.DongMeng
 		{
 
 			MemoryRecovery.getInstance().gcFun(swfPlayer, Event.COMPLETE, on_swf_complete);
+			MemoryRecovery.getInstance().gcFun(swfPlayer, ProgressEvent.PROGRESS, on_flv_progress);
 			MemoryRecovery.getInstance().gcObj(swfPlayer, true);
+			flvRemove();
 			removeAreas();
 		}
 	}
