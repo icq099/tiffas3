@@ -34,7 +34,7 @@ package lsd.FanZhuSanJiao
 		{
 
 			flvPlayer=new FLVPlayer("movie/gx-fz1.flv", 900, 480, false);
-			//flvPlayer.addEventListener(FLVPlayerEvent.READY, on_flv_ready);
+			flvPlayer.addEventListener(FLVPlayerEvent.READY, on_flv_ready);
 			flvPlayer.addEventListener(FLVPlayerEvent.COMPLETE, on_flv_complete);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, on_Complete);
 			addChild(flvPlayer);
@@ -43,19 +43,19 @@ package lsd.FanZhuSanJiao
 
 		private function on_flv_ready(e:FLVPlayerEvent):void
 		{
-			/* addChild(flvPlayer);
+			
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 			MainSystem.getInstance().addAutoClose(dispose_fz, []);
-			MainSystem.getInstance().isBusy=true;  */
+			MainSystem.getInstance().isBusy=true;  
 			
 		}
 		private function on_flv_complete(e:FLVPlayerEvent):void
 		{   
-			MainSystem.getInstance().isBusy=false;
+			/* MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 			MainSystem.getInstance().addAutoClose(dispose_fz, []);
-			MainSystem.getInstance().isBusy=true; 
+			MainSystem.getInstance().isBusy=true;  */
 		}
 		
 
@@ -63,11 +63,10 @@ package lsd.FanZhuSanJiao
 		{
 			if (MainSystem.getInstance().isBusy == true)
 			{
-				MainSystem.getInstance().isBusy == false
-				dispose();
+				MainSystem.getInstance().isBusy == false;
 				MainSystem.getInstance().removePluginById("FanZhuSanJiaoModule");
 				removeAreas();
-				MainSystem.getInstance().isBusy == true
+				MainSystem.getInstance().isBusy == true;
 			}
 			else
 			{
@@ -178,7 +177,6 @@ package lsd.FanZhuSanJiao
 			MemoryRecovery.getInstance().gcObj(swfPlayer, true);
 			removeAreas();
 
-
-		}
+        }
 	}
 }
