@@ -77,6 +77,7 @@ package lsd.ZongHengSiHai
 		{
 		     
 		     MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS,on_Complete);
+		     MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.COMPLETE,on_flv_complete);
 		     MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.READY,on_flv_complete);
 		     MemoryRecovery.getInstance().gcObj(flvPlayer,true);
 		}
@@ -161,12 +162,21 @@ package lsd.ZongHengSiHai
 		}
 		private function fanZhuClick():void
 		{
-				trace("fanzhu");
-				
-				MainSystem.getInstance().showPluginById("FanZhuSanJiaoModule");
-			    removeAreas();
-			    
-				
+			   trace("fanzhu");
+			   removeAreas();
+			   MainSystem.getInstance().isBusy=true;
+			   flvPlayer=new FLVPlayer("movie/gx-fz1.flv", 900, 480, false);
+			   addChild(flvPlayer);
+			   //flvPlayer.addEventListener(FLVPlayerEvent.READY, on_gx_fz_complete);
+			   flvPlayer.resume();
+			   flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, gx_fz_Complete);	
+		}
+
+		private function gx_fz_Complete(e:NetStatusEvent):void
+		{  
+			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().addAutoClose(flvRemove, []);
+			MainSystem.getInstance().showPluginById("FanZhuSanJiaoModule");
 		}
 		private function beiBuWanClick():void
 		{
