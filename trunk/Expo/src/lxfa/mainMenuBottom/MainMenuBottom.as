@@ -54,29 +54,29 @@ package lxfa.mainMenuBottom
 		//场景按钮事件
 		private function on_lvsejiayuan_click(e:MouseEvent):void
 		{
-			customGotoScene(0);
+			customGoto3DScene(0);
 		}
 		private function on_lansemengxiang_click(e:MouseEvent):void
 		{
-			customGotoScene(1);
+			customGoto3DScene(1);
 		}
 		private function on_meiguantianxia_click(e:MouseEvent):void
 		{
-			customGotoScene(2);
+			customGoto3DScene(2);
 		}
 		private function on_jingxiuhuazhang_click(e:MouseEvent):void
 		{
-			customGotoScene(3);
+			customGoto3DScene(3);
 		}
 		private function on_shengshihexie_click(e:MouseEvent):void
 		{
-			customGotoScene(4);
+			customGoto3DScene(4);
 		}
-		private function customGotoScene(id:int):void
+		private function customGoto3DScene(id:int):void
 		{
-			if(!MainSystem.getInstance().isBusy && MainSystem.getInstance().currentScene!=id)
+			if(!MainSystem.getInstance().isBusy && MainMenuStatic.currentSceneId!=id)
 			{
-				MainSystem.getInstance().currentScene=id;
+				MainMenuStatic.currentSceneId=id;
 				MainSystem.getInstance().enable360System();
 				MainSystem.getInstance().startRender();
 				MainSystem.getInstance().gotoScene(id);
@@ -84,18 +84,18 @@ package lxfa.mainMenuBottom
 		}
 		private function on_zonghengsihai_click(e:MouseEvent):void//纵横四海
 		{
-			if(MainSystem.getInstance().currentScene!=5 && !MainSystem.getInstance().isBusy)
-			{
-				MainSystem.getInstance().currentScene=5;
-				MainSystem.getInstance().showPluginById("ZongHengSiHaiModule");
-			}
+			customGoto2DScene(5,"ZongHengSiHaiModule");
 		}
 		private function on_yangmengbagui_click(e:MouseEvent):void//杨梦八桂
 		{
-			if(MainSystem.getInstance().currentScene!=6 &&  !MainSystem.getInstance().isBusy)
+			customGoto2DScene(6,"YangMengBaGuiModule");
+		}
+		private function customGoto2DScene(id:int,moduleName:String):void
+		{
+			if(!MainSystem.getInstance().isBusy && MainMenuStatic.currentSceneId!=id)
 			{
-				MainSystem.getInstance().currentScene=6;
-				MainSystem.getInstance().showPluginById("YangMengBaGuiModule");
+				MainMenuStatic.currentSceneId=id;
+				MainSystem.getInstance().showPluginById(moduleName);
 			}
 		}
 		//下面的没BUG，可以不用看
