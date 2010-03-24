@@ -53,7 +53,6 @@ package lsd.FanZhuSanJiao
 
 			MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS, gx_Complete);
 			MemoryRecovery.getInstance().gcFun(flvPlayer, FLVPlayerEvent.READY, on_fz_gx_complete);
-			//MemoryRecovery.getInstance().gcFun(flvPlayer, FLVPlayerEvent.COMPLETE, on_flv_complete);
 			MemoryRecovery.getInstance().gcObj(flvPlayer, true);
 
 		}
@@ -121,8 +120,9 @@ package lsd.FanZhuSanJiao
 
 		private function on_swf_complete(e:Event):void
 		{
-			MemoryRecovery.getInstance().gcFun(swfPlayer, ProgressEvent.PROGRESS, on_flv_progress);
+
 			MemoryRecovery.getInstance().gcObj(loading_mc);
+			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 			this.addChild(swfPlayer);
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
@@ -147,6 +147,7 @@ package lsd.FanZhuSanJiao
 		public function dispose():void
 		{
 			MemoryRecovery.getInstance().gcFun(swfPlayer, Event.COMPLETE, on_swf_complete);
+			MemoryRecovery.getInstance().gcFun(swfPlayer, ProgressEvent.PROGRESS, on_flv_progress);
 			MemoryRecovery.getInstance().gcObj(swfPlayer, true);
 			removeAreas();
 
