@@ -24,7 +24,8 @@ package lsd.ZongHengSiHai
 	public class ZongHenSiHai extends UIComponent
 	{
 		private var swfPlayer:SwfPlayer;
-		private var flvPlayer:FLVPlayer;
+		private var flvPlayer_gx:FLVPlayer;
+		private var flvPlayer_fz:FLVPlayer;
 		private var loading_mc:LoadingWaveRota;
 		private var loading_mb:LoadingWaveRota;
 		public function ZongHenSiHai(withMovie:Boolean)
@@ -61,11 +62,11 @@ package lsd.ZongHengSiHai
 		}
 		private function initPlayer():void
 		{
-			flvPlayer=new FLVPlayer("movie/donggu.flv",900,480,false);
-			addChild(flvPlayer);
-			flvPlayer.addEventListener(FLVPlayerEvent.READY,on_gx_complete);
-	        flvPlayer.resume();
-			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
+			flvPlayer_gx=new FLVPlayer("movie/donggu.flv",900,480,false);
+			addChild(flvPlayer_gx);
+			flvPlayer_gx.addEventListener(FLVPlayerEvent.COMPLETE,on_gx_complete);
+	        flvPlayer_gx.resume();
+			flvPlayer_gx.addEventListener(NetStatusEvent.NET_STATUS,on_Complete);
 			
 		}
 		private function on_gx_complete(e:FLVPlayerEvent):void
@@ -73,14 +74,22 @@ package lsd.ZongHengSiHai
 			
 			MainSystem.getInstance().addAutoClose(on_plugin_update,[]);
 		}
-		private function flvRemove():void
+		private function flvRemove_gx():void
 		{
 		     
-		     MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS,on_Complete);
-		     MemoryRecovery.getInstance().gcFun(flvPlayer,NetStatusEvent.NET_STATUS, gx_fz_Complete);
-		     MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.READY,on_gx_complete);
-		     MemoryRecovery.getInstance().gcObj(flvPlayer,true);
+		     MemoryRecovery.getInstance().gcFun(flvPlayer_gx,NetStatusEvent.NET_STATUS,on_Complete);
+		     MemoryRecovery.getInstance().gcFun(flvPlayer_gx,FLVPlayerEvent.COMPLETE,on_gx_complete);
+		     MemoryRecovery.getInstance().gcObj(flvPlayer_gx,true);
 		}
+		private function flvRemove_fz():void{
+			
+			 MemoryRecovery.getInstance().gcFun(flvPlayer_fz,NetStatusEvent.NET_STATUS, gx_fz_Complete);
+			 MemoryRecovery.getInstance().gcObj(flvPlayer_fz,true);
+		}
+		
+		
+		
+		
 		private function on_Complete(e:Event):void
 		{     
              init();
@@ -133,7 +142,7 @@ package lsd.ZongHengSiHai
 			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			MemoryRecovery.getInstance().gcObj(loading_mb);
-			flvRemove();
+			flvRemove_gx();
 			this.addChild(swfPlayer);
 			addAreas();
 		    CollisionManager.getInstance().showCollision();
@@ -162,16 +171,16 @@ package lsd.ZongHengSiHai
 			   trace("fanzhu");
 			   removeAreas();
 			   MainSystem.getInstance().isBusy=true;
-			   flvPlayer=new FLVPlayer("movie/gx-fz1.flv", 900, 480, false);
-			   addChild(flvPlayer);
-			   flvPlayer.resume();
-			   flvPlayer.addEventListener(NetStatusEvent.NET_STATUS, gx_fz_Complete);	
+			   flvPlayer_fz=new FLVPlayer("movie/gx-fz1.flv", 900, 480, false);
+			   addChild(flvPlayer_fz);
+			   flvPlayer_fz.resume();
+			   flvPlayer_fz.addEventListener(NetStatusEvent.NET_STATUS, gx_fz_Complete);	
 		}
 
 		private function gx_fz_Complete(e:NetStatusEvent):void
 		{  
 			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().addAutoClose(flvRemove, []);
+			MainSystem.getInstance().addAutoClose(flvRemove_fz, []);
 			MainSystem.getInstance().showPluginById("FanZhuSanJiaoModule");
 		}
 		private function beiBuWanClick():void
@@ -193,8 +202,8 @@ package lsd.ZongHengSiHai
         }
          private function close():void
          {  
-         	MemoryRecovery.getInstance().gcFun(swfPlayer,Event.COMPLETE,on_swf_complete);
          	MemoryRecovery.getInstance().gcFun(swfPlayer,ProgressEvent.PROGRESS,on_flv_progress);
+         	MemoryRecovery.getInstance().gcFun(swfPlayer,Event.COMPLETE,on_swf_complete);
          	MemoryRecovery.getInstance().gcObj(swfPlayer,true);
          	
            
