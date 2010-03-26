@@ -27,6 +27,7 @@ package lxfa.mainMenuTop
 			if(!MainSystem.getInstance().isBusy && MainMenuStatic.currentSceneId!=id)
 			{
 				MainMenuStatic.currentSceneId=id;
+				MainSystem.getInstance().currentScene=-1;
 				MainSystem.getInstance().showPluginById(moduleName);
 			}
 		}

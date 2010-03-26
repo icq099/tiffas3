@@ -60,10 +60,9 @@ package lxfa.view.tool
 		public static function init(base:DisplayObjectContainer):void {
 			if (instance == null) {
 				instance = new ToolTip();
-				base.addChild(instance);				
 			}
+			base.addChild(instance);
 		}
-		
 		public static function register(area:DisplayObject, message:String):void {
 			if(instance != null){
 				var prop:AccessibilityProperties = new AccessibilityProperties();

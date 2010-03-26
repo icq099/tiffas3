@@ -109,7 +109,7 @@
 
 			addChild(viewport);
 			camera.z=20;
-			sphere=new Sphere(material, 5000, 20, 20);
+			sphere=new Sphere(material, 5000, 40, 40);
 			sphere.scaleX*=-1
 			//设置罗盘
 			var material_compass:BitmapMaterial=new BitmapMaterial(compassBitmapdata.clone());
@@ -428,70 +428,76 @@
 			//添加事件
 			plane_animate.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, function(e:InteractiveScene3DEvent):void
 				{
-					tip_sprite.text=tip
-					addChild(tip_sprite);
+					if(tip!="")
+					{
+						tip_sprite.text=tip
+						addChild(tip_sprite);
+					}
 					plane_animate.filters=[glowFilter];
 				});
 			plane_animate.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, function(e:InteractiveScene3DEvent):void
 				{
-					removeChild(tip_sprite);
+					if(tip!="")
+					{
+						removeChild(tip_sprite);
+					}
 					plane_animate.filters=[];
 				});
-//			var distance:int=10;
-//			var rotateSpeed:int=5;
-//			var scaleSpeed:Number=0.1;
-//			Application.application.stage.addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent):void
-//				{
-//					if (e.keyCode == 87)
-//					{
-//						plane_animate.z+=distance;
-//					}
-//					if (e.keyCode == 83)
-//					{
-//						plane_animate.z-=distance;
-//					}
-//					if (e.keyCode == 65)
-//					{
-//						plane_animate.x+=distance;
-//					}
-//					if (e.keyCode == 68)
-//					{
-//						plane_animate.x-=distance;
-//					}
-//					if (e.keyCode == 189)
-//					{
-//						plane_animate.y+=distance;
-//					}
-//					if (e.keyCode == 187)
-//					{
-//						plane_animate.y-=distance;
-//					}
-//					if (e.keyCode == 81)
-//					{
-//						plane_animate.rotationY+=rotateSpeed;
-//					}
-//					if (e.keyCode == 69)
-//					{
-//						plane_animate.rotationY-=rotateSpeed;
-//					}
-//					if (e.keyCode == 90)
-//					{
-//						plane_animate.scaleX+=scaleSpeed;
-//					}
-//					if (e.keyCode == 88)
-//					{
-//						plane_animate.scaleX-=scaleSpeed;
-//					}
-//					if (e.keyCode == 67)
-//					{
-//						plane_animate.scaleY+=scaleSpeed;
-//					}
-//					if (e.keyCode == 86)
-//					{
-//						plane_animate.scaleY-=scaleSpeed;
-//					}
-//					trace("x=\"" + plane_animate.x + "\" y=\"" + plane_animate.y + "\" z=\"" + plane_animate.z + "\" rotationY=\"" + plane_animate.rotationY + "\"" + " scaleX=\"" + plane_animate.scaleX + "\" scaleY=\"" + plane_animate.scaleY + "\"");
-//				});
+			var distance:int=10;
+			var rotateSpeed:int=5;
+			var scaleSpeed:Number=0.1;
+			Application.application.stage.addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent):void
+				{
+					if (e.keyCode == 87)
+					{
+						plane_animate.z+=distance;
+					}
+					if (e.keyCode == 83)
+					{
+						plane_animate.z-=distance;
+					}
+					if (e.keyCode == 65)
+					{
+						plane_animate.x+=distance;
+					}
+					if (e.keyCode == 68)
+					{
+						plane_animate.x-=distance;
+					}
+					if (e.keyCode == 189)
+					{
+						plane_animate.y+=distance;
+					}
+					if (e.keyCode == 187)
+					{
+						plane_animate.y-=distance;
+					}
+					if (e.keyCode == 81)
+					{
+						plane_animate.rotationY+=rotateSpeed;
+					}
+					if (e.keyCode == 69)
+					{
+						plane_animate.rotationY-=rotateSpeed;
+					}
+					if (e.keyCode == 90)
+					{
+						plane_animate.scaleX+=scaleSpeed;
+					}
+					if (e.keyCode == 88)
+					{
+						plane_animate.scaleX-=scaleSpeed;
+					}
+					if (e.keyCode == 67)
+					{
+						plane_animate.scaleY+=scaleSpeed;
+					}
+					if (e.keyCode == 86)
+					{
+						plane_animate.scaleY-=scaleSpeed;
+					}
+					trace("x=\"" + plane_animate.x + "\" y=\"" + plane_animate.y + "\" z=\"" + plane_animate.z + "\" rotationY=\"" + plane_animate.rotationY + "\"" + " scaleX=\"" + plane_animate.scaleX + "\" scaleY=\"" + plane_animate.scaleY + "\"");
+				});
 			return plane_animate;
 
 		}

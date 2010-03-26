@@ -12,6 +12,7 @@ package lsd.ZongHengSiHai
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
+	import lxfa.view.tool.ToolTip;
 	
 	import mx.core.Application;
 	import mx.core.UIComponent;
@@ -111,8 +112,6 @@ package lsd.ZongHengSiHai
 		{
 			loading_mc=new LoadingWaveRota();
 			loading_mb=new LoadingWaveRota();
-			loading_mb.x=450;
-			loading_mb.y=180;
 			addChild(Toolyzhkof.mcToUI(loading_mb));
 			this.addEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 		}
@@ -120,6 +119,8 @@ package lsd.ZongHengSiHai
 		{
 			loading_mc.x=this.stage.stageWidth/2;
 			loading_mc.y=this.stage.stageHeight/2;
+			loading_mb.x=this.stage.stageWidth/2;
+			loading_mb.y=this.stage.stageHeight/2;
 			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
 		}
 		private function on_flv_progress(e:ProgressEvent):void//FLV加载完毕
@@ -135,8 +136,9 @@ package lsd.ZongHengSiHai
 			flvRemove();
 			this.addChild(swfPlayer);
 			this.addChild(unrealCompassSwc);
+			ToolTip.init(this);
+			ToolTip.register(unrealCompassSwc,"杨梦八桂");
 			addAreas();
-		    CollisionManager.getInstance().showCollision();
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatcherSceneChangeComplete(5);
 			MainSystem.getInstance().addSceneChangeCompleteHandler(on_plugin_update,[]);

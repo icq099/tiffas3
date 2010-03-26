@@ -31,7 +31,7 @@ package lxfa.No4.view
 		{
 			flvPlayer.resume();
 			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
+			MainSystem.getInstance().dispatcherSceneChangeComplete(4);
 			MainSystem.getInstance().isBusy=true;
 		}
 		private function flvPlayer_NetStatusHandler(e:NetStatusEvent):void
@@ -42,7 +42,7 @@ package lxfa.No4.view
 				MainSystem.getInstance().enable360System();
 			}
 			MainSystem.getInstance().gotoScene(0);//跑到绿色家园
-//			MainSystem.getInstance().addEventListener(SceneChangeEvent,on_scenechanged);
+			MainSystem.getInstance().addEventListener(SceneChangeEvent.COMPLETE,on_scenechanged);
 		}
 		private function on_scenechanged(e:SceneChangeEvent):void
 		{

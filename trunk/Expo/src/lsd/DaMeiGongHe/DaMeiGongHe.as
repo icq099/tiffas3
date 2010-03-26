@@ -6,6 +6,7 @@ package lsd.DaMeiGongHe
 	import flash.events.NetStatusEvent;
 	import flash.events.ProgressEvent;
 	
+	import lxfa.mainMenuBottom.MainMenuStatic;
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
 	import lxfa.utils.MemoryRecovery;
@@ -25,6 +26,7 @@ package lsd.DaMeiGongHe
 
 		public function DaMeiGongHe()
 		{
+			MainMenuStatic.currentSceneId=53;
 			MainSystem.getInstance().dispatcherSceneChangeInit(53);
 			MainSystem.getInstance().dispatcherPluginUpdate();
 			MainSystem.getInstance().isBusy=true;
@@ -94,7 +96,6 @@ package lsd.DaMeiGongHe
 			var daMeiGongHeWindowArea:Array=[[[670, 185], [880, 222]]];
 			CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "dmg_gx");
 			CollisionManager.getInstance().addCollision(daMeiGongHeWindowArea, daMeiGongHeWindowClick, "daMeiGongHeWindow");
-       	    CollisionManager.getInstance().showCollision();
        }
 		private function on_swf_complete(e:Event):void
 		{

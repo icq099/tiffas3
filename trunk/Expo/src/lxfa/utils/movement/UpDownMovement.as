@@ -25,13 +25,7 @@ package lxfa.utils.movement
 		{
 			if(obj!=null)
 			{
-				if(Math.random()>0.5)
-				{
-					moveUpComplete();
-				}else
-				{
-					moveDownComplete();
-				}
+				moveUpComplete();
 			}
 		}
 		//向上运动

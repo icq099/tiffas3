@@ -13,6 +13,8 @@ package lxfa.normalWindow
 	
 	import lxfa.view.tool.ToolTip;
 	
+	import yzhkof.loader.CompatibleLoader;
+	
 	public class PicturePlayer extends Sprite
 	{
 		private var picturePlayerUISwc:PicturePlayerUISwc;
@@ -25,7 +27,7 @@ package lxfa.normalWindow
 		private var pictureContainer:Sprite;//图片的容器，倒时候可以用来移动所有的预览图
 		private var pictureNum:int;//图片的总数
 		private var offset:int=0;  //当前图片载入的数目
-		private const defaultDistance:int=66;//两张图片在X坐标上的距离
+		private const defaultDistance:int=200;//两张图片在X坐标上的距离
 		private const defaultScale:Number=0.15;//预览图的默认宽度
 		private var previewPictureArray:Array;//存储所有的图片
 		private var rubbishArray:Array;
@@ -136,27 +138,23 @@ package lxfa.normalWindow
 		private var locationx:int;
 		private function onLeftClick(e:MouseEvent):void
 		{
-			locationx=pictureContainer.x-defaultDistance;
+			locationx=pictureContainer.x+defaultDistance;
 			onClick();
 		}
 		private function onRightClick(e:MouseEvent):void
 		{
-			locationx=pictureContainer.x+defaultDistance;
-			onClick();
+			if(locationx!=0)
+			{
+				locationx=pictureContainer.x-defaultDistance;
+				onClick();
+			}
 		}
 		private function onClick():void
 		{
-			Tweener.addTween(pictureContainer,{x:locationx,time:2});
 			picturePlayerUISwc.left.mouseEnabled=picturePlayerUISwc.right.mouseEnabled=false;
-			this.addEventListener(Event.ENTER_FRAME,onENTER_FRAME);
-		}
-		private function onENTER_FRAME(e:Event):void
-		{
-			if(!Tweener.isTweening(pictureContainer))
-			{
-				this.removeEventListener(Event.ENTER_FRAME,onENTER_FRAME);
-				picturePlayerUISwc.left.mouseEnabled=picturePlayerUISwc.right.mouseEnabled=true;
-			}
+			Tweener.addTween(pictureContainer,{x:locationx,time:2,onComplete:function():void{
+			   picturePlayerUISwc.left.mouseEnabled=picturePlayerUISwc.right.mouseEnabled=true;
+			}});
 		}
 		public function close():void
 		{

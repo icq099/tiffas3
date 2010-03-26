@@ -29,7 +29,7 @@ package lxfa.index.view
 		private function initIndexSwc():void
 		{
 			indexSwc=new IndexSwc();
-			indexSwc.btn_enter.mouseEnabled=false;
+			indexSwc.btn_enter.visible=false;
 			indexSwc.btn_enter.addEventListener(MouseEvent.CLICK,on_btn_enter_click);
 			indexSwc.progressText.autoSize=TextFieldAutoSize.LEFT;
 			indexSwc.progressText.mouseEnabled=false;
@@ -77,7 +77,7 @@ package lxfa.index.view
 		private function downLoadcompleteHandler(e:FLVPlayerEvent):void
 		{
 			indexSwc.progressText.text="100";
-			indexSwc.btn_enter.mouseEnabled=true;
+			indexSwc.btn_enter.visible=true;
 		}
 		private function completeHandler(e:Event):void
 		{

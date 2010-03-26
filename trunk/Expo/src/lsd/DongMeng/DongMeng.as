@@ -6,6 +6,7 @@ package lsd.DongMeng
 	import flash.events.NetStatusEvent;
 	import flash.events.ProgressEvent;
 	
+	import lxfa.mainMenuBottom.MainMenuStatic;
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
 	import lxfa.utils.MemoryRecovery;
@@ -24,6 +25,7 @@ package lsd.DongMeng
        	private var loading_mc:LoadingWaveRota;
 		public function DongMeng()
 		{
+			MainMenuStatic.currentSceneId=52;
 			MainSystem.getInstance().dispatcherSceneChangeInit(52);
 			MainSystem.getInstance().dispatcherPluginUpdate();
 			MainSystem.getInstance().isBusy=true;
@@ -82,7 +84,6 @@ package lsd.DongMeng
 			var dongMengWindowArea:Array=[[[660, 110], [870, 148]]];
 			CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "dm_gx")
 			CollisionManager.getInstance().addCollision(dongMengWindowArea, dongMengWindowClick, "dongMengWindow");
-			CollisionManager.getInstance().showCollision();
         }
 		private function initLoadingMc():void
 		{
