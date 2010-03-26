@@ -36,7 +36,6 @@ package commands
 		}
 		private static var num:int=0;
 		override public function execute(notification:INotification):void{
-			
 			setValue(notification);
 			var xml_movie:XMLList;
 			var camera_rota:Object;
@@ -63,7 +62,6 @@ package commands
 				
 			}
 			if(movie==null){
-
 				facade.sendNotification(FacadePv.POSITION_CHANGE, MainSystem.getInstance().currentScene);
 			
 			}else{
@@ -139,7 +137,9 @@ package commands
             }
             else
             {
-            	MainSystem.getInstance().runScript(movie);
+            	MainSystem.getInstance().isBusy=false;
+            	facade.sendNotification(FacadePv.GO_POSITION,1);
+//            	MainSystem.getInstance().runScript(movie);
             } 
 		}
 		

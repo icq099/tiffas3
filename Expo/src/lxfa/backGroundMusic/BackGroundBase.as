@@ -20,7 +20,7 @@ package lxfa.backGroundMusic
 		{
 			for(var i:int=0;i<musicNum;i++)
 			{
-				var mp3:Mp3Player=new Mp3Player("sound/"+i+".mp3",true);
+				var mp3:Mp3Player=new Mp3Player("sound/bg"+(i+1)+".mp3",true);
 				musics.push(mp3);
 				mp3.stop();
 				mp3.addEventListener(Mp3PlayerEvent.COMPLETE,onComplete);

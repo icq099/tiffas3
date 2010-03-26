@@ -15,9 +15,9 @@ package lxfa.mainMenuBottom
 	{
 		private var bottom:MainMenuBottomSwc;
 		private const cameraRotateSpeed:int=8;
-		private const focusMaxRange:int=110;
+		private const focusMaxRange:int=120;
 		private const focusMinRange:int=60;
-		private var focusSpeed:int=10;
+		private var focusSpeed:int=5;
 		private var currentSceneId:int=-1;//当前场景的编号
 		public function MainMenuBottom()
 		{

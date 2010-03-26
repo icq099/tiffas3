@@ -11,6 +11,7 @@ package lxfa.No3Swf.view
 	
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.MemoryRecovery;
+	import lxfa.view.tool.ToolTip;
 	
 	import mx.core.Application;
 	import mx.core.UIComponent;
@@ -59,13 +60,16 @@ package lxfa.No3Swf.view
 			MemoryRecovery.getInstance().gcObj(loading_mc);//下载完毕的时候回收LOADING_MC
 			this.addChild(flowerFlvSwf);
 			this.addChild(unrealCompassSwc);
+			ToolTip.init(this);
+			ToolTip.register(unrealCompassSwc,"绿色家园");
 			unrealCompassSwc.addEventListener(MouseEvent.CLICK,onClick);
 			Tweener.addTween(flowerFlvSwf,{alpha:1,time:3});
 			MainSystem.getInstance().isBusy=false;
             MainSystem.getInstance().showPluginById("MainMenuBottomModule");
 			MainSystem.getInstance().showPluginById("MainMenuTopModule");
+			MainSystem.getInstance().showPluginById("BackGroundMusicModule");
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
-			MainSystem.getInstance().addAutoClose(dispose,[]);
+			MainSystem.getInstance().addSceneChangeCompleteHandler(dispose,[]);
 			MainSystem.getInstance().removePluginById("No3Module");
 		}
 		private var hasClick:Boolean=false;

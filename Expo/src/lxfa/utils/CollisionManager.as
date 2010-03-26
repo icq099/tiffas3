@@ -101,7 +101,6 @@ package lxfa.utils
 				rootAr[rootObj[id].id]=null;
 			}
 			graphics.clear();
-			showCollision();
 		}
 		private function clearAllText():void
 		{

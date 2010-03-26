@@ -6,6 +6,7 @@ package lsd.FanZhuSanJiao
 	import flash.events.NetStatusEvent;
 	import flash.events.ProgressEvent;
 	
+	import lxfa.mainMenuBottom.MainMenuStatic;
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
 	import lxfa.utils.MemoryRecovery;
@@ -25,6 +26,7 @@ package lsd.FanZhuSanJiao
 
 		public function FanZhuSanJiao()
 		{   
+			MainMenuStatic.currentSceneId=51;
 			MainSystem.getInstance().dispatcherSceneChangeInit(51);
 			MainSystem.getInstance().dispatcherPluginUpdate();
 			MainSystem.getInstance().isBusy=true;
@@ -71,7 +73,6 @@ package lsd.FanZhuSanJiao
 			initLoadingMc();
 			swfPlayer.addEventListener(ProgressEvent.PROGRESS, on_flv_progress);
 			swfPlayer.addEventListener(Event.COMPLETE, on_swf_complete);
-			CollisionManager.getInstance().showCollision();
 		}
         private function addAreas():void{
         	
@@ -79,7 +80,6 @@ package lsd.FanZhuSanJiao
 			var fanZhuWindowArea:Array=[[[680, 153], [892, 192]]]
         	CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "fz_gx");
 			CollisionManager.getInstance().addCollision(fanZhuWindowArea, fanZhuWindowClick, "fanZhuWindow");
-			CollisionManager.getInstance().showCollision();
         }
 		private function initLoadingMc():void
 		{
