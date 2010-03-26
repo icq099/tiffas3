@@ -37,7 +37,7 @@ package yzhkof.loader
 		 * 
 		 */		
 		public function add(url:Object):void{
-			url_arr.push(url);
+			url_arr.unshift(url);
 			loader_url_map.put(url,new LoaderClass());
 		}
 		public function getItem(url:Object):Object{
