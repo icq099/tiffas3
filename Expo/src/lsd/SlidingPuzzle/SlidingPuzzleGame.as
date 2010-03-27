@@ -10,6 +10,8 @@ package lsd.SlidingPuzzle
 	
 	import lxfa.utils.MemoryRecovery;
 	
+	import yzhkof.Toolyzhkof;
+	
 	public class SlidingPuzzleGame extends Sprite
 	{
 		private var slidingPuzzle:SlidingPuzzle;
@@ -37,16 +39,16 @@ package lsd.SlidingPuzzle
 			puzzleGameClose.close_btn.addEventListener(MouseEvent.CLICK,end_fun);
 			this.addEventListener(SlidingEvent.PUZZLE_END,end_fun);
 		}
-		private function on_loaded(e:Event):void
+		
+        private function on_loaded(e:Event):void
 		{
 			MainSystem.getInstance().dispatcherSceneChangeComplete(7);
-			MainSystem.getInstance().addSceneChangeCompleteHandler(function():void{
-				//删掉自己
-			},[]);
+			MainSystem.getInstance().addSceneChangeCompleteHandler(dispose_sp,[]);
 			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
-//				/不能玩游戏
+			    puzzleGameClose.close_btn.removeEventListener(MouseEvent.CLICK,end_fun);
+			    puzzleGameClose.close_btn.mouseEnabled=false;
+			    slidingPuzzle.mouseEnabled=false;
 			},[]);
-			MemoryRecovery.getInstance().gcFun(slidingPuzzle,Event.COMPLETE,on_loaded);
 			MainSystem.getInstance().isBusy=false;
 		}
 		private function next_fun(e:SlidingEvent):void{
@@ -84,11 +86,19 @@ package lsd.SlidingPuzzle
 			 	
 			 	}});
 		}
-		
-		
-		
-		
-		
+		private function dispose_sp():void{
+			
+			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["SlidingModule"]);
+		}
+		public function dispose():void{
+			
+			MemoryRecovery.getInstance().gcFun(slidingPuzzle,SlidingEvent.PUZZLE_CHANG,next_fun);
+			MemoryRecovery.getInstance().gcFun(slidingPuzzle,Event.COMPLETE,on_loaded);
+			MemoryRecovery.getInstance().gcObj(slidingPuzzle,false);
+			MemoryRecovery.getInstance().gcFun(puzzleGameClose.close_btn,MouseEvent.CLICK,end_fun);
+			MemoryRecovery.getInstance().gcObj(puzzleGameClose);
+			
+		}
 
 	}
 }
