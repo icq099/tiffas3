@@ -4,8 +4,9 @@ package
 	import flash.events.Event;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
-	import flash.media.SoundMixer;
 	import flash.net.URLRequest;
+	
+	import lxfa.utils.MemoryRecovery;
 	
 	public class CustomMusicManager extends Sprite
 	{
@@ -57,7 +58,7 @@ package
 		public function dispose():void{
 			
 			soundStop();
-            soundChannel.removeEventListener(Event.SOUND_COMPLETE,soundFinished);
+			MemoryRecovery.getInstance().gcFun(soundChannel,Event.SOUND_COMPLETE,soundFinished);
 		    soundChannel=null;
 		    sound=null;
 		}
