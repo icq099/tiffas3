@@ -1,20 +1,23 @@
-package
+package lxfa.utils
 {
-	import flash.display.Sprite;
+	import communication.Event.SceneChangeEvent;
+	import communication.MainSystem;
+	
 	import flash.events.Event;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.net.URLRequest;
 	
+	import lxfa.model.CustomMusicModel;
 	import lxfa.utils.MemoryRecovery;
 	
-	public class CustomMusicManager extends Sprite
+	public class CustomMusicManager
 	{
 	   private static var instance:CustomMusicManager
 	   private var sound:Sound;
 	   private var soundChannel:SoundChannel;
 	   private var resumeTime:Number;
-	  
+	   private var customMusicModel:CustomMusicModel;
 	   
 		public function CustomMusicManager()
 		{
@@ -25,6 +28,17 @@ package
 			{
 				throw new Error("不能实例化");
 			}
+			init();
+		}
+		private function init():void
+		{
+			customMusicModel=new CustomMusicModel();
+			MainSystem.getInstance().addEventListener(SceneChangeEvent.INIT,function(e:SceneChangeEvent):void{
+				dispose();
+			});
+			MainSystem.getInstance().addEventListener(SceneChangeEvent.COMPLETE,function(e:SceneChangeEvent):void{
+				loadCustomMusic(customMusicModel.getMusicUrl(e.id));
+			});
 		}
 		public static function getInstance():CustomMusicManager
 		{
@@ -33,17 +47,19 @@ package
 		}
 		
 		public function loadCustomMusic(url:String):void{
-		    
-		    sound=new Sound();
-			sound.load(new URLRequest(url));
-			resumeTime = 0;
-			soundChannel=sound.play();
-			soundChannel.addEventListener(Event.SOUND_COMPLETE,soundFinished,false,0,true);	
+		    if(url!="" && url!=null)
+		    {
+			    sound=new Sound();
+				sound.load(new URLRequest(url));
+				resumeTime = 0;
+				soundChannel=sound.play();
+				soundChannel.addEventListener(Event.SOUND_COMPLETE,soundFinished,false,0,true);
+		    }
 		}
 		
 		
 		private function soundFinished(e:Event):void{
-			
+			 MemoryRecovery.getInstance().gcFun(soundChannel,Event.SOUND_COMPLETE,soundFinished);
 			 soundChannel=sound.play(0);
 			 soundChannel.addEventListener(Event.SOUND_COMPLETE,soundFinished,false,0,true);
 		}

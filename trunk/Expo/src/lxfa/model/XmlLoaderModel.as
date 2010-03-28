@@ -5,6 +5,8 @@ package lxfa.model
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
+	import lxfa.utils.MemoryRecovery;
+	
 	public class XmlLoaderModel extends Sprite
 	{
 		private var xmlLoader:URLLoader;
@@ -20,6 +22,12 @@ package lxfa.model
 		{
 			xmlData=XML(URLLoader(e.currentTarget).data);
 			this.dispatchEvent(new Event(Event.COMPLETE));//抛出完成的事件
+		}
+		public function dispose():void
+		{
+			MemoryRecovery.getInstance().gcFun(xmlLoader,Event.COMPLETE,onComplete);
+			MemoryRecovery.getInstance().gcObj(xmlLoader);
+			MemoryRecovery.getInstance().gcObj(xmlRequest);
 		}
 	}
 }

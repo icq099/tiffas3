@@ -3,6 +3,8 @@ package {
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
 	
+	import lxfa.utils.CustomMusicManager;
+	
 	import mx.containers.Canvas;
 	
 	import util.Cover;
@@ -19,7 +21,7 @@ package {
 			
 		}
 		private function init(e:Event):void{
-			
+			CustomMusicManager.getInstance();
 			//KeyMy.setStage(this.stage);
 			addChild(new Pv360Application());
 			//FPSfromA3d.init(stage)
