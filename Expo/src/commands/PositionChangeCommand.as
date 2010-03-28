@@ -90,6 +90,7 @@ package commands
 		{
 			//罗盘旋转完毕就开始抛出插件刷新的事件
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新的事件
+			MainSystem.getInstance().dispatcherSceneChangeInit(MainSystem.getInstance().currentScene);
 			if(inquire==1)
 			{
 				facade.sendNotification(FacadePv.STOP_RENDER);
