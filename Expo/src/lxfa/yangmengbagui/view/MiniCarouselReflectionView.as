@@ -8,7 +8,6 @@
 	import flash.filters.*;
 	
 	import lxfa.utils.MemoryRecovery;
-	import lxfa.view.pv3dAddOn.milkmidi.papervision3d.materials.ReflectionFileMaterial;
 	import lxfa.view.pv3dAddOn.org.papervision3d.objects.primitives.NumberPlane;
 	import lxfa.yangmengbagui.model.YangMengBaGuiModel;
 	
@@ -24,7 +23,7 @@
 		private var rootNode	:DisplayObject3D;
 		//DisplayObject3D物件，可以想像是PV3D裡的空白MovieClip。
 		//本身是個容器,可以透過addChild加入任何繼承DisplayObject3D的物件。
-		private var radius		:Number = 800;//半徑
+		private var radius		:Number = 1000;//半徑
 		private var angleUnit	:Number ;
 		//360徑度 = Math.PI * 2 弧度
 		//除以數量即可得到單位弧度。
@@ -48,16 +47,15 @@
 			angleUnit = (Math.PI ) / itemOfNumber;//角度的偏移量
 			init3DEngine();
 			init3DObject();
-			initObject();	
 		}
 		private function init3DEngine():void{
-			this.x=200;
-			this.y=200;
-			basicView = new BasicView(600, 600, false, true, "Target");			
+			this.x=0;
+			this.y=150;
+			basicView = new BasicView(900, 600, false, true, "Target");			
 			//設定反射面的 y 軸方向高度
-			basicView.camera.y = 400;
+			basicView.camera.y = 0;
 			basicView.camera.z = -3000;
-			basicView.camera.focus=80;
+			basicView.camera.focus=140;
 			basicView.viewport.buttonMode = true;
 			//PV3D物件預設都不會有滑鼠指標手示，
 			//BasicBiew是繼承Sprite，
@@ -79,13 +77,13 @@
 			var bmpMat		:MaterialObject3D;
 			for (var i:int = 0; i < itemOfNumber; i++) {	
 				imgUrl=yangMengBaGuiModel.getImgUrl(i);			
-				bmpMat = new ReflectionFileMaterial(imgUrl, true);
+				bmpMat = new BitmapFileMaterial(imgUrl,true);
 				planeHeight = 400;			
 				bmpMat.doubleSided = true; //雙面模式
 				bmpMat.interactive = true;
 				bmpMat.smooth = true;		
-				var _plane	:NumberPlane = new NumberPlane(bmpMat, 320, 400, 2, 2);
-				var _radian	:Number = i * angleUnit;
+				var _plane	:NumberPlane = new NumberPlane(bmpMat, 400, 320, 2, 2);
+				var _radian	:Number = i * angleUnit*0.8;
 				_plane.x = Math.cos(_radian) * radius;
 				_plane.z = Math.sin(_radian) * radius;
 				_plane.setID(yangMengBaGuiModel.getMin()+i);
@@ -100,25 +98,8 @@
 				rubbishArray.push(bmpMat);
 				rubbishArray.push(_plane);
 			}
+			rootNode.rotationY=-25;
 			rubbishArray.push(rootNode);
-		}
-		private function initObject():void{
-			this.addEventListener(Event.ADDED_TO_STAGE,ADDED_TO_STAGE);
-			//偵聽MouseEvent.MOUSE_WHEEL事件。
-		}
-		private function ADDED_TO_STAGE(e:Event):void
-		{
-			stage.addEventListener(MouseEvent.MOUSE_WHEEL, onStageMouseWheel);
-		}
-		private function onStageMouseWheel(e:MouseEvent):void {
-			//MouseEvent類別, delta屬性可以得到滑鼠滾輪的值
-			//e.dalta如果大於0,表示滾輪向上,小於0表示向下。	
-			if (e.delta >0) {
-				currentIndex++;
-			}else {
-				currentIndex--;
-			}
-			updateRootNodeTransform();
 		}
 		private function onStageClick(e:MouseEvent):void{
 			ldr.unload();
@@ -137,17 +118,7 @@
 		private var currentTarget:NumberPlane;//当前选择的平面
 		private function on3DPress(e:InteractiveScene3DEvent):void{
 			currentTarget=NumberPlane(e.currentTarget);
-            currentIndex=currentTarget.getID()-yangMengBaGuiModel.getMin()+3;
-            updateRootNodeTransform(true);
-		}
-		private function updateRootNodeTransform(isPress:Boolean=false):void {
-			//更新rootNode的rotationY值
-			Tweener.addTween(rootNode,{rotationY:currentIndex*angleUnit*180/Math.PI-180,time:0.5,onComplete:function():void{
-				if(isPress)//只有用户点击才能触发
-				{
-					MainSystem.getInstance().runAPIDirect("showNormalWindow",[currentTarget.getID()]);
-				}
-			}});
+			MainSystem.getInstance().runAPIDirect("showNormalWindow",[currentTarget.getID()]);
 		}
 		private function onEventRender3D(e:Event):void {	
 			if(basicView!=null)
