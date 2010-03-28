@@ -68,7 +68,7 @@ package proxys
 		}
 		public function changePosition(postition:int):void{
 			MainSystem.getInstance().dispatcherSceneChangeInit(postition);
-			MainMenuStatic.currentSceneId=postition;
+//			MainMenuStatic.currentSceneId=postition;
 			if((MainSystem.getInstance().currentScene!=postition)&&(travel.menu_count<=0)&&(!MainSystem.getInstance().isBusy)){
 				MainSystem.getInstance().isBusy=true;
 				oldPosition=MainSystem.getInstance().currentScene;
