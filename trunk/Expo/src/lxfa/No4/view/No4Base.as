@@ -1,6 +1,5 @@
 package lxfa.No4.view
 {
-	import communication.Event.PluginEvent;
 	import communication.Event.SceneChangeEvent;
 	import communication.MainSystem;
 	
@@ -9,6 +8,7 @@ package lxfa.No4.view
 	
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
+	
 	
 	public class No4Base extends Sprite
 	{

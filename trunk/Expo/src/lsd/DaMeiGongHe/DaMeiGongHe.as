@@ -10,13 +10,13 @@ package lsd.DaMeiGongHe
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
 	import lxfa.utils.MemoryRecovery;
+	import lxfa.view.loadings.LoadingWaveRota;
 	import lxfa.view.player.FLVPlayer;
 	
 	import mx.core.Application;
 	import mx.core.UIComponent;
 	
 	import yzhkof.Toolyzhkof;
-	import yzhkof.loadings.LoadingWaveRota;
 
 	public class DaMeiGongHe extends UIComponent
 	{

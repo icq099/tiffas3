@@ -41,7 +41,6 @@
 
 		private var compassBitmapdata:BitmapData=ToolBitmapData.getInstance().drawDisplayObject(new CompassSkin);
 		private var arrow_bitmapdata:BitmapData=ToolBitmapData.getInstance().drawDisplayObject(new ArrowSkin);
-		private var arrow_bitmapdata1:BitmapData=ToolBitmapData.getInstance().drawDisplayObject(new ArrowSkin1);
 
 		private var this_stage:Stage;
 		private var URLpath:URLRequest;
@@ -109,7 +108,7 @@
 
 			addChild(viewport);
 			camera.z=20;
-			sphere=new Sphere(material, 5000, 40, 40);
+			sphere=new Sphere(material, 5000, 40, 20);
 			sphere.scaleX*=-1
 			//设置罗盘
 			var material_compass:BitmapMaterial=new BitmapMaterial(compassBitmapdata.clone());
@@ -269,11 +268,6 @@
 			material_arrow.doubleSided=true;
 			material_arrow.interactive=true;
 			arrowMaterials.push(material_arrow);
-			var material_arrow1:BitmapMaterial=new BitmapMaterial(arrow_bitmapdata1.clone());
-			material_arrow1.smooth=true;
-			material_arrow1.doubleSided=true;
-			material_arrow1.interactive=true;
-			arrowMaterials.push(material_arrow1); //存起来，用于回收
 			var plane:Plane=new Plane(material_arrow, 1.4, 8.4, 2, 4)
 			arrows.push(plane);
 			plane.rotationX=-90;

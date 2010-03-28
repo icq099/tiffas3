@@ -74,6 +74,7 @@ package lxfa.normalWindow
 		//标准窗关闭的时候
 		private function onnormalWindowClose(e:Event):void
 		{
+			MainSystem.getInstance().startRender();
 			this.dispatchEvent(new Event(Event.CLOSE));
 			normalWindow=null;
 			if(animate!=null)

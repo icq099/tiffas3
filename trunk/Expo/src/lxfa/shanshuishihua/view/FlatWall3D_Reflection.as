@@ -8,10 +8,9 @@ package lxfa.shanshuishihua.view{
     import flash.utils.getQualifiedClassName;
     
     import lxfa.shanshuishihua.model.ShanShuiShiHuaModel;
+    import lxfa.utils.MemoryRecovery;
     import lxfa.view.pv3dAddOn.milkmidi.papervision3d.materials.ReflectionFileMaterial;
     import lxfa.view.pv3dAddOn.org.papervision3d.objects.primitives.NumberPlane;
-    
-    import mx.managers.PopUpManager;
     
     import org.papervision3d.core.proto.MaterialObject3D;
     import org.papervision3d.events.*;
@@ -29,6 +28,7 @@ package lxfa.shanshuishihua.view{
 		private var secondLineHeight:int=   400;    //第二行的高度
 		private var rubbishArray:Array;             //垃圾回收数组
 		private var itemModel:ShanShuiShiHuaModel;    //
+		private var materialRubbishArray:Array;
         public function FlatWall3D_Reflection(){
         	initPictureUrlCtr();
         }
@@ -47,6 +47,7 @@ package lxfa.shanshuishihua.view{
         private function initRubbishArray():void
         {
         	rubbishArray=new Array();
+        	materialRubbishArray=new Array();
         }
 		private function init3DEngine():void{
 			basicView = new BasicView(771, 224, false , true, "FREECAMERA3D");
@@ -91,7 +92,7 @@ package lxfa.shanshuishihua.view{
 				}				
 				bmpMat.interactive = true;
 				bmpMat.smooth = true;		
-				rubbishArray.push(bmpMat);		
+				materialRubbishArray.push(bmpMat);		
 				var plane:NumberPlane=new NumberPlane(bmpMat, 320, planeHeight, 4, 4);
 				plane.x =Math.floor(i/2)* 360;
 				plane.y = i % 2 * secondLineHeight;	
@@ -152,32 +153,47 @@ package lxfa.shanshuishihua.view{
 			//取消偵聽。
 		}
 
-        private function onEventRender3D(e:Event):void{			
-			var _incrementX:Number = (cameraX - basicView.camera.x) / 20;
-			//算出x軸的移動量			
-			var _incrementRotation:Number = (_incrementX - basicView.camera.rotationY) / 20;
-			//把 x 軸的移動量當成 rotationY 的目標值, 套入至漸進公式裡 
-			//這樣可以做出 Camera 到達到目標 x 軸後, 再慢慢轉正的效果
-			basicView.camera.rotationY += _incrementRotation;
-			
-			basicView.camera.x += _incrementX;
-			// x 軸的漸進公式
-			basicView.camera.y += (cameraY - basicView.camera.y) / 20;
-			// y 軸的漸進公式
-			basicView.camera.z += (cameraZ - basicView.camera.z) / 20;
-			// z 軸的漸進公式
-        	basicView.singleRender();
+        private function onEventRender3D(e:Event):void{		
+        	if(basicView!=null)
+        	{
+				var _incrementX:Number = (cameraX - basicView.camera.x) / 20;
+				//算出x軸的移動量			
+				var _incrementRotation:Number = (_incrementX - basicView.camera.rotationY) / 20;
+				//把 x 軸的移動量當成 rotationY 的目標值, 套入至漸進公式裡 
+				//這樣可以做出 Camera 到達到目標 x 軸後, 再慢慢轉正的效果
+				basicView.camera.rotationY += _incrementRotation;
+				
+				basicView.camera.x += _incrementX;
+				// x 軸的漸進公式
+				basicView.camera.y += (cameraY - basicView.camera.y) / 20;
+				// y 軸的漸進公式
+				basicView.camera.z += (cameraZ - basicView.camera.z) / 20;
+				// z 軸的漸進公式
+	        	basicView.singleRender();
+        	}	
         }
         public function dispose():void
         {
-        	basicView.renderer.destroy();
-        	basicView.viewport.destroy();
-        	basicView=null;
+        	MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME, onEventRender3D);	
+        	MemoryRecovery.getInstance().gcFun(itemModel,Event.COMPLETE,onPictureUrlCtrComplete);
+        	MemoryRecovery.getInstance().gcObj(itemModel,true);
+        	for each(var m:MaterialObject3D in materialRubbishArray)
+        	{
+        		if(m!=null)
+        		{
+        			m.destroy();
+        		}
+        	}
         	var i:int=0;
         	for(i=0;i<rubbishArray.length;i++)
         	{
-        		rubbishArray[i]=null;
+        		MemoryRecovery.getInstance().gcFun(rubbishArray[i],InteractiveScene3DEvent.OBJECT_OVER, onEvent3DOver);
+        		MemoryRecovery.getInstance().gcFun(rubbishArray[i],InteractiveScene3DEvent.OBJECT_OUT, onEvent3DOut);
+        		MemoryRecovery.getInstance().gcFun(rubbishArray[i],InteractiveScene3DEvent.OBJECT_CLICK, onEvent3DClick);
+        		MemoryRecovery.getInstance().gcObj(rubbishArray[i]);
         	}
+        	basicView.renderer.destroy();
+        	basicView=null;
         }
     }
 }

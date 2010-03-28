@@ -2,9 +2,11 @@
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" implements="communication.IPlugin" creationComplete="init()">
    <mx:Script>
    	<![CDATA[
+   		import communication.MainSystem;
    		private var normalWindowBase:NormalWindowBase;
    		private function init():void
    		{
+   			MainSystem.getInstance().stopRender();
    			normalWindowBase=new NormalWindowBase();
    			normalWindowBase.addEventListener(Event.CLOSE,onClose);
    		}
