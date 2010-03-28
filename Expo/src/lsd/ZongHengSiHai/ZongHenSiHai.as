@@ -112,6 +112,8 @@ package lsd.ZongHengSiHai
 		{
 			loading_mc=new LoadingWaveRota();
 			loading_mb=new LoadingWaveRota();
+			loading_mb.x=450;
+			loading_mb.y=230;
 			addChild(Toolyzhkof.mcToUI(loading_mb));
 			this.addEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 		}
@@ -119,8 +121,6 @@ package lsd.ZongHengSiHai
 		{
 			loading_mc.x=this.stage.stageWidth/2;
 			loading_mc.y=this.stage.stageHeight/2;
-			loading_mb.x=this.stage.stageWidth/2;
-			loading_mb.y=this.stage.stageHeight/2;
 			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
 		}
 		private function on_flv_progress(e:ProgressEvent):void//FLV加载完毕
