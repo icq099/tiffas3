@@ -12,7 +12,6 @@ package commands
 			super();
 		}
 		override public function execute(notification:INotification):void{
-			
 			var travel:PTravel=facade.retrieveProxy(PTravel.NAME) as PTravel;
 			travel.changePosition(int(notification.getBody()));
 		

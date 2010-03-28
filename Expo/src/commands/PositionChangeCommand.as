@@ -139,8 +139,8 @@ package commands
             else
             {
             	MainSystem.getInstance().isBusy=false;
-            	facade.sendNotification(FacadePv.GO_POSITION,1);
-//            	MainSystem.getInstance().runScript(movie);
+//            	facade.sendNotification(FacadePv.GO_POSITION,1);
+            	MainSystem.getInstance().runScript(movie);
             } 
 		}
 		
