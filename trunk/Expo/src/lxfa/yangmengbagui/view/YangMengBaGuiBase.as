@@ -102,12 +102,12 @@ package lxfa.yangmengbagui.view
 			}});
 			initYangMengBaGuiSwc();
 			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.COMPLETE,100));
+			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.COMPLETE,6));
 			MainSystem.getInstance().addSceneChangeCompleteHandler(close,[]);
 			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
 			    LED.dispose();
 			    flowerFlvSwf.enabled=false;
-			    view3d.dispose();
+//			    view3d.dispose();
 			},[]);
 		}
 		private function on_net_state_change(e:NetStatusEvent):void
