@@ -138,9 +138,16 @@ package commands
             }
             else
             {
-            	MainSystem.getInstance().isBusy=false;
-//            	facade.sendNotification(FacadePv.GO_POSITION,1);
-            	MainSystem.getInstance().runScript(movie);
+            	if(MainSystem.getInstance().isBusy)
+            	{
+	            	MainSystem.getInstance().isBusy=false;
+	            	MainSystem.getInstance().runScript(movie);
+	            	MainSystem.getInstance().isBusy=true;
+            	}
+            	else
+            	{
+            		MainSystem.getInstance().runScript(movie);
+            	}
             } 
 		}
 		

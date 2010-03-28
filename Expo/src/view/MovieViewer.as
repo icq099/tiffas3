@@ -37,8 +37,7 @@ package view
 			this.URL=URL;
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			loading_mc=new LoadingWaveRota();
-			MainSystem.getInstance().isBusy=false;//让电影能够播放
-			MainSystem.getInstance().showPluginById("FlvModule");
+			MainSystem.getInstance().runAPIDirectDirectly("showPluginById",["FlvModule"]);
 			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,on_add_api);
 			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
 			loading_mc.x=this.stage.stageWidth/2;
@@ -77,19 +76,6 @@ package view
 		
 		}
 		public function disappear():void{
-			
-//			if(loader!=null){
-//				
-////				loader.addFrameScript(loader.totalFrames-1,null);
-//				TweenLite.to(loader,2,{ease:Cubic.easeInOut,alpha:0,onComplete:function():void{
-//				
-////					loader=null;
-//					loader.parent.removeChild(loader);
-//					loader=null;
-//			
-//				}});
-//			}
-		
 		}
 		private function onProgressHandler(e:ProgressEvent):void{
 			
