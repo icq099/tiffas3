@@ -62,6 +62,7 @@
 <module application="src/Expo.mxml" destPath="lxfa/backGroundMusic/BackGroundMusicModule.swf" optimize="true" sourcePath="src/lxfa/backGroundMusic/BackGroundMusicModule.mxml"/>
 <module application="src/Expo.mxml" destPath="yzhkof/opening/OpeningModule.swf" optimize="true" sourcePath="src/yzhkof/opening/OpeningModule.mxml"/>
 <module application="src/Expo.mxml" destPath="lxfa/yangMengBaGuiWithMovie/YangMengBaGuiWithMovieModule.swf" optimize="true" sourcePath="src/lxfa/yangMengBaGuiWithMovie/YangMengBaGuiWithMovieModule.mxml"/>
+<module application="src/Expo.mxml" destPath="lxfa/shanshuishihua/ShanShuiShiHuaModule.swf" optimize="true" sourcePath="src/lxfa/shanshuishihua/ShanShuiShiHuaModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>

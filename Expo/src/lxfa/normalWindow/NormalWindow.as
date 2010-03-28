@@ -182,11 +182,13 @@ package lxfa.normalWindow
 		private function initViewer360():void
 		{
 			viewer360=new Object360Viewer();
-		    viewer360.load(pictureUrl,3,24);
+		    viewer360.load(pictureUrl,3,8);
 		    var scale:Number=new Number(dp.panel1.width/640);
-		    viewer360.scaleX=viewer360.scaleY=scale;
+		    viewer360.scaleX=0.64;
+		    viewer360.scaleY=0.9;
 		    viewer360.addEventListener(Event.COMPLETE,onViewer360Complete);
 		    viewer360.addEventListener(Event.CLEAR,onView360Clear);
+		    dp.Btn_Close.addEventListener(MouseEvent.CLICK,onClick);//360图片加载完之后才能添加关闭事件
 		    if(pictureUrl=="" || pictureUrl==null)//如果没有360图片。就抛出CLEAR事件，只是作为区别，并不是真正的CLEAR
 		    {
 		    	viewer360.dispatchEvent(new Event(Event.CLEAR));
@@ -215,7 +217,6 @@ package lxfa.normalWindow
 			if(!isLoaded)
 			{
 				dp.panel1.addChild(viewer360);
-				dp.Btn_Close.addEventListener(MouseEvent.CLICK,onClick);//360图片加载完之后才能添加关闭事件
 				isLoaded=true;
 				initFlvPlayer();
 				initPicturePlayer();

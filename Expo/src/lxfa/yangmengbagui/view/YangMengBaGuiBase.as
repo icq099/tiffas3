@@ -16,6 +16,7 @@ package lxfa.yangmengbagui.view
 	import lxfa.mainMenuBottom.MainMenuStatic;
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.MemoryRecovery;
+	import lxfa.view.loadings.LoadingWaveRota;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
 	
@@ -23,7 +24,6 @@ package lxfa.yangmengbagui.view
 	import mx.core.UIComponent;
 	
 	import yzhkof.Toolyzhkof;
-	import yzhkof.loadings.LoadingWaveRota;
 	
 	public class YangMengBaGuiBase extends UIComponent
 	{
@@ -35,7 +35,7 @@ package lxfa.yangmengbagui.view
 		{
 			MainMenuStatic.currentSceneId=6;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
-			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.INIT,100));
+			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.INIT,6));
 			MainSystem.getInstance().stopRender();
 			showYangMengBaGui(withMovie);
 			MainSystem.getInstance().isBusy=true;

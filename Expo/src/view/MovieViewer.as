@@ -14,13 +14,13 @@ package view
 	import gs.TweenLite;
 	
 	import lxfa.utils.MemoryRecovery;
+	import lxfa.view.loadings.LoadingWaveRota;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
 	
 	import mx.core.Application;
 	
 	import yzhkof.Toolyzhkof;
-	import yzhkof.loadings.LoadingWaveRota;
 	
 	public class MovieViewer extends Sprite
 	{

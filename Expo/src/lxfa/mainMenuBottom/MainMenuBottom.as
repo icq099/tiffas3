@@ -2,10 +2,13 @@ package lxfa.mainMenuBottom
 {
 	import caurina.transitions.Tweener;
 	
+	import communication.Event.SceneChangeEvent;
 	import communication.MainSystem;
 	
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	
+	import gs.TweenMax;
 	
 	import lxfa.mainMenuTop.MainMenu;
 	
@@ -14,6 +17,7 @@ package lxfa.mainMenuBottom
 	public class MainMenuBottom extends MainMenu
 	{
 		private var bottom:MainMenuBottomSwc;
+		private var bottomSign:MainMenuBottomSign;
 		private const cameraRotateSpeed:int=8;
 		private const focusMaxRange:int=120;
 		private const focusMinRange:int=60;
@@ -51,6 +55,42 @@ package lxfa.mainMenuBottom
 			bottom.shengshihexie.addEventListener(MouseEvent.CLICK,on_shengshihexie_click);
 			bottom.zonghengsihai.addEventListener(MouseEvent.CLICK,on_zonghengsihai_click);
 			bottom.yangmengbagui.addEventListener(MouseEvent.CLICK,on_yangmengbagui_click);
+			bottomSign=new MainMenuBottomSign();
+			bottom.addChild(bottomSign);
+			bottomSign.y=500;
+			MainSystem.getInstance().addEventListener(SceneChangeEvent.INIT,changeColor);
+		}
+		private function changeColor(e:SceneChangeEvent):void
+		{
+			if(e.id==0)
+			{
+				bottomSign.x=bottom.lvsejiayuan.x;
+				bottomSign.y=bottom.lvsejiayuan.y;
+			}else if(e.id==1)
+			{
+				bottomSign.x=bottom.lansemengxiang.x;
+				bottomSign.y=bottom.lansemengxiang.y;
+			}else if(e.id==2)
+			{
+				bottomSign.x=bottom.meiguantianxia.x;
+				bottomSign.y=bottom.meiguantianxia.y;
+			}else if(e.id==3)
+			{
+				bottomSign.x=bottom.jingxiuhuazhang.x;
+				bottomSign.y=bottom.jingxiuhuazhang.y;
+			}else if(e.id==4)
+			{
+				bottomSign.x=bottom.shengshihexie.x;
+				bottomSign.y=bottom.shengshihexie.y;
+			}else if(e.id==5)
+			{
+				bottomSign.x=bottom.zonghengsihai.x;
+				bottomSign.y=bottom.zonghengsihai.y;
+			}else if(e.id==6)
+			{
+				bottomSign.x=bottom.yangmengbagui.x;
+				bottomSign.y=bottom.yangmengbagui.y;
+			}
 		}
 		//场景按钮事件
 		private function on_lvsejiayuan_click(e:MouseEvent):void

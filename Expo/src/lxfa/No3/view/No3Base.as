@@ -9,13 +9,13 @@ package lxfa.No3.view
 	import flash.events.ProgressEvent;
 	
 	import lxfa.utils.MemoryRecovery;
+	import lxfa.view.loadings.LoadingWaveRota;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
 	
 	import mx.core.Application;
 	
 	import yzhkof.Toolyzhkof;
-	import yzhkof.loadings.LoadingWaveRota;
 	
 	public class No3Base extends Sprite
 	{

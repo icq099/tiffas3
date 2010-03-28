@@ -1,9 +1,11 @@
 package lxfa.shanshuishihua.view
 {
+	import communication.MainSystem;
+	
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import view.Object360Viewer;
+	
+	import lxfa.utils.MemoryRecovery;
 	public class ShanShuiShiHua extends Sprite
 	{
 		private var shanShuiShiHuaSwc:ShanShuiShiHuaSwc;
@@ -40,7 +42,7 @@ package lxfa.shanshuishihua.view
 		//关闭按钮点击事件
 		private function onCloseClick(e:MouseEvent):void
 		{
-			this.dispatchEvent(new Event(Event.CLOSE));
+			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["ShanShuiShiHuaModule"]);
 		}
 		//左边按钮的点击事件
 		private function onLeftClick(e:MouseEvent):void
@@ -94,9 +96,17 @@ package lxfa.shanshuishihua.view
 		}
 		public function dispose():void
 		{
-			shanShuiShiHuaSwc=null;
-			flatWall.dispose();
-			flatWall=null;
+			MemoryRecovery.getInstance().gcFun(shanShuiShiHuaSwc.scrubber,MouseEvent.MOUSE_DOWN,onMouseDownHandler);
+			MemoryRecovery.getInstance().gcFun(shanShuiShiHuaSwc.scrubber,MouseEvent.MOUSE_UP,onMouseUpHandler);
+			MemoryRecovery.getInstance().gcObj(shanShuiShiHuaSwc.scrubber);
+			MemoryRecovery.getInstance().gcFun(shanShuiShiHuaSwc.left,MouseEvent.CLICK,onLeftClick);
+			MemoryRecovery.getInstance().gcFun(shanShuiShiHuaSwc.right,MouseEvent.CLICK,onRightClick);
+			MemoryRecovery.getInstance().gcFun(shanShuiShiHuaSwc.close,MouseEvent.CLICK,onCloseClick);
+			MemoryRecovery.getInstance().gcObj(shanShuiShiHuaSwc.left);
+			MemoryRecovery.getInstance().gcObj(shanShuiShiHuaSwc.right);
+			MemoryRecovery.getInstance().gcObj(shanShuiShiHuaSwc.close);
+			MemoryRecovery.getInstance().gcObj(shanShuiShiHuaSwc);
+			MemoryRecovery.getInstance().gcObj(flatWall,true);
 		}
 	}
 }

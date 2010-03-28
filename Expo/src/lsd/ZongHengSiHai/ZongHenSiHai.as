@@ -10,6 +10,7 @@ package lsd.ZongHengSiHai
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.CollisionManager;
 	import lxfa.utils.MemoryRecovery;
+	import lxfa.view.loadings.LoadingWaveRota;
 	import lxfa.view.player.FLVPlayer;
 	import lxfa.view.player.FLVPlayerEvent;
 	import lxfa.view.tool.ToolTip;
@@ -18,7 +19,6 @@ package lsd.ZongHengSiHai
 	import mx.core.UIComponent;
 	
 	import yzhkof.Toolyzhkof;
-	import yzhkof.loadings.LoadingWaveRota;
 
 	public class ZongHenSiHai extends UIComponent
 	{

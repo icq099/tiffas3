@@ -11,13 +11,13 @@ package lxfa.No3Swf.view
 	
 	import lxfa.normalWindow.SwfPlayer;
 	import lxfa.utils.MemoryRecovery;
+	import lxfa.view.loadings.LoadingWaveRota;
 	import lxfa.view.tool.ToolTip;
 	
 	import mx.core.Application;
 	import mx.core.UIComponent;
 	
 	import yzhkof.Toolyzhkof;
-	import yzhkof.loadings.LoadingWaveRota;
 	
 	public class No3SwfBase extends UIComponent
 	{
@@ -34,9 +34,9 @@ package lxfa.No3Swf.view
 			flowerFlvSwf.y=-100;
 			flowerFlvSwf.addEventListener(ProgressEvent.PROGRESS,on_progress);
 			unrealCompassSwc=new UnrealCompassSwc();
-			unrealCompassSwc.scaleX=unrealCompassSwc.scaleY=0.5;
-			unrealCompassSwc.x=170;
-			unrealCompassSwc.y=220;
+			unrealCompassSwc.scaleX=unrealCompassSwc.scaleY=0.4;
+			unrealCompassSwc.x=130;
+			unrealCompassSwc.y=300;
 			unrealCompassSwc.buttonMode=true;
 		}
 		private function on_progress(e:ProgressEvent):void
