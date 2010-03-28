@@ -8,10 +8,9 @@
 	import flash.filters.*;
 	
 	import lxfa.minzubaimei.model.MinZuBaiMeiModel;
+	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.pv3dAddOn.milkmidi.papervision3d.materials.ReflectionFileMaterial;
 	import lxfa.view.pv3dAddOn.org.papervision3d.objects.primitives.NumberPlane;
-	
-	import mx.managers.PopUpManager;
 	
 	import org.papervision3d.core.proto.MaterialObject3D;
 	import org.papervision3d.events.*;
@@ -36,6 +35,8 @@
 		private var minZuBaiMeiModel:MinZuBaiMeiModel;
 		private var bg:ShanShuiShiHuaSwc;
 		private var rubbishArray:Array=new Array();//垃圾回收的数组
+		private var matArray:Array=new Array();    //回收素材的数组
+		private var planeArray:Array=new Array();  //回收平面的数组
 		public function MiniCarouselReflectionView(){
 			initBackGround();//加载背景
 			initMinZuBaiMeiModel();//读取数据库
@@ -49,14 +50,18 @@
 			container.x=(bg.width-container.width)/4;
 			container.y=(bg.height-container.height)/2-30;
 			bg.addChild(container);
+			bg.close.addEventListener(MouseEvent.CLICK,on_close_click);
 			rubbishArray.push(bg);
 			rubbishArray.push(container);
+		}
+		private function on_close_click(e:MouseEvent):void{
+			MemoryRecovery.getInstance().gcFun(bg.close,MouseEvent.CLICK,on_close_click);
+			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["MinZuBaiMeiModule"]);
 		}
 		private function initMinZuBaiMeiModel():void
 		{
 			minZuBaiMeiModel=new MinZuBaiMeiModel();
 			minZuBaiMeiModel.addEventListener(Event.COMPLETE,onModelComplete);
-			rubbishArray.push(minZuBaiMeiModel);
 		}
 		private function onModelComplete(e:Event):void
 		{
@@ -110,8 +115,8 @@
 				_plane.addEventListener(InteractiveScene3DEvent.OBJECT_PRESS, on3DPress);
 				//偵聽
 				rootNode.addChild(_plane);
-				rubbishArray.push(bmpMat);
-				rubbishArray.push(_plane);
+				matArray.push(bmpMat);
+				planeArray.push(_plane);
 			}
 			rubbishArray.push(rootNode);
 		}
@@ -184,6 +189,27 @@
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
+			MemoryRecovery.getInstance().gcFun(minZuBaiMeiModel,Event.COMPLETE,onModelComplete);
+			MemoryRecovery.getInstance().gcObj(minZuBaiMeiModel,true);
+			for each(var mat:BitmapFileMaterial in matArray)
+			{
+				if(mat!=null)
+				{
+					mat.destroy();
+					mat=null;
+				}
+			}
+			for each(var plane:Plane in planeArray)
+			{
+				MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_OVER, on3DOver);
+				MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_OUT, on3DOut);
+				MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_PRESS, on3DPress);
+				MemoryRecovery.getInstance().gcObj(plane);
+			}
+			MemoryRecovery.getInstance().gcFun(container.right_btn,MouseEvent.CLICK, onButtonClick);
+			MemoryRecovery.getInstance().gcFun(container.left_btn,MouseEvent.CLICK, onButtonClick);
+			MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_WHEEL, onStageMouseWheel);
 			basicView.renderer.destroy();
 			basicView.viewport.destroy();
 			var i:int=0;
