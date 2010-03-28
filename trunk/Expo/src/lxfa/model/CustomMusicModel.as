@@ -7,9 +7,16 @@ package lxfa.model
 			super("xml/basic.xml");
 		}
 		public function getMusicUrl(id:int):String{
-			return xmlData.Travel.Scene[id].@customMusic;
-		}
-		override public function dispose():void{
-		}
+		   if(xmlData.Travel.Scene[id]!=null){
+			 
+			  return xmlData.Travel.Scene[id].@customMusic;
+		   }
+		   else{
+		          return null;
+		     }
+		  }
+		  override public function dispose():void{
+		  
+		  }
 	}
 }
