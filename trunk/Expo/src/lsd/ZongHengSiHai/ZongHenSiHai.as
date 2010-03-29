@@ -61,7 +61,7 @@ package lsd.ZongHengSiHai
 		private function on_gx_complete(e:FLVPlayerEvent):void
 		{   
 			
-			MainSystem.getInstance().addAutoClose(on_plugin_update,[]);
+			//MainSystem.getInstance().addAutoClose(on_plugin_update,[]);
 		}
 		private function flvRemove():void
 		{
