@@ -3,6 +3,7 @@ package lxfa.normalWindow
 	/****************************
 	 * 根据	ID参建标准窗
 	 * */
+	import communication.Event.ScriptAPIAddEvent;
 	import communication.MainSystem;
 	
 	import flash.display.DisplayObject;
@@ -29,6 +30,7 @@ package lxfa.normalWindow
 		private var animate:DisplayObject          //桂娃
 		private var animateParent:ModuleLoader;    //桂娃的父亲容器
 		private var normalWindow:NormalWindow;
+		private var type:String;                   //类型
 		public function NormalWindowFactory(ID:int)
 		{
 			this.ID=ID;
@@ -42,6 +44,43 @@ package lxfa.normalWindow
 		}
 		//数据库加载完毕
 		private function onComplete(e:Event):void
+		{
+			type=itemModel.getType(ID);
+			if(type=="" || type==null)
+			{
+				createWindow(e);
+			}else if(type=="ShanShuiShiHuaModule")
+			{
+				create("ShanShuiShiHuaModule","getShanShuiShiHua",10,20);
+			}
+			else if(type=="LiJiangWanChangModule")
+			{
+				create("LiJiangWanChangModule","getLiJiangWanCHang",10,20);
+			}
+			else if(type=="MinZuBaiMeiModule")
+			{
+				create("MinZuBaiMeiModule","getMinZuBaiMei",10,20);
+			}
+			else if(type=="GeHaiQingYunModule")
+			{
+				create("GeHaiQingYunModule","getGeHaiQingYun",10,20);
+			}
+		}
+		private function create(moduleName:String,funName:String,x:int,y:int):void
+		{
+			MainSystem.getInstance().showPluginById(moduleName);
+			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,function(e:ScriptAPIAddEvent):void{
+				if(e.fun_name==funName)
+				{
+					var dis:DisplayObject=MainSystem.getInstance().runAPIDirectDirectly(funName,[]);
+					dis.x=x;
+					dis.y=y;
+					dis.addEventListener(Event.CLOSE,onnormalWindowClose);
+					addChild(dis);
+				}
+			});
+		}
+		private function createWindow(e:Event):void
 		{
 			this.pictureUrls=new Array();
 			this.pictureUrls=itemModel.getPictureUrls(ID);

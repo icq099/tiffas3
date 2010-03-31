@@ -4,9 +4,9 @@ package lxfa.lijiangwanchang
 	import flash.events.MouseEvent;
 	
 	import lxfa.normalWindow.SwfPlayer;
+	import lxfa.utils.MemoryRecovery;
 	
 	import mx.core.UIComponent;
-	import mx.managers.PopUpManager;
 	
 	public class FishingGame extends UIComponent
 	{
@@ -38,7 +38,15 @@ package lxfa.lijiangwanchang
 		}
 		private function onbtn_closeClick(e:MouseEvent):void
 		{
-			PopUpManager.removePopUp(this);
+			this.dispatchEvent(new Event(Event.CLOSE));
+		}
+		public function dispose():void
+		{
+			MemoryRecovery.getInstance().gcFun(swfPlayer,Event.COMPLETE,onswfPlayerComplete);
+			swfPlayer.unloadAndStop();
+			MemoryRecovery.getInstance().gcObj(swfPlayer);
+			MemoryRecovery.getInstance().gcFun(fishingSwc.btn_close,MouseEvent.CLICK,onbtn_closeClick);
+			MemoryRecovery.getInstance().gcObj(fishingSwc);
 		}
 	}
 }

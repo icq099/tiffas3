@@ -14,15 +14,15 @@ package lxfa.gehaiqingyun.view
 		private var playListCtr:PlayListCtr;
 		public function GeHaiQingYun()
 		{
-			initGeHaiQingYunSwc();
-			initPlayListCtr();
+			MainSystem.getInstance().addAPI("getGeHaiQingYun",initGeHaiQingYunSwc);
 		}
-		private function initGeHaiQingYunSwc():void
+		private function initGeHaiQingYunSwc():GeHaiQingYunSwc
 		{
 			geHaiQingYunSwc=new GeHaiQingYunSwc();
 			geHaiQingYunSwc.playList.visible=false;
-			this.addChild(geHaiQingYunSwc);
-			initListener();
+			initPlayListCtr();
+//			initListener();
+			return geHaiQingYunSwc;
 		}
 		private function initListener():void
 		{

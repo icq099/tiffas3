@@ -7,11 +7,11 @@
 			private function init():void
 			{
 				liJiangWanChang=new LiJiangWanChang();
-				this.addChild(Toolyzhkof.mcToUI(liJiangWanChang));
+//				this.addChild(Toolyzhkof.mcToUI(liJiangWanChang));
 			}
 			public function dispose():void
 			{
-				
+				liJiangWanChang.dispose();
 			}
 		]]>
 	</mx:Script>
