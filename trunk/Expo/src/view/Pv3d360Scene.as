@@ -144,7 +144,7 @@
 			//提示文字
 			addEventListener(Event.ENTER_FRAME, function(e:Event):void
 				{
-
+					trace(camera.rotationY);
 					tip_sprite.x=mouseX;
 					tip_sprite.y=mouseY;
 
@@ -198,7 +198,7 @@
 					});
 
 			}
-
+			
 			return hot_point_plane;
 
 		}
@@ -443,66 +443,66 @@
 			var scaleSpeed:Number=0.1;
 			if(debuge==1)
 			{
-			Application.application.stage.addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent):void
-				{
-					if (e.keyCode == 87)
-					{
-						plane_animate.z+=distance;
-					}
-					if (e.keyCode == 83)
-					{
-						plane_animate.z-=distance;
-					}
-					if (e.keyCode == 65)
-					{
-						plane_animate.x+=distance;
-					}
-					if (e.keyCode == 68)
-					{
-						plane_animate.x-=distance;
-					}
-					if (e.keyCode == 189)
-					{
-						plane_animate.y+=distance;
-					}
-					if (e.keyCode == 187)
-					{
-						plane_animate.y-=distance;
-					}
-					if (e.keyCode == 81)
-					{
-						plane_animate.rotationY+=rotateSpeed;
-					}
-					if (e.keyCode == 69)
-					{
-						plane_animate.rotationY-=rotateSpeed;
-					}
-					if (e.keyCode == 90)
-					{
-						plane_animate.scaleX+=scaleSpeed;
-					}
-					if (e.keyCode == 88)
-					{
-						plane_animate.scaleX-=scaleSpeed;
-					}
-					if (e.keyCode == 67)
-					{
-						plane_animate.scaleY+=scaleSpeed;
-					}
-					if (e.keyCode == 86)
-					{
-						plane_animate.scaleY-=scaleSpeed;
-					}
-					if(e.keyCode==73)
-					{
-						distance+=10;
-					}
-					if(e.keyCode==75)
-					{
-						distance-=10;
-					}
-					trace("x=\"" + plane_animate.x + "\" y=\"" + plane_animate.y + "\" z=\"" + plane_animate.z + "\" rotationY=\"" + plane_animate.rotationY + "\"" + " scaleX=\"" + plane_animate.scaleX + "\" scaleY=\"" + plane_animate.scaleY + "\"");
-				});
+//			Application.application.stage.addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent):void
+//				{
+//					if (e.keyCode == 87)
+//					{
+//						plane_animate.z+=distance;
+//					}
+//					if (e.keyCode == 83)
+//					{
+//						plane_animate.z-=distance;
+//					}
+//					if (e.keyCode == 65)
+//					{
+//						plane_animate.x+=distance;
+//					}
+//					if (e.keyCode == 68)
+//					{
+//						plane_animate.x-=distance;
+//					}
+//					if (e.keyCode == 189)
+//					{
+//						plane_animate.y+=distance;
+//					}
+//					if (e.keyCode == 187)
+//					{
+//						plane_animate.y-=distance;
+//					}
+//					if (e.keyCode == 81)
+//					{
+//						plane_animate.rotationY+=rotateSpeed;
+//					}
+//					if (e.keyCode == 69)
+//					{
+//						plane_animate.rotationY-=rotateSpeed;
+//					}
+//					if (e.keyCode == 90)
+//					{
+//						plane_animate.scaleX+=scaleSpeed;
+//					}
+//					if (e.keyCode == 88)
+//					{
+//						plane_animate.scaleX-=scaleSpeed;
+//					}
+//					if (e.keyCode == 67)
+//					{
+//						plane_animate.scaleY+=scaleSpeed;
+//					}
+//					if (e.keyCode == 86)
+//					{
+//						plane_animate.scaleY-=scaleSpeed;
+//					}
+//					if(e.keyCode==73)
+//					{
+//						distance+=10;
+//					}
+//					if(e.keyCode==75)
+//					{
+//						distance-=10;
+//					}
+//					trace("x=\"" + plane_animate.x + "\" y=\"" + plane_animate.y + "\" z=\"" + plane_animate.z + "\" rotationY=\"" + plane_animate.rotationY + "\"" + " scaleX=\"" + plane_animate.scaleX + "\" scaleY=\"" + plane_animate.scaleY + "\"");
+//				});
 			}
 			return plane_animate;
 

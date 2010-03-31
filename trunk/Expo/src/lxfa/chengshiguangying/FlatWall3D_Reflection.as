@@ -7,6 +7,7 @@ package lxfa.chengshiguangying{
     import flash.events.*;
     import flash.utils.getQualifiedClassName;
     
+    import lxfa.model.ItemModel;
     import lxfa.shanshuishihua.model.ShanShuiShiHuaModel;
     import lxfa.utils.MemoryRecovery;
     import lxfa.view.pv3dAddOn.milkmidi.papervision3d.materials.ReflectionFileMaterial;
@@ -19,7 +20,6 @@ package lxfa.chengshiguangying{
 	//匯入筆者所撰寫的MiniSlider類別。
     public class FlatWall3D_Reflection extends Sprite 	{
 		private var basicView			:BasicView;
-		private var itemOfNumber	:int = 1;		//圖片數量
 		public  var cameraX			:Number = 900;	//camera的目標x軸
 		private var cameraY			:Number = 200;	//camera的目標y軸
 		private var cameraZ			:Number = -1500;//camera的目標z軸
@@ -27,25 +27,26 @@ package lxfa.chengshiguangying{
 		private var cameraZMax		:Number = -150;	//cameraZ軸的最大值
 		private var secondLineHeight:int=   400;    //第二行的高度
 		private var rubbishArray:Array;             //垃圾回收数组
-		private var itemModel:ShanShuiShiHuaModel;    //
+		private var itemModel:ItemModel;    //
 		private var materialRubbishArray:Array;
 		private var pictureUrls:Array;
 		private var customDown:CustomWindowUIDown;
 		private var minMouseX:Number=173.7;//滑块的最小X坐标
 		private var maxMouseX:Number=568.7;//滑块的最大X坐标
 		private var offset:Number=5;    //点击左（右）按钮，滑块的偏移量
-        public function FlatWall3D_Reflection(){
+		private var ID:int;
+        public function FlatWall3D_Reflection(ID:int){
+        	this.ID=ID;
         	initPictureUrlCtr();
         }
         private function initPictureUrlCtr():void
         {
-        	itemModel=new ShanShuiShiHuaModel();
-        	itemModel.addEventListener(Event.COMPLETE,onPictureUrlCtrComplete);
+        	itemModel=new ItemModel("NormalWindow");
+        	onPictureUrlCtrComplete(null);
         }
         private function onPictureUrlCtrComplete(e:Event):void
         {
-        	itemOfNumber=itemModel.getItemOfNumber();
-        	this.pictureUrls=itemModel.getPictureUrls(51);
+        	this.pictureUrls=itemModel.getPictureUrls(ID);
         	initRubbishArray();
 			init3DEngine();
 			initObject();

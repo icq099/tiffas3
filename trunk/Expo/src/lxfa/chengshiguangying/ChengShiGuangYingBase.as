@@ -16,6 +16,7 @@ package lxfa.chengshiguangying
 		private var itemModel:ItemModel;
 		private var customWindow:CustomWindow;
 		private var flatWall3D_Reflection:FlatWall3D_Reflection;
+		private var ID:int;
 		public function ChengShiGuangYingBase()
 		{
 			MainSystem.getInstance().addAPI("initChengShiGuangYing",init);
@@ -23,13 +24,12 @@ package lxfa.chengshiguangying
 		}
 		private function init(ID:int):void
 		{
+			this.ID=ID;
 			MainSystem.getInstance().stopRender();
 			itemModel=new ItemModel("NormalWindow");
-			itemModel.addEventListener(Event.COMPLETE,function(e:Event):void{
-				customWindow=new CustomWindow(itemModel.getSwfUrl(ID),itemModel.getText(ID));
-				customWindow.addEventListener(CustomWindowEvent.SWF_COMPLETE,on_swf_complete);
-				customWindow.addEventListener(CustomWindowEvent.WINDOW_CLOSE,dispose);
-			});
+			customWindow=new CustomWindow(itemModel.getSwfUrl(ID),itemModel.getText(ID));
+			customWindow.addEventListener(CustomWindowEvent.SWF_COMPLETE,on_swf_complete);
+			customWindow.addEventListener(CustomWindowEvent.WINDOW_CLOSE,dispose);
 		}
 		private function on_swf_complete(e:CustomWindowEvent):void
 		{
@@ -38,7 +38,7 @@ package lxfa.chengshiguangying
 		}
 		private function init3DView():void
 		{
-			flatWall3D_Reflection=new FlatWall3D_Reflection();
+			flatWall3D_Reflection=new FlatWall3D_Reflection(ID);
 			flatWall3D_Reflection.x=14;
 			flatWall3D_Reflection.y=80;
 			customWindow.addChild(flatWall3D_Reflection);
@@ -49,6 +49,7 @@ package lxfa.chengshiguangying
 		}
 		public function dispose(e:CustomWindowEvent):void
 		{
+			customWindow.dispatchEvent(new Event(Event.CLOSE));
 			MemoryRecovery.getInstance().gcObj(flatWall3D_Reflection,true);
 			MemoryRecovery.getInstance().gcFun(customWindow,CustomWindowEvent.SWF_COMPLETE,on_swf_complete);
 			MemoryRecovery.getInstance().gcFun(customWindow,CustomWindowEvent.WINDOW_CLOSE,dispose);
