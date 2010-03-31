@@ -8,6 +8,8 @@ package lsd.AnimatePlayer.view
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 	
+	import lxfa.utils.MemoryRecovery;
+	
 	import mx.core.UIComponent;
 	
 	public class AnimatePlayer extends UIComponent
@@ -198,8 +200,7 @@ package lsd.AnimatePlayer.view
 				}
 				if(closeButton!=null)
 				{
-					removeChild(closeButton);
-					closeButton=null;
+					MemoryRecovery.getInstance().gcObj(closeButton);
 				}
 			}
 		}

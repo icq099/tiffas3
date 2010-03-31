@@ -10,7 +10,6 @@ package lxfa.normalWindow
 	import flash.events.Event;
 	
 	import lxfa.normalWindow.model.NormalWindowModel;
-	import lxfa.utils.CollisionManager;
 	
 	import mx.core.UIComponent;
 	import mx.managers.PopUpManager;
@@ -41,15 +40,15 @@ package lxfa.normalWindow
 		private function initItemModel():void
 		{
 			itemModel=new NormalWindowModel();
-			itemModel.addEventListener(Event.COMPLETE,onComplete);
+			onComplete();
 		}
 		//数据库加载完毕
-		private function onComplete(e:Event):void
+		private function onComplete():void
 		{
 			type=itemModel.getType(ID);
 			if(type=="" || type==null)
 			{
-				createWindow(e);
+				createWindow(null);
 			}else if(type=="ShanShuiShiHuaModule")
 			{
 				create("ShanShuiShiHuaModule","getShanShuiShiHua",10,20);
@@ -85,7 +84,9 @@ package lxfa.normalWindow
 		}
 		private function on_chengshiguangying_complete(e:Event):void
 		{
-			this.addChild(MainSystem.getInstance().runAPIDirectDirectly("getChengShiGuangYing",[]));
+			var dis:DisplayObject=MainSystem.getInstance().runAPIDirectDirectly("getChengShiGuangYing",[]);
+			this.addChild(dis);
+			dis.addEventListener(Event.CLOSE,onnormalWindowClose);
 		}
 		private function create(moduleName:String,funName:String,x:int,y:int):void
 		{
@@ -116,7 +117,7 @@ package lxfa.normalWindow
 			this.addChild(normalWindow);
 			createAnimate(animateId);
 			normalWindow.addEventListener(Event.CLOSE,onnormalWindowClose);
-			this.dispatchEvent(e);
+			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 		private function createAnimate(animateId:int):void
 		{

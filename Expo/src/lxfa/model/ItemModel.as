@@ -11,8 +11,6 @@ package lxfa.model
 	
 	public class ItemModel extends Sprite
 	{
-		private var xmlLoader:URLLoader;
-		private var xmlRequest:URLRequest;
 		private const path:String="xml/item.xml";//XML文件的路径了
 		public var xmlData:XML;                  //XML数据
 		private var offsetName:String;           //索引的名字
@@ -20,18 +18,9 @@ package lxfa.model
 		private var max:int;                     //最大值
 		public function ItemModel(name:String)
 		{
-			xmlRequest=new URLRequest(path);
-			xmlLoader=new URLLoader(xmlRequest);
-			xmlLoader.addEventListener(Event.COMPLETE,onComplete);
+			xmlData=ModelManager.getInstance().xmlData();
+			this.dispatchEvent(new Event(Event.COMPLETE));
 			setOffsetName(name);//存储索引的路径
-		}
-		private function onComplete(e:Event):void
-		{
-			xmlData=XML(URLLoader(e.currentTarget).data);
-			min=xmlData.child(offsetName).@start;         //获取最小值
-			max=xmlData.child(offsetName).@end;           //获取最大值
-			this.dispatchEvent(new Event(Event.COMPLETE));//抛出完成的事件
-			xmlLoader.removeEventListener(Event.COMPLETE,onComplete);
 		}
 		//存储索引名字
 		private function setOffsetName(name:String):void
@@ -144,8 +133,6 @@ package lxfa.model
 	    }
 	    public function dispose():void
 	    {
-	    	MemoryRecovery.getInstance().gcObj(xmlLoader);
-	    	MemoryRecovery.getInstance().gcObj(xmlRequest);
 	    	MemoryRecovery.getInstance().gcObj(xmlData);
 	    }
 	}

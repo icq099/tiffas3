@@ -25,7 +25,7 @@ package lsd.AnimatePlayer.control
 		}
 		private function init(id:int,controlRender:Boolean=false):AnimatePlayer
 		{
-			MainSystem.getInstance().isBusy=true
+			MainSystem.getInstance().isBusy=true;
 			animatePlayer=new AnimatePlayer();
 			isClose=false;
 			if(id!=-1)//-1就不显示桂娃了
@@ -35,6 +35,9 @@ package lsd.AnimatePlayer.control
 				xml=new XmlLoaderModel("xml/animate.xml");
 				xml.addEventListener(Event.COMPLETE,on_xml_loaded);
 				MainSystem.getInstance().addEventListener(PluginEvent.UPDATE,on_update);
+			}else
+			{
+				MainSystem.getInstance().isBusy=false;
 			}
 			return animatePlayer;
 		}
