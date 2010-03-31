@@ -7,7 +7,9 @@
 	import flash.events.*;
 	import flash.filters.*;
 	
-	import lxfa.minzubaimei.model.MinZuBaiMeiModel;
+	import lsd.CustomWindow.CustomWindow;
+	
+	import lxfa.model.ItemModel;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.pv3dAddOn.milkmidi.papervision3d.materials.ReflectionFileMaterial;
 	import lxfa.view.pv3dAddOn.org.papervision3d.objects.primitives.NumberPlane;
@@ -19,7 +21,6 @@
 	import org.papervision3d.objects.primitives.*;
 	import org.papervision3d.view.BasicView;
 	public class MiniCarouselReflectionView extends Sprite{
-		private var container:MinZuBaiMeiSwc;
 		private var basicView		:BasicView;
 		//反射ReflectionView物件。
 		private var rootNode	:DisplayObject3D;
@@ -32,41 +33,23 @@
 		private var currentIndex:Number = 0;//目前的索引值
 		private var ldr			:Loader;	//載入大圖用的Loader。
 		private var itemOfNumber:int;
-		private var minZuBaiMeiModel:MinZuBaiMeiModel;
-		private var bg:ShanShuiShiHuaSwc;
+		private const min:int=27;
 		private var rubbishArray:Array=new Array();//垃圾回收的数组
 		private var matArray:Array=new Array();    //回收素材的数组
 		private var planeArray:Array=new Array();  //回收平面的数组
+		private var backGround:CustomWindow;
+		private var itemModel:ItemModel;
+		private const ID:int=53;
+		private var pictureUrls:Array=new Array();
+		private var customDown:CustomWindowUIDown;
 		public function MiniCarouselReflectionView(){
-			initBackGround();//加载背景
-			initMinZuBaiMeiModel();//读取数据库
+			init();
 		}
-		//初始化背景
-		private function initBackGround():void
+		private function init():void
 		{
-			bg=new ShanShuiShiHuaSwc();
-			this.addChild(bg);
-			container=new MinZuBaiMeiSwc();
-			container.x=(bg.width-container.width)/4;
-			container.y=(bg.height-container.height)/2-30;
-			bg.addChild(container);
-			bg.close.addEventListener(MouseEvent.CLICK,on_close_click);
-			rubbishArray.push(bg);
-			rubbishArray.push(container);
-		}
-		private function on_close_click(e:MouseEvent):void{
-			MemoryRecovery.getInstance().gcFun(bg.close,MouseEvent.CLICK,on_close_click);
-			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["MinZuBaiMeiModule"]);
-		}
-		private function initMinZuBaiMeiModel():void
-		{
-			minZuBaiMeiModel=new MinZuBaiMeiModel();
-			minZuBaiMeiModel.addEventListener(Event.COMPLETE,onModelComplete);
-		}
-		private function onModelComplete(e:Event):void
-		{
-			itemOfNumber=minZuBaiMeiModel.getItemOfNumber();//读取图片的数目,正常是12个
-			angleUnit = (Math.PI * 2) / itemOfNumber;//角度的偏移量
+			itemModel=new ItemModel("NormalWindow");
+			pictureUrls=itemModel.getPictureUrls(ID);
+			angleUnit = (Math.PI * 2) / pictureUrls.length;//角度的偏移量
 			init3DEngine();
 			init3DObject();
 			initObject();		
@@ -80,11 +63,25 @@
 			//PV3D物件預設都不會有滑鼠指標手示，
 			//BasicBiew是繼承Sprite，
 			//所以可以開啟buttonMode屬性。
-			container.addChild(basicView);
+			this.addChild(basicView);
+			initCustomDown();
 			basicView.y=-250;
 			basicView.x=-26;
 			this.addEventListener(Event.ENTER_FRAME, onEventRender3D);
 			rubbishArray.push(basicView);
+		}
+		private function initCustomDown():void
+		{
+			customDown=new CustomWindowUIDown();
+			customDown.scaleX=customDown.scaleY=0.6;
+			customDown.x=50;
+			customDown.y=200;
+			this.addChild(customDown);
+			customDown.bar.visible=false;
+			customDown.left.addEventListener(MouseEvent.CLICK,onButtonClick);
+			customDown.right.addEventListener(MouseEvent.CLICK,onButtonClick);
+			customDown.left.buttonMode=true;
+			customDown.right.buttonMode=true;
 		}
 		private function init3DObject():void{
 			rootNode = new DisplayObject3D();
@@ -95,8 +92,8 @@
 			//宣告變數, 避免在判斷式時重復宣告。
 			var planeHeight:int=-1;
 			var bmpMat		:MaterialObject3D;
-			for (var i:int = 0; i < itemOfNumber; i++) {	
-				imgUrl=minZuBaiMeiModel.getImgUrl(i);			
+			for (var i:int = 0; i < pictureUrls.length; i++) {	
+				imgUrl=pictureUrls[i];			
 				bmpMat = new ReflectionFileMaterial(imgUrl, true);
 				planeHeight = 400;			
 				bmpMat.doubleSided = true; //雙面模式
@@ -106,7 +103,7 @@
 				var _radian	:Number = i * angleUnit;
 				_plane.x = Math.cos(_radian) * radius;
 				_plane.z = Math.sin(_radian) * radius;
-				_plane.setID(minZuBaiMeiModel.getMin()+i);
+				_plane.setID(min+i);
 				//透過三角函數來排列。
 				_plane.rotationY = 270 - (_radian * 180 / Math.PI) ;
 				_plane.useOwnContainer = true;					
@@ -121,8 +118,6 @@
 			rubbishArray.push(rootNode);
 		}
 		private function initObject():void{
-			container.right_btn.addEventListener(MouseEvent.CLICK, onButtonClick);
-			container.left_btn.addEventListener(MouseEvent.CLICK, onButtonClick);
 			this.addEventListener(Event.ADDED_TO_STAGE,ADDED_TO_STAGE);
 			//偵聽MouseEvent.MOUSE_WHEEL事件。
 		}
@@ -145,7 +140,7 @@
 			//移除Loader載入的物件。
 			stage.removeEventListener(MouseEvent.CLICK, onStageClick);
 			//取消偵聽。
-			container.right_btn.visible = container.left_btn.visible = true;
+//			container.right_btn.visible = container.left_btn.visible = true;
 			//讓左、右Button看的見。
 		}
 		private function on3DOver(e:InteractiveScene3DEvent):void {			
@@ -158,17 +153,13 @@
 		}
 		private function on3DPress(e:InteractiveScene3DEvent):void{
 			var _target:NumberPlane=NumberPlane(e.currentTarget);
-			MainSystem.getInstance().runAPIDirect("showNormalWindow",[_target.getID()]);
-            currentIndex=_target.getID()-minZuBaiMeiModel.getMin()+3;
+			MainSystem.getInstance().runAPIDirectDirectly("showNormalWindow",[_target.getID()]);
+            currentIndex=_target.getID()-min+3;
             updateRootNodeTransform();
 		}
 		private function onButtonClick(e:Event):void {
-			if(e.currentTarget == container.right_btn){
+			if(e.currentTarget == customDown.right){
 				currentIndex++;
-				//如果廣播者是right_btn,就讓目前的索引值加一
-				//currentIndex++也可寫成
-				//currentIndex += 1或是
-				//currentIndex = currentIndex+1
 			}else{
 				currentIndex--;
 			}
@@ -190,9 +181,13 @@
 		public function dispose():void
 		{
 			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
-			MemoryRecovery.getInstance().gcFun(minZuBaiMeiModel,Event.COMPLETE,onModelComplete);
-			MemoryRecovery.getInstance().gcObj(minZuBaiMeiModel,true);
-			for each(var mat:BitmapFileMaterial in matArray)
+			MemoryRecovery.getInstance().gcFun(this,Event.ADDED_TO_STAGE,ADDED_TO_STAGE);
+			MemoryRecovery.getInstance().gcFun(customDown.left,MouseEvent.CLICK,onButtonClick);
+			MemoryRecovery.getInstance().gcFun(customDown.right,MouseEvent.CLICK,onButtonClick);
+			MemoryRecovery.getInstance().gcObj(customDown.left);
+			MemoryRecovery.getInstance().gcObj(customDown.right);
+			MemoryRecovery.getInstance().gcObj(customDown);
+			for each(var mat:* in matArray)
 			{
 				if(mat!=null)
 				{
@@ -207,8 +202,6 @@
 				MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_PRESS, on3DPress);
 				MemoryRecovery.getInstance().gcObj(plane);
 			}
-			MemoryRecovery.getInstance().gcFun(container.right_btn,MouseEvent.CLICK, onButtonClick);
-			MemoryRecovery.getInstance().gcFun(container.left_btn,MouseEvent.CLICK, onButtonClick);
 			MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_WHEEL, onStageMouseWheel);
 			basicView.renderer.destroy();
 			basicView.viewport.destroy();

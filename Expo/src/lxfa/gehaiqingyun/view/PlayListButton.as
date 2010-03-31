@@ -1,16 +1,32 @@
 package lxfa.gehaiqingyun.view
 {
-	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
-	public class PlayListButton extends Sprite
+	import lxfa.utils.MemoryRecovery;
+	
+	public class PlayListButton extends ListButton
 	{
-		public var label:String;
-		public var icon:String=null;
-		public function PlayListButton(path:String,name:String)
+		private var ctr:PlayListCtr
+		private var ID:int;
+		public function PlayListButton(ID:int,name:String,ctr:PlayListCtr)
 		{
-			label=name;
+			this.text.text=name;
+			this.ctr=ctr;
+			this.ID=ID;
+			initListener();
+		}
+		private function initListener():void
+		{
+			this.addEventListener(MouseEvent.CLICK,on_double_click);
+		}
+		private function on_double_click(e:MouseEvent):void
+		{
+			ctr.playMedia(ID);
+			this.parent.visible=false;
+		}
+		public function dispose():void
+		{
+			MemoryRecovery.getInstance().gcFun(this,MouseEvent.CLICK,on_double_click);
 		}
 	}
 }

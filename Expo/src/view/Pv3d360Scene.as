@@ -144,7 +144,6 @@
 			//提示文字
 			addEventListener(Event.ENTER_FRAME, function(e:Event):void
 				{
-					trace(camera.rotationY);
 					tip_sprite.x=mouseX;
 					tip_sprite.y=mouseY;
 
@@ -361,7 +360,7 @@
 			{
 				plane_animate.scaleY=Number(init_obj["scaleY"]);
 			}
-			plane_animate.addEventListener(InteractiveScene3DEvent.OBJECT_PRESS,function(e:InteractiveScene3DEvent):void{
+			plane_animate.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK,function(e:InteractiveScene3DEvent):void{
 				MainSystem.getInstance().runScript(init_obj["onClick"]);
 				if(sign==1)
 				{

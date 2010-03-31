@@ -2,6 +2,9 @@
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="communication.IPlugin">
 	<mx:Script>
 		<![CDATA[
+			import mx.core.IFlexDisplayObject;
+			import mx.managers.PopUpManager;
+			import lxfa.utils.MemoryRecovery;
 			import lxfa.minzubaimei.view.MinZuBaiMei;
 		    private var minzubaimei:MinZuBaiMei;
 			private function init():void
@@ -14,8 +17,7 @@
 			}
 			public function dispose():void
 			{
-				minzubaimei.dispose();
-				minzubaimei=null;
+				MemoryRecovery.getInstance().gcObj(minzubaimei,true);
 			}
 		]]>
 	</mx:Script>

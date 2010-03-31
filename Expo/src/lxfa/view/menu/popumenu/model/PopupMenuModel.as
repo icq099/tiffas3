@@ -15,7 +15,7 @@ package lxfa.view.menu.popumenu.model
 			var temp:Array=new Array();
 			for(var i:int=0;i<xmlData.PopMenu[ID].Item.length();i++)
 			{
-				temp.push({name:xmlData.PopMenu[ID].Item[i].@name,id:xmlData.PopMenu.Item[i].@id});
+				temp.push({name:xmlData.PopMenu[ID].Item[i].@name,id:xmlData.PopMenu[ID].Item[i].@id});
 			}
 			return temp;
 		}

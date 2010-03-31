@@ -1,9 +1,9 @@
 package lxfa.gehaiqingyun.view
 {
 	import flash.events.Event;
-	import flash.text.TextFormat;
 	
 	import lxfa.gehaiqingyun.model.GeHaiQingYunModel;
+	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.player.Mp3Player;
 	
 	import view.player.FlvPlayer;
@@ -16,16 +16,17 @@ package lxfa.gehaiqingyun.view
 		private var geHaiQingYunSwc:GeHaiQingYunSwc;
 		private var currentIndex:int=-999999;
 		private var rubbishArray:Array=new Array();
-		public function PlayListCtr(geHaiQingYunSwc:GeHaiQingYunSwc)
+		private var list:ListBg;
+		public function PlayListCtr(geHaiQingYunSwc:GeHaiQingYunSwc,list:ListBg)
 		{
 			this.geHaiQingYunSwc=geHaiQingYunSwc;
+			this.list=list;
 			initGeHaiQingYunModel();
 		}
 		private function initGeHaiQingYunModel():void
 		{
 			geHaiQingYunModel=new GeHaiQingYunModel("xml/gehaiqingyun.xml");
 			geHaiQingYunModel.addEventListener(Event.COMPLETE,onComplete);
-			rubbishArray.push(geHaiQingYunModel);
 		}
 		private function onComplete(e:Event):void
 		{
@@ -35,15 +36,14 @@ package lxfa.gehaiqingyun.view
 		}
 		private function initPlayList():void
 		{
-			var format:TextFormat = new TextFormat();
-			format.size = 16;
-			geHaiQingYunSwc.playList.setRendererStyle("textFormat", format);
 			var i:int;
 			for(i=0;i<mediaList.length;i++)
 			{
-				geHaiQingYunSwc.playList.addItem(new PlayListButton(mediaList[i],mediaNames[i]));
+				var button:PlayListButton=new PlayListButton(mediaList[i],mediaNames[i],this);
+				button.y=i*19.8;
+				rubbishArray.push(button);
+				list.addChild(button);
 			}
-			rubbishArray.push(format);
 		}
 		public function playPre():void
 		{
@@ -102,7 +102,7 @@ package lxfa.gehaiqingyun.view
 				mp3Player=new Mp3Player(path);
 			}
 			play();
-			geHaiQingYunSwc.playList.visible=false;
+			list.visible=false;
 		}
 		public function play():void
 		{
@@ -117,10 +117,11 @@ package lxfa.gehaiqingyun.view
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(geHaiQingYunModel,Event.COMPLETE,onComplete);
 			var i:int;
 			for(i=0;i<rubbishArray.length;i++)
 			{
-				rubbishArray[i]=null;
+				MemoryRecovery.getInstance().gcObj(rubbishArray[i],true);
 			}
 			if(flvPlayer!=null)
 			{
