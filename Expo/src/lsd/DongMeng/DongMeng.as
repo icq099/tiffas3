@@ -2,6 +2,7 @@ package lsd.DongMeng
 {
 	import communication.MainSystem;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	import flash.events.ProgressEvent;
@@ -79,7 +80,7 @@ package lsd.DongMeng
 
 		}
         private function addAreas():void{
-        	
+        	CollisionManager.getInstance().init(DisplayObject(Application.application));
         	var guangXiArea:Array=[[[325, 103], [387, 128]]];
 			var dongMengWindowArea:Array=[[[660, 110], [870, 148]]];
 			CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "dm_gx")

@@ -120,6 +120,11 @@ package lxfa.model
 			}
 			return pictureUrls;
 		}
+		//获取swf的路径
+		public function getSwfUrl(num:int):String
+		{
+			return xmlData.Item[num+min].Swf[0];
+		}
 		//类型
 		public function getType(num:int):String
 		{

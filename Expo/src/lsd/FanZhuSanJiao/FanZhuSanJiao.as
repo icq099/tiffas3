@@ -2,6 +2,7 @@ package lsd.FanZhuSanJiao
 {
 	import communication.MainSystem;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	import flash.events.ProgressEvent;
@@ -75,7 +76,7 @@ package lsd.FanZhuSanJiao
 			swfPlayer.addEventListener(Event.COMPLETE, on_swf_complete);
 		}
         private function addAreas():void{
-        	
+        	CollisionManager.getInstance().init(DisplayObject(Application.application));
         	var guangXiArea:Array=[[[272, 299], [394, 377]], [[297, 377], [347, 410]]];
 			var fanZhuWindowArea:Array=[[[680, 153], [892, 192]]]
         	CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "fz_gx");

@@ -2,6 +2,7 @@ package lsd.DaMeiGongHe
 {
 	import communication.MainSystem;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	import flash.events.ProgressEvent;
@@ -91,7 +92,7 @@ package lsd.DaMeiGongHe
 			swfPlayer.addEventListener(Event.COMPLETE, on_swf_complete);
 		}
        private function addAreas():void{
-       	     
+       	    CollisionManager.getInstance().init(DisplayObject(Application.application));
        	    var guangXiArea:Array=[[[485, 129], [610, 183]]];
 			var daMeiGongHeWindowArea:Array=[[[670, 185], [880, 222]]];
 			CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "dmg_gx");
