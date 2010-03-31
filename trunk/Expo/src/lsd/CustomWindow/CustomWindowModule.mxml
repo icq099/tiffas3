@@ -10,8 +10,8 @@
 			   	
 			   	      customwindow=new CustomWindow();
 			   	      addChild(customwindow);
-			   	     customwindow.x=30
-			   	      
+			   	      customwindow.x=50
+			   	      customwindow.y=50
 			   }
 			   public function dispose():void{
 			   	

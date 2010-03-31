@@ -4,10 +4,10 @@ package lsd.CustomWindow
 	
 	public class CustomWindowEvent extends Event
 	{
-		public static const CUSTOMWINOW_SWFLOAD:String="customwindw_swfload";
-		public static const CUSTOMWINOW_CLOSE:String="customwindow_close";
+		public static const SWF_COMPLETE:String="swf_complete";
+		public static const WINDOW_CLOSE:String="window_close";
 		
-		public function CustomWindowEvent()
+		public function CustomWindowEvent(type:String)
 		{
 			super(type);
 		}
