@@ -10,6 +10,7 @@ package lxfa.normalWindow
 	import flash.events.Event;
 	
 	import lxfa.normalWindow.model.NormalWindowModel;
+	import lxfa.utils.CollisionManager;
 	
 	import mx.core.UIComponent;
 	import mx.managers.PopUpManager;
@@ -65,6 +66,26 @@ package lxfa.normalWindow
 			{
 				create("GeHaiQingYunModule","getGeHaiQingYun",10,20);
 			}
+			else if(type=="ChengShiGuangYingModule")
+			{
+				createChengShiGuangYing();
+			}
+		}
+		private function createChengShiGuangYing():void
+		{
+			MainSystem.getInstance().showPluginById("ChengShiGuangYingModule");
+			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,function(e:ScriptAPIAddEvent):void{
+				if(e.fun_name=="initChengShiGuangYing")
+				{
+					MainSystem.getInstance().runAPIDirectDirectly("initChengShiGuangYing",[ID]);
+					var dis:DisplayObject=MainSystem.getInstance().getPlugin("ChengShiGuangYingModule");
+					dis.addEventListener(Event.COMPLETE,on_chengshiguangying_complete);
+				}
+			});
+		}
+		private function on_chengshiguangying_complete(e:Event):void
+		{
+			this.addChild(MainSystem.getInstance().runAPIDirectDirectly("getChengShiGuangYing",[]));
 		}
 		private function create(moduleName:String,funName:String,x:int,y:int):void
 		{

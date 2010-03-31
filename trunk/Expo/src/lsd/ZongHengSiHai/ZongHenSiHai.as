@@ -2,6 +2,7 @@ package lsd.ZongHengSiHai
 {
 	import communication.MainSystem;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.NetStatusEvent;
@@ -94,7 +95,7 @@ package lsd.ZongHengSiHai
 			unrealCompassSwc.addEventListener(MouseEvent.CLICK,on_unrealCompassSwc_click);
 		}
 		private function addAreas():void{
-			
+			 CollisionManager.getInstance().init(DisplayObject(Application.application));
 			 var daMeiGongHeArea:Array=[[[43,220],[157,301]]];
 			 var dongMengArea:Array=[[[163,325],[282,395]]];
 			 var fanZhuArea:Array=[[[580,296],[689,360]]];

@@ -1,5 +1,6 @@
 package lxfa.utils
 {
+	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
@@ -11,6 +12,7 @@ package lxfa.utils
 		private static var instance:CollisionManager;
 		private var rootAr:Array=new Array();//一种以数组进行存储
 		private var rootObj:Object=new Object();//一种以对象的属性进行存储，用于删除
+		private var container:*;
 		public function CollisionManager()
 		{
 			if(instance==null){
@@ -18,10 +20,21 @@ package lxfa.utils
 			}else{
 				throw new Error("Cann't be new!");
 			}
+			container=DisplayObject(Application.application);
 			Application.application.addEventListener(MouseEvent.CLICK,onClick);
+		}
+		public function init(dis:DisplayObject):void
+		{
+			if(dis!=null)
+			{
+				MemoryRecovery.getInstance().gcFun(container,MouseEvent.CLICK,onClick);
+				container=dis;
+				container.addEventListener(MouseEvent.CLICK,onClick);
+			}
 		}
 		public function onClick(e:MouseEvent):Boolean
 		{
+			trace(e.stageX);
 			var obj:Object;//节点
 			var array:Array;
 			var pointLeftTop:Array;//左上角的点
@@ -157,7 +170,7 @@ package lxfa.utils
 					}
 				}
 			}
-			Application.application.addChild(this);
+			container.addChild(this);
 		}
 	}
 }

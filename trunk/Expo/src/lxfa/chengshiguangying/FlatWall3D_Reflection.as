@@ -1,4 +1,4 @@
-package lxfa.shanshuishihua.view{
+package lxfa.chengshiguangying{
     import caurina.transitions.*;
     
     import communication.MainSystem;
@@ -30,6 +30,10 @@ package lxfa.shanshuishihua.view{
 		private var itemModel:ShanShuiShiHuaModel;    //
 		private var materialRubbishArray:Array;
 		private var pictureUrls:Array;
+		private var customDown:CustomWindowUIDown;
+		private var minMouseX:Number=173.7;//滑块的最小X坐标
+		private var maxMouseX:Number=568.7;//滑块的最大X坐标
+		private var offset:Number=5;    //点击左（右）按钮，滑块的偏移量
         public function FlatWall3D_Reflection(){
         	initPictureUrlCtr();
         }
@@ -55,9 +59,72 @@ package lxfa.shanshuishihua.view{
 			basicView = new BasicView(771, 224, false , true, "FREECAMERA3D");
 			basicView.viewport.buttonMode = true;
 			this.addChild(basicView);
+			initCustomDown();
 			this.addEventListener(Event.ENTER_FRAME, onEventRender3D);			
 			basicView.camera.z = -2500;
 			basicView.camera.x = -1000;
+		}
+		private function initCustomDown():void
+		{
+			customDown=new CustomWindowUIDown();
+			customDown.scaleX=customDown.scaleY=0.6;
+			customDown.x=160;
+			customDown.y=270;
+			this.addChild(customDown);
+			customDown.bar.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownHandler );
+			customDown.bar.addEventListener(MouseEvent.MOUSE_UP, onMouseUpHandler );
+			customDown.left.addEventListener(MouseEvent.CLICK,onLeftClick);
+			customDown.right.addEventListener(MouseEvent.CLICK,onRightClick);
+		}
+		//左边按钮的点击事件
+		private function onLeftClick(e:MouseEvent):void
+		{
+			if(customDown.bar.x-offset>minMouseX)
+			{
+				customDown.bar.x-=offset;
+				setCameraX();
+			}
+			else
+			{
+				customDown.bar.x=minMouseX;
+			}
+		}
+		//右边按钮的点击事件
+		private function onRightClick(e:MouseEvent):void
+		{
+			if(customDown.bar.x+offset<=maxMouseX)
+			{
+				customDown.bar.x+=offset;
+				setCameraX();
+			}
+			else
+			{
+				customDown.bar.x=maxMouseX;
+			}
+		}
+		private function onMouseDownHandler( e : MouseEvent ):void {
+		       stage.addEventListener( MouseEvent.MOUSE_MOVE, onMoveHandler );
+		       stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUpHandler );
+		}
+		
+		private function onMouseUpHandler( e :MouseEvent ):void {
+		       if ( stage.hasEventListener( MouseEvent.MOUSE_MOVE ) ) {
+		              stage.removeEventListener( MouseEvent.MOUSE_MOVE, onMoveHandler );
+		       }
+		       if ( stage.hasEventListener( MouseEvent.MOUSE_UP ) ) {
+		              stage.removeEventListener( MouseEvent.MOUSE_UP, onMouseUpHandler );
+		       }
+		}
+		private function onMoveHandler( e : MouseEvent ):void {
+	       if( mouseX > minMouseX &&  mouseX < maxMouseX )
+	       {
+		       	customDown.bar.x = mouseX;
+		       	setCameraX();
+	       }
+		}
+		private function setCameraX():void
+		{
+			cameraX=(customDown.bar.x-minMouseX)/(maxMouseX-minMouseX)*1000;
 		}
 		private function initObject():void{
 			init3DObject();
@@ -152,6 +219,9 @@ package lxfa.shanshuishihua.view{
 		}
 		private function onBackGroundClick(e:MouseEvent):void{
 			cameraZ = -1000;
+			//目標Z軸回到-1000;
+//			bg_mc.removeEventListener(MouseEvent.CLICK, onBackGroundClick);
+			//取消偵聽。
 		}
 
         private function onEventRender3D(e:Event):void{		
@@ -175,6 +245,10 @@ package lxfa.shanshuishihua.view{
         }
         public function dispose():void
         {
+        	MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_MOVE, onMoveHandler );
+        	MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_UP, onMouseUpHandler );
+        	MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_WHEEL, onMouseWheel);
+        	MemoryRecovery.getInstance().gcFun(stage,MouseEvent.CLICK,onStageClick);
         	MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME, onEventRender3D);	
         	MemoryRecovery.getInstance().gcFun(itemModel,Event.COMPLETE,onPictureUrlCtrComplete);
         	MemoryRecovery.getInstance().gcObj(itemModel,true);
