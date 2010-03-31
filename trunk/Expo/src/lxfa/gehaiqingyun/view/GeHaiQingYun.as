@@ -8,10 +8,13 @@ package lxfa.gehaiqingyun.view
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import lxfa.utils.MemoryRecovery;
+	
 	public class GeHaiQingYun extends Sprite
 	{
 		private var geHaiQingYunSwc:GeHaiQingYunSwc;
 		private var playListCtr:PlayListCtr;
+		private var list:ListBg;
 		public function GeHaiQingYun()
 		{
 			MainSystem.getInstance().addAPI("getGeHaiQingYun",initGeHaiQingYunSwc);
@@ -19,39 +22,47 @@ package lxfa.gehaiqingyun.view
 		private function initGeHaiQingYunSwc():GeHaiQingYunSwc
 		{
 			geHaiQingYunSwc=new GeHaiQingYunSwc();
-			geHaiQingYunSwc.playList.visible=false;
+			initList(geHaiQingYunSwc);
 			initPlayListCtr();
-//			initListener();
+			initListener();
 			return geHaiQingYunSwc;
+		}
+		private function initList(geHaiQingYunSwc:GeHaiQingYunSwc):void
+		{
+			list=new ListBg();
+			geHaiQingYunSwc.addChild(list);
+			geHaiQingYunSwc.playList.visible=false;
+			list.visible=false;
+			list.x=605;list.y=30;
 		}
 		private function initListener():void
 		{
 			geHaiQingYunSwc.btn_playList.addEventListener(MouseEvent.CLICK,onClick);
 			geHaiQingYunSwc.btn_play.addEventListener(MouseEvent.CLICK,onbtn_playClick);
-			geHaiQingYunSwc.playList.addEventListener(ListEvent.ITEM_DOUBLE_CLICK,onITEM_DOUBLE_CLICK);
+			list.addEventListener(MouseEvent.DOUBLE_CLICK,onITEM_DOUBLE_CLICK);
 			geHaiQingYunSwc.btn_pre.addEventListener(MouseEvent.CLICK,onbtn_preCLICK);
 			geHaiQingYunSwc.btn_next.addEventListener(MouseEvent.CLICK,onbtn_nextCLICK);
 			geHaiQingYunSwc.btn_Close.addEventListener(MouseEvent.CLICK,onbtn_CloseClick);
 		}
 		private function onbtn_CloseClick(e:Event):void
 		{
-			this.dispatchEvent(new Event(Event.CLOSE));
-			MainSystem.getInstance().removePluginById("GeHaiQingYunModule");
+			geHaiQingYunSwc.dispatchEvent(new Event(Event.CLOSE));
+			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["GeHaiQingYunModule"]);
 		}
-		private function onClick(e:Event):void
+		private function onClick(e:MouseEvent):void
 		{
-			if(geHaiQingYunSwc.playList.visible==true)
+			if(list.visible==true)
 			{
-				geHaiQingYunSwc.playList.visible=false;
+				list.visible=false;
 			}
 			else
 			{
-				geHaiQingYunSwc.playList.visible=true;
+				list.visible=true;
 			}
 		}
 		private function onbtn_playClick(e:Event):void
 		{
-			if(geHaiQingYunSwc.playList.visible==true)
+			if(list.visible==true)
 			{
 				if(playListCtr!=null)
 				{
@@ -88,10 +99,21 @@ package lxfa.gehaiqingyun.view
 		}
 		private function initPlayListCtr():void
 		{
-			playListCtr=new PlayListCtr(geHaiQingYunSwc);
+			playListCtr=new PlayListCtr(geHaiQingYunSwc,list);
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(geHaiQingYunSwc.btn_playList,MouseEvent.CLICK,onClick);
+			MemoryRecovery.getInstance().gcFun(geHaiQingYunSwc.btn_play,MouseEvent.CLICK,onbtn_playClick);
+			MemoryRecovery.getInstance().gcFun(geHaiQingYunSwc.btn_pre,MouseEvent.CLICK,onbtn_preCLICK);
+			MemoryRecovery.getInstance().gcFun(geHaiQingYunSwc.btn_next,MouseEvent.CLICK,onbtn_nextCLICK);
+			MemoryRecovery.getInstance().gcFun(geHaiQingYunSwc.btn_Close,MouseEvent.CLICK,onbtn_CloseClick);
+			MemoryRecovery.getInstance().gcObj(geHaiQingYunSwc.btn_playList);
+			MemoryRecovery.getInstance().gcObj(geHaiQingYunSwc.btn_play);
+			MemoryRecovery.getInstance().gcObj(geHaiQingYunSwc.btn_pre);
+			MemoryRecovery.getInstance().gcObj(geHaiQingYunSwc.btn_next);
+			MemoryRecovery.getInstance().gcObj(geHaiQingYunSwc.btn_Close);
+			MemoryRecovery.getInstance().gcObj(geHaiQingYunSwc);
 			playListCtr.dispose();
 			geHaiQingYunSwc=null;
 			playListCtr=null;

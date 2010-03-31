@@ -27,7 +27,7 @@ package lxfa.lijiangwanchang
 		private function onbtn_closeClick(e:MouseEvent):void
 		{
 			liJiangWanChangSwc.dispatchEvent(new Event(Event.CLOSE));
-			MainSystem.getInstance().removePluginById("LiJiangWanChangModule");
+			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["LiJiangWanChangModule"]);
 		}
 		private function onbtn_fishingClick(e:MouseEvent):void
 		{
@@ -45,7 +45,7 @@ package lxfa.lijiangwanchang
 		}
 		private function on_fishGame_close(e:Event):void
 		{
-			MainSystem.getInstance().removePluginById("LiJiangWanChangModule");
+			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["LiJiangWanChangModule"]);
 			liJiangWanChangSwc.dispatchEvent(e);
 		}
 		private function popupFishGame():void
