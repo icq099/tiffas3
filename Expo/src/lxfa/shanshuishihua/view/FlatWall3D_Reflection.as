@@ -29,6 +29,7 @@ package lxfa.shanshuishihua.view{
 		private var rubbishArray:Array;             //垃圾回收数组
 		private var itemModel:ShanShuiShiHuaModel;    //
 		private var materialRubbishArray:Array;
+		private var pictureUrls:Array;
         public function FlatWall3D_Reflection(){
         	initPictureUrlCtr();
         }
@@ -40,6 +41,7 @@ package lxfa.shanshuishihua.view{
         private function onPictureUrlCtrComplete(e:Event):void
         {
         	itemOfNumber=itemModel.getItemOfNumber();
+        	this.pictureUrls=itemModel.getPictureUrls(51);
         	initRubbishArray();
 			init3DEngine();
 			initObject();
@@ -59,8 +61,10 @@ package lxfa.shanshuishihua.view{
 		}
 		private function initObject():void{
 			init3DObject();
+			this.addEventListener(Event.ADDED_TO_STAGE,function(e:Event):void{
 			stage.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			stage.addEventListener(MouseEvent.CLICK,onStageClick);
+			});
 			//监听添加到STAGE得事件
 		}
         private function onStageClick(e:MouseEvent):void
@@ -77,8 +81,8 @@ package lxfa.shanshuishihua.view{
 			var planeHeight	:int;
 			var imgUrl:String;
 			//宣告變數, 避免在判斷式時重復宣告。
-			for (var i:int = 0; i < itemOfNumber; i++) {	
-				imgUrl=itemModel.getImgUrl(i);
+			for (var i:int = 0; i < pictureUrls.length; i++) {	
+				imgUrl=pictureUrls[i];
 				if (i % 2 == 0) {	
 					//取 3 餘數如果等於 0 的話, 表示是最下方一排					
 					bmpMat = new ReflectionFileMaterial(imgUrl, true);

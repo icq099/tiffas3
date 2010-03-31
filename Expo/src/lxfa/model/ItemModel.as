@@ -120,6 +120,15 @@ package lxfa.model
 			}
 			return pictureUrls;
 		}
+		//类型
+		public function getType(num:int):String
+		{
+			if(xmlData.Item[num+min]!=null)
+			{
+				return xmlData.Item[num+min].@type;
+			}
+			return null;
+		}
 		public function getPictureName(num:int):String
 		{
 			if(xmlData.Item[num+min].Picture[0]!=null)

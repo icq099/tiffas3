@@ -1,5 +1,6 @@
 package lxfa.normalWindow
 {
+	import communication.Event.MainSystemEvent;
 	import communication.MainSystem;
 	
 	import flash.display.DisplayObject;
@@ -17,7 +18,7 @@ package lxfa.normalWindow
 		{
 			MainSystem.getInstance().addAPI("showNormalWindow",showNormalWindow);
 		}
-		public function showNormalWindow(id:String):void
+		public function showNormalWindow(id:String,sid:int=0):void
 		{
 			MainSystem.getInstance().stopRender();
 			MainSystem.getInstance().runAPIDirectDirectly("removeAnimate",[]);
@@ -26,7 +27,7 @@ package lxfa.normalWindow
 				isPoped=true;
 				normalWindowFactory=new NormalWindowFactory(int(id));
 				PopUpManager.addPopUp(normalWindowFactory,DisplayObject(Application.application), true);
-	            PopUpManager.centerPopUp(normalWindowFactory); 
+	            PopUpManager.centerPopUp(normalWindowFactory);
 	            normalWindowFactory.x=33;
 	            normalWindowFactory.y=80;
 	            normalWindowFactory.addEventListener(Event.CLOSE,onnormalWindowFactoryClose);

@@ -3,6 +3,7 @@ package lxfa.shanshuishihua.view
 	import communication.MainSystem;
 	
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import lxfa.utils.MemoryRecovery;
@@ -15,13 +16,14 @@ package lxfa.shanshuishihua.view
 		private var offset:Number=5;    //点击左（右）按钮，滑块的偏移量
 		public function ShanShuiShiHua()
 		{
-			initShanShuiShiHuaSwc();
-			initFlatWall3D_Reflection();
+			MainSystem.getInstance().addAPI("getShanShuiShiHua",initShanShuiShiHuaSwc);
 		}
-		private function initShanShuiShiHuaSwc():void
+		private function initShanShuiShiHuaSwc():ShanShuiShiHuaSwc
 		{
+			MainSystem.getInstance().stopRender();
 			shanShuiShiHuaSwc=new ShanShuiShiHuaSwc();
-			this.addChild(shanShuiShiHuaSwc);
+			initFlatWall3D_Reflection();
+			return shanShuiShiHuaSwc;
 		}
 		private function initFlatWall3D_Reflection():void
 		{
@@ -42,6 +44,7 @@ package lxfa.shanshuishihua.view
 		//关闭按钮点击事件
 		private function onCloseClick(e:MouseEvent):void
 		{
+			shanShuiShiHuaSwc.dispatchEvent(new Event(Event.CLOSE));
 			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["ShanShuiShiHuaModule"]);
 		}
 		//左边按钮的点击事件
@@ -96,6 +99,7 @@ package lxfa.shanshuishihua.view
 		}
 		public function dispose():void
 		{
+			MainSystem.getInstance().startRender();
 			MemoryRecovery.getInstance().gcFun(shanShuiShiHuaSwc.scrubber,MouseEvent.MOUSE_DOWN,onMouseDownHandler);
 			MemoryRecovery.getInstance().gcFun(shanShuiShiHuaSwc.scrubber,MouseEvent.MOUSE_UP,onMouseUpHandler);
 			MemoryRecovery.getInstance().gcObj(shanShuiShiHuaSwc.scrubber);

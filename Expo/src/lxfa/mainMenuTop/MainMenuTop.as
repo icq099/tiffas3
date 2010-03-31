@@ -4,14 +4,22 @@ package lxfa.mainMenuTop
 	
 	import communication.MainSystem;
 	
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
-	import lxfa.utils.CollisionManager;
+	import lxfa.utils.MemoryRecovery;
+	import lxfa.view.menu.popumenu.view.PopupMenuManager;
+	
+	import mx.core.Application;
+	
+	import yzhkof.Toolyzhkof;
 	
 	public class MainMenuTop extends MainMenu
 	{
 		private var top:MainMenuTopSwc;
 		private var hasBackGround:Boolean=true;
+		private var popupMenuManager:PopupMenuManager;
+		private var head:MainMenuHead=new MainMenuHead();
 		public function MainMenuTop()
 		{
 			top=new MainMenuTopSwc();
@@ -19,39 +27,44 @@ package lxfa.mainMenuTop
 			top.alpha=0;
 			Tweener.addTween(top,{alpha:1,time:3});
 			initLaba();
-			initCollision();
+			init();
 		}
-		private function initCollision():void
+		private function init():void
 		{
-			top.addFrameScript(10,addAreas);
-			top.addFrameScript(94,removeAreas);
+			popupMenuManager=new PopupMenuManager();
+			popupMenuManager.init(top.lvsejiayuan,top.lvsejiayuan.name,0);
+			popupMenuManager.init(top.lansemengxiang,top.lansemengxiang.name,1);
+			popupMenuManager.init(top.meiguantianxia,top.meiguantianxia.name,2);
+			popupMenuManager.init(top.jinxiuhuazhang,top.jinxiuhuazhang.name,3);
+			popupMenuManager.init(top.shengshihexie,top.shengshihexie.name,4);
+			popupMenuManager.init(top.zonghengsihai,top.zonghengsihai.name,5);
+			popupMenuManager.init(top.yangmengbagui,top.yangmengbagui.name,6);
+			top.stop();
+			Application.application.addChild(Toolyzhkof.mcToUI(head));
+			head.x=87;
+			head.y=4;
+			head.buttonMode=true;
+			head.addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void{
+				if(top.currentFrame==1 || top.currentFrame==2)
+				{
+					top.play();
+					top.addFrameScript(top.totalFrames-1,function():void{
+						top.stop();
+					});
+				}
+				if(top.currentFrame==top.totalFrames)
+				{
+					top.addEventListener(Event.ENTER_FRAME,enter);
+					top.addFrameScript(1,function():void{
+						top.stop();
+						MemoryRecovery.getInstance().gcFun(top,Event.ENTER_FRAME,enter);
+					});
+				}
+			});
 		}
-		private function addAreas():void
+		private function enter(e:Event):void
 		{
-			var lvsejiayuanArea:Array=[[[221,31],[299,47]]];
-			CollisionManager.getInstance().addCollision(lvsejiayuanArea,lvsejiayuanClick,"lvsejiayuan");
-			var lansemengxiangArea:Array=[[[312,31],[390,47]]];
-			CollisionManager.getInstance().addCollision(lansemengxiangArea,lansemengxiangClick,"lansemengxiang");
-			var meiguantianxiaArea:Array=[[[406,31],[485,47]]];
-			CollisionManager.getInstance().addCollision(meiguantianxiaArea,meiguantianxiaClick,"meiguantianxia");
-			var jinxiuhuazhangArea:Array=[[[497,31],[575,47]]];
-			CollisionManager.getInstance().addCollision(jinxiuhuazhangArea,jinxiuhuazhangClick,"jinxiuhuazhang");
-			var shengshihexieArea:Array=[[[592,31],[672,47]]];
-			CollisionManager.getInstance().addCollision(shengshihexieArea,shengshihexieClick,"shengshihexie");
-			var zonghengsihaiArea:Array=[[[685,31],[771,47]]];
-			CollisionManager.getInstance().addCollision(zonghengsihaiArea,zonghengsihaiClick,"zonghengsihai");
-			var yangmengbaguiArea:Array=[[[787,31],[866,47]]];
-			CollisionManager.getInstance().addCollision(yangmengbaguiArea,yangmengbaguiClick,"yangmengbagui");
-		}
-		private function removeAreas():void
-		{
-			CollisionManager.getInstance().removeCollision("lvsejiayuan");
-			CollisionManager.getInstance().removeCollision("lansemengxiang");
-			CollisionManager.getInstance().removeCollision("meiguantianxia");
-			CollisionManager.getInstance().removeCollision("jinxiuhuazhang");
-			CollisionManager.getInstance().removeCollision("shengshihexie");
-			CollisionManager.getInstance().removeCollision("zonghengsihai");
-			CollisionManager.getInstance().removeCollision("yangmengbagui");
+			top.prevFrame();
 		}
 		private function lvsejiayuanClick():void
 		{

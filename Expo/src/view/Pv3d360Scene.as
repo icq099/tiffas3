@@ -317,7 +317,7 @@
 				arrows=new Array();
 			}
 		}
-
+		private var distance:int=10;
 		//增加动画
 		public function addAminate(URL:String, init_obj:Object, cache:Boolean=false):Plane
 		{
@@ -340,6 +340,7 @@
 			var speed:Number=init_obj["speed"] ? init_obj["speed"] : 0;
 			var filter:int=init_obj["filter"] ? init_obj["filter"] : 0;
 			var sign:int=init_obj["sign"] ? init_obj["sign"] : 0;
+			var debuge:int=init_obj["debuge"] ? init_obj["debuge"] : 0;
 			var plane_animate:BendPlane=new BendPlane(new ColorMaterial(0xffffff, 0), width, height, segmentsW, segmentsH, init_obj);
 			plane_animate.offset=init_obj["offset"] ? init_obj["offset"] : 0;
 			plane_animate.angle=init_obj["angle"] ? init_obj["angle"] : 0;
@@ -437,9 +438,11 @@
 					}
 					plane_animate.filters=[];
 				});
-			var distance:int=10;
+			
 			var rotateSpeed:int=5;
 			var scaleSpeed:Number=0.1;
+			if(debuge==1)
+			{
 			Application.application.stage.addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent):void
 				{
 					if (e.keyCode == 87)
@@ -490,8 +493,17 @@
 					{
 						plane_animate.scaleY-=scaleSpeed;
 					}
+					if(e.keyCode==73)
+					{
+						distance+=10;
+					}
+					if(e.keyCode==75)
+					{
+						distance-=10;
+					}
 					trace("x=\"" + plane_animate.x + "\" y=\"" + plane_animate.y + "\" z=\"" + plane_animate.z + "\" rotationY=\"" + plane_animate.rotationY + "\"" + " scaleX=\"" + plane_animate.scaleX + "\" scaleY=\"" + plane_animate.scaleY + "\"");
 				});
+			}
 			return plane_animate;
 
 		}

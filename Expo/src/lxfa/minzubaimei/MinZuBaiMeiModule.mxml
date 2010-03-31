@@ -2,7 +2,6 @@
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="communication.IPlugin">
 	<mx:Script>
 		<![CDATA[
-			import yzhkof.Toolyzhkof;
 			import lxfa.minzubaimei.view.MinZuBaiMei;
 		    private var minzubaimei:MinZuBaiMei;
 			private function init():void
@@ -12,7 +11,6 @@
 			private function initMinZuBaiMei():void
 			{
 				minzubaimei=new MinZuBaiMei();
-				addChild(Toolyzhkof.mcToUI(minzubaimei));
 			}
 			public function dispose():void
 			{

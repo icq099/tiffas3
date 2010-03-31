@@ -1,5 +1,7 @@
 package lxfa.minzubaimei.view
 {
+	import communication.MainSystem;
+	
 	import flash.display.Sprite;
 	
 	public class MinZuBaiMei extends Sprite
@@ -7,12 +9,12 @@ package lxfa.minzubaimei.view
 		private var miniCarouselReflectionView:MiniCarouselReflectionView;
 		public function MinZuBaiMei()
 		{
-			initMiniCarouselReflectionView();
+			MainSystem.getInstance().addAPI("getMinZuBaiMei",initMiniCarouselReflectionView);
 		}
-		private function initMiniCarouselReflectionView():void
+		private function initMiniCarouselReflectionView():MiniCarouselReflectionView
 		{
 			miniCarouselReflectionView=new MiniCarouselReflectionView();
-			this.addChild(miniCarouselReflectionView);
+			return miniCarouselReflectionView;
 		}
 		public function dispose():void
 		{
