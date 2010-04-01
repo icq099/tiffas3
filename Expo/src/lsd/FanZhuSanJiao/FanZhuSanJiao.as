@@ -123,7 +123,7 @@ package lsd.FanZhuSanJiao
 
 		private function fanZhuWindowClick():void
 		{
-			trace("fanzhuwindow");
+			MainSystem.getInstance().runAPIDirect("showNormalWindow",[42]);
 		}
 
 		public function dispose():void

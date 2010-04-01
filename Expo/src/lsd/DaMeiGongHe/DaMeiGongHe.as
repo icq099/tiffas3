@@ -80,7 +80,7 @@ package lsd.DaMeiGongHe
 
 		private function daMeiGongHeWindowClick():void
 		{
-			trace("dameigonghewindow");
+			MainSystem.getInstance().runAPIDirect("showNormalWindow",[41]);
 		}
 
 		private function init():void

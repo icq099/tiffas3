@@ -166,7 +166,6 @@ package lsd.ZongHengSiHai
 		}
        private function on_unrealCompassSwc_click(e:MouseEvent):void
 		{
-				trace("杨梦八桂");
 			    removeAreas();
 			    MainSystem.getInstance().isBusy=true;
 			    flvPlayer=new FLVPlayer("movie/zonghengsihai-yangmengbagui.flv", 900, 480, false);
@@ -182,7 +181,6 @@ package lsd.ZongHengSiHai
 		
         private function dongMengClick():void
 		{
-				trace("dongmeng");
 				removeAreas();
 			    MainSystem.getInstance().isBusy=true;
 			    flvPlayer=new FLVPlayer("movie/gx-dm1.flv", 900, 480, false);
@@ -197,7 +195,6 @@ package lsd.ZongHengSiHai
 		}
 		private function fanZhuClick():void
 		{
-			   trace("fanzhu");
 			   removeAreas();
 			   MainSystem.getInstance().isBusy=true;
 			   flvPlayer=new FLVPlayer("movie/gx-fz1.flv", 900, 480, false);
@@ -219,11 +216,11 @@ package lsd.ZongHengSiHai
 		}
 		private function beiBuWanClick():void
 		{
-				trace("beibuwan");
+				MainSystem.getInstance().runAPIDirect("showNormalWindow",[43]);
 		}
 		private function xiJiangClick():void
 		{
-				trace("xiJiang");
+				MainSystem.getInstance().runAPIDirect("showNormalWindow",[40]);
 		}
 		private function removeAreas():void{
 			

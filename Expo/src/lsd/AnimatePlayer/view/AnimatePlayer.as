@@ -112,7 +112,7 @@ package lsd.AnimatePlayer.view
 							MovieClip(outLoader.content).gotoAndPlay(0);
 							MovieClip(outLoader.content).addFrameScript(MovieClip(outLoader.content).totalFrames-1,dispose);
 						}catch(e:Error){
-							trace(e);
+							trace(this.className+e);
 						}
 			            is_open=false;
 			  		}

@@ -68,7 +68,7 @@ package lsd.DongMeng
 
 		private function dongMengWindowClick():void
 		{
-			trace("dongMeng");
+			MainSystem.getInstance().runAPIDirect("showNormalWindow",[39]);
 		}
 
 		private function init():void
