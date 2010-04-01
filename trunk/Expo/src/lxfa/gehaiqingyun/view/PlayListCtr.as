@@ -39,7 +39,7 @@ package lxfa.gehaiqingyun.view
 			var i:int;
 			for(i=0;i<mediaList.length;i++)
 			{
-				var button:PlayListButton=new PlayListButton(mediaList[i],mediaNames[i],this);
+				var button:PlayListButton=new PlayListButton(i,mediaNames[i],this);
 				button.y=i*19.8;
 				rubbishArray.push(button);
 				list.addChild(button);
