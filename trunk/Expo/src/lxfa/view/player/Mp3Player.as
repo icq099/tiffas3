@@ -4,7 +4,6 @@ package lxfa.view.player
 	 * MP3播放器
 	 * */
 	import flash.display.Sprite;
-	import flash.errors.IOError;
 	import flash.events.Event;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
@@ -16,7 +15,7 @@ package lxfa.view.player
 	public class Mp3Player extends Sprite
 	{
 		private var sound:Sound;
-		private var soundChannel:SoundChannel;
+		private var soundChannel:SoundChannel=new SoundChannel;
 		private var musicUrl:String;
 		private var isPlaying:Boolean=true;
 		private var loop:Boolean;
@@ -52,15 +51,19 @@ package lxfa.view.player
 		}
 		public function stop():void
 		{
-			soundChannel.stop();
+			if(soundChannel!=null)
+			{
+				soundChannel.stop();
+			}
 		}
 		public function play():void
 		{
-			soundChannel=sound.play(soundChannel.position);
-			if(!soundChannel.hasEventListener(Event.SOUND_COMPLETE))
-			{
-				soundChannel.addEventListener(Event.SOUND_COMPLETE,onSOUND_COMPLETE);
-			}
+            soundChannel.stop();
+            soundChannel=sound.play();
+//			if(!soundChannel.hasEventListener(Event.SOUND_COMPLETE))
+//			{
+//				soundChannel.addEventListener(Event.SOUND_COMPLETE,onSOUND_COMPLETE);
+//			}
 			isPlaying=true;
 		}
 		public function replay():void
@@ -76,16 +79,8 @@ package lxfa.view.player
 			MemoryRecovery.getInstance().gcFun(sound,Event.COMPLETE,onComplete);
 			MemoryRecovery.getInstance().gcFun(soundChannel,Event.SOUND_COMPLETE,onSOUND_COMPLETE);
 			stop();
-			soundChannel.stop();
-			try
-			{
-				sound.close();
-			}catch(e:IOError)
-			{
-				
-			}
-			sound=null;
 			soundChannel=null;
+			sound=null;
 		}
 	}
 }
