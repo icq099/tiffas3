@@ -1,5 +1,7 @@
 package lxfa.gehaiqingyun.view
 {
+	import caurina.transitions.Tweener;
+	
 	import communication.MainSystem;
 	
 	import fl.events.ListEvent;
@@ -33,7 +35,7 @@ package lxfa.gehaiqingyun.view
 			geHaiQingYunSwc.addChild(list);
 			geHaiQingYunSwc.playList.visible=false;
 			list.visible=false;
-			list.x=605;list.y=30;
+			list.x=605;list.y=325;
 		}
 		private function initListener():void
 		{
@@ -49,15 +51,31 @@ package lxfa.gehaiqingyun.view
 			geHaiQingYunSwc.dispatchEvent(new Event(Event.CLOSE));
 			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["GeHaiQingYunModule"]);
 		}
+		private var isTweening:Boolean=false;
 		private function onClick(e:MouseEvent):void
 		{
-			if(list.visible==true)
+			if(!isTweening)
 			{
-				list.visible=false;
-			}
-			else
-			{
-				list.visible=true;
+				isTweening=true;
+				if(list.visible==true)
+				{
+					list.mouseEnabled=false;
+					Tweener.addTween(list,{scaleX:0,scaleY:0,time:1,onComplete:function():void{
+						list.mouseEnabled=true;
+					list.visible=false;
+					isTweening=false;
+					}});
+				}
+				else
+				{
+					list.scaleX=list.scaleY=0;
+					list.visible=true;
+					list.mouseEnabled=false;
+					Tweener.addTween(list,{scaleX:1,scaleY:1,time:1,onComplete:function():void{
+						list.mouseEnabled=true;
+					isTweening=false;
+					}});
+				}
 			}
 		}
 		private function onbtn_playClick(e:Event):void
