@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application clipContent="false" frameRate="30" width="900" height="600" creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundColor="#FFFFFF" backgroundGradientColors="[#FFFFFF, #FFFFFF]">
+<mx:Application clipContent="false" frameRate="30" width="900" height="600" creationComplete="init()" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundGradientAlphas="[1.0, 1.0]" backgroundColor="#FFFFFF" backgroundGradientColors="[#010101, #000000]">
 	
 	<mx:Script>
 		<![CDATA[
@@ -13,6 +13,4 @@
 			}
 		]]>
 	</mx:Script>
-	<mx:Panel x="0" y="0" width="900" height="600" layout="absolute" borderStyle="outset" themeColor="#000000" borderColor="#000000" backgroundColor="#030303">
-	</mx:Panel>
 </mx:Application>
