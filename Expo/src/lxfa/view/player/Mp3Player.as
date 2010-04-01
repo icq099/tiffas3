@@ -73,7 +73,9 @@ package lxfa.view.player
 		}
 		public function close():void
 		{
-			sound=new Sound();
+			MemoryRecovery.getInstance().gcFun(sound,Event.COMPLETE,onComplete);
+			MemoryRecovery.getInstance().gcFun(soundChannel,Event.SOUND_COMPLETE,onSOUND_COMPLETE);
+			stop();
 			soundChannel.stop();
 			try
 			{

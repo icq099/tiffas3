@@ -61,7 +61,7 @@ package lxfa.No3.view
 			MemoryRecovery.getInstance().gcObj(loading_mc);
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().removePluginById("IndexModule");
-			MainSystem.getInstance().runAPIDirect("addAnimate",[0]);
+//			MainSystem.getInstance().runAPIDirect("addAnimate",[0]);
 			flvPlayer.addEventListener(Event.CLOSE,on_flvPlayer_close);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,flvPlayer_NetStatus_handler);
 		}
