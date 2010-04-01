@@ -48,8 +48,11 @@ package lxfa.gehaiqingyun.view
 		}
 		private function onbtn_CloseClick(e:Event):void
 		{
-			geHaiQingYunSwc.dispatchEvent(new Event(Event.CLOSE));
-			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["GeHaiQingYunModule"]);
+			if(!MainSystem.getInstance().isBusy)
+			{
+				geHaiQingYunSwc.dispatchEvent(new Event(Event.CLOSE));
+				MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["GeHaiQingYunModule"]);
+			}
 		}
 		private var isTweening:Boolean=false;
 		private function onClick(e:MouseEvent):void

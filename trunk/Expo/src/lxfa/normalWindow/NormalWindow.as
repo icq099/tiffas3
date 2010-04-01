@@ -214,7 +214,7 @@ package lxfa.normalWindow
 		private var isLoaded:Boolean;
 		private function onViewer360Complete(e:Event):void
 		{
-			if(!isLoaded)
+			if(!isLoaded && viewer360!=null)
 			{
 				dp.panel1.addChild(viewer360);
 				isLoaded=true;

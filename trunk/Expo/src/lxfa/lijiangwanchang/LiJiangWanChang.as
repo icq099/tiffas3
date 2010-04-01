@@ -26,8 +26,11 @@ package lxfa.lijiangwanchang
 		}
 		private function onbtn_closeClick(e:MouseEvent):void
 		{
-			liJiangWanChangSwc.dispatchEvent(new Event(Event.CLOSE));
-			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["LiJiangWanChangModule"]);
+			if(!MainSystem.getInstance().isBusy)
+			{
+				liJiangWanChangSwc.dispatchEvent(new Event(Event.CLOSE));
+				MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["LiJiangWanChangModule"]);
+			}
 		}
 		private function onbtn_fishingClick(e:MouseEvent):void
 		{
