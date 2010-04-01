@@ -15,7 +15,7 @@ package lsd.SlidingPuzzle
 	public class SlidingPuzzleGame extends Sprite
 	{
 		private var slidingPuzzle:SlidingPuzzle;
-		private var url:Array=["img/百里柳江.jpg","img/广西体育中心.jpg","img/桂林两江机场.jpg","img/南宁大桥.jpg","img/南宁机场.jpg"]
+		private var url:Array=["point/img/19-1-1.jpg","point/img/19-1-2.jpg","point/img/19-1-3.jpg","point/img/19-1-4.jpg","point/img/19-1-5.jpg"]
 	    private var i:int=0;
 		private var puzzleGameClose:PuzzleGameClose;
 		
@@ -53,7 +53,7 @@ package lsd.SlidingPuzzle
 		}
 		private function next_fun(e:SlidingEvent):void{
 			
-			 if(url[i].toString()!="img/南宁机场.jpg")
+			 if(url[i].toString()!="point/img/19-1-5.jpg")
 			 {	
 			 i++;
 			 TweenLite.from(slidingPuzzle,1,{alpha:0});
