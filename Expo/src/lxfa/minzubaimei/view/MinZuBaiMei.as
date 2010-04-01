@@ -39,8 +39,11 @@ package lxfa.minzubaimei.view
 		}
 		private function on_close(e:CustomWindowEvent):void
 		{
-			backGround.dispatchEvent(new Event(Event.CLOSE));
-			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["MinZuBaiMeiModule"]);
+			if(!MainSystem.getInstance().isBusy)
+			{
+				backGround.dispatchEvent(new Event(Event.CLOSE));
+				MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["MinZuBaiMeiModule"]);
+			}
 		}
 		public function dispose():void
 		{

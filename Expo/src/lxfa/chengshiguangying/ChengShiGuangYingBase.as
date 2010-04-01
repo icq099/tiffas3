@@ -49,11 +49,14 @@ package lxfa.chengshiguangying
 		}
 		public function dispose(e:CustomWindowEvent):void
 		{
-			customWindow.dispatchEvent(new Event(Event.CLOSE));
-			MemoryRecovery.getInstance().gcObj(flatWall3D_Reflection,true);
-			MemoryRecovery.getInstance().gcFun(customWindow,CustomWindowEvent.SWF_COMPLETE,on_swf_complete);
-			MemoryRecovery.getInstance().gcFun(customWindow,CustomWindowEvent.WINDOW_CLOSE,dispose);
-			MemoryRecovery.getInstance().gcObj(customWindow,true);
+			if(!MainSystem.getInstance().isBusy)
+			{
+				customWindow.dispatchEvent(new Event(Event.CLOSE));
+				MemoryRecovery.getInstance().gcObj(flatWall3D_Reflection,true);
+				MemoryRecovery.getInstance().gcFun(customWindow,CustomWindowEvent.SWF_COMPLETE,on_swf_complete);
+				MemoryRecovery.getInstance().gcFun(customWindow,CustomWindowEvent.WINDOW_CLOSE,dispose);
+				MemoryRecovery.getInstance().gcObj(customWindow,true);
+			}
 		}
 	}
 }

@@ -44,8 +44,11 @@ package lxfa.shanshuishihua.view
 		//关闭按钮点击事件
 		private function onCloseClick(e:MouseEvent):void
 		{
-			shanShuiShiHuaSwc.dispatchEvent(new Event(Event.CLOSE));
-			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["ShanShuiShiHuaModule"]);
+			if(!MainSystem.getInstance().isBusy)
+			{
+				shanShuiShiHuaSwc.dispatchEvent(new Event(Event.CLOSE));
+				MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["ShanShuiShiHuaModule"]);
+			}
 		}
 		//左边按钮的点击事件
 		private function onLeftClick(e:MouseEvent):void

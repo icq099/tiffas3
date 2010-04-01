@@ -137,23 +137,18 @@ package lxfa.normalWindow
 		//标准窗关闭的时候
 		private function onnormalWindowClose(e:Event):void
 		{
-			BackGroundMusicManager.getInstance().reload();
-			MainSystem.getInstance().startRender();
-			this.dispatchEvent(new Event(Event.CLOSE));
-			normalWindow=null;
-			if(animate!=null)
+			if(!MainSystem.getInstance().isBusy)
 			{
-				animateParent.addChild(animate);
-			}
-			PopUpManager.removePopUp(this);
-			if(MainSystem.getInstance().isBusy==true)
-			{
-				MainSystem.getInstance().isBusy=false;
-				MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
-				MainSystem.getInstance().isBusy=true;
-			}else
-			{
-				MainSystem.getInstance().runAPIDirect("removeAnimate",[]);
+				BackGroundMusicManager.getInstance().reload();
+				MainSystem.getInstance().startRender();
+				this.dispatchEvent(new Event(Event.CLOSE));
+				normalWindow=null;
+				if(animate!=null)
+				{
+					animateParent.addChild(animate);
+				}
+				PopUpManager.removePopUp(this);
+				MainSystem.getInstance().runAPIDirectDirectly("removeAnimate",[]);
 			}
 		}
 	}
