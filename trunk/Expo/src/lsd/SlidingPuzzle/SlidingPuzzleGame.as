@@ -71,7 +71,6 @@ package lsd.SlidingPuzzle
 			 	
 			 	dispatchEvent(new SlidingEvent(SlidingEvent.PUZZLE_END));
 			 	
-			 	trace("game over")
 			 }
 			 
 		}
@@ -79,10 +78,6 @@ package lsd.SlidingPuzzle
 			
 			 TweenLite.to(slidingPuzzle,1,{alpha:0,onComplete:function():void{
 			          
-			         //removeChild(slidingPuzzle);
-			        // slidingPuzzle.parent.removeChild(slidingPuzzle);
-			        
-			        trace("wangjie");
 			 	
 			 	}});
 		}

@@ -34,7 +34,6 @@ package lxfa.utils
 		}
 		public function onClick(e:MouseEvent):Boolean
 		{
-			trace(e.stageX);
 			var obj:Object;//节点
 			var array:Array;
 			var pointLeftTop:Array;//左上角的点
