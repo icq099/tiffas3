@@ -10,6 +10,7 @@ package lxfa.No3Swf.view
 	import flash.events.ProgressEvent;
 	
 	import lxfa.normalWindow.SwfPlayer;
+	import lxfa.utils.BackGroundMusicManager;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.loadings.LoadingWaveRota;
 	import lxfa.view.tool.ToolTip;
@@ -68,6 +69,7 @@ package lxfa.No3Swf.view
             MainSystem.getInstance().showPluginById("MainMenuBottomModule");
 			MainSystem.getInstance().showPluginById("MainMenuTopModule");
 			MainSystem.getInstance().showPluginById("BackGroundMusicModule");
+			BackGroundMusicManager.getInstance().loadBackGroundMusic("sound/bg1.mp3");
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
 			MainSystem.getInstance().addSceneChangeCompleteHandler(dispose,[]);
 			MainSystem.getInstance().removePluginById("No3Module");
