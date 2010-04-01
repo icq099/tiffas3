@@ -9,7 +9,6 @@ package lxfa.utils
 	import flash.net.URLRequest;
 	
 	import lxfa.model.BackGroundMusicModel;
-	import lxfa.model.CustomMusicModel;
 	
 	public class BackGroundMusicManager
 	{
@@ -18,7 +17,7 @@ package lxfa.utils
 	   private var soundChannel:SoundChannel;
 	   private var resumeTime:Number;
 	   private var backGroundMusicModel:BackGroundMusicModel;
-	   
+	   private var currentMusic:String
 		public function BackGroundMusicManager()
 		{
 		   if(instance==null)
@@ -49,6 +48,7 @@ package lxfa.utils
 		public function loadBackGroundMusic(url:String):void{
 		    if(url!="" && url!=null)
 		    {
+		    	currentMusic=url;
 			    sound=new Sound();
 				sound.load(new URLRequest(url));
 				resumeTime = 0;
@@ -56,8 +56,10 @@ package lxfa.utils
 				soundChannel.addEventListener(Event.SOUND_COMPLETE,soundFinished,false,0,true);
 		    }
 		}
-		
-		
+		public function reload():void
+		{
+			loadBackGroundMusic(currentMusic);
+		}
 		private function soundFinished(e:Event):void{
 			 MemoryRecovery.getInstance().gcFun(soundChannel,Event.SOUND_COMPLETE,soundFinished);
 			 soundChannel=sound.play(0);

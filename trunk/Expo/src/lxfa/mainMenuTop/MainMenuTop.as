@@ -7,6 +7,7 @@ package lxfa.mainMenuTop
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import lxfa.utils.BackGroundMusicManager;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.menu.popumenu.view.PopupMenuManager;
 	
@@ -106,13 +107,13 @@ package lxfa.mainMenuTop
 			{
 				top.laba.gotoAndStop(2);
 				hasBackGround=false;
-				MainSystem.getInstance().runAPIDirect("stopSound",[]);
+				BackGroundMusicManager.getInstance().dispose();
 			}
 			else
 			{
 				top.laba.gotoAndStop(1);
 				hasBackGround=true;
-				MainSystem.getInstance().runAPIDirect("playSound",[]);
+				BackGroundMusicManager.getInstance().reload();
 			}
 		}
 		public function dispose():void

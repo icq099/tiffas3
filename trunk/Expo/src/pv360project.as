@@ -4,6 +4,7 @@ package {
 	import flash.ui.ContextMenuItem;
 	
 	import lxfa.model.ModelManager;
+	import lxfa.utils.BackGroundMusicManager;
 	import lxfa.utils.CustomMusicManager;
 	
 	import mx.containers.Canvas;
@@ -24,6 +25,7 @@ package {
 		private function init(e:Event):void{
 			CustomMusicManager.getInstance();
 			ModelManager.getInstance();
+			BackGroundMusicManager.getInstance();
 			//KeyMy.setStage(this.stage);
 			addChild(new Pv360Application());
 			//FPSfromA3d.init(stage)
