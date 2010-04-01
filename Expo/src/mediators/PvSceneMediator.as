@@ -204,7 +204,7 @@ package mediators
 				
 				var arrow:Plane=viewer.addArrow(xml_compass.Arrow.@rotation[i],xml_compass.Arrow[i].@tip);
 				
-				arrow.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK,function(e:InteractiveScene3DEvent):void{
+				arrow.addEventListener(InteractiveScene3DEvent.OBJECT_PRESS,function(e:InteractiveScene3DEvent):void{
 					var travel:PTravel=facade.retrieveProxy(PTravel.NAME) as PTravel;
 					travel.changePosition(xml_compass.Arrow.@destination[viewer.arrows.indexOf(e.currentTarget)]);
 				

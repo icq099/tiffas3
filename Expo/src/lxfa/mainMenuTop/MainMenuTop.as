@@ -107,13 +107,13 @@ package lxfa.mainMenuTop
 			{
 				top.laba.gotoAndStop(2);
 				hasBackGround=false;
-				BackGroundMusicManager.getInstance().dispose();
+				BackGroundMusicManager.getInstance().hasBackGroundMusic=false;
 			}
 			else
 			{
 				top.laba.gotoAndStop(1);
 				hasBackGround=true;
-				BackGroundMusicManager.getInstance().reload();
+				BackGroundMusicManager.getInstance().hasBackGroundMusic=true;
 			}
 		}
 		public function dispose():void
