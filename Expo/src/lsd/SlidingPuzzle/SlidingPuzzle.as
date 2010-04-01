@@ -4,11 +4,20 @@ http://flashgameu.com
 See the book or site for more information */
 
 package lsd.SlidingPuzzle {
+	import communication.MainSystem;
+	
 	import flash.display.*;
 	import flash.events.*;
 	import flash.geom.*;
 	import flash.net.URLRequest;
 	import flash.utils.Timer;
+	
+	import lxfa.utils.MemoryRecovery;
+	import lxfa.view.loadings.LoadingWaveRota;
+	
+	import mx.core.Application;
+	
+	import yzhkof.Toolyzhkof;
 	
 	public class SlidingPuzzle extends Sprite {
 		// space between pieces and offset
@@ -30,7 +39,7 @@ package lsd.SlidingPuzzle {
 		// size of pieces
 		private var pieceWidth:Number;
 		private var pieceHeight:Number;
-
+        private var loading_mc:LoadingWaveRota;
 		// game pieces
 		private var puzzleObjects:Array;
 		
@@ -47,20 +56,38 @@ package lsd.SlidingPuzzle {
 		
 		// get the bitmap from an external source
 		public function loadBitmap(bitmapFile:String):void{
+			MainSystem.getInstance().isBusy=true;
 			blankPoint = new Point(numPiecesHoriz-1,numPiecesVert-1);
 			var loader:Loader = new Loader();
+			initLoadingMc();
+			loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS,on_flv_progress);
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loadingDone);
 			var request:URLRequest = new URLRequest(bitmapFile);
 			loader.load(request);
 		}
-		
+		private function initLoadingMc():void
+		{
+			loading_mc=new LoadingWaveRota();
+			this.addEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
+		}
+		private function on_added_to_stage(e:Event):void
+		{
+			loading_mc.x=this.stage.stageWidth/2;
+			loading_mc.y=this.stage.stageHeight/2;
+			Application.application.addChild(Toolyzhkof.mcToUI(loading_mc));
+		}
+		private function on_flv_progress(e:ProgressEvent):void //FLV加载完毕
+		{
+			loading_mc.updateByProgressEvent(e);
+		}
 		// bitmap done loading, cut into pieces
 		private function loadingDone(event:Event):void {
 			// create new image to hold loaded bitmap
 			var image:Bitmap = Bitmap(event.target.loader.content);
 			pieceWidth = image.width/numPiecesHoriz;
 			pieceHeight = image.height/numPiecesVert;
-			
+			MemoryRecovery.getInstance().gcObj(loading_mc);
+			this.removeEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 			// cut into puzzle pieces
 			makePuzzlePieces(image.bitmapData);
 			
@@ -93,6 +120,7 @@ package lsd.SlidingPuzzle {
 					newPuzzleObject.currentLoc = new Point(x,y);
 					newPuzzleObject.homeLoc = new Point(x,y);
 					newPuzzleObject.piece = newPuzzlePiece;
+					MainSystem.getInstance().isBusy=false;
 					newPuzzlePiece.addEventListener(MouseEvent.CLICK,clickPuzzlePiece);
 					puzzleObjects.push(newPuzzleObject);
 				}
