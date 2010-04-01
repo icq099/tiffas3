@@ -88,9 +88,6 @@ package lxfa.No4.view
 				{
 					flvPlayer.parent.removeChild(flvPlayer);
 				}
-	//			flvPlayer.dispose();
-//				flvPlayer=null;
-//				MainSystem.getInstance().removePluginById("No4Module");
 			}
 		}
 	}
