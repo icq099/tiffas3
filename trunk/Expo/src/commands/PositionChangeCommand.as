@@ -8,6 +8,8 @@ package commands
 	
 	import flash.events.Event;
 	
+	import lxfa.utils.BackGroundMusicManager;
+	
 	import mediators.PvSceneMediator;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -123,6 +125,7 @@ package commands
 		{
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().startRender();
+			BackGroundMusicManager.getInstance().reload();
 			var travel:PTravel=facade.retrieveProxy(PTravel.NAME) as PTravel;
 			MainSystem.getInstance().currentScene=travel.oldPosition;
 			MainSystem.getInstance().getPlugin("InquireModule").removeEventListener(Event.CLOSE,close);//删除监听关闭东西的事件
