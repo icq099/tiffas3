@@ -41,7 +41,7 @@ package lxfa.mainMenuTop
 			popupMenuManager.init(top.yangmengbagui,top.yangmengbagui.name,6);
 			top.stop();
 			Application.application.addChild(Toolyzhkof.mcToUI(head));
-			head.x=87;
+			head.x=94;
 			head.y=4;
 			head.buttonMode=true;
 			head.addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void{

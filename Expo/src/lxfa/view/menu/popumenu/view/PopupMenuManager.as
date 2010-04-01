@@ -1,5 +1,7 @@
 package lxfa.view.menu.popumenu.view
 {
+	import communication.MainSystem;
+	
 	import flash.events.MouseEvent;
 	
 	public class PopupMenuManager
@@ -18,7 +20,10 @@ package lxfa.view.menu.popumenu.view
 		private function over(e:MouseEvent):void
 		{
 			removeAllPopupMenu();
-			e.currentTarget.parent.addChild(popupMenuList[e.currentTarget.name]);
+			if(!MainSystem.getInstance().isBusy)
+			{
+				e.currentTarget.parent.addChild(popupMenuList[e.currentTarget.name]);
+			}
 		}
 		private function removeAllPopupMenu():void
 		{
