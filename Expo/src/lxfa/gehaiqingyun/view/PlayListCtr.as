@@ -4,7 +4,7 @@ package lxfa.gehaiqingyun.view
 	
 	import lxfa.gehaiqingyun.model.GeHaiQingYunModel;
 	import lxfa.utils.MemoryRecovery;
-	import lxfa.view.player.Mp3Player;
+	import lxfa.utils.tool.Mp3PlayerBase;
 	
 	import view.player.FlvPlayer;
 	
@@ -70,7 +70,7 @@ package lxfa.gehaiqingyun.view
 			}
 		}
 		private var flvPlayer:FlvPlayer;
-		private var mp3Player:Mp3Player;
+		private var mp3Player:Mp3PlayerBase;
 		public function playMedia(ID:int):void
 		{
 			currentIndex=ID;//当前播放的编号
@@ -99,7 +99,8 @@ package lxfa.gehaiqingyun.view
 			}
 			else//不然就是音频咯
 			{
-				mp3Player=new Mp3Player(path);
+				mp3Player=new Mp3PlayerBase();
+				mp3Player.loadMusic(path);
 			}
 			play();
 			list.visible=false;
@@ -109,10 +110,6 @@ package lxfa.gehaiqingyun.view
 			if(flvPlayer!=null)
 			{
 				flvPlayer.play();
-			}
-			if(mp3Player!=null)
-			{
-				mp3Player.play();
 			}
 		}
 		public function dispose():void
@@ -130,6 +127,7 @@ package lxfa.gehaiqingyun.view
 			if(mp3Player!=null)
 			{
 				mp3Player.close();
+				mp3Player=null
 			}
 		}
 	}
