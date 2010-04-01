@@ -10,6 +10,7 @@ package lxfa.normalWindow
 	import flash.events.Event;
 	
 	import lxfa.normalWindow.model.NormalWindowModel;
+	import lxfa.utils.BackGroundMusicManager;
 	
 	import mx.core.UIComponent;
 	import mx.managers.PopUpManager;
@@ -33,6 +34,7 @@ package lxfa.normalWindow
 		private var type:String;                   //类型
 		public function NormalWindowFactory(ID:int)
 		{
+			BackGroundMusicManager.getInstance().dispose();
 			this.ID=ID;
 			initItemModel();
 		}
@@ -135,6 +137,7 @@ package lxfa.normalWindow
 		//标准窗关闭的时候
 		private function onnormalWindowClose(e:Event):void
 		{
+			BackGroundMusicManager.getInstance().reload();
 			MainSystem.getInstance().startRender();
 			this.dispatchEvent(new Event(Event.CLOSE));
 			normalWindow=null;
