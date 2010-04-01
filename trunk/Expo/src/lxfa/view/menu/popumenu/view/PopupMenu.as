@@ -6,6 +6,7 @@ package lxfa.view.menu.popumenu.view
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
 	import flash.utils.getQualifiedClassName;
 	
 	import lxfa.utils.MemoryRecovery;
@@ -75,6 +76,7 @@ package lxfa.view.menu.popumenu.view
 				this.addChild(createItem(items[i].name,items[i].id));
 			}
 		}
+		private var filter:GlowFilter=new GlowFilter(0xffff3,1,30,30);
 		private function createItem(name:String,id:int):PopuMenuRect
 		{
 			var popr:PopuMenuRect=new PopuMenuRect();
@@ -91,6 +93,10 @@ package lxfa.view.menu.popumenu.view
 			});
 			popr.addEventListener(MouseEvent.MOUSE_OVER,function(e:MouseEvent):void{
 				removeAllSecondPopupMenu();
+				popr.text.filters=[filter];
+			});
+			popr.addEventListener(MouseEvent.MOUSE_OUT,function(e:MouseEvent):void{
+				popr.text.filters=[];
 			});
 			return popr;
 		}
@@ -177,6 +183,12 @@ package lxfa.view.menu.popumenu.view
 			popr.buttonMode=true;
 			popr.addEventListener(MouseEvent.CLICK,function():void{
 				MainSystem.getInstance().runAPIDirect("showNormalWindow",[int(id)]);
+			});
+			popr.addEventListener(MouseEvent.MOUSE_OVER,function():void{
+				popr.text.filters=[filter];
+			});
+			popr.addEventListener(MouseEvent.MOUSE_OUT,function():void{
+				popr.text.filters=[];
 			});
 			return popr;
 		}
