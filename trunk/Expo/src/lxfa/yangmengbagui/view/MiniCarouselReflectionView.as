@@ -1,15 +1,13 @@
 ﻿package lxfa.yangmengbagui.view{	
-	import caurina.transitions.Tweener;
-	
 	import communication.MainSystem;
 	
 	import flash.display.*;
 	import flash.events.*;
 	import flash.filters.*;
 	
+	import lxfa.model.ItemModel;
 	import lxfa.utils.MemoryRecovery;
 	import lxfa.view.pv3dAddOn.org.papervision3d.objects.primitives.NumberPlane;
-	import lxfa.yangmengbagui.model.YangMengBaGuiModel;
 	
 	import org.papervision3d.core.proto.MaterialObject3D;
 	import org.papervision3d.events.*;
@@ -30,21 +28,23 @@
 		private var currentIndex:Number = 0;//目前的索引值
 		private var ldr			:Loader;	//載入大圖用的Loader。
 		private var itemOfNumber:int;
-		private var yangMengBaGuiModel:YangMengBaGuiModel;
+		private var yangMengBaGuiModel:ItemModel;
 		private var rubbishArray:Array=new Array();//垃圾回收的数组
+		private var pictureUrls:Array;
+		private const ID:int=56;
 		public function MiniCarouselReflectionView(){
 			initMinZuBaiMeiModel();//读取数据库
 		}
 
 		private function initMinZuBaiMeiModel():void
 		{
-			yangMengBaGuiModel=new YangMengBaGuiModel();
-			yangMengBaGuiModel.addEventListener(Event.COMPLETE,onModelComplete);
+			yangMengBaGuiModel=new ItemModel("NormalWindow");
+			onModelComplete();
 		}
-		private function onModelComplete(e:Event):void
+		private function onModelComplete():void
 		{
-			itemOfNumber=yangMengBaGuiModel.getItemOfNumber();//读取图片的数目,正常是12个
-			angleUnit = (Math.PI ) / itemOfNumber;//角度的偏移量
+			pictureUrls=yangMengBaGuiModel.getPictureUrls(ID);//读取图片的数目,正常是12个
+			angleUnit = (Math.PI ) / pictureUrls.length;//角度的偏移量
 			init3DEngine();
 			init3DObject();
 		}
@@ -75,8 +75,8 @@
 			//宣告變數, 避免在判斷式時重復宣告。
 			var planeHeight:int=-1;
 			var bmpMat		:MaterialObject3D;
-			for (var i:int = 0; i < itemOfNumber; i++) {	
-				imgUrl=yangMengBaGuiModel.getImgUrl(i);			
+			for (var i:int = 0; i < pictureUrls.length; i++) {	
+				imgUrl=pictureUrls[i];			
 				bmpMat = new BitmapFileMaterial(imgUrl,true);
 				planeHeight = 400;			
 				bmpMat.doubleSided = true; //雙面模式

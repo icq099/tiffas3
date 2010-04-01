@@ -18,6 +18,7 @@ package lxfa.utils
 	   private var resumeTime:Number;
 	   private var backGroundMusicModel:BackGroundMusicModel;
 	   private var currentMusic:String
+	   private var _hasBackGroundSound:Boolean=false;
 		public function BackGroundMusicManager()
 		{
 		   if(instance==null)
@@ -46,7 +47,7 @@ package lxfa.utils
 		}
 		
 		public function loadBackGroundMusic(url:String):void{
-		    if(url!="" && url!=null)
+		    if(url!="" && url!=null && _hasBackGroundSound)
 		    {
 		    	currentMusic=url;
 			    sound=new Sound();
@@ -61,9 +62,12 @@ package lxfa.utils
 			loadBackGroundMusic(currentMusic);
 		}
 		private function soundFinished(e:Event):void{
-			 MemoryRecovery.getInstance().gcFun(soundChannel,Event.SOUND_COMPLETE,soundFinished);
-			 soundChannel=sound.play(0);
-			 soundChannel.addEventListener(Event.SOUND_COMPLETE,soundFinished,false,0,true);
+			 if(sound!=null)
+			 {
+				 MemoryRecovery.getInstance().gcFun(soundChannel,Event.SOUND_COMPLETE,soundFinished);
+				 soundChannel=sound.play(0);
+				 soundChannel.addEventListener(Event.SOUND_COMPLETE,soundFinished,false,0,true);
+			 }
 		}
 		
 		public function soundStop():void{
@@ -72,7 +76,17 @@ package lxfa.utils
 			   soundChannel.stop();
 			}
 		}
-		
+		public function set hasBackGroundMusic(has:Boolean):void
+		{
+			_hasBackGroundSound=has;
+			if(!_hasBackGroundSound)
+			{
+				dispose();
+			}else
+			{
+				reload();
+			}
+		}
 		public function dispose():void{
 			
 			soundStop();

@@ -2,14 +2,12 @@ package lxfa.model
 {
 	//定制窗数据的model
 	//先根据索引找到起点和终点
-	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
+	import flash.events.EventDispatcher;
 	
 	import lxfa.utils.MemoryRecovery;
 	
-	public class ItemModel extends Sprite
+	public class ItemModel extends EventDispatcher
 	{
 		private const path:String="xml/item.xml";//XML文件的路径了
 		public var xmlData:XML;                  //XML数据
