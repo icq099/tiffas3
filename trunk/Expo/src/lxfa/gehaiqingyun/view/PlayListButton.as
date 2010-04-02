@@ -1,5 +1,6 @@
 package lxfa.gehaiqingyun.view
 {
+	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
 	import lxfa.utils.MemoryRecovery;
@@ -17,9 +18,9 @@ package lxfa.gehaiqingyun.view
 		}
 		private function initListener():void
 		{
-			this.addEventListener(MouseEvent.DOUBLE_CLICK,on_double_click);
+			this.addEventListener(MouseEvent.CLICK,on_double_click);
 		}
-		private function on_double_click(e:MouseEvent):void
+		public function on_double_click(e:MouseEvent):void
 		{
 			ctr.playMedia(ID);
 			this.parent.visible=false;

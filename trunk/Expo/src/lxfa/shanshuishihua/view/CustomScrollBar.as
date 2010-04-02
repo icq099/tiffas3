@@ -2,6 +2,7 @@ package lxfa.shanshuishihua.view
 {
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
 	import flash.geom.Rectangle;
 	
 	import mx.core.Application;
@@ -62,12 +63,14 @@ package lxfa.shanshuishihua.view
 				normalWindowSwc.text.text="     "+text;
 			}
 		}
+		private var filter:GlowFilter=new GlowFilter(0xffff3,1,30,30);
 		private function initScrollCenter():void
 		{
 			normalWindowSwc.removeChild(normalWindowSwc.center);
 			center=new ScrollCenter();
 			center.x=784;
 			center.y=85;
+			center.mouseEnabled=true;
 			this.addChild(center);
 			if(normalWindowSwc.text.maxScrollV<normalWindowSwc.text.numLines)
 			{
@@ -78,6 +81,16 @@ package lxfa.shanshuishihua.view
 				center.visible=false;
 			}
 			center.addEventListener(MouseEvent.MOUSE_DOWN,onMouseDownHandler);
+			center.addEventListener(MouseEvent.MOUSE_OVER,center_over);
+			center.addEventListener(MouseEvent.MOUSE_OUT,center_out);
+		}
+		private function center_over(e:MouseEvent):void
+		{
+			center.filters=[filter];
+		}
+		private function center_out(e:MouseEvent):void
+		{
+			center.filters=[];
 		}
 		private function onMouseDownHandler( e : MouseEvent ):void {
 			   center.startDrag(true,new Rectangle(center.x,minMouseY,0,maxMouseY-minMouseY));
