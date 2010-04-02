@@ -4,10 +4,9 @@ package lxfa.lijiangwanchang
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.ui.Mouse;
 	
 	import lxfa.utils.MemoryRecovery;
-	
-	import mx.core.Application;
 	
 	public class LiJiangWanChang
 	{
@@ -46,6 +45,16 @@ package lxfa.lijiangwanchang
 				popupFishGame();
 			}
 		}
+		
+		private function mouseover_fun(e:Event):void{
+			
+			Mouse.show();
+		}
+		private function mouseout_fun(e:Event):void{
+			
+			Mouse.show();
+		}
+		
 		private function on_fishGame_close(e:Event):void
 		{
 			MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["LiJiangWanChangModule"]);
@@ -57,6 +66,8 @@ package lxfa.lijiangwanchang
 			liJiangWanChangSwc.parent.removeChild(liJiangWanChangSwc);
 			fishingGame.x=10;
 			fishingGame.y=20;
+			fishingGame.addEventListener(MouseEvent.MOUSE_OVER,mouseover_fun);
+			fishingGame.addEventListener(MouseEvent.MOUSE_OUT,mouseout_fun);
 		}
 		private function onfishingGameComplete(e:Event):void
 		{
@@ -71,6 +82,8 @@ package lxfa.lijiangwanchang
 			MemoryRecovery.getInstance().gcObj(liJiangWanChangSwc);
 			MemoryRecovery.getInstance().gcFun(fishingGame,Event.COMPLETE,onfishingGameComplete);
 			MemoryRecovery.getInstance().gcFun(fishingGame,Event.CLOSE,on_fishGame_close);
+			MemoryRecovery.getInstance().gcFun(fishingGame,MouseEvent.MOUSE_OVER,mouseover_fun);
+			MemoryRecovery.getInstance().gcFun(fishingGame,MouseEvent.MOUSE_OUT,mouseout_fun);
 			MemoryRecovery.getInstance().gcObj(fishingGame,true);
 		}
 	}
