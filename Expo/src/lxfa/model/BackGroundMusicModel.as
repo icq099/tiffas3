@@ -7,7 +7,7 @@ package lxfa.model
 			super("xml/basic.xml");
 		}
 		public function getMusicUrl(id:int):String{
-			if(xmlData.Travel.Scene[id].@backGroundMusic=="" || xmlData.Travel.Scene[id].@backGroundMusic==null)
+			if (id>xmlData.Travel.Scene.length() || (xmlData.Travel.Scene[id].@backGroundMusic == "" || xmlData.Travel.Scene[id].@backGroundMusic == null))
 			{
 				return null;
 			}

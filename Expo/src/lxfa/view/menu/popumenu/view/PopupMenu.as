@@ -7,6 +7,7 @@ package lxfa.view.menu.popumenu.view
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
+	import flash.text.TextFormat;
 	import flash.utils.getQualifiedClassName;
 	
 	import lxfa.utils.MemoryRecovery;
@@ -21,10 +22,13 @@ package lxfa.view.menu.popumenu.view
 		private var menuItems:Array;
 		private var currentHeight:int=0;
 		private var secondPopupMenus:Array=new Array();
+		private var tf:TextFormat=new TextFormat  
 		public function PopupMenu(obj:*,id:int)
 		{
 			initModel(id);
 			initLocation(obj);
+			tf.kerning=true  //间距开启
+			tf.letterSpacing=8  //间距大小
 			obj.addEventListener(MouseEvent.CLICK,click);
 			Application.application.addEventListener(MouseEvent.MOUSE_DOWN,on_click_others);
 		}
@@ -85,6 +89,7 @@ package lxfa.view.menu.popumenu.view
 			if(name!=null && name!="")
 			{
 				popr.text.text=name;
+				popr.text.setTextFormat(tf,0,name.length);
 			}
 			popr.text.mouseEnabled=false;
 			popr.buttonMode=true;
@@ -119,6 +124,7 @@ package lxfa.view.menu.popumenu.view
 			if(name!=null && name!="")
 			{
 				popv.text.text=name;
+				popv.text.setTextFormat(tf,0,name.length);
 			}
 			popv.name=String(id);//到时候以这个name去取2级菜单
 			popv.text.mouseEnabled=false;
@@ -178,6 +184,7 @@ package lxfa.view.menu.popumenu.view
 			if(name!=null && name!="")
 			{
 				popr.text.text=name;
+				popr.text.setTextFormat(tf,0,name.length);
 			}
 			popr.text.mouseEnabled=false;
 			popr.buttonMode=true;
