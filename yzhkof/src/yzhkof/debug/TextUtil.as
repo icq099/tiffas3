@@ -12,62 +12,69 @@ package yzhkof.debug
 		public function TextUtil()
 		{
 		}
-		public static function objToTextTrace(obj:Object,showFunctionReturn:Boolean=false):String
+		public static function objToTextTrace(obj:*,showFunctionReturn:Boolean=false):String
 		{
 			var final_text:String="";
 			var title_text:String="";
 			var objname:String;
-			var xml:XML=describeType(getDefinitionByName(getQualifiedClassName(obj)));
-			var isClass:Boolean=obj is Class;
 			
-			if(!isSimple(obj))
+			if((obj!=null)&&(obj!=undefined))
 			{
-				var accessor_xmllist:XMLList=getAccessProperty(xml,isClass);				
+				var xml:XML=describeType(getDefinitionByName(getQualifiedClassName(obj)));
+				var isClass:Boolean=obj is Class;
 				
-				for each(var x:XML in accessor_xmllist)
+				if(!isSimple(obj))
 				{
-					if(!(obj[x.@name] is ByteArray))
-					{
-						final_text+=addSpace("{"+x.@name+"} = "+obj[x.@name])+"\n";
-						if(x.@name=="name")
-							objname=obj.name;
-					}else
-					{
-						final_text+=addSpace("{"+x.@name+"} = [Type ByteArray]\n");
-					}
+					var accessor_xmllist:XMLList=getAccessProperty(xml,isClass);				
 					
-				}
-				
-				if(xml.@isDynamic=="true")
-				{
-					for(var ob_p:Object in obj)
+					for each(var x:XML in accessor_xmllist)
 					{
-						if(!(obj[ob_p] is ByteArray))
+						if(!(obj[x.@name] is ByteArray))
 						{
-							final_text+=addSpace("{"+ob_p+"} = "+obj[ob_p])+"\n";
+							final_text+=addSpace("{"+x.@name+"} = "+obj[x.@name])+"\n";
+							if(x.@name=="name")
+								objname=obj.name;
 						}else
 						{
-							final_text+=addSpace("{"+ob_p+"} = [Type ByteArray]\n");
+							final_text+=addSpace("{"+x.@name+"} = [Type ByteArray]\n");
+						}
+						
+					}
+					
+					if(xml.@isDynamic=="true")
+					{
+						for(var ob_p:Object in obj)
+						{
+							if(!(obj[ob_p] is ByteArray))
+							{
+								final_text+=addSpace("{"+ob_p+"} = "+obj[ob_p])+"\n";
+							}else
+							{
+								final_text+=addSpace("{"+ob_p+"} = [Type ByteArray]\n");
+							}
 						}
 					}
-				}
-				if(showFunctionReturn)
-				{
-					var method_xmllist:XMLList=getReturnOnlyMethod(xml,isClass);
-					for each(var xx:XML in method_xmllist)
+					if(showFunctionReturn)
 					{
-						final_text+=addSpace("["+xx.@name+"()] : "+obj[xx.@name]())+"\n";
+						var method_xmllist:XMLList=getReturnOnlyMethod(xml,isClass);
+						for each(var xx:XML in method_xmllist)
+						{
+							final_text+=addSpace("["+xx.@name+"()] : "+obj[xx.@name]())+"\n";
+						}
+					}else
+					{
+						final_text+=addSpace("[toString()] : "+obj.toString())+"\n";
 					}
 				}else
 				{
-					final_text+=addSpace("[toString()] : "+obj.toString())+"\n";
+					final_text+=addSpace(obj.toString())+"\n";
 				}
+				
+				title_text="Type : "+xml.@name;
 			}else
 			{
-				final_text+=addSpace(obj.toString())+"\n";
+				final_text+=obj+"\n";
 			}
-			
-			title_text="Type : "+xml.@name;
 			if(objname)
 				title_text+="(name:"+objname+")";
 			title_text+="**************************\n";
