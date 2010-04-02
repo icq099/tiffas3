@@ -41,6 +41,7 @@ package lxfa.mainMenuTop
 			popupMenuManager.init(top.zonghengsihai,top.zonghengsihai.name,5);
 			popupMenuManager.init(top.yangmengbagui,top.yangmengbagui.name,6);
 			top.stop();
+			top.gotoAndStop(top.totalFrames);
 			Application.application.addChild(Toolyzhkof.mcToUI(head));
 			head.x=94;
 			head.y=4;

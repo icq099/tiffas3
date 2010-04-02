@@ -34,6 +34,7 @@
 <sourceAttachmentPath/>
 </compiler>
 <applications>
+<application path="PreLoader.mxml"/>
 <application path="pv360flexDebug.mxml"/>
 <application path="Expo.mxml"/>
 </applications>

@@ -36,9 +36,9 @@ package lxfa.shanshuishihua.view{
         private function initPictureUrlCtr():void
         {
         	itemModel=new ShanShuiShiHuaModel();
-        	itemModel.addEventListener(Event.COMPLETE,onPictureUrlCtrComplete);
+        	onPictureUrlCtrComplete();
         }
-        private function onPictureUrlCtrComplete(e:Event):void
+        private function onPictureUrlCtrComplete():void
         {
         	itemOfNumber=itemModel.getItemOfNumber();
         	this.pictureUrls=itemModel.getPictureUrls(51);

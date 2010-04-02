@@ -1,10 +1,11 @@
 package lxfa.model
 {
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
-	public class ModelManager
+	public class ModelManager extends EventDispatcher
 	{
 		private static var instance:ModelManager;
 		private var _xmlData:XML;
@@ -13,6 +14,7 @@ package lxfa.model
 		public function ModelManager()
 		{
 			if(instance==null){
+				super(this);
 				instance=this;
 			}else{
 				throw new Error("Cann't be new!");
@@ -25,6 +27,7 @@ package lxfa.model
 			xmlLoader=new URLLoader(xmlRequest);
 			xmlLoader.addEventListener(Event.COMPLETE,function(e:Event):void{
 				_xmlData=XML(URLLoader(e.currentTarget).data);
+				ModelManager.getInstance().dispatchEvent(e);
 			});
 		}
 		public function xmlData():XML

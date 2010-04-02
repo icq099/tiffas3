@@ -23,19 +23,21 @@ package {
 			
 		}
 		private function init(e:Event):void{
-			CustomMusicManager.getInstance();
-			ModelManager.getInstance();
-			BackGroundMusicManager.getInstance();
-			//KeyMy.setStage(this.stage);
-			addChild(new Pv360Application());
-			//FPSfromA3d.init(stage)
-			addChild(Toolyzhkof.mcToUI(new Cover(this)));
-			var c_menu:ContextMenu=new ContextMenu();
-			c_menu.hideBuiltInItems();
-			var item:ContextMenuItem= new ContextMenuItem("LLLQW");
-			c_menu.customItems.push(item);
-			contextMenu=c_menu;
-		
+			ModelManager.getInstance().addEventListener(Event.COMPLETE,on_model_complete);
+		}
+		private function on_model_complete(e:Event):void
+		{
+				CustomMusicManager.getInstance();
+				BackGroundMusicManager.getInstance();
+				//KeyMy.setStage(this.stage);
+				addChild(new Pv360Application());
+				//FPSfromA3d.init(stage)
+				addChild(Toolyzhkof.mcToUI(new Cover(this)));
+				var c_menu:ContextMenu=new ContextMenu();
+				c_menu.hideBuiltInItems();
+				var item:ContextMenuItem= new ContextMenuItem("LLLQW");
+				c_menu.customItems.push(item);
+				contextMenu=c_menu;
 		}
 	}
 }
