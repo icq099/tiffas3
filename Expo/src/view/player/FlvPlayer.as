@@ -46,6 +46,10 @@ package view.player
 			player.width=controler.width=background.width=value;
 		
 		}
+		public function set controlerWidth(value:Number):void
+		{
+			controler.width=value;
+		}
 		override public function get width():Number{
 			
 			return player.width;

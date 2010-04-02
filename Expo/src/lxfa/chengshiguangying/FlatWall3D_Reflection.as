@@ -22,7 +22,7 @@ package lxfa.chengshiguangying{
 		private var basicView			:BasicView;
 		public  var cameraX			:Number = 900;	//camera的目標x軸
 		private var cameraY			:Number = 200;	//camera的目標y軸
-		private var cameraZ			:Number = -1500;//camera的目標z軸
+		private var cameraZ			:Number = -600;//camera的目標z軸
 		private var cameraZMin		:Number = -1500;//cameraZ軸的最小值
 		private var cameraZMax		:Number = -150;	//cameraZ軸的最大值
 		private var secondLineHeight:int=   400;    //第二行的高度
@@ -57,12 +57,13 @@ package lxfa.chengshiguangying{
         	materialRubbishArray=new Array();
         }
 		private function init3DEngine():void{
-			basicView = new BasicView(771, 224, false , true, "FREECAMERA3D");
+			basicView = new BasicView(751, 224, false , true, "FREECAMERA3D");
 			basicView.viewport.buttonMode = true;
+			basicView.x=20;
 			this.addChild(basicView);
 			initCustomDown();
 			this.addEventListener(Event.ENTER_FRAME, onEventRender3D);			
-			basicView.camera.z = -2500;
+			basicView.camera.z = -3500;
 			basicView.camera.x = -1000;
 		}
 		private function initCustomDown():void
