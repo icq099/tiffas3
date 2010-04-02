@@ -64,6 +64,7 @@ package lxfa.shanshuishihua.view
 		}
 		private function initScrollCenter():void
 		{
+			normalWindowSwc.removeChild(normalWindowSwc.center);
 			center=new ScrollCenter();
 			center.x=784;
 			center.y=85;
