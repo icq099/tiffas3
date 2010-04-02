@@ -11,15 +11,11 @@ package yzhkof
 		
 		public function BasicAsProject()
 		{
-			stage.align=StageAlign.TOP_LEFT;
-			stage.scaleMode=StageScaleMode.NO_SCALE;
+			this.stage.align=StageAlign.TOP_LEFT;
+			this.stage.scaleMode=StageScaleMode.NO_SCALE;
+			_stage=this.stage;
 		}
-		protected static function set mainStage(value:Stage):void{
-			
-			_stage=value;
-		
-		}
-		public static function get mainStage():Stage{
+		public static function get stage():Stage{
 			
 			return _stage;
 		
