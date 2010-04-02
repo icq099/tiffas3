@@ -96,6 +96,10 @@ package lxfa.normalWindow
 			sprite.addEventListener(MouseEvent.CLICK,onPreviewPictureDown);
 			MemoryRecovery.getInstance().gcFun(loader.contentLoaderInfo,Event.COMPLETE,onComplete);
 			initPictureLoader();
+			if(offset==1)
+			{
+				sprite.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+			}
 		}
 		private var currentPicture:Bitmap;
 		private function onPreviewPictureDown(e:MouseEvent):void

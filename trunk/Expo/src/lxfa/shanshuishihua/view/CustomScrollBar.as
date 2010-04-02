@@ -59,7 +59,7 @@ package lxfa.shanshuishihua.view
 			}
 			else
 			{
-				normalWindowSwc.text.text=text;
+				normalWindowSwc.text.text="     "+text;
 			}
 		}
 		private function initScrollCenter():void

@@ -175,6 +175,8 @@ package lxfa.normalWindow
 				flvPlayer.loadFlv(videoUrl);
 				flvPlayer.x=1.5;
 				flvPlayer.y=1.5;
+				flvPlayer.controlerWidth=381;
+				flvPlayer.setTime_TextVisible(false);
 			    dp.panel2.addChild(flvPlayer);	
 			}
 		}

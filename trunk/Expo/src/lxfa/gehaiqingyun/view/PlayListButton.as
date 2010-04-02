@@ -17,7 +17,7 @@ package lxfa.gehaiqingyun.view
 		}
 		private function initListener():void
 		{
-			this.addEventListener(MouseEvent.CLICK,on_double_click);
+			this.addEventListener(MouseEvent.DOUBLE_CLICK,on_double_click);
 		}
 		private function on_double_click(e:MouseEvent):void
 		{
@@ -26,7 +26,7 @@ package lxfa.gehaiqingyun.view
 		}
 		public function dispose():void
 		{
-			MemoryRecovery.getInstance().gcFun(this,MouseEvent.CLICK,on_double_click);
+			MemoryRecovery.getInstance().gcFun(this,MouseEvent.DOUBLE_CLICK,on_double_click);
 		}
 	}
 }
