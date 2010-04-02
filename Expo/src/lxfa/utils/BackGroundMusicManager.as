@@ -18,7 +18,7 @@ package lxfa.utils
 	   private var resumeTime:Number;
 	   private var backGroundMusicModel:BackGroundMusicModel;
 	   private var currentMusic:String
-	   private var _hasBackGroundSound:Boolean=false;
+	   private var _hasBackGroundSound:Boolean=true;
 		public function BackGroundMusicManager()
 		{
 		   if(instance==null)
