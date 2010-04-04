@@ -59,10 +59,6 @@ package lxfa.normalWindow
 			{
 				create("LiJiangWanChangModule","getLiJiangWanCHang",10,20);
 			}
-			else if(type=="MinZuBaiMeiModule")
-			{
-				create("MinZuBaiMeiModule","getMinZuBaiMei",10,20);
-			}
 			else if(type=="GeHaiQingYunModule")
 			{
 				create("GeHaiQingYunModule","getGeHaiQingYun",10,20);

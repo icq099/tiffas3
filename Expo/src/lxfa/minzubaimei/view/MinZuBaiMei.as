@@ -3,7 +3,6 @@ package lxfa.minzubaimei.view
 	import communication.MainSystem;
 	
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	
 	import lsd.CustomWindow.CustomWindow;
 	import lsd.CustomWindow.CustomWindowEvent;
@@ -11,7 +10,9 @@ package lxfa.minzubaimei.view
 	import lxfa.model.ItemModel;
 	import lxfa.utils.MemoryRecovery;
 	
-	public class MinZuBaiMei extends EventDispatcher
+	import mx.core.UIComponent;
+	
+	public class MinZuBaiMei extends UIComponent
 	{
 		private var miniCarouselReflectionView:MiniCarouselReflectionView;
 		private var backGround:CustomWindow;
@@ -19,16 +20,16 @@ package lxfa.minzubaimei.view
 		private const ID:int=53;
 		public function MinZuBaiMei()
 		{
-			MainSystem.getInstance().addAPI("getMinZuBaiMei",initMiniCarouselReflectionView);
+			initMiniCarouselReflectionView()
 		}
-		private function initMiniCarouselReflectionView():CustomWindow
+		private function initMiniCarouselReflectionView():void
 		{
 			MainSystem.getInstance().stopRender();
 			itemModel=new ItemModel("NormalWindow");
 			backGround=new CustomWindow(itemModel.getSwfUrl(ID),itemModel.getText(ID));
 			backGround.addEventListener(CustomWindowEvent.SWF_COMPLETE,on_swf_complete);
 			backGround.addEventListener(CustomWindowEvent.WINDOW_CLOSE,on_close);
-			return backGround;
+			this.addChild(backGround);
 		}
 		private function on_swf_complete(e:CustomWindowEvent):void
 		{
