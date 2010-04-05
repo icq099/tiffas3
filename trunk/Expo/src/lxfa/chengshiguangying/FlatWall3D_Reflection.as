@@ -260,6 +260,14 @@ package lxfa.chengshiguangying{
         private var isClose:Boolean=false;
         public function dispose():void
         {
+        	MemoryRecovery.getInstance().gcFun(customDown.bar,MouseEvent.MOUSE_DOWN, onMouseDownHandler );
+        	MemoryRecovery.getInstance().gcFun(customDown.bar,MouseEvent.MOUSE_UP, onMouseUpHandler );
+        	MemoryRecovery.getInstance().gcFun(customDown.left,MouseEvent.CLICK,onLeftClick);
+        	MemoryRecovery.getInstance().gcFun(customDown.right,MouseEvent.CLICK,onRightClick);
+        	MemoryRecovery.getInstance().gcObj(customDown.bar);
+        	MemoryRecovery.getInstance().gcObj(customDown.left);
+        	MemoryRecovery.getInstance().gcObj(customDown.right);
+        	MemoryRecovery.getInstance().gcObj(customDown);
         	isClose=true;
         	for each(var plane:Plane in rubbishArray)
         	{
@@ -278,14 +286,6 @@ package lxfa.chengshiguangying{
 				}
 				plane=null;
         	}
-        	MemoryRecovery.getInstance().gcFun(customDown.bar,MouseEvent.MOUSE_DOWN, onMouseDownHandler );
-        	MemoryRecovery.getInstance().gcFun(customDown.bar,MouseEvent.MOUSE_UP, onMouseUpHandler );
-        	MemoryRecovery.getInstance().gcFun(customDown.left,MouseEvent.CLICK,onLeftClick);
-        	MemoryRecovery.getInstance().gcFun(customDown.right,MouseEvent.CLICK,onRightClick);
-        	MemoryRecovery.getInstance().gcObj(customDown.bar);
-        	MemoryRecovery.getInstance().gcObj(customDown.left);
-        	MemoryRecovery.getInstance().gcObj(customDown.right);
-        	MemoryRecovery.getInstance().gcObj(customDown);
 
         	MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_MOVE, onMoveHandler );
         	MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_UP, onMouseUpHandler );
