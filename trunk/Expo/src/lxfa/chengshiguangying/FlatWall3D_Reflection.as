@@ -1,24 +1,22 @@
 package lxfa.chengshiguangying{
     import caurina.transitions.*;
     
-    import communication.MainSystem;
-    
     import flash.display.*;
     import flash.events.*;
+    import flash.net.URLRequest;
     import flash.utils.getQualifiedClassName;
     
     import lxfa.model.ItemModel;
-    import lxfa.shanshuishihua.model.ShanShuiShiHuaModel;
     import lxfa.utils.MemoryRecovery;
-    import lxfa.view.pv3dAddOn.milkmidi.papervision3d.materials.ReflectionFileMaterial;
-    import lxfa.view.pv3dAddOn.org.papervision3d.objects.primitives.NumberPlane;
     
-    import org.papervision3d.core.proto.MaterialObject3D;
+    import mx.core.UIComponent;
+    
     import org.papervision3d.events.*;
     import org.papervision3d.materials.*;
+    import org.papervision3d.objects.primitives.Plane;
     import org.papervision3d.view.BasicView;
 	//匯入筆者所撰寫的MiniSlider類別。
-    public class FlatWall3D_Reflection extends Sprite 	{
+    public class FlatWall3D_Reflection extends UIComponent 	{
 		private var basicView			:BasicView;
 		public  var cameraX			:Number = 900;	//camera的目標x軸
 		private var cameraY			:Number = 200;	//camera的目標y軸
@@ -28,7 +26,6 @@ package lxfa.chengshiguangying{
 		private var secondLineHeight:int=   400;    //第二行的高度
 		private var rubbishArray:Array;             //垃圾回收数组
 		private var itemModel:ItemModel;    //
-		private var materialRubbishArray:Array;
 		private var pictureUrls:Array;
 		private var customDown:CustomWindowUIDown;
 		private var minMouseX:Number=173.7;//滑块的最小X坐标
@@ -54,7 +51,6 @@ package lxfa.chengshiguangying{
         private function initRubbishArray():void
         {
         	rubbishArray=new Array();
-        	materialRubbishArray=new Array();
         }
 		private function init3DEngine():void{
 			basicView = new BasicView(751, 224, false , true, "FREECAMERA3D");
@@ -62,7 +58,6 @@ package lxfa.chengshiguangying{
 			basicView.x=20;
 			this.addChild(basicView);
 			initCustomDown();
-			this.addEventListener(Event.ENTER_FRAME, onEventRender3D);			
 			basicView.camera.z = -3500;
 			basicView.camera.x = -1000;
 		}
@@ -130,9 +125,16 @@ package lxfa.chengshiguangying{
 		}
 		private function initObject():void{
 			init3DObject();
-			this.addEventListener(Event.ADDED_TO_STAGE,function(e:Event):void{
+			this.addEventListener(Event.ADDED_TO_STAGE,function fuck(e:Event):void{
 			stage.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			stage.addEventListener(MouseEvent.CLICK,onStageClick);
+			removeEventListener(Event.ADDED_TO_STAGE,fuck);
+			addEventListener(Event.ENTER_FRAME, onEventRender3D);		
+			});
+			this.addEventListener(Event.REMOVED_FROM_STAGE,function remove(e:Event):void{
+				basicView.viewport.destroy();
+				removeEventListener(Event.REMOVED_FROM_STAGE,remove);
+				removeEventListener(Event.ENTER_FRAME,onEventRender3D);	
 			});
 			//监听添加到STAGE得事件
 		}
@@ -146,49 +148,60 @@ package lxfa.chengshiguangying{
 			}
 		}
 		private function init3DObject():void {
-			var bmpMat		:MaterialObject3D;
 			var planeHeight	:int;
 			var imgUrl:String;
 			//宣告變數, 避免在判斷式時重復宣告。
-			for (var i:int = 0; i < pictureUrls.length; i++) {	
+			for (var i:int= 0; i <pictureUrls.length; i++) {	
 				imgUrl=pictureUrls[i];
-				if (i % 2 == 0) {	
-					//取 3 餘數如果等於 0 的話, 表示是最下方一排					
-					bmpMat = new ReflectionFileMaterial(imgUrl, true);
-					//反射材質
-					planeHeight = 400;
-					//因為使用反射材質, 所以高度要增加一倍					
-				}else {
-					bmpMat = new BitmapFileMaterial(imgUrl);
-					planeHeight = 240;
-					//使用本來的點陣圖材質和高度
-				}				
+				createPlane(imgUrl,i);
+//				if (i % 2 == 0) {	
+//					//取 3 餘數如果等於 0 的話, 表示是最下方一排					
+//					bmpMat = new BitmapFileMaterial(imgUrl);
+//					//反射材質
+//					planeHeight = 240;
+//					//因為使用反射材質, 所以高度要增加一倍					
+//				}else {
+//					bmpMat = new BitmapFileMaterial(imgUrl);
+//					planeHeight = 240;
+//					//使用本來的點陣圖材質和高度
+//				}	
+			}
+		}
+		private function createPlane(imgUrl:String,i:int):void
+		{
+			var bmpMat		:BitmapMaterial;
+			var loader:Loader=new Loader();
+			loader.load(new URLRequest(imgUrl));
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,function loaded(e:Event):void{
+			    bmpMat=new BitmapMaterial(Bitmap(loader.content).bitmapData);
 				bmpMat.interactive = true;
 				bmpMat.smooth = true;		
-				materialRubbishArray.push(bmpMat);		
-				var plane:NumberPlane=new NumberPlane(bmpMat, 320, planeHeight, 4, 4);
+				var plane:Plane=new Plane(new ColorMaterial(0xffffff, 0), 320, 240, 4, 4);
+			    plane.material=bmpMat;
 				plane.x =Math.floor(i/2)* 360;
 				plane.y = i % 2 * secondLineHeight;	
-				plane.setID(itemModel.getMin()+i);
+				rubbishArray.push(plane);
 				//修正反射Plane物件的y軸。				
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, onEvent3DOver);
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, onEvent3DOut);
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK, onEvent3DClick);
 				basicView.scene.addChild(plane);
-				rubbishArray.push(plane);	
-			}
+			});
 		}
 		private function onMouseWheel(e:MouseEvent):void {
 			//用 MouseEvent 類別下的 delta 屬性可以得到滑鼠滾輪的值
 			//e.dalta如果大於0,表示滾輪向上,小於0表示向下。			
-			cameraZ = basicView.camera.z + (e.delta * 100);
-			//將 camera 要移動到的目標 z 軸值寫入至 cameraZ 變數裡
-			if (cameraZ < cameraZMin) {
-				cameraZ = cameraZMin
-			}else if(cameraZ > cameraZMax){
-				cameraZ = cameraZMax
+			if(basicView!=null)
+			{
+				cameraZ = basicView.camera.z + (e.delta * 100);
+				//將 camera 要移動到的目標 z 軸值寫入至 cameraZ 變數裡
+				if (cameraZ < cameraZMin) {
+					cameraZ = cameraZMin
+				}else if(cameraZ > cameraZMax){
+					cameraZ = cameraZMax
+				}
+				//判斷目標 z 軸值是否小於最小值或是大於最大值, 再決定 camera 要移動到的目標			
 			}
-			//判斷目標 z 軸值是否小於最小值或是大於最大值, 再決定 camera 要移動到的目標			
 		}
 		private function onEvent3DOver(e:InteractiveScene3DEvent):void {
 			//當滑鼠滑入感應區時, 讓廣播者物件稍往前移
@@ -205,7 +218,7 @@ package lxfa.chengshiguangying{
 			});
 		}
 		private function onEvent3DClick(e:InteractiveScene3DEvent):void{
-			var _target:NumberPlane = e.displayObject3D as NumberPlane;
+			var _target:Plane = e.displayObject3D as Plane;
 			//當使用者點選圖片時, 先取得廣播者 (被點選者),
 			//其x,y,z屬性即是Camera的目標值,
 			//z軸要多減去200,讓Camera可以往後一點
@@ -216,7 +229,6 @@ package lxfa.chengshiguangying{
 			{
 				cameraY+=80;
 			}  
-            MainSystem.getInstance().runAPIDirect("showNormalWindow",[_target.getID()]);
 			basicView.stopRendering();
 		}
 		private function onBackGroundClick(e:MouseEvent):void{
@@ -227,7 +239,7 @@ package lxfa.chengshiguangying{
 		}
 
         private function onEventRender3D(e:Event):void{		
-        	if(basicView!=null)
+        	if(basicView!=null && !isClose)
         	{
 				var _incrementX:Number = (cameraX - basicView.camera.x) / 20;
 				//算出x軸的移動量			
@@ -241,35 +253,52 @@ package lxfa.chengshiguangying{
 				basicView.camera.y += (cameraY - basicView.camera.y) / 20;
 				// y 軸的漸進公式
 				basicView.camera.z += (cameraZ - basicView.camera.z) / 20;
-				// z 軸的漸進公式
+//				// z 軸的漸進公式
 	        	basicView.singleRender();
         	}	
         }
+        private var isClose:Boolean=false;
         public function dispose():void
         {
+        	isClose=true;
+        	for each(var plane:Plane in rubbishArray)
+        	{
+	    		MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_OVER, onEvent3DOver);
+	    		MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_OUT, onEvent3DOut);
+	    		MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_CLICK, onEvent3DClick);
+				basicView.scene.removeChild(plane);
+				if(plane.material!=null)
+				{
+					if(plane.material.bitmap!=null)
+					{
+						plane.material.bitmap.dispose();
+						plane.material.bitmap=null;
+					}
+					plane.material.destroy();
+				}
+				plane=null;
+        	}
+        	MemoryRecovery.getInstance().gcFun(customDown.bar,MouseEvent.MOUSE_DOWN, onMouseDownHandler );
+        	MemoryRecovery.getInstance().gcFun(customDown.bar,MouseEvent.MOUSE_UP, onMouseUpHandler );
+        	MemoryRecovery.getInstance().gcFun(customDown.left,MouseEvent.CLICK,onLeftClick);
+        	MemoryRecovery.getInstance().gcFun(customDown.right,MouseEvent.CLICK,onRightClick);
+        	MemoryRecovery.getInstance().gcObj(customDown.bar);
+        	MemoryRecovery.getInstance().gcObj(customDown.left);
+        	MemoryRecovery.getInstance().gcObj(customDown.right);
+        	MemoryRecovery.getInstance().gcObj(customDown);
+
         	MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_MOVE, onMoveHandler );
         	MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_UP, onMouseUpHandler );
         	MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_WHEEL, onMouseWheel);
         	MemoryRecovery.getInstance().gcFun(stage,MouseEvent.CLICK,onStageClick);
-        	MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME, onEventRender3D);	
         	MemoryRecovery.getInstance().gcFun(itemModel,Event.COMPLETE,onPictureUrlCtrComplete);
         	MemoryRecovery.getInstance().gcObj(itemModel,true);
-        	for each(var m:MaterialObject3D in materialRubbishArray)
-        	{
-        		if(m!=null)
-        		{
-        			m.destroy();
-        		}
-        	}
-        	var i:int=0;
-        	for(i=0;i<rubbishArray.length;i++)
-        	{
-        		MemoryRecovery.getInstance().gcFun(rubbishArray[i],InteractiveScene3DEvent.OBJECT_OVER, onEvent3DOver);
-        		MemoryRecovery.getInstance().gcFun(rubbishArray[i],InteractiveScene3DEvent.OBJECT_OUT, onEvent3DOut);
-        		MemoryRecovery.getInstance().gcFun(rubbishArray[i],InteractiveScene3DEvent.OBJECT_CLICK, onEvent3DClick);
-        		MemoryRecovery.getInstance().gcObj(rubbishArray[i]);
-        	}
+        	rubbishArray=null;
+        	pictureUrls=null;
         	basicView.renderer.destroy();
+        	basicView.renderer=null;
+        	basicView.scene=null;
+        	MemoryRecovery.getInstance().gcObj(basicView);
         	basicView=null;
         }
     }

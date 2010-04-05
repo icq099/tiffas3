@@ -11,6 +11,7 @@ package lxfa.normalWindow
 	
 	import lxfa.normalWindow.model.NormalWindowModel;
 	import lxfa.utils.BackGroundMusicManager;
+	import lxfa.utils.MemoryRecovery;
 	
 	import mx.core.UIComponent;
 	import mx.managers.PopUpManager;
@@ -71,9 +72,10 @@ package lxfa.normalWindow
 		private function createChengShiGuangYing():void
 		{
 			MainSystem.getInstance().showPluginById("ChengShiGuangYingModule");
-			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,function(e:ScriptAPIAddEvent):void{
+			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,function fuck(e:ScriptAPIAddEvent):void{
 				if(e.fun_name=="initChengShiGuangYing")
 				{
+					MemoryRecovery.getInstance().gcFun(MainSystem.getInstance(),ScriptAPIAddEvent.ADD_API,fuck);
 					MainSystem.getInstance().runAPIDirectDirectly("initChengShiGuangYing",[ID]);
 					var dis:DisplayObject=MainSystem.getInstance().getPlugin("ChengShiGuangYingModule");
 					dis.addEventListener(Event.COMPLETE,on_chengshiguangying_complete);
@@ -82,6 +84,7 @@ package lxfa.normalWindow
 		}
 		private function on_chengshiguangying_complete(e:Event):void
 		{
+			MemoryRecovery.getInstance().gcFun(e.currentTarget,Event.COMPLETE,on_chengshiguangying_complete);
 			var dis:DisplayObject=MainSystem.getInstance().runAPIDirectDirectly("getChengShiGuangYing",[]);
 			this.addChild(dis);
 			dis.addEventListener(Event.CLOSE,onnormalWindowClose);
@@ -89,9 +92,10 @@ package lxfa.normalWindow
 		private function create(moduleName:String,funName:String,x:int,y:int):void
 		{
 			MainSystem.getInstance().showPluginById(moduleName);
-			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,function(e:ScriptAPIAddEvent):void{
+			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,function fuck(e:ScriptAPIAddEvent):void{
 				if(e.fun_name==funName)
 				{
+					MemoryRecovery.getInstance().gcFun(MainSystem.getInstance(),ScriptAPIAddEvent.ADD_API,fuck);
 					var dis:DisplayObject=MainSystem.getInstance().runAPIDirectDirectly(funName,[]);
 					dis.x=x;
 					dis.y=y;
@@ -135,6 +139,7 @@ package lxfa.normalWindow
 		{
 			if(!MainSystem.getInstance().isBusy)
 			{
+				MemoryRecovery.getInstance().gcFun(e.currentTarget,Event.CLOSE,onnormalWindowClose);
 				BackGroundMusicManager.getInstance().reload();
 				MainSystem.getInstance().startRender();
 				this.dispatchEvent(new Event(Event.CLOSE));
