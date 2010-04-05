@@ -73,11 +73,12 @@
 		}
 		private function removed(e:Event):void
 		{
-			basicView.viewport.destroy();
-//			basicView.viewport=null;
-//			basicView=null;
-			MemoryRecovery.getInstance().gcFun(this,Event.REMOVED_FROM_STAGE,removed);
-			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
+//			MemoryRecovery.getInstance().gcFun(this,Event.REMOVED_FROM_STAGE,removed);
+//			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
+//			basicView.viewport.destroy();
+//			basicView.renderer.destroy();
+//			basicView.renderer=null;
+//			basicView.scene=null;
 		}
 		private function initCustomDown():void
 		{
@@ -94,37 +95,12 @@
 		}
 		private function init3DObject():void{
 			rootNode = new DisplayObject3D();
-			//建立一個DisplayObject3D物件
 			basicView.scene.addChild(rootNode);
-			//加入至scene。
 			var imgUrl:String;
-			//宣告變數, 避免在判斷式時重復宣告。
 			var planeHeight:int=-1;
-//			var bmpMat		:MaterialObject3D;
 			for (var i:int = 0; i < pictureUrls.length; i++) {	
 				imgUrl=pictureUrls[i];			
-//				bmpMat = new ReflectionFileMaterial(imgUrl, true);
-//				planeHeight = 400;			
-//				bmpMat.doubleSided = true; //雙面模式
-//				bmpMat.interactive = true;
-//				bmpMat.smooth = true;		
-				var _plane	:Plane = new Plane(new ColorMaterial(0xffffff, 0), 320, 400, 2, 2);
-				var _radian	:Number = i * angleUnit;
-//				_plane.material=bmpMat;
-				_plane.x = Math.cos(_radian) * radius;
-				_plane.z = Math.sin(_radian) * radius;
-//				_plane.setID(min+i);
-				//透過三角函數來排列。
-				_plane.rotationY = 270 - (_radian * 180 / Math.PI) ;
-//				_plane.useOwnContainer = true;					
-				_plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, on3DOver);
-				_plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, on3DOut);
-				_plane.addEventListener(InteractiveScene3DEvent.OBJECT_PRESS, on3DPress);
-				basicView.scene.addChild(_plane);
-				//偵聽
-//				rootNode.addChild(_plane);
-				planeArray.push(_plane);
-				trace("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+				createPlane(imgUrl,i);
 			}
 		}
 		private function createPlane(imgUrl:String,i:int):void
@@ -136,17 +112,19 @@
 			    bmpMat=new BitmapMaterial(Bitmap(loader.content).bitmapData);
 				bmpMat.interactive = true;
 				bmpMat.smooth = true;		
+				bmpMat.doubleSided=true;
 				var _radian	:Number = i * angleUnit;
 				var plane:Plane=new Plane(new ColorMaterial(0xffffff, 0), 320, 240, 4, 4);
 			    plane.material=bmpMat;
 				plane.x =Math.cos(_radian) * radius;
 				plane.z = Math.sin(_radian) * radius;
-//				rubbishArray.push(plane);
+				plane.rotationY = 270 - (_radian * 180 / Math.PI) ;
+				planeArray.push(plane);
 				//修正反射Plane物件的y軸。				
-//				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, onEvent3DOver);
-//				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, onEvent3DOut);
-//				plane.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK, onEvent3DClick);
-				basicView.scene.addChild(plane);
+				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, on3DOver);
+				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, on3DOut);
+				plane.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK, on3DPress);
+				rootNode.addChild(plane);
 			});
 		}
 		private function initObject():void{
@@ -231,9 +209,6 @@
 			basicView.scene.removeChild(rootNode);
 			planeArray=null;
 			MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_WHEEL, onStageMouseWheel);
-			basicView.renderer.destroy();
-			basicView.renderer=null;
-			basicView.scene=null;
         	MemoryRecovery.getInstance().gcObj(basicView);
 		}
 	}
