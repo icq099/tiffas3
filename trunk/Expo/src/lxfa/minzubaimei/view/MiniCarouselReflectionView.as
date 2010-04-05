@@ -1,20 +1,16 @@
 ﻿package lxfa.minzubaimei.view {	
 	import caurina.transitions.Tweener;
 	
-	import communication.MainSystem;
-	
 	import flash.display.*;
 	import flash.events.*;
 	import flash.filters.*;
+	import flash.net.URLRequest;
 	
 	import lsd.CustomWindow.CustomWindow;
 	
 	import lxfa.model.ItemModel;
 	import lxfa.utils.MemoryRecovery;
-	import lxfa.view.pv3dAddOn.milkmidi.papervision3d.materials.ReflectionFileMaterial;
-	import lxfa.view.pv3dAddOn.org.papervision3d.objects.primitives.NumberPlane;
 	
-	import org.papervision3d.core.proto.MaterialObject3D;
 	import org.papervision3d.events.*;
 	import org.papervision3d.materials.*;
 	import org.papervision3d.objects.DisplayObject3D;
@@ -34,7 +30,6 @@
 		private var ldr			:Loader;	//載入大圖用的Loader。
 		private var itemOfNumber:int;
 		private const min:int=27;
-		private var rubbishArray:Array=new Array();//垃圾回收的数组
 		private var matArray:Array=new Array();    //回收素材的数组
 		private var planeArray:Array=new Array();  //回收平面的数组
 		private var backGround:CustomWindow;
@@ -69,7 +64,6 @@
 			basicView.x=-26;
 			this.addEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
 			this.addEventListener(Event.REMOVED_FROM_STAGE,removed);
-			rubbishArray.push(basicView);
 		}
 		private function on_added_to_stage(e:Event):void
 		{
@@ -79,6 +73,9 @@
 		}
 		private function removed(e:Event):void
 		{
+			basicView.viewport.destroy();
+//			basicView.viewport=null;
+//			basicView=null;
 			MemoryRecovery.getInstance().gcFun(this,Event.REMOVED_FROM_STAGE,removed);
 			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
 		}
@@ -103,30 +100,54 @@
 			var imgUrl:String;
 			//宣告變數, 避免在判斷式時重復宣告。
 			var planeHeight:int=-1;
-			var bmpMat		:MaterialObject3D;
+//			var bmpMat		:MaterialObject3D;
 			for (var i:int = 0; i < pictureUrls.length; i++) {	
 				imgUrl=pictureUrls[i];			
-				bmpMat = new ReflectionFileMaterial(imgUrl, true);
-				planeHeight = 400;			
-				bmpMat.doubleSided = true; //雙面模式
-				bmpMat.interactive = true;
-				bmpMat.smooth = true;		
-				var _plane	:NumberPlane = new NumberPlane(bmpMat, 320, 400, 2, 2);
+//				bmpMat = new ReflectionFileMaterial(imgUrl, true);
+//				planeHeight = 400;			
+//				bmpMat.doubleSided = true; //雙面模式
+//				bmpMat.interactive = true;
+//				bmpMat.smooth = true;		
+				var _plane	:Plane = new Plane(new ColorMaterial(0xffffff, 0), 320, 400, 2, 2);
 				var _radian	:Number = i * angleUnit;
+//				_plane.material=bmpMat;
 				_plane.x = Math.cos(_radian) * radius;
 				_plane.z = Math.sin(_radian) * radius;
-				_plane.setID(min+i);
+//				_plane.setID(min+i);
 				//透過三角函數來排列。
 				_plane.rotationY = 270 - (_radian * 180 / Math.PI) ;
-				_plane.useOwnContainer = true;					
+//				_plane.useOwnContainer = true;					
 				_plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, on3DOver);
 				_plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, on3DOut);
 				_plane.addEventListener(InteractiveScene3DEvent.OBJECT_PRESS, on3DPress);
+				basicView.scene.addChild(_plane);
 				//偵聽
-				rootNode.addChild(_plane);
+//				rootNode.addChild(_plane);
 				planeArray.push(_plane);
+				trace("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 			}
-			rubbishArray.push(rootNode);
+		}
+		private function createPlane(imgUrl:String,i:int):void
+		{
+			var bmpMat		:BitmapMaterial;
+			var loader:Loader=new Loader();
+			loader.load(new URLRequest(imgUrl));
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,function loaded(e:Event):void{
+			    bmpMat=new BitmapMaterial(Bitmap(loader.content).bitmapData);
+				bmpMat.interactive = true;
+				bmpMat.smooth = true;		
+				var _radian	:Number = i * angleUnit;
+				var plane:Plane=new Plane(new ColorMaterial(0xffffff, 0), 320, 240, 4, 4);
+			    plane.material=bmpMat;
+				plane.x =Math.cos(_radian) * radius;
+				plane.z = Math.sin(_radian) * radius;
+//				rubbishArray.push(plane);
+				//修正反射Plane物件的y軸。				
+//				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, onEvent3DOver);
+//				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, onEvent3DOut);
+//				plane.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK, onEvent3DClick);
+				basicView.scene.addChild(plane);
+			});
 		}
 		private function initObject():void{
 			//偵聽MouseEvent.MOUSE_WHEEL事件。
@@ -158,9 +179,8 @@
 			e.displayObject3D.scale = 1;			
 		}
 		private function on3DPress(e:InteractiveScene3DEvent):void{
-			var _target:NumberPlane=NumberPlane(e.currentTarget);
-			MainSystem.getInstance().runAPIDirectDirectly("showNormalWindow",[_target.getID()]);
-            currentIndex=_target.getID()-min+3;
+			var _target:Plane=Plane(e.currentTarget);
+//            currentIndex=_target.getID()-min+3;
             updateRootNodeTransform();
 		}
 		private function onButtonClick(e:Event):void {
@@ -191,35 +211,30 @@
 			MemoryRecovery.getInstance().gcObj(customDown.left);
 			MemoryRecovery.getInstance().gcObj(customDown.right);
 			MemoryRecovery.getInstance().gcObj(customDown);
-			for each(var mat:ReflectionFileMaterial in matArray)
-			{
-				if(mat!=null)
-				{
-					if(mat.bitmap!=null)
-					{
-						mat.bitmap.dispose();
-					}
-					mat.destroy();
-					mat=null;
-				}
-			}
 			for each(var plane:Plane in planeArray)
 			{
 				MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_OVER, on3DOver);
 				MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_OUT, on3DOut);
 				MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_PRESS, on3DPress);
-				MemoryRecovery.getInstance().gcObj(plane);
+				basicView.scene.removeChild(plane);
+				if(plane.material!=null)
+				{
+					if(plane.material.bitmap!=null)
+					{
+						plane.material.bitmap.dispose();
+						plane.material.bitmap=null;
+					}
+					plane.material.destroy();
+				}
+				plane=null;
 			}
+			basicView.scene.removeChild(rootNode);
 			planeArray=null;
 			MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_WHEEL, onStageMouseWheel);
 			basicView.renderer.destroy();
-			basicView.viewport.destroy();
-			MemoryRecovery.getInstance().gcObj(basicView);
-			var i:int=0;
-			for(;i<rubbishArray.length;i++)
-			{
-				rubbishArray[i]=null;
-			}
+			basicView.renderer=null;
+			basicView.scene=null;
+        	MemoryRecovery.getInstance().gcObj(basicView);
 		}
 	}
 }
