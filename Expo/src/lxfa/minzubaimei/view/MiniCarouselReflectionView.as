@@ -55,7 +55,7 @@
 			initObject();		
 		}
 		private function init3DEngine():void{
-			basicView = new BasicView(600, 600, false, true, "Target");			
+			basicView = new BasicView(600, 600, false, true, "Target");		
 			//設定反射面的 y 軸方向高度
 			basicView.camera.y = 1200;
 			basicView.camera.z = -3800;
@@ -67,8 +67,20 @@
 			initCustomDown();
 			basicView.y=-250;
 			basicView.x=-26;
-			this.addEventListener(Event.ENTER_FRAME, onEventRender3D);
+			this.addEventListener(Event.ADDED_TO_STAGE,on_added_to_stage);
+			this.addEventListener(Event.REMOVED_FROM_STAGE,removed);
 			rubbishArray.push(basicView);
+		}
+		private function on_added_to_stage(e:Event):void
+		{
+			MemoryRecovery.getInstance().gcFun(this,Event.ADDED_TO_STAGE,on_added_to_stage);
+			this.addEventListener(Event.ENTER_FRAME, onEventRender3D);
+			stage.addEventListener(MouseEvent.MOUSE_WHEEL, onStageMouseWheel);
+		}
+		private function removed(e:Event):void
+		{
+			MemoryRecovery.getInstance().gcFun(this,Event.REMOVED_FROM_STAGE,removed);
+			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
 		}
 		private function initCustomDown():void
 		{
@@ -112,18 +124,12 @@
 				_plane.addEventListener(InteractiveScene3DEvent.OBJECT_PRESS, on3DPress);
 				//偵聽
 				rootNode.addChild(_plane);
-				matArray.push(bmpMat);
 				planeArray.push(_plane);
 			}
 			rubbishArray.push(rootNode);
 		}
 		private function initObject():void{
-			this.addEventListener(Event.ADDED_TO_STAGE,ADDED_TO_STAGE);
 			//偵聽MouseEvent.MOUSE_WHEEL事件。
-		}
-		private function ADDED_TO_STAGE(e:Event):void
-		{
-			stage.addEventListener(MouseEvent.MOUSE_WHEEL, onStageMouseWheel);
 		}
 		private function onStageMouseWheel(e:MouseEvent):void {
 			//MouseEvent類別, delta屬性可以得到滑鼠滾輪的值
@@ -180,17 +186,19 @@
 		}
 		public function dispose():void
 		{
-			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
-			MemoryRecovery.getInstance().gcFun(this,Event.ADDED_TO_STAGE,ADDED_TO_STAGE);
 			MemoryRecovery.getInstance().gcFun(customDown.left,MouseEvent.CLICK,onButtonClick);
 			MemoryRecovery.getInstance().gcFun(customDown.right,MouseEvent.CLICK,onButtonClick);
 			MemoryRecovery.getInstance().gcObj(customDown.left);
 			MemoryRecovery.getInstance().gcObj(customDown.right);
 			MemoryRecovery.getInstance().gcObj(customDown);
-			for each(var mat:* in matArray)
+			for each(var mat:ReflectionFileMaterial in matArray)
 			{
 				if(mat!=null)
 				{
+					if(mat.bitmap!=null)
+					{
+						mat.bitmap.dispose();
+					}
 					mat.destroy();
 					mat=null;
 				}
@@ -202,9 +210,11 @@
 				MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_PRESS, on3DPress);
 				MemoryRecovery.getInstance().gcObj(plane);
 			}
+			planeArray=null;
 			MemoryRecovery.getInstance().gcFun(stage,MouseEvent.MOUSE_WHEEL, onStageMouseWheel);
 			basicView.renderer.destroy();
 			basicView.viewport.destroy();
+			MemoryRecovery.getInstance().gcObj(basicView);
 			var i:int=0;
 			for(;i<rubbishArray.length;i++)
 			{
