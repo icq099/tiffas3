@@ -2,18 +2,22 @@
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="communication.IPlugin">
 	<mx:Script>
 		<![CDATA[
+			import lxfa.utils.MemoryRecovery;
 		private var chengShiGuangYingBase:ChengShiGuangYingBase
 			private function init():void
 			{
 				chengShiGuangYingBase=new ChengShiGuangYingBase();
-				chengShiGuangYingBase.addEventListener(Event.COMPLETE,function(e:Event):void
-				{
-					dispatchEvent(e);
-				});
+				chengShiGuangYingBase.addEventListener(Event.COMPLETE,on_complete);
+			}
+			private function on_complete(e:Event):void
+			{
+				dispatchEvent(e);
 			}
 			public function dispose():void
 			{
+				MemoryRecovery.getInstance().gcFun(chengShiGuangYingBase,Event.COMPLETE,on_complete);
 				chengShiGuangYingBase.dispose(null);
+				chengShiGuangYingBase=null;
 			}
 		]]>
 	</mx:Script>
