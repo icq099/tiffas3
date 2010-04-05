@@ -1,13 +1,13 @@
 package lxfa.chengshiguangying
 {
 	import communication.MainSystem;
-
+	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-
+	
 	import lsd.CustomWindow.CustomWindow;
 	import lsd.CustomWindow.CustomWindowEvent;
-
+	
 	import lxfa.model.ItemModel;
 	import lxfa.utils.MemoryRecovery;
 
@@ -63,12 +63,13 @@ package lxfa.chengshiguangying
 		{
 			if (!MainSystem.getInstance().isBusy)
 			{
-				customWindow.removeChild(flatWall3D_Reflection);
-				flatWall3D_Reflection.dispose();
-				flatWall3D_Reflection=null;
-//				MemoryRecovery.getInstance().gcObj(flatWall3D_Reflection, true);
+				
+//				customWindow.removeChild(flatWall3D_Reflection);
+//				flatWall3D_Reflection.dispose();
+//				flatWall3D_Reflection=null;
+				MemoryRecovery.getInstance().gcObj(flatWall3D_Reflection, true);
 				MemoryRecovery.getInstance().gcFun(customWindow, CustomWindowEvent.SWF_COMPLETE, on_swf_complete);
-				MemoryRecovery.getInstance().gcFun(customWindow, CustomWindowEvent.WINDOW_CLOSE, dispose);
+				MemoryRecovery.getInstance().gcFun(customWindow, CustomWindowEvent.WINDOW_CLOSE, on_customWindow_close);
 				MemoryRecovery.getInstance().gcObj(customWindow, true);
 			}
 		}
