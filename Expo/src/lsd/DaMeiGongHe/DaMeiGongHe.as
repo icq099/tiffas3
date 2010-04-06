@@ -94,7 +94,7 @@ package lsd.DaMeiGongHe
        private function addAreas():void{
        	    CollisionManager.getInstance().init(DisplayObject(Application.application));
        	    var guangXiArea:Array=[[[485, 129], [610, 183]]];
-			var daMeiGongHeWindowArea:Array=[[[670, 185], [880, 222]]];
+			var daMeiGongHeWindowArea:Array=[[[670, 238], [850, 275]]];
 			CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "dmg_gx");
 			CollisionManager.getInstance().addCollision(daMeiGongHeWindowArea, daMeiGongHeWindowClick, "daMeiGongHeWindow");
        }

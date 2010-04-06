@@ -78,7 +78,7 @@ package lsd.FanZhuSanJiao
         private function addAreas():void{
         	CollisionManager.getInstance().init(DisplayObject(Application.application));
         	var guangXiArea:Array=[[[272, 299], [394, 377]], [[297, 377], [347, 410]]];
-			var fanZhuWindowArea:Array=[[[680, 153], [892, 192]]]
+			var fanZhuWindowArea:Array=[[[716, 387], [873, 421]]]
         	CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "fz_gx");
 			CollisionManager.getInstance().addCollision(fanZhuWindowArea, fanZhuWindowClick, "fanZhuWindow");
         }
