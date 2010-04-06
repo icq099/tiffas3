@@ -2,6 +2,7 @@
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="communication.IPlugin">
 	<mx:Script>
 		<![CDATA[
+			import communication.MainSystem;
 			import mx.core.IFlexDisplayObject;
 			import mx.managers.PopUpManager;
 			import lxfa.utils.MemoryRecovery;

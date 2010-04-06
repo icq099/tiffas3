@@ -12,8 +12,6 @@
 	
 	import lxfa.utils.movement.UpDownMovement;
 	
-	import mx.core.Application;
-	
 	import org.papervision3d.cameras.FreeCamera3D;
 	import org.papervision3d.core.proto.MaterialObject3D;
 	import org.papervision3d.events.InteractiveScene3DEvent;
@@ -344,6 +342,7 @@
 			plane_animate.offset=init_obj["offset"] ? init_obj["offset"] : 0;
 			plane_animate.angle=init_obj["angle"] ? init_obj["angle"] : 0;
 			plane_animate.force=init_obj["force"] ? init_obj["force"] : 0;
+			var autoKeep:Number=init_obj["autoKeep"]?init_obj["autoKeep"]:0;
 			if (Number(init_obj["scaleX"]) == 0 || Number(init_obj["scaleX"]) < 0)
 			{
 				plane_animate.scaleX=1;
@@ -365,6 +364,11 @@
 				if(sign==1)
 				{
 					plane_animate.alpha=0.5;
+				}
+				if(autoKeep==1)//如果要自动保存当前的对象
+				{
+					MainSystem.getInstance().currentHotpoint=plane_animate;
+					plane_animate.material.interactive=false;
 				}
 			});
 			//添加运动
