@@ -82,7 +82,7 @@ package lsd.DongMeng
         private function addAreas():void{
         	CollisionManager.getInstance().init(DisplayObject(Application.application));
         	var guangXiArea:Array=[[[325, 103], [387, 128]]];
-			var dongMengWindowArea:Array=[[[660, 110], [870, 148]]];
+			var dongMengWindowArea:Array=[[[660, 155], [865, 191]]];
 			CollisionManager.getInstance().addCollision(guangXiArea, guangXiClick, "dm_gx")
 			CollisionManager.getInstance().addCollision(dongMengWindowArea, dongMengWindowClick, "dongMengWindow");
         }
