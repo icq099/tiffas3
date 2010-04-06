@@ -5,6 +5,7 @@
 	import flash.events.*;
 	import flash.filters.*;
 	import flash.net.URLRequest;
+	import flash.text.TextFieldAutoSize;
 	
 	import lsd.CustomWindow.CustomWindow;
 	
@@ -47,7 +48,6 @@
 			angleUnit = (Math.PI * 2) / pictureUrls.length;//角度的偏移量
 			init3DEngine();
 			init3DObject();
-			initObject();		
 		}
 		private function init3DEngine():void{
 			basicView = new BasicView(600, 600, false, true, "Target");		
@@ -75,8 +75,8 @@
 		{
 //			MemoryRecovery.getInstance().gcFun(this,Event.REMOVED_FROM_STAGE,removed);
 //			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
-//			basicView.viewport.destroy();
 //			basicView.renderer.destroy();
+////			basicView.viewport.destroy();
 //			basicView.renderer=null;
 //			basicView.scene=null;
 		}
@@ -120,15 +120,13 @@
 				plane.z = Math.sin(_radian) * radius;
 				plane.rotationY = 270 - (_radian * 180 / Math.PI) ;
 				planeArray.push(plane);
+				plane.name=i.toString();
 				//修正反射Plane物件的y軸。				
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, on3DOver);
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, on3DOut);
 				plane.addEventListener(InteractiveScene3DEvent.OBJECT_CLICK, on3DPress);
 				rootNode.addChild(plane);
 			});
-		}
-		private function initObject():void{
-			//偵聽MouseEvent.MOUSE_WHEEL事件。
 		}
 		private function onStageMouseWheel(e:MouseEvent):void {
 			//MouseEvent類別, delta屬性可以得到滑鼠滾輪的值
@@ -145,8 +143,6 @@
 			//移除Loader載入的物件。
 			stage.removeEventListener(MouseEvent.CLICK, onStageClick);
 			//取消偵聽。
-//			container.right_btn.visible = container.left_btn.visible = true;
-			//讓左、右Button看的見。
 		}
 		private function on3DOver(e:InteractiveScene3DEvent):void {			
 			//當滑鼠進入感應區時，修改廣播者scale屬性，放大1.2倍。
@@ -158,7 +154,7 @@
 		}
 		private function on3DPress(e:InteractiveScene3DEvent):void{
 			var _target:Plane=Plane(e.currentTarget);
-//            currentIndex=_target.getID()-min+3;
+            currentIndex=int(_target.name)+3;
             updateRootNodeTransform();
 		}
 		private function onButtonClick(e:Event):void {

@@ -273,7 +273,7 @@
 			var height:Number=init_obj["height"]?init_obj["height"]:100;
 			var segmentsW:Number=init_obj["segmentsW"]?init_obj["segmentsW"]:2;
 			var segmentsH:Number=init_obj["segmentsH"]?init_obj["segmentsH"]:2;
-			
+			var autoKeep:Number=init_obj["autoKeep"]?init_obj["autoKeep"]:0;
 			
 			var plane_animate:Plane=new Plane(new ColorMaterial(0xffffff),width,height,segmentsW,segmentsH,init_obj);
 			

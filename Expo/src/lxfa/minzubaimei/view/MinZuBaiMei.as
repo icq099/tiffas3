@@ -33,6 +33,7 @@ package lxfa.minzubaimei.view
 		}
 		private function on_swf_complete(e:CustomWindowEvent):void
 		{
+			MainSystem.getInstance().currentHotpoint.material.interactive=true;
 			miniCarouselReflectionView=new MiniCarouselReflectionView();
 			backGround.addChild(miniCarouselReflectionView);
 			miniCarouselReflectionView.x=130;
