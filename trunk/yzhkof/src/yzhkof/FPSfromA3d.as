@@ -28,6 +28,7 @@ package yzhkof
         private var socketIn:TextField;
         private var dwl:TextField;
         private var skinsChanged:int = 0;
+        private var stg:DisplayObjectContainer;
         static private const diagramWidth:uint = 60;
         static private const tfDelayMax:int = 10;
         static private var instance:FPSfromA3d;
@@ -36,6 +37,8 @@ package yzhkof
 
         public function FPSfromA3d(stg:DisplayObjectContainer)
         {
+        	this.stg=stg;
+        	stg.addEventListener(Event.ADDED,onStageAdd);
 			var _loc_2:Bitmap;
             fps = new TextField();
             mem = new TextField();
@@ -95,7 +98,10 @@ package yzhkof
             }// end else if
             return;
         }
-
+        private function onStageAdd(e:Event):void
+    	{
+    		stg.setChildIndex(this,stg.numChildren-1);
+    	}
         private function bytesToString(mouseChildren:uint) : String
         {
             var _loc_2:String;
