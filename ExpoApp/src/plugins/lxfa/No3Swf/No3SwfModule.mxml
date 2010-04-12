@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="core.manager.pluginManager.IPlugin">
+	<mx:Script>
+		<![CDATA[
+			import plugins.lxfa.No3Swf.view.No3SwfBase;
+			private var no3swf:No3SwfBase;
+			private function init():void
+			{
+				no3swf=new No3SwfBase();
+				this.addChild(no3swf);
+			}
+			public function dispose():void
+			{
+				no3swf.dispose();
+				no3swf=null
+			}
+		]]>
+	</mx:Script>
+</mx:Module>

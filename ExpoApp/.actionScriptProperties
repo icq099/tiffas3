@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionScriptProperties mainApplicationPath="ExpoApp.mxml" version="3">
+<compiler additionalCompilerArguments="-services &quot;C:\Program Files\Apache Software Foundation\Tomcat 6.0\webapps\p5006\WEB-INF\flex\services-config.xml&quot; -locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="9.0.124" htmlPlayerVersionCheck="true" outputFolderLocation="C:/Program Files/Apache Software Foundation/Tomcat 6.0/webapps/p5006/ExpoApp-debug" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
+<compilerSourcePath/>
+<libraryPath defaultLinkType="1">
+<libraryPathEntry kind="4" path=""/>
+<libraryPathEntry kind="1" linkType="1" path="libs"/>
+<libraryPathEntry kind="3" linkType="1" path="/pv360flexllib/bin/pv360flexllib.swc" useDefaultLinkType="false"/>
+<libraryPathEntry kind="3" linkType="1" path="/tool/bin/tool.swc" useDefaultLinkType="false"/>
+</libraryPath>
+<sourceAttachmentPath/>
+</compiler>
+<applications>
+<application path="ExpoApp.mxml"/>
+</applications>
+<modules>
+<module application="src/ExpoApp.mxml" destPath="plugins/lxfa/No3/No3Module.swf" optimize="true" sourcePath="src/plugins/lxfa/No3/No3Module.mxml"/>
+<module application="src/ExpoApp.mxml" destPath="plugins/lxfa/index/IndexModule.swf" optimize="true" sourcePath="src/plugins/lxfa/index/IndexModule.mxml"/>
+<module application="src/ExpoApp.mxml" destPath="plugins/lxfa/mainMenuTop/MainMenuTopModule.swf" optimize="true" sourcePath="src/plugins/lxfa/mainMenuTop/MainMenuTopModule.mxml"/>
+<module application="src/ExpoApp.mxml" destPath="plugins/lxfa/No3Swf/No3SwfModule.swf" optimize="true" sourcePath="src/plugins/lxfa/No3Swf/No3SwfModule.mxml"/>
+<module application="src/ExpoApp.mxml" destPath="plugins/lxfa/mainMenuBottom/MainMenuBottomModule.swf" optimize="true" sourcePath="src/plugins/lxfa/mainMenuBottom/MainMenuBottomModule.mxml"/>
+<module application="src/ExpoApp.mxml" destPath="plugins/lxfa/yangMengBaGuiWithMovie/YangMengBaGuiWithMovieModule.swf" optimize="true" sourcePath="src/plugins/lxfa/yangMengBaGuiWithMovie/YangMengBaGuiWithMovieModule.mxml"/>
+<module application="src/ExpoApp.mxml" destPath="plugins/lxfa/yangmengbagui/YangMengBaGuiModule.swf" optimize="true" sourcePath="src/plugins/lxfa/yangmengbagui/YangMengBaGuiModule.mxml"/>
+</modules>
+<buildCSSFiles/>
+</actionScriptProperties>

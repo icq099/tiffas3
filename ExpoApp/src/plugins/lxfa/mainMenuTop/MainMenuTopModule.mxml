@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="core.manager.pluginManager.IPlugin">
+	<mx:Script>
+		<![CDATA[
+		    private var top:MainMenuTop;
+			private function init():void
+			{
+				top=new MainMenuTop();
+				addChild(top);
+			}
+			public function dispose():void
+			{
+				top.dispose();
+				top.parent.removeChild(top);
+				top=null;
+			}
+		]]>
+	</mx:Script>
+</mx:Module>
