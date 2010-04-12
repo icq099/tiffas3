@@ -32,7 +32,7 @@ package yzhkof
 				
 				onReSize();
 				
-				var stage_obj:Stage=use_basiceasproject?BasicAsProject.mainStage:obj.stage;
+				var stage_obj:Stage=use_basiceasproject?BasicAsProject.stage:obj.stage;
 				
 				stage_obj.removeEventListener(Event.RESIZE,onReSize)
 				stage_obj.addEventListener(Event.RESIZE,onReSize,false,0,weak_reference);
