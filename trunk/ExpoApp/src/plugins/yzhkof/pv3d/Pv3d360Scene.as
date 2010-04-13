@@ -93,7 +93,6 @@
 			this.czoom=czoom;
 			init();
 			initListener();
-			trace();
 		}
 
 		protected function init():void

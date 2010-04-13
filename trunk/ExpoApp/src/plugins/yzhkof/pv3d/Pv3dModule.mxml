@@ -2,7 +2,7 @@
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" implements="core.manager.pluginManager.IPlugin" creationComplete="init()">
 	<mx:Script>
 		<![CDATA[
-		    private var pv3d:Pv3d360SceneCompass=new Pv3d360SceneCompass();
+		    private var pv3d:Pv3dModuleBase=new Pv3dModuleBase();
 			private function init():void
 			{
 				this.addChild(pv3d);
