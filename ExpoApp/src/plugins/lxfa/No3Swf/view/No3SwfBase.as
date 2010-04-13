@@ -77,7 +77,6 @@ package plugins.lxfa.No3Swf.view
 			{
 				MainSystem.getInstance().showPluginById("No4Module");
 				MemoryRecovery.getInstance().gcFun(unrealCompassSwc,MouseEvent.CLICK,onClick);
-				MemoryRecovery.getInstance().gcObj(unrealCompassSwc);
 			}
 		}
 		private function removeCurrentModule():void
@@ -87,8 +86,11 @@ package plugins.lxfa.No3Swf.view
 		public function dispose():void
 		{
 			MemoryRecovery.getInstance().gcFun(unrealCompassSwc,MouseEvent.CLICK,onClick);
-			MemoryRecovery.getInstance().gcObj(unrealCompassSwc);
-			MemoryRecovery.getInstance().gcFun(unrealCompassSwc,MouseEvent.CLICK,onClick);
+			if(unrealCompassSwc.parent!=null)
+			{
+				unrealCompassSwc.parent.removeChild(unrealCompassSwc);
+			}
+			unrealCompassSwc=null;
 			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,ProgressEvent.PROGRESS,on_progress);
 			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,Event.COMPLETE,onComplete);
 			flowerFlvSwf.enabled=false;

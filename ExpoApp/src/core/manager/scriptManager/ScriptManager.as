@@ -42,10 +42,10 @@ package core.manager.scriptManager
 			ScriptManager.getInstance().dispatchEvent(new ScriptEvent(ScriptEvent.REMOVEAPI,fun_name));
 		}
 		//直接运行脚本
-		public function runScriptDirectly(script:String):void
+		public function runScriptDirectly(script:String):*
 		{
-			scriptSimple.run(script);
 			ScriptManager.getInstance().dispatchEvent(new ScriptEvent(ScriptEvent.RUNSCRIPT,null,null,script));
+			return scriptSimple.run(script);
 		}
 		//跳过函数名运行已经注册的API,API没注册就输出函数为空的警告
 		public function runScriptByName(function_name:String,param:Array=null):*
