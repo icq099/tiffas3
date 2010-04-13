@@ -11,6 +11,7 @@ package core.manager
 	    private static var instance:MainSystem
 	    public var isBusy:Boolean=false;
 	    public var currentScene:int;
+	    public var currentHotpoint:*;
 		public function MainSystem()
 		{
 		   if(instance==null)
@@ -26,6 +27,10 @@ package core.manager
 		{
 			if(instance==null) return new MainSystem();
 			return instance;
+		}
+		public function runScript(script:String):*
+		{
+			return ScriptManager.getInstance().runScriptDirectly(script);
 		}
 		public function runAPI(funName:String,param:Array=null):*
 		{
