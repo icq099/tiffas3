@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" creationComplete="init()" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+
+<mx:Script>
+	<![CDATA[
+		import lsd.view.PopUp;
+		import lsd.view.MainInterface;
+		
+		 var mainInterface:MainInterface;
+		 var a:PopUp;
+		 private function init():void{
+		 	a=new PopUp();
+		 	a.visible=false;
+		 	addChild(a);
+		 	mainInterface=new MainInterface();
+		 	addChild(mainInterface);
+		 	
+		 }
+		
+	]]>
+</mx:Script>
+	
+	
+</mx:Application>
