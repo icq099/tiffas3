@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				width="200"
+				height="100"
+				showCloseButton="true"
+				close="PopUpManager.removePopUp(this)"
+				
+				removedEffect="{fadeout}"
+				initialize="init(event)" added="changeEffect()">
+	<mx:Script>
+		<![CDATA[
+			import lsd.util.EffectVo;
+			import mx.states.SetProperty;
+			import flash.utils.getQualifiedClassName;
+			import flash.utils.getDefinitionByName;
+			import mx.effects.Effect;
+			import lsd.Event.SendEffectEvent;
+			import mx.core.Application;
+			import mx.events.FlexEvent;
+			import mx.effects.easing.Bounce;
+			import mx.managers.PopUpManager;
+
+			
+            private  var effect_add:String="";
+            
+			private function init(e:FlexEvent):void
+			{
+                Application.application.addEventListener(SendEffectEvent.EFFECT,effect_do);
+              
+				this.x=500;
+				this.y=300;
+			}
+
+			
+			
+			private function effect_do(e:SendEffectEvent):void{
+				 trace("2");
+				EffectVo.getInstance().setEffect(e._effect);
+				 Application.application.removeEventListener(SendEffectEvent.EFFECT, effect_do);
+				
+			}
+			
+			
+				
+			
+			private function changeEffect():void{
+				 trace("3");
+				
+				if (EffectVo.getInstance().getEffect()== "fadein")
+				{ 
+					this.setStyle("addedEffect", fadein);
+					
+
+				}
+				else if (EffectVo.getInstance().getEffect() == "movePauseMove")
+				{
+					this.setStyle("addedEffect", movePauseMove);
+					
+				}
+				
+			}
+			}
+		]]>
+	</mx:Script>
+
+
+	<mx:Sequence id="movePauseMove">
+
+		<mx:Blur duration="1000"
+				 blurXFrom="0.0"
+				 blurXTo="10.0"
+				 blurYFrom="0.0"
+				 blurYTo="10.0"/>
+		<mx:Blur 
+				 duration="1000"
+				 blurXFrom="10.0"
+				 blurXTo="0.0"
+				 blurYFrom="10.0"
+				 blurYTo="0.0"/>
+	
+			<mx:Move xBy="-150"  yBy="-150" duration="2000" easingFunction="Bounce.easeOut"/>
+     <mx:Resize  target="{this}" widthTo="800" heightTo="600"/>
+          
+
+	</mx:Sequence>
+
+
+<mx:Sequence id="fadein">
+   <mx:Fade alphaFrom="0"
+			 alphaTo="1"/>
+   
+    <mx:Pause duration="2000"/>
+     <mx:Move xBy="300"  duration="1000" easingFunction="Bounce.easeIn"/>
+     <mx:Move xBy="-500" yBy="-150" duration="1000" easingFunction="Bounce.easeIn"/>
+     <mx:Resize  target="{this}" widthTo="800" heightTo="600"/>
+</mx:Sequence>
+
+	
+	<mx:Fade id="fadeout"
+			 alphaFrom="1"
+			 alphaTo="0"/>
+
+
+</mx:TitleWindow>
