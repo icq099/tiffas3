@@ -4,21 +4,24 @@ package yzhkof.debug
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.sampler.clearSamples;
 	import flash.text.TextField;
 	
 	import yzhkof.MyGraphy;
+	import yzhkof.ui.TextPanel;
 
 	public class TextTrace extends Sprite
 	{
 		private static const text_info:TextField=new TextField();
 		private static const container:Sprite=new Sprite();
 		private static const drag_btn:Sprite=MyGraphy.drawRectangle(20,20);
+		private static const clean_btn:TextPanel=new TextPanel(0xffff00);
 		private static const scaleX_btn:Sprite=MyGraphy.drawRectangle(20,20);
 		
-		private static const text_width:Number=600;
-		private static const text_height:Number=50;
+		private static const text_width:Number=500;
+		private static const text_height:Number=300;
 		
-		private static const back:Sprite=MyGraphy.drawRectangle(text_width+21,text_height,true,0xffffff);
+		private static const back:Sprite=MyGraphy.drawRectangle(text_width+21,text_height+21,true,0xffffff);
 		
 		
 		public function TextTrace()
@@ -26,21 +29,29 @@ package yzhkof.debug
 			super();
 			
 		}
+		public static function get view():Sprite
+		{
+			return container;
+		}
 		public static function init(dobj:DisplayObjectContainer):DisplayObjectContainer{
 			
 			drag_btn.buttonMode=true;
 			scaleX_btn.buttonMode=true;
-			scaleX_btn.x=text_width+21;
-			scaleX_btn.y=text_height-20;
+			clean_btn.text="清除";
+			clean_btn.x=30;
+			scaleX_btn.x=text_width;
+			scaleX_btn.y=text_height;
 			
 			text_info.width=text_width;
 			text_info.height=text_height;
 			text_info.x=21;
+			text_info.y=21;
 			
 			container.addChild(back);
+			container.addChild(text_info);
 			container.addChild(scaleX_btn);
 			container.addChild(drag_btn);
-			container.addChild(text_info);
+			container.addChild(clean_btn);
 			dobj.addChild(container);
 			
 			drag_btn.addEventListener(MouseEvent.MOUSE_DOWN,containerMouseDownHandler);
@@ -49,9 +60,20 @@ package yzhkof.debug
 			scaleX_btn.addEventListener(MouseEvent.MOUSE_DOWN,scaleXMouseDownHandler);
 			scaleX_btn.addEventListener(MouseEvent.MOUSE_UP,scaleXMouseUpHandler);
 			
+			clean_btn.addEventListener(MouseEvent.CLICK,__onCleanClick);
+			
+			scaleXonEnterFrame(null);
 			return dobj;
 		
 		
+		}
+		public static function get visible():Boolean
+		{
+			return container.visible;
+		}
+		public static function set visible(value:Boolean):void
+		{
+			container.visible=value;
 		}
 		public static function textPlus(str:String):void{
 			
@@ -61,8 +83,12 @@ package yzhkof.debug
 		}
 		public static function textClean():void{
 			
-			text_info.text=null;
+			text_info.text="";
 		
+		}
+		private static function __onCleanClick(e:Event):void
+		{
+			textClean();
 		}
 		private static function scaleXMouseDownHandler(e:Event):void{
 			
@@ -80,10 +106,10 @@ package yzhkof.debug
 		}
 		private static function scaleXonEnterFrame(e:Event):void{
 			
-			text_info.width+=scaleX_btn.x-text_info.width-20;
-			back.width+=scaleX_btn.x-back.width;
-			text_info.height+=scaleX_btn.y-text_info.height+20;
-			back.height+=scaleX_btn.y-back.height+20;
+			text_info.width=scaleX_btn.x;
+			back.width=scaleX_btn.x+20;
+			text_info.height=scaleX_btn.y;
+			back.height=scaleX_btn.y+20;
 		
 		}
 		private static function containerMouseDownHandler(e:Event):void{

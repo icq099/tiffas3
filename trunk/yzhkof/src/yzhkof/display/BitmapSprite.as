@@ -27,7 +27,7 @@ package yzhkof.display
 		private var _bitmapData:BitmapData;
 		private var _width:Number;
 		private var _height:Number;
-		public function BitmapSprite(width:Number,height:Number,transparent:Boolean=true,fillColor:uint=0)
+		public function BitmapSprite(width:Number,height:Number,transparent:Boolean=false,fillColor:uint=0)
 		{
 			super();
 			this.rendAtStage=true;

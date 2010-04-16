@@ -29,14 +29,20 @@ package yzhkof.debug
 					
 					for each(var x:XML in accessor_xmllist)
 					{
-						if(!(obj[x.@name] is ByteArray))
+						try
 						{
-							final_text+=addSpace("{"+x.@name+"} = "+obj[x.@name])+"\n";
-							if(x.@name=="name")
-								objname=obj.name;
-						}else
+							if(!(obj[x.@name] is ByteArray))
+							{
+								final_text+=addSpace("{"+x.@name+"} = "+obj[x.@name])+"\n";
+								if(x.@name=="name")
+									objname=obj.name;
+							}else
+							{
+								final_text+=addSpace("{"+x.@name+"} = [Type ByteArray]\n");
+							}
+						}catch(e:Error)
 						{
-							final_text+=addSpace("{"+x.@name+"} = [Type ByteArray]\n");
+							
 						}
 						
 					}

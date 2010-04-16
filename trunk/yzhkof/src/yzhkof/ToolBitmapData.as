@@ -2,6 +2,7 @@ package yzhkof
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.Stage;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	
@@ -22,11 +23,17 @@ package yzhkof
 		}
 		public function drawDisplayObject(obj:DisplayObject=null):BitmapData{
 		
-			var rect:Rectangle=obj.getBounds(obj);
-			var bitmapdata:BitmapData=new BitmapData(rect.width,rect.height,true,0);
-			var matrix:Matrix=new Matrix();
-			matrix.translate(-rect.x,-rect.y);
-			bitmapdata.draw(obj,matrix);
+			if(obj is Stage || (obj.width!=0&&obj.height!=0))
+			{
+				var rect:Rectangle=obj.getBounds(obj);
+				var bimap_rect:Rectangle=new Rectangle(0,0,Math.abs(rect.width),Math.abs(rect.height));
+				bimap_rect.width=bimap_rect.width>2880?2880:bimap_rect.width;
+				bimap_rect.height=bimap_rect.height>2880?2880:bimap_rect.height;
+				var bitmapdata:BitmapData=new BitmapData(bimap_rect.width,bimap_rect.height,true,0);
+				var matrix:Matrix=new Matrix();
+				matrix.translate(-rect.x,-rect.y);
+				bitmapdata.draw(obj,matrix);
+			}
 			return bitmapdata;
 		
 		}
