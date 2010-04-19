@@ -21,9 +21,19 @@ package yzhkof.debug
 			addChild(bitmap);
 			addEventListener(Event.ENTER_FRAME,onEnterFrame);
 		}
+		public function clearView():void
+		{
+			visible=false;
+			source=null;
+		}
 		public function view(dobj:DisplayObject):void
 		{
 			source=dobj;
+			if(bitmapdata)
+			{
+				bitmapdata.dispose();
+				bitmapdata=null;
+			}
 			bitmap.smoothing=true;
 			onEnterFrame(null);
 		}

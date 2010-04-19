@@ -2,21 +2,32 @@ package yzhkof.debug
 {
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
-	import flash.utils.Dictionary;
 	import flash.utils.getQualifiedClassName;
 	
 	import yzhkof.ui.TextPanel;
 	import yzhkof.ui.TileContainer;
+	import yzhkof.util.WeakMap;
 
 	public class DebutDisplayObjectDctionary extends TileContainer
 	{
-		private var dobj_map:Dictionary;
+		private var dobj_map:WeakMap;
 		private var viewer:DebugDisplayObjectViewer;
 		public function DebutDisplayObjectDctionary()
 		{
 			super();
 			width = 1000;
 			height = 100;
+		}
+		public function checkGC():void
+		{
+			var text_arr:Array=dobj_map.keySet;
+			for each(var i:TextPanel in text_arr)
+			{
+				if(!dobj_map.getValue(i))
+				{
+					i.color=0x00ff00;
+				};
+			}
 		}
 		public function setup(viewer:DebugDisplayObjectViewer):void
 		{
@@ -25,7 +36,7 @@ package yzhkof.debug
 		public function goto(dobj:DisplayObject):void
 		{
 			var text_arr:Array=new Array;
-			dobj_map=new Dictionary(true);
+			dobj_map=new WeakMap;
 			removeAllChildren();
 			do
 			{
@@ -46,7 +57,7 @@ package yzhkof.debug
 				t.text=getQualifiedClassName(dobj);
 				text_arr.push(t);
 				text_arr.push(arrow);
-				dobj_map[t]=dobj;
+				dobj_map.add(t,dobj);
 				
 				t.addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void
 				{
@@ -54,15 +65,15 @@ package yzhkof.debug
 					{
 						if(e.ctrlKey)
 						{
-							viewer.view(dobj_map[e.currentTarget]);
+							viewer.view(dobj_map.getValue(e.currentTarget));
 						}
 						else if(e.shiftKey)
 						{
-							debugObjectTrace(dobj_map[e.currentTarget]);
+							debugObjectTrace(dobj_map.getValue(e.currentTarget));
 						}
 						else
 						{
-							viewer.goto(dobj_map[e.currentTarget]);
+							viewer.goto(dobj_map.getValue(e.currentTarget));
 						}
 					}
 				});

@@ -7,7 +7,6 @@ package yzhkof.debug
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.system.System;
-	import flash.utils.Dictionary;
 	import flash.utils.getQualifiedClassName;
 	
 	import yzhkof.MyGC;
@@ -15,17 +14,20 @@ package yzhkof.debug
 	import yzhkof.ui.BackGroudContainer;
 	import yzhkof.ui.TextPanel;
 	import yzhkof.ui.TileContainer;
+	import yzhkof.util.WeakMap;
 
 	public class DebugDisplayObjectViewer extends BackGroudContainer
 	{
 		private var container:TileContainer=new TileContainer();
 		private var btn_container:TileContainer=new TileContainer();
-		private var currentLeaf:DisplayObjectContainer;
+		private var _currentLeaf:WeakMap;
+		private var _latestLeaf:WeakMap;
 		private var dictionary_viewer:DebutDisplayObjectDctionary;		
 		
 		private var _stage:Stage;
-		private var child_map:Dictionary;
+		private var child_map:WeakMap;
 		private var up_btn:TextPanel;
+		private var back_btn:TextPanel;
 		private var stage_btn:TextPanel;
 		private var refresh_btn:TextPanel;
 		private var gc_btn:TextPanel;
@@ -40,11 +42,30 @@ package yzhkof.debug
 			init();
 			initEvent();
 		}
+		private function set currentLeaf(value:DisplayObjectContainer):void
+		{
+			_currentLeaf=new WeakMap();
+			_currentLeaf.add(0,value);
+		}
+		private function get currentLeaf():DisplayObjectContainer
+		{
+			return _currentLeaf.getValue(0) as DisplayObjectContainer;
+		}
+		private function set latestLeaf(value:DisplayObjectContainer):void
+		{
+			_latestLeaf=new WeakMap();
+			_latestLeaf.add(0,value);
+		}
+		private function get latestLeaf():DisplayObjectContainer
+		{
+			return _latestLeaf.getValue(0) as DisplayObjectContainer;
+		}
 		private function init():void
 		{
 			viewer=new SnapshotDisplayViewer();
 			dictionary_viewer=new DebutDisplayObjectDctionary();
 			up_btn=new TextPanel();
+			back_btn=new TextPanel();
 			stage_btn=new TextPanel();
 			refresh_btn=new TextPanel();
 			gc_btn=new TextPanel();
@@ -58,6 +79,7 @@ package yzhkof.debug
 			btn_container.height=200;
 			
 			refresh_btn.text="刷新";
+			back_btn.text="后退";
 			up_btn.text="向上";
 			stage_btn.text="舞台";
 			gc_btn.text="GC";
@@ -69,6 +91,7 @@ package yzhkof.debug
 			addChild(viewer);
 			
 			btn_container.addChild(up_btn);
+			btn_container.addChild(back_btn);
 			btn_container.addChild(stage_btn);
 			btn_container.addChild(refresh_btn);
 			btn_container.addChild(gc_btn);
@@ -95,18 +118,23 @@ package yzhkof.debug
 					goto(_stage);
 				}
 			});
+			back_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
+			{
+				if(latestLeaf)
+					goto(latestLeaf);
+			});
 			stage_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
 					goto(_stage);
 			});
 			mask_background.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
-				viewer.visible=false;
+				viewer.clearView();
 				mask_background.visible=false;
 			});
 			viewer.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
-				viewer.visible=false;
+				viewer.clearView();
 				mask_background.visible=false;
 			});
 			refresh_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
@@ -117,6 +145,8 @@ package yzhkof.debug
 			{
 				System.gc();
 				MyGC.gc();
+				checkGC();
+				dictionary_viewer.checkGC();
 			});
 			focus_txt.addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void
 			{
@@ -182,8 +212,9 @@ package yzhkof.debug
 		}
 		public function goto(dobjc:DisplayObjectContainer):void
 		{
-			if(dobjc&&dobjc.stage!=null)
+			if(dobjc!=null)
 			{
+				latestLeaf=currentLeaf;
 				currentLeaf=dobjc;
 				dictionary_viewer.goto(dobjc);
 				refresh();
@@ -200,12 +231,12 @@ package yzhkof.debug
 		}
 		private function refresh():void
 		{
-			if(currentLeaf.stage==null)
+			if(currentLeaf==null)
 			{
 				goto(_stage);
 			}
 			container.removeAllChildren();
-			child_map=new Dictionary(true);
+			child_map=new WeakMap;
 			var i:int;
 			var length:uint=currentLeaf.numChildren;
 			for(i=0;i<length;i++)
@@ -229,22 +260,33 @@ package yzhkof.debug
 				}
 				container.addChild(t_text);
 				t_text.text=getQualifiedClassName(t_dobj);
-				child_map[t_text]=t_dobj;
+				child_map.add(t_text,t_dobj);
 				t_text.doubleClickEnabled=true;
 				t_text.addEventListener(MouseEvent.CLICK,__onItemClick);
 			}
 			container.updataChildPosition();
 		}
+		public function checkGC():void
+		{
+			var text_arr:Array=child_map.keySet;
+			for each(var i:TextPanel in text_arr)
+			{
+				if(!child_map.getValue(i))
+				{
+					i.color=0x00ff00;
+				};
+			}
+		}
 		private function __onItemClick(e:MouseEvent):void
 		{
-			var gotoObj:DisplayObject=child_map[e.currentTarget];
+			var gotoObj:DisplayObject=child_map.getValue(e.currentTarget);
 			if(e.ctrlKey)
 			{
-				view(child_map[e.currentTarget]);
+				view(child_map.getValue(e.currentTarget));
 			}
 			else if(e.shiftKey)
 			{
-				debugObjectTrace(child_map[e.currentTarget]);	
+				debugObjectTrace(child_map.getValue(e.currentTarget));	
 			}
 			else if(gotoObj is DisplayObjectContainer)
 			{

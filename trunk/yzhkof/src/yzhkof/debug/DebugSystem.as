@@ -30,7 +30,9 @@ package yzhkof.debug
 			initDisplayObjectViewer();
 			TextTrace.init(_mainContainer);
 			
-			_mainContainer.visible=false;
+			_mainContainer.visible=true;
+			TextTrace.visible=false;
+			displayObjectViewer.visible=false;
 			
 			TextTrace.view.y=200;
 			
