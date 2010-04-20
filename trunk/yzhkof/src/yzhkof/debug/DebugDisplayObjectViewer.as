@@ -9,11 +9,13 @@ package yzhkof.debug
 	import flash.system.System;
 	import flash.utils.getQualifiedClassName;
 	
+	import yzhkof.KeyMy;
 	import yzhkof.MyGC;
 	import yzhkof.MyGraphy;
 	import yzhkof.ui.BackGroudContainer;
 	import yzhkof.ui.TextPanel;
 	import yzhkof.ui.TileContainer;
+	import yzhkof.util.DebugUtil;
 	import yzhkof.util.WeakMap;
 
 	public class DebugDisplayObjectViewer extends BackGroudContainer
@@ -29,9 +31,11 @@ package yzhkof.debug
 		private var up_btn:TextPanel;
 		private var back_btn:TextPanel;
 		private var stage_btn:TextPanel;
+		private var text_btn:TextPanel;
 		private var refresh_btn:TextPanel;
 		private var gc_btn:TextPanel;
 		private var focus_txt:TextPanel;
+		private var x_btn:TextPanel;
 		private var mask_background:Sprite;
 		private var viewer:SnapshotDisplayViewer;
 		public function DebugDisplayObjectViewer(_stage:Stage)
@@ -67,9 +71,11 @@ package yzhkof.debug
 			up_btn=new TextPanel();
 			back_btn=new TextPanel();
 			stage_btn=new TextPanel();
+			text_btn=new TextPanel();
 			refresh_btn=new TextPanel();
 			gc_btn=new TextPanel();
 			focus_txt=new TextPanel();
+			x_btn=new TextPanel();
 			
 			dictionary_viewer.setup(this);
 			dictionary_viewer.y = 25;
@@ -82,7 +88,10 @@ package yzhkof.debug
 			back_btn.text="后退";
 			up_btn.text="向上";
 			stage_btn.text="舞台";
+			text_btn.text="文本";
+			x_btn.text="隐藏";
 			gc_btn.text="GC";
+			
 			
 			addChild(btn_container);
 			addChild(dictionary_viewer);
@@ -93,9 +102,12 @@ package yzhkof.debug
 			btn_container.addChild(up_btn);
 			btn_container.addChild(back_btn);
 			btn_container.addChild(stage_btn);
+			btn_container.addChild(text_btn);
 			btn_container.addChild(refresh_btn);
 			btn_container.addChild(gc_btn);
+			btn_container.addChild(x_btn);
 			btn_container.addChild(focus_txt);
+			
 			
 			container.y=120;
 			container.width=_stage.stageWidth
@@ -126,6 +138,10 @@ package yzhkof.debug
 			stage_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
 					goto(_stage);
+			});
+			text_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
+			{
+					TextTrace.visible=!TextTrace.visible;
 			});
 			mask_background.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
@@ -171,6 +187,10 @@ package yzhkof.debug
 						goto(t);
 					}
 				}
+			});
+			x_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
+			{
+				visible=!visible;
 			});
 			addEventListener(Event.ENTER_FRAME,function(e:Event):void
 			{
@@ -280,13 +300,18 @@ package yzhkof.debug
 		private function __onItemClick(e:MouseEvent):void
 		{
 			var gotoObj:DisplayObject=child_map.getValue(e.currentTarget);
-			if(e.ctrlKey)
+			if(KeyMy.isDown(83))
+			{
+//				debugTrace(SampleUtil.getInstanceCreatPath(child_map.getValue(e.currentTarget)));
+				debugTrace(DebugUtil.analyseInstance(child_map.getValue(e.currentTarget)));
+			}
+			else if(e.ctrlKey)
 			{
 				view(child_map.getValue(e.currentTarget));
 			}
 			else if(e.shiftKey)
 			{
-				debugObjectTrace(child_map.getValue(e.currentTarget));	
+				debugObjectTrace(child_map.getValue(e.currentTarget));
 			}
 			else if(gotoObj is DisplayObjectContainer)
 			{

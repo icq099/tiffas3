@@ -5,21 +5,32 @@ package yzhkof.debug
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
+	import flash.sampler.startSampling;
+	import flash.sampler.stopSampling;
+	
+	import yzhkof.KeyMy;
 	
 	public class DebugSystem
 	{
-		private static var _mainContainer:Sprite=new Sprite;
+		private static var _mainContainer:Sprite;
 		private static var _stage:Stage;
 		
 		private static var displayObjectViewer:DebugDisplayObjectViewer; 
 		public function DebugSystem()
 		{
 		}
-		public static function init(stage:Stage):void
+		public static function init(stage:Stage,useSample:Boolean=false):void
 		{
+			if(useSample)
+			{
+				startSampling();
+			}
+			_mainContainer=new Sprite;
 			_stage=stage;
 			stage.addChild(_mainContainer);
 			
+			KeyMy.setStage(stage);
+			KeyMy.startListener(stage);
 			_mainContainer.addEventListener(FocusEvent.FOCUS_IN,function(e:FocusEvent):void
 			{
 				stage.focus=e.relatedObject;
@@ -50,6 +61,9 @@ package yzhkof.debug
 						break;
 						case 68:
 							displayObjectViewer.visible=!displayObjectViewer.visible;
+						break;
+						case 80:
+							stopSampling();
 						break;
 					}
 				}

@@ -4,8 +4,8 @@ package yzhkof.debug
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.sampler.clearSamples;
 	import flash.text.TextField;
+	import flash.text.TextFormat;
 	
 	import yzhkof.MyGraphy;
 	import yzhkof.ui.TextPanel;
@@ -46,6 +46,10 @@ package yzhkof.debug
 			text_info.height=text_height;
 			text_info.x=21;
 			text_info.y=21;
+//			
+//			var text_format:TextFormat=text_info.getTextFormat();
+//			text_format.size = 15; 
+//			text_info.setTextFormat(text_format);
 			
 			container.addChild(back);
 			container.addChild(text_info);
