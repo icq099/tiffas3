@@ -4,8 +4,10 @@ package yzhkof.debug
 	import flash.events.MouseEvent;
 	import flash.utils.getQualifiedClassName;
 	
+	import yzhkof.KeyMy;
 	import yzhkof.ui.TextPanel;
 	import yzhkof.ui.TileContainer;
+	import yzhkof.util.DebugUtil;
 	import yzhkof.util.WeakMap;
 
 	public class DebutDisplayObjectDctionary extends TileContainer
@@ -63,7 +65,12 @@ package yzhkof.debug
 				{
 					if(viewer)
 					{
-						if(e.ctrlKey)
+						if(KeyMy.isDown(83))
+						{
+							//debugTrace(SampleUtil.getInstanceCreatPath(dobj_map.getValue(e.currentTarget)));
+							debugTrace(DebugUtil.analyseInstance(dobj_map.getValue(e.currentTarget)));
+						}
+						else if(e.ctrlKey)
 						{
 							viewer.view(dobj_map.getValue(e.currentTarget));
 						}
