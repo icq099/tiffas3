@@ -15,7 +15,9 @@ package yzhkof.debug
 		private static var _mainContainer:Sprite;
 		private static var _stage:Stage;
 		
-		private static var displayObjectViewer:DebugDisplayObjectViewer; 
+		private static var displayObjectViewer:DebugDisplayObjectViewer;
+		public static var scriptViewer:ScriptViewer;
+		
 		public function DebugSystem()
 		{
 		}
@@ -31,19 +33,19 @@ package yzhkof.debug
 			
 			KeyMy.setStage(stage);
 			KeyMy.startListener(stage);
-			_mainContainer.addEventListener(FocusEvent.FOCUS_IN,function(e:FocusEvent):void
-			{
-				stage.focus=e.relatedObject;
-				e.preventDefault();			
-			});
+			
 			_stage.addEventListener(Event.ADDED,onStageAdd)
 			
 			initDisplayObjectViewer();
+			scriptViewer=new ScriptViewer();
+			_mainContainer.addChild(scriptViewer);
+			scriptViewer.x=420;
 			TextTrace.init(_mainContainer);
 			
 			_mainContainer.visible=true;
 			TextTrace.visible=false;
 			displayObjectViewer.visible=false;
+			scriptViewer.visible=false;
 			
 			TextTrace.view.y=200;
 			
@@ -62,8 +64,8 @@ package yzhkof.debug
 						case 68:
 							displayObjectViewer.visible=!displayObjectViewer.visible;
 						break;
-						case 80:
-							stopSampling();
+						case 65:
+							scriptViewer.visible=!scriptViewer.visible;
 						break;
 					}
 				}
@@ -73,6 +75,11 @@ package yzhkof.debug
 		{
 			displayObjectViewer=new DebugDisplayObjectViewer(_stage);
 			_mainContainer.addChild(displayObjectViewer);
+			displayObjectViewer.addEventListener(FocusEvent.FOCUS_IN,function(e:FocusEvent):void
+			{
+				_stage.focus=e.relatedObject;
+				e.preventDefault();			
+			});
 			
 		}
 		private static function onStageAdd(e:Event):void

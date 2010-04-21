@@ -70,6 +70,10 @@ package yzhkof.debug
 							//debugTrace(SampleUtil.getInstanceCreatPath(dobj_map.getValue(e.currentTarget)));
 							debugTrace(DebugUtil.analyseInstance(dobj_map.getValue(e.currentTarget)));
 						}
+						else if(KeyMy.isDown(84))
+						{
+							DebugSystem.scriptViewer.setTarget(dobj_map.getValue(e.currentTarget));
+						}
 						else if(e.ctrlKey)
 						{
 							viewer.view(dobj_map.getValue(e.currentTarget));
