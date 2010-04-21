@@ -32,6 +32,7 @@ package yzhkof.debug
 		private var back_btn:TextPanel;
 		private var stage_btn:TextPanel;
 		private var text_btn:TextPanel;
+		private var script_btn:TextPanel;
 		private var refresh_btn:TextPanel;
 		private var gc_btn:TextPanel;
 		private var focus_txt:TextPanel;
@@ -72,6 +73,7 @@ package yzhkof.debug
 			back_btn=new TextPanel();
 			stage_btn=new TextPanel();
 			text_btn=new TextPanel();
+			script_btn=new TextPanel();
 			refresh_btn=new TextPanel();
 			gc_btn=new TextPanel();
 			focus_txt=new TextPanel();
@@ -88,6 +90,7 @@ package yzhkof.debug
 			back_btn.text="后退";
 			up_btn.text="向上";
 			stage_btn.text="舞台";
+			script_btn.text="脚本";
 			text_btn.text="文本";
 			x_btn.text="隐藏";
 			gc_btn.text="GC";
@@ -103,6 +106,7 @@ package yzhkof.debug
 			btn_container.addChild(back_btn);
 			btn_container.addChild(stage_btn);
 			btn_container.addChild(text_btn);
+			btn_container.addChild(script_btn);
 			btn_container.addChild(refresh_btn);
 			btn_container.addChild(gc_btn);
 			btn_container.addChild(x_btn);
@@ -142,6 +146,10 @@ package yzhkof.debug
 			text_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
 					TextTrace.visible=!TextTrace.visible;
+			});
+			script_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
+			{
+					DebugSystem.scriptViewer.visible=!DebugSystem.scriptViewer.visible;
 			});
 			mask_background.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
@@ -304,6 +312,10 @@ package yzhkof.debug
 			{
 //				debugTrace(SampleUtil.getInstanceCreatPath(child_map.getValue(e.currentTarget)));
 				debugTrace(DebugUtil.analyseInstance(child_map.getValue(e.currentTarget)));
+			}
+			else if(KeyMy.isDown(84))
+			{
+				DebugSystem.scriptViewer.setTarget(child_map.getValue(e.currentTarget));
 			}
 			else if(e.ctrlKey)
 			{
