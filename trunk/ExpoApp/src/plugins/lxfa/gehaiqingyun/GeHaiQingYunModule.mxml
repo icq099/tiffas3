@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="core.manager.pluginManager.IPlugin">
+	<mx:Script>
+		<![CDATA[
+			import plugins.lxfa.gehaiqingyun.view.GeHaiQingYun;
+		    private var geHaiQingYun:GeHaiQingYun;
+			private function init():void
+			{
+				geHaiQingYun=new GeHaiQingYun();
+				this.addChild(geHaiQingYun);
+			}
+			public function dispose():void
+			{
+				geHaiQingYun.dispose();
+				geHaiQingYun=null;
+			}
+		]]>
+	</mx:Script>
+</mx:Module>
