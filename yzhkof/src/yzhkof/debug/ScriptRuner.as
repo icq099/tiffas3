@@ -31,6 +31,14 @@ package yzhkof.debug
 		{
 			return weakTarget.getValue(0);
 		}
+		public static function getDefinitionByName(value:String):*
+		{
+			return getDefinitionByName(value);	
+		}
+		public static function trace(obj:Object,showFunctionReturn:Boolean=false):void
+		{
+			traceObject(obj,showFunctionReturn);
+		}
 
 	}
 }

@@ -17,8 +17,10 @@ package yzhkof.debug
 		private var btn_container:TileContainer=new TileContainer();
 		private var run_btn:TextPanel=new TextPanel(0xffff00);
 		private var target_btn:TextPanel=new TextPanel(0xffff00);
+		private var import_btn:TextPanel=new TextPanel(0xffff00);
 		private const textWidth:Number=500;
 		private const textHeight:Number=300;
+		private var importCount:uint=0;
 		public function ScriptViewer()
 		{
 			super();
@@ -37,8 +39,10 @@ package yzhkof.debug
 			
 			btn_container.addChild(run_btn);
 			btn_container.addChild(target_btn);
+			btn_container.addChild(import_btn);
 			
 			run_btn.text="run";
+			import_btn.text="import";
 			target_btn.text=getQualifiedClassName(ScriptRuner.target);
 			run_btn.drawBackGround();
 			textField.y=30;
@@ -50,6 +54,7 @@ package yzhkof.debug
 			
 			run_btn.addEventListener(MouseEvent.CLICK,__onRunBtnClick);
 			target_btn.addEventListener(MouseEvent.CLICK,__onTargetClick);
+			import_btn.addEventListener(MouseEvent.CLICK,__onImportClick);
 //			textField.addEventListener(KeyboardEvent.KEY_DOWN,__onKeyDown);
 		}
 //		private function __onKeyDown(e:KeyboardEvent):void
@@ -59,6 +64,11 @@ package yzhkof.debug
 //				__onRunBtnClick(null);
 //			}
 //		}
+		private function __onImportClick(e:Event):void
+		{
+			textField.text=StringUtil.addString(textField.text,"namespace n"+importCount+" = \"****\"; use namespace n"+importCount+";\n",0);
+			importCount++;
+		}
 		private function __onTargetClick(e:Event):void
 		{
 			var text_content:String=textField.text;
