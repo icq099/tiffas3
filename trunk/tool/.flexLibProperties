@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+<includeClasses>
+<classEntry path="loaders.CompatibleLoader"/>
+<classEntry path="loaders.SerialCacheMovieClipLoader"/>
+<classEntry path="loaders.SerialXmlLoader"/>
+<classEntry path="loaders.XmlLoader"/>
+<classEntry path="loaders.event.LoaderEvent"/>
+<classEntry path="loaders.event.SerialLoaderEvent"/>
+<classEntry path="loaders.event.SerialXmlLoaderEvent"/>
+<classEntry path="loaders.item.CompatibleLoaderItem"/>
+<classEntry path="loaders.item.LoaderBaseItem"/>
+<classEntry path="loaders.item.SerialCacheMovieClipItem"/>
+<classEntry path="loaders.item.SerialLoaderItem"/>
+<classEntry path="loaders.item.SerialXmlLoaderItem"/>
+<classEntry path="loaders.proxy.CompatibleLoaderProxy"/>
+<classEntry path="loaders.proxy.IManageLoader"/>
+<classEntry path="memory.MemoryRecovery"/>
+<classEntry path="memory.MyGC"/>
+<classEntry path="movement.UpDownMovement"/>
+<classEntry path="structure.AddavanceArray"/>
+<classEntry path="structure.DualMap"/>
+<classEntry path="structure.HashMap"/>
+<classEntry path="view.AddToStageSetter"/>
+<classEntry path="view.DoubleClickDecorator"/>
+<classEntry path="view.IDoubleClickDecorator"/>
+<classEntry path="view.MyGraphy"/>
+<classEntry path="view.ToolBitmapData"/>
+<classEntry path="view.ToolTip"/>
+<classEntry path="view.delayCallNextFrame"/>
+<classEntry path="view.fl2mx.Fl2Mx"/>
+<classEntry path="view.loadings.LoadingWaveRota"/>
+<classEntry path="view.player.CacheMovieClip"/>
+<classEntry path="view.player.PicturePlayer"/>
+<classEntry path="view.player.SwfPlayer"/>
+<classEntry path="view.pv3d.CameraRotationControler"/>
+<classEntry path="view.pv3d.event.CamereaControlerEvent"/>
+</includeClasses>
+<includeResources/>
+<namespaceManifests/>
+</flexLibProperties>
