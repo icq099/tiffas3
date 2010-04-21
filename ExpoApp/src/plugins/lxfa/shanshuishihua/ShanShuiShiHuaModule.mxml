@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="core.manager.pluginManager.IPlugin">
+	<mx:Script>
+		<![CDATA[
+			import view.fl2mx.Fl2Mx;
+		    private var shanshuishihua:ShanShuiShiHua;
+			private function init():void
+			{
+				initShanShuiShiHua();
+			}
+			private function initShanShuiShiHua():void
+			{
+				shanshuishihua=new ShanShuiShiHua();
+				addChild(shanshuishihua);
+			}
+			public function dispose():void
+			{
+				if(shanshuishihua!=null)
+				{
+					if(shanshuishihua.parent!=null)
+					{
+						shanshuishihua.parent.removeChild(shanshuishihua);
+					}
+					shanshuishihua.dispose();
+					shanshuishihua=null;
+				}
+			}
+		]]>
+	</mx:Script>
+</mx:Module>

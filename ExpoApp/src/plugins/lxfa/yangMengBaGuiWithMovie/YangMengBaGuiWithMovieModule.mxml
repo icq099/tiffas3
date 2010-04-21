@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml"
+		   layout="absolute"
+		   width="400"
+		   height="300"
+		   creationComplete="init()"
+		   implements="core.manager.pluginManager.IPlugin">
+	<mx:Script>
+		<![CDATA[
+			import plugins.lxfa.yangmengbagui.view.YangMengBaGuiBase;
+			import plugins.lxfa.yangmengbagui.YangMengBaGuiStatic;
+			private var yangMengBaGuiBase:YangMengBaGuiBase
+			private function init():void
+			{   
+				
+				YangMengBaGuiStatic.currentName=this.className;
+				yangMengBaGuiBase=new YangMengBaGuiBase(true);
+				addChild(yangMengBaGuiBase);
+			}
+
+			public function dispose():void
+			{
+				yangMengBaGuiBase.dispose();
+				yangMengBaGuiBase=null;
+			}
+		]]>
+	</mx:Script>
+
+</mx:Module>

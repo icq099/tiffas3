@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="core.manager.pluginManager.IPlugin">
+	<mx:Script>
+		<![CDATA[
+			private var inquire:InquireBase;
+			private function init():void
+			{
+				inquire=new InquireBase();
+				inquire.addEventListener(Event.OPEN,function(e:Event):void{
+					dispatchEvent(e);
+				});
+				inquire.addEventListener(Event.CLOSE,function(e:Event):void{
+					dispatchEvent(e);
+				});
+			}
+			public function dispose():void
+			{
+			}
+		]]>
+	</mx:Script>
+</mx:Module>
