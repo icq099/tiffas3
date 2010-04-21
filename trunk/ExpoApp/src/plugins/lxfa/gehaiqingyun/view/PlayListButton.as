@@ -14,6 +14,7 @@ package plugins.lxfa.gehaiqingyun.view
 			this.ctr=ctr;
 			this.ID=ID;
 			initListener();
+			
 		}
 		private function initListener():void
 		{
