@@ -42,7 +42,7 @@ package yzhkof
 		public static function setStage(stage_object:Stage):void{
 			
 			stage=stage_object;
-			stage_object.addEventListener(Event.MOUSE_LEAVE,mouseLeaveHandler);
+			stage_object.addEventListener(Event.MOUSE_LEAVE,mouseLeaveHandler,false,0,true);
 		
 		}
 		private static function mouseLeaveHandler(e:Event):void{
