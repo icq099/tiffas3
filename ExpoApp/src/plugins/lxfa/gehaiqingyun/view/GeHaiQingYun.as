@@ -26,11 +26,16 @@ package plugins.lxfa.gehaiqingyun.view
 		}
 		private function initGeHaiQingYunSwc():void
 		{
+			this.addEventListener(Event.ADDED_TO_STAGE,onAdded);
+		}
+		private function onAdded(e:Event):void
+		{
+			MemoryRecovery.getInstance().gcFun(this,Event.ADDED_TO_STAGE,onAdded);
 			geHaiQingYunSwc=new GeHaiQingYunSwc();
 			this.addChild(geHaiQingYunSwc);
 			initList(geHaiQingYunSwc);
-			initListener();
 			initPlayListCtr();
+			initListener();
 		}
 		private function initList(geHaiQingYunSwc:GeHaiQingYunSwc):void
 		{
@@ -49,11 +54,11 @@ package plugins.lxfa.gehaiqingyun.view
 			list.addEventListener(MouseEvent.DOUBLE_CLICK,onITEM_DOUBLE_CLICK);
 			geHaiQingYunSwc.btn_pre.addEventListener(MouseEvent.CLICK,onbtn_preCLICK);
 			geHaiQingYunSwc.btn_next.addEventListener(MouseEvent.CLICK,onbtn_nextCLICK);
-			geHaiQingYunSwc.btn_Close.addEventListener(MouseEvent.CLICK,onbtn_CloseClick);
 			geHaiQingYunSwc.addChild(btn_stop);
 			btn_stop.x=geHaiQingYunSwc.btn_play.x+23;
 			btn_stop.y=geHaiQingYunSwc.btn_play.y+17;
 			btn_stop.addEventListener(MouseEvent.CLICK,onbtn_stopClick);
+			geHaiQingYunSwc.btn_Close.addEventListener(MouseEvent.CLICK,onbtn_CloseClick);
 		}
 		private function onbtn_CloseClick(e:Event):void
 		{
@@ -197,8 +202,11 @@ package plugins.lxfa.gehaiqingyun.view
 				}
 				geHaiQingYunSwc=null;
 			}
-			playListCtr.dispose();
-			playListCtr=null;
+			if(playListCtr!=null)
+			{
+				playListCtr.dispose();
+				playListCtr=null;
+			}
 			MyGC.gc();
 		}
 	}
