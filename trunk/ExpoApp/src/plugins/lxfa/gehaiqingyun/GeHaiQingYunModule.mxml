@@ -8,11 +8,19 @@
 			{
 				geHaiQingYun=new GeHaiQingYun();
 				this.addChild(geHaiQingYun);
+				
 			}
 			public function dispose():void
 			{
-				geHaiQingYun.dispose();
-				geHaiQingYun=null;
+				if(geHaiQingYun!=null)
+				{
+					if(geHaiQingYun.parent!=null)
+					{
+						geHaiQingYun.parent.removeChild(geHaiQingYun);
+					}
+					geHaiQingYun.dispose();
+					geHaiQingYun=null;
+				}
 			}
 		]]>
 	</mx:Script>
