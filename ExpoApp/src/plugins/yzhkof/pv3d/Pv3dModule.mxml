@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" implements="core.manager.pluginManager.IPlugin" creationComplete="init()">
+	<mx:Script>
+		<![CDATA[
+			import plugins.yzhkof.pv3d.control.Pv3dSceneCtr;
+		    private var pv3d:Pv3dSceneCtr=new Pv3dSceneCtr();
+			private function init():void
+			{
+				this.addChild(pv3d);
+			}
+			public function dispose():void
+			{
+			}
+		]]>
+	</mx:Script>
+</mx:Module>
