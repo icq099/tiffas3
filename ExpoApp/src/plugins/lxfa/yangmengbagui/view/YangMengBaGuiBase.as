@@ -3,8 +3,12 @@ package plugins.lxfa.yangmengbagui.view
 	import caurina.transitions.Tweener;
 	
 	import core.manager.MainSystem;
+	import core.manager.pluginManager.PluginManager;
 	import core.manager.pluginManager.event.PluginEvent;
+	import core.manager.sceneManager.SceneManager;
 	import core.manager.sceneManager.event.SceneChangeEvent;
+	import core.manager.scriptManager.ScriptManager;
+	import core.manager.scriptManager.ScriptName;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -12,6 +16,7 @@ package plugins.lxfa.yangmengbagui.view
 	import flash.events.ProgressEvent;
 	
 	import memory.MemoryRecovery;
+	import memory.MyGC;
 	
 	import mx.core.Application;
 	import mx.core.UIComponent;
@@ -37,7 +42,7 @@ package plugins.lxfa.yangmengbagui.view
 			MainMenuStatic.currentSceneId=6;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
 			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.INIT,6));
-//			MainSystem.getInstance().stopRender();
+			ScriptManager.getInstance().runScriptByName(ScriptName.STOPRENDER,[]);
 			showYangMengBaGui(withMovie);
 			MainSystem.getInstance().isBusy=true;
 		}
@@ -49,7 +54,6 @@ package plugins.lxfa.yangmengbagui.view
 			}else
 			{
 				initSwf();
-				
 			}
 		}
 		//过场动画
@@ -92,11 +96,14 @@ package plugins.lxfa.yangmengbagui.view
 		}
 		private function onComplete(e:Event):void
 		{
-			if(loading_mc.parent!=null)
+			if(loading_mc!=null)
 			{
-				loading_mc.parent.removeChild(loading_mc);
+				if(loading_mc.parent!=null)
+				{
+					loading_mc.parent.removeChild(loading_mc);
+				}
+				loading_mc=null;
 			}
-			loading_mc=null;
 			this.addChild(flowerFlvSwf);
 			initLED();
 			if(view3d!=null)
@@ -117,12 +124,15 @@ package plugins.lxfa.yangmengbagui.view
 			initYangMengBaGuiSwc();
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.COMPLETE,6));
-			MainSystem.getInstance().addSceneChangeCompleteHandler(close,[]);
-			MainSystem.getInstance().addSceneChangeInitHandler(function():void{
-			    LED.dispose();
-			    flowerFlvSwf.enabled=false;
-//			    view3d.dispose();
-			},[]);
+			SceneManager.getInstance().addEventListener(SceneChangeEvent.COMPLETE,close,false,0,true);
+			SceneManager.getInstance().addEventListener(SceneChangeEvent.INIT,on_other_scene_init,false,0,true);
+			close(null);
+		}
+		private function on_other_scene_init(e:SceneChangeEvent):void
+		{
+			LED.dispose();
+			flowerFlvSwf.enabled=false;
+			MemoryRecovery.getInstance().gcFun(SceneManager.getInstance(),SceneChangeEvent.INIT,on_other_scene_init);
 		}
 		private function on_net_state_change(e:NetStatusEvent):void
 		{
@@ -146,12 +156,10 @@ package plugins.lxfa.yangmengbagui.view
 		//添加LED墙
 		private function initLED():void
 		{
-			LED=new FLVPlayer("http://flv.pavilion.expo.cn/p5006/flv/yangmengbagui/yangmengbagui.flv",127,53,false);
+			LED=new FLVPlayer("http://flv.pavilion.expo.cn/p5006/flv/yangmengbagui/yangmengbagui.flv",130,56,false);
 			this.addChild(LED);
-			LED.x=110;
-			LED.y=404;
-			LED.scaleX=0.143;
-			LED.scaleY=0.114;
+			LED.x=109;
+			LED.y=403;
 			LED.rotation=-1.5;
 			LED.buttonMode=true;
 			LED.addEventListener(MouseEvent.CLICK,on_LED_Click);
@@ -182,10 +190,11 @@ package plugins.lxfa.yangmengbagui.view
 			//显示标准窗
 			MainSystem.getInstance().runAPIDirectDirectly("showNormalWindow",[44]);
 		}
-		private function close():void
+		private function close(e:SceneChangeEvent):void
 		{
+			MemoryRecovery.getInstance().gcFun(SceneManager.getInstance(),SceneChangeEvent.COMPLETE,close);
 			Tweener.addTween(this,{alpha:0,time:1.5,onComplete:function():void{
-			    MainSystem.getInstance().runAPIDirectDirectly("removePluginById",["YangMengBaGuiModule"]);
+			    PluginManager.getInstance().removePluginById("YangMengBaGuiModule");
 			}});
 		}
 		//清除内存
@@ -196,6 +205,10 @@ package plugins.lxfa.yangmengbagui.view
 			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,ProgressEvent.PROGRESS,on_progress);
 			MemoryRecovery.getInstance().gcFun(LED,MouseEvent.CLICK,on_LED_Click);
 			MemoryRecovery.getInstance().gcFun(LED,NetStatusEvent.NET_STATUS,on_LED_play_complete);
+			MemoryRecovery.getInstance().gcFun(MainSystem.getInstance(),NormalWindowEvent.SHOW,on_normalwindow_show);
+			MemoryRecovery.getInstance().gcFun(MainSystem.getInstance(),NormalWindowEvent.REMOVE,on_normalwindow_remove);
+			MemoryRecovery.getInstance().gcFun(SceneManager.getInstance(),SceneChangeEvent.INIT,on_other_scene_init);
+			MemoryRecovery.getInstance().gcFun(SceneManager.getInstance(),SceneChangeEvent.COMPLETE,close);
 			if(flvPlayer!=null)
 			{
 				if(flvPlayer.parent!=null)
@@ -240,6 +253,8 @@ package plugins.lxfa.yangmengbagui.view
 				view3d.dispose()
 				view3d=null;
 			}
+			ScriptManager.getInstance().runScriptByName(ScriptName.STARTRENDER,[]);
+			MyGC.gc();
 		}
 	}
 }

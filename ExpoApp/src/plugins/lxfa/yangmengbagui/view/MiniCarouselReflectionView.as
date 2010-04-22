@@ -7,11 +7,12 @@
 	import flash.net.URLRequest;
 	
 	import memory.MemoryRecovery;
+	import memory.MyGC;
 	
+	import org.papervision3d.cameras.FreeCamera3D;
 	import org.papervision3d.core.proto.MaterialObject3D;
 	import org.papervision3d.events.*;
 	import org.papervision3d.materials.*;
-	import org.papervision3d.objects.DisplayObject3D;
 	import org.papervision3d.objects.primitives.*;
 	import org.papervision3d.view.BasicView;
 	
@@ -19,7 +20,6 @@
 	public class MiniCarouselReflectionView extends Sprite{
 		private var basicView		:BasicView;
 		//反射ReflectionView物件。
-		private var rootNode	:DisplayObject3D;
 		//DisplayObject3D物件，可以想像是PV3D裡的空白MovieClip。
 		//本身是個容器,可以透過addChild加入任何繼承DisplayObject3D的物件。
 		private var radius		:Number = 1000;//半徑
@@ -27,7 +27,6 @@
 		//360徑度 = Math.PI * 2 弧度
 		//除以數量即可得到單位弧度。
 		private var currentIndex:Number = 0;//目前的索引值
-		private var ldr			:Loader;	//載入大圖用的Loader。
 		private var itemOfNumber:int;
 		private var yangMengBaGuiModel:ItemModel;
 		private var rubbishArray:Array=new Array();//垃圾回收的数组
@@ -35,15 +34,16 @@
 		private var videoUrls:Array;
 		private const ID:int=56;
 		private const min:int=44;
+		private const defaultRotationY:Number=15;
+		private const maxRotationY:Number=20;
+		private const minRotationY:Number=10;
 		public function MiniCarouselReflectionView(){
-			initMinZuBaiMeiModel();//读取数据库
+			initModel();//读取数据库
 		}
-
-		private function initMinZuBaiMeiModel():void
+		private function initModel():void
 		{
 			yangMengBaGuiModel=new ItemModel();
 			onModelComplete();
-			
 		}
 		private function onModelComplete():void
 		{
@@ -56,11 +56,12 @@
 		private function init3DEngine():void{
 			this.x=0;
 			this.y=150;
-			basicView = new BasicView(900, 600, false, true, "Target");			
+			basicView = new BasicView(900, 600, false, true, FreeCamera3D.TYPE);			
 			//設定反射面的 y 軸方向高度
 			basicView.camera.y = 0;
-			basicView.camera.z = -3000;
-			basicView.camera.focus=140;
+			basicView.camera.z = -800;
+			basicView.camera.focus=280;
+			basicView.camera.rotationY=defaultRotationY;
 			basicView.viewport.buttonMode = true;
 			//PV3D物件預設都不會有滑鼠指標手示，
 			//BasicBiew是繼承Sprite，
@@ -72,11 +73,10 @@
 		}
 		private function added(e:Event):void
 		{
-			this.addEventListener(Event.ENTER_FRAME, onEventRender3D);
+			this.addEventListener(Event.ENTER_FRAME, onEventRender3D,false,0,true);
 			this.removeEventListener(Event.ADDED_TO_STAGE,added);
 		}
 		private function init3DObject():void{
-			rootNode = new DisplayObject3D();
 			var imgUrl:String;
 			var videoUrl:String;
 			var planeHeight:int=-1;
@@ -84,13 +84,6 @@
 				imgUrl=pictureUrls[i];			
 				createPlane(imgUrl,i);
 			}
-			for(var j:int=0;j<videoUrls.length;j++)
-			{
-				videoUrl=videoUrls[j];
-				createPlane(videoUrl,j,"movie");
-			}
-			rootNode.rotationY=-25;
-			basicView.scene.addChild(rootNode);
 		}
 		private function createPlane(imgUrl:String,i:int,type:String="picture"):void
 		{
@@ -101,13 +94,7 @@
 				if(rubbishArray!=null)
 				{
 					var _radian	:Number = i * angleUnit*0.8;
-					if(type=="picture")
-					{
-						bmpMat=new BitmapMaterial(Bitmap(loader.content).bitmapData);
-					}else
-					{
-						bmpMat=new MovieMaterial(loader.content);
-					}
+					bmpMat=new BitmapMaterial(Bitmap(loader.content).bitmapData);
 					bmpMat.interactive = true;
 					bmpMat.smooth = true;	
 					var plane:Plane=new Plane(new ColorMaterial(0xffffff, 0), 320, 240, 4, 4);
@@ -116,20 +103,14 @@
 					plane.x =Math.cos(_radian) * radius;
 					plane.z =Math.sin(_radian) * radius;
 					plane.rotationY = 270 - (_radian * 180 / Math.PI)+180;
+					rubbishArray.push(plane);
 					//修正反射Plane物件的y軸。				
 					plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, on3DOver,false,0,true);
 					plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, on3DOut,false,0,true);
 					plane.addEventListener(InteractiveScene3DEvent.OBJECT_PRESS, on3DPress,false,0,true);
-					rootNode.addChild(plane);
-					rubbishArray.push(plane);
+					basicView.scene.addChild(plane);
 				}
 			});
-		}
-		private function onStageClick(e:MouseEvent):void{
-			ldr.unload();
-			//移除Loader載入的物件。
-			stage.removeEventListener(MouseEvent.CLICK, onStageClick);
-			//取消偵聽。
 		}
 		private function on3DOver(e:InteractiveScene3DEvent):void {			
 			//當滑鼠進入感應區時，修改廣播者scale屬性，放大1.2倍。
@@ -147,22 +128,33 @@
 			{
 				basicView.singleRender();
 			}		
+			refreshCameraRotation();
+		}
+		private function refreshCameraRotation():void
+		{
+			if(basicView!=null)
+			{
+				basicView.camera.rotationY=(mouseX/900)*(maxRotationY-minRotationY)+minRotationY;
+			}
 		}
 		public function dispose():void
 		{
-			MemoryRecovery.getInstance().gcFun(yangMengBaGuiModel,Event.COMPLETE,onModelComplete);
+			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
+			MemoryRecovery.getInstance().gcFun(this,Event.ADDED_TO_STAGE,added);
 			if(yangMengBaGuiModel!=null)
 			{
 				yangMengBaGuiModel.dispose();
 				yangMengBaGuiModel=null;
 			}
-			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
-			if(basicView.renderer!=null)
-			{
-				basicView.renderer.destroy();
-			}
 			for each(var plane:Plane in rubbishArray)
 			{
+				MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_OVER, on3DOver);
+				MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_OUT, on3DOut);
+				MemoryRecovery.getInstance().gcFun(plane,InteractiveScene3DEvent.OBJECT_PRESS, on3DPress);
+				if(plane.parent!=null)
+				{
+					plane.parent.removeChild(plane);
+				}
 				if(plane.material!=null)
 				{
 					if(plane.material.bitmap!=null)
@@ -171,18 +163,26 @@
 					}
 					plane.material.destroy();
 				}
-				if(plane.parent!=null)
-				{
-					rootNode.removeChild(plane);
-				}
-				plane.removeEventListener(InteractiveScene3DEvent.OBJECT_OVER, on3DOver);
-				plane.removeEventListener(InteractiveScene3DEvent.OBJECT_OUT, on3DOut);
-				plane.removeEventListener(InteractiveScene3DEvent.OBJECT_PRESS, on3DPress);
 				plane=null;
 			}
+			pictureUrls=null;
+			videoUrls=null;
 			rubbishArray=null;
-			basicView.scene.removeChild(rootNode);
-			rootNode=null;
+			if(basicView!=null)
+			{
+        		if(basicView.parent!=null)
+        		{
+        			basicView.parent.removeChild(basicView);
+        		}
+				basicView.camera.rotationY=195;
+	        	basicView.renderer.destroy();
+	        	basicView.renderer=null;
+	        	basicView.scene=null;
+	        	basicView.viewport.destroy();
+	        	basicView.viewport=null;
+        		basicView=null;
+			}
+			MyGC.gc();
 		}
 	}
 }

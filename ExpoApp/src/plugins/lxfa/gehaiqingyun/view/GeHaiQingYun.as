@@ -4,6 +4,8 @@ package plugins.lxfa.gehaiqingyun.view
 	
 	import core.manager.MainSystem;
 	import core.manager.pluginManager.PluginManager;
+	import core.manager.scriptManager.ScriptManager;
+	import core.manager.scriptManager.ScriptName;
 	
 	import fl.events.ListEvent;
 	
@@ -22,6 +24,7 @@ package plugins.lxfa.gehaiqingyun.view
 		private var list:ListBg;
 		public function GeHaiQingYun()
 		{
+			ScriptManager.getInstance().runScriptByName(ScriptName.STOPRENDER,[]);
 			initGeHaiQingYunSwc();
 		}
 		private function initGeHaiQingYunSwc():void
@@ -207,6 +210,7 @@ package plugins.lxfa.gehaiqingyun.view
 				playListCtr.dispose();
 				playListCtr=null;
 			}
+			ScriptManager.getInstance().runScriptByName(ScriptName.STARTRENDER,[]);
 			MyGC.gc();
 		}
 	}

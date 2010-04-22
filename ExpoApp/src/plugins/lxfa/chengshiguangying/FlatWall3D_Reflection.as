@@ -7,6 +7,7 @@ package plugins.lxfa.chengshiguangying{
     import flash.utils.getQualifiedClassName;
     
     import memory.MemoryRecovery;
+    import memory.MyGC;
     
     import mx.core.UIComponent;
     
@@ -130,8 +131,8 @@ package plugins.lxfa.chengshiguangying{
 		private function initObject():void{
 			init3DObject();
 			this.addEventListener(Event.ADDED_TO_STAGE,function fuck(e:Event):void{
-			stage.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-			stage.addEventListener(MouseEvent.CLICK,onStageClick);
+			stage.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel,false,0,true);
+			stage.addEventListener(MouseEvent.CLICK,onStageClick,false,0,true);
 			removeEventListener(Event.ADDED_TO_STAGE,fuck);
 			addEventListener(Event.ENTER_FRAME, onEventRender3D);		
 			});
@@ -342,6 +343,7 @@ package plugins.lxfa.chengshiguangying{
         		}
         		basicView=null;
         	}
+        	MyGC.gc();
         }
     }
 }

@@ -3,11 +3,13 @@ package plugins.lxfa.mainMenuBottom
 	import caurina.transitions.Tweener;
 	
 	import core.manager.MainSystem;
+	import core.manager.sceneManager.SceneManager;
 	import core.manager.sceneManager.event.SceneChangeEvent;
 	import core.manager.scriptManager.ScriptName;
 	
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	
 	import mx.core.Application;
 	
 	import plugins.lxfa.mainMenuTop.MainMenu;
@@ -113,7 +115,7 @@ package plugins.lxfa.mainMenuBottom
 		}
 		private function on_zonghengsihai_click(e:MouseEvent):void//纵横四海
 		{
-			customGoto2DScene(5,"ZongHengSiHaiModule");
+			SceneManager.getInstance().gotoScene(5);
 		}
 		private function on_yangmengbagui_click(e:MouseEvent):void//杨梦八桂
 		{

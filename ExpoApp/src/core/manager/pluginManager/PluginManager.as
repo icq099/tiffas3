@@ -194,7 +194,7 @@ package core.manager.pluginManager
 				PluginManager.getInstance().dispatchEvent(new PluginEvent(PluginEvent.REMOVED,id));
 			}catch(e:Error)
 			{
-				trace("PluginManager删除插件:"+e);
+				trace("PluginManager删除插件"+id+":"+e);
 				return false;
 			}
 			return true;

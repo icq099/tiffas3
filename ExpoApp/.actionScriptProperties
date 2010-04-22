@@ -37,6 +37,9 @@
 <module application="src/ExpoApp.mxml" destPath="plugins/lxfa/shanshuishihua/ShanShuiShiHuaModule.swf" optimize="true" sourcePath="src/plugins/lxfa/shanshuishihua/ShanShuiShiHuaModule.mxml"/>
 <module application="src/ExpoApp.mxml" destPath="plugins/lxfa/chengshiguangying/ChengShiGuangYingModule.swf" optimize="true" sourcePath="src/plugins/lxfa/chengshiguangying/ChengShiGuangYingModule.mxml"/>
 <module application="src/ExpoApp.mxml" destPath="plugins/lxfa/gehaiqingyun/GeHaiQingYunModule.swf" optimize="true" sourcePath="src/plugins/lxfa/gehaiqingyun/GeHaiQingYunModule.mxml"/>
+<module application="src/ExpoApp.mxml" destPath="plugins/lxfa/lijiangwanchang/LiJiangWanChangModule.swf" optimize="true" sourcePath="src/plugins/lxfa/lijiangwanchang/LiJiangWanChangModule.mxml"/>
+<module application="src/ExpoApp.mxml" destPath="plugins/lsd/swfModule/SwfModule.swf" optimize="true" sourcePath="src/plugins/lsd/swfModule/SwfModule.mxml"/>
+<module application="src/ExpoApp.mxml" destPath="plugins/lxfa/normalWindow/NormalWindowModule.swf" optimize="true" sourcePath="src/plugins/lxfa/normalWindow/NormalWindowModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>

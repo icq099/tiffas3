@@ -1,7 +1,7 @@
 package plugins.lxfa.gehaiqingyun.view
 {
-	import view.DoubleClickDecorator;
-	import view.IDoubleClickDecorator;
+	import view.decorator.DoubleClickDecorator;
+	import view.decorator.IDoubleClickDecorator;
 	
 	public class PlayListButton extends ListButton implements IDoubleClickDecorator
 	{
