@@ -7,7 +7,8 @@ package core.manager.sceneManager
 	import core.manager.scriptManager.ScriptName;
 	
 	import flash.events.EventDispatcher;
-	
+	[Event(name="init", type="manager.sceneManager.event.SceneChangeEvent")]
+	[Event(name="complete", type="manager.sceneManager.event.SceneChangeEvent")]
 	public class SceneManager extends EventDispatcher
 	{
 		private static var instance:SceneManager; //单例。。。

@@ -3,24 +3,28 @@ package plugins.lxfa.normalWindow
 	/****************************
 	 * 根据	ID参建标准窗
 	 * */
-	import communication.Event.ScriptAPIAddEvent;
-	import communication.MainSystem;
+	import core.manager.MainSystem;
+	import core.manager.musicManager.BackGroundMusicManager;
+	import core.manager.pluginManager.PluginManager;
+	import core.manager.scriptManager.ScriptManager;
+	import core.manager.scriptManager.ScriptName;
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
-	import lxfa.normalWindow.event.NormalWindowEvent;
-	import lxfa.normalWindow.model.NormalWindowModel;
-	import lxfa.utils.BackGroundMusicManager;
-	import lxfa.utils.MemoryRecovery;
+	import memory.MemoryRecovery;
 	
+	import mx.containers.Canvas;
 	import mx.core.UIComponent;
 	import mx.managers.PopUpManager;
 	import mx.modules.ModuleLoader;
 	
+	import plugins.lxfa.normalWindow.event.NormalWindowEvent;
+	import plugins.model.ItemModel;
+	
 	public class NormalWindowFactory extends UIComponent
 	{
-		private var itemModel:NormalWindowModel;
+		private var itemModel:ItemModel;
 		private var ID:int;                        //Item的ID号
 		private var picture360Url:String;          //360图片路径
 		private var videoUrl:String;               //视频路径
@@ -31,9 +35,8 @@ package plugins.lxfa.normalWindow
 		private var text:String;                   //文本
 		private var animateId:int;                 //桂娃的ID，-1就是没桂娃
 		private var animate:DisplayObject          //桂娃
-		private var animateParent:ModuleLoader;    //桂娃的父亲容器
+		private var animateParent:Canvas;    //桂娃的父亲容器
 		private var normalWindow:NormalWindow;
-		private var type:String;                   //类型
 		public function NormalWindowFactory(ID:int)
 		{
 			BackGroundMusicManager.getInstance().dispose();
@@ -43,68 +46,14 @@ package plugins.lxfa.normalWindow
 		//加载数据库
 		private function initItemModel():void
 		{
-			itemModel=new NormalWindowModel();
+			itemModel=new ItemModel();
 			onComplete();
 		}
 		//数据库加载完毕
 		private function onComplete():void
 		{
-			type=itemModel.getType(ID);
 			MainSystem.getInstance().dispatchEvent(new NormalWindowEvent(NormalWindowEvent.SHOW));
-			if(type=="" || type==null)
-			{
-				createWindow(null);
-			}else if(type=="ShanShuiShiHuaModule")
-			{
-				create("ShanShuiShiHuaModule","getShanShuiShiHua",10,20);
-			}
-			else if(type=="LiJiangWanChangModule")
-			{
-				create("LiJiangWanChangModule","getLiJiangWanCHang",10,20);
-			}
-			else if(type=="GeHaiQingYunModule")
-			{
-				create("GeHaiQingYunModule","getGeHaiQingYun",10,20);
-			}
-			else if(type=="ChengShiGuangYingModule")
-			{
-				createChengShiGuangYing();
-			}
-		}
-		private function createChengShiGuangYing():void
-		{
-			MainSystem.getInstance().showPluginById("ChengShiGuangYingModule");
-			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,function fuck(e:ScriptAPIAddEvent):void{
-				if(e.fun_name=="initChengShiGuangYing")
-				{
-					MemoryRecovery.getInstance().gcFun(MainSystem.getInstance(),ScriptAPIAddEvent.ADD_API,fuck);
-					MainSystem.getInstance().runAPIDirectDirectly("initChengShiGuangYing",[ID]);
-					var dis:DisplayObject=MainSystem.getInstance().getPlugin("ChengShiGuangYingModule");
-					dis.addEventListener(Event.COMPLETE,on_chengshiguangying_complete);
-				}
-			});
-		}
-		private function on_chengshiguangying_complete(e:Event):void
-		{
-			MemoryRecovery.getInstance().gcFun(e.currentTarget,Event.COMPLETE,on_chengshiguangying_complete);
-			var dis:DisplayObject=MainSystem.getInstance().runAPIDirectDirectly("getChengShiGuangYing",[]);
-			this.addChild(dis);
-			dis.addEventListener(Event.CLOSE,onnormalWindowClose);
-		}
-		private function create(moduleName:String,funName:String,x:int,y:int):void
-		{
-			MainSystem.getInstance().showPluginById(moduleName);
-			MainSystem.getInstance().addEventListener(ScriptAPIAddEvent.ADD_API,function fuck(e:ScriptAPIAddEvent):void{
-				if(e.fun_name==funName)
-				{
-					MemoryRecovery.getInstance().gcFun(MainSystem.getInstance(),ScriptAPIAddEvent.ADD_API,fuck);
-					var dis:DisplayObject=MainSystem.getInstance().runAPIDirectDirectly(funName,[]);
-					dis.x=x;
-					dis.y=y;
-					dis.addEventListener(Event.CLOSE,onnormalWindowClose);
-					addChild(dis);
-				}
-			});
+			createWindow(null);
 		}
 		private function createWindow(e:Event):void
 		{
@@ -128,9 +77,9 @@ package plugins.lxfa.normalWindow
 			//显示桂娃
 			if(animateId!=-1)
 			{
-		        MainSystem.getInstance().runAPIDirect("addAnimate",[animateId]);
-		        animate=MainSystem.getInstance().getPlugin("AnimateModule");
-		        animateParent=ModuleLoader(animate.parent);
+		        ScriptManager.getInstance().runScriptByName(ScriptName.ADDANIMATE,[animateId]);
+		        animate=PluginManager.getInstance().getPlugin("AnimateModule");
+		        animateParent=Canvas(animate.parent);
 		        animate.x=-20;
 		        animate.y=300;
 			    this.addChild(animate);
@@ -144,7 +93,7 @@ package plugins.lxfa.normalWindow
 				MainSystem.getInstance().dispatchEvent(new NormalWindowEvent(NormalWindowEvent.REMOVE));
 				MemoryRecovery.getInstance().gcFun(e.currentTarget,Event.CLOSE,onnormalWindowClose);
 				BackGroundMusicManager.getInstance().reload();
-				MainSystem.getInstance().startRender();
+				ScriptManager.getInstance().runScriptByName(ScriptName.STOPRENDER,[]);
 				this.dispatchEvent(new Event(Event.CLOSE));
 				normalWindow=null;
 				if(animate!=null)
@@ -152,7 +101,7 @@ package plugins.lxfa.normalWindow
 					animateParent.addChild(animate);
 				}
 				PopUpManager.removePopUp(this);
-				MainSystem.getInstance().runAPIDirectDirectly("removeAnimate",[]);
+				ScriptManager.getInstance().runScriptByName(ScriptName.REMOVEANIMATE,[]);
 			}
 		}
 	}

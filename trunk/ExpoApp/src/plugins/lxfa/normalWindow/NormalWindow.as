@@ -12,13 +12,14 @@ package plugins.lxfa.normalWindow
 	
 	import mx.core.UIComponent;
 	
-	import util.view.player.FLVPlayer;
+	import plugins.yzhkof.view.Object360Viewer;
+	import plugins.yzhkof.view.player.FlvPlayer;
 	
 	import view.player.PicturePlayer;
 	public class NormalWindow extends UIComponent
 	{
 		private var dp:NormalWindowSwc;             //标准窗的SWC
-		private var flvPlayer:FLVPlayer;            //flv播放器
+		private var flvPlayer:FlvPlayer;            //flv播放器
 		private var viewer360:Object360Viewer;      //图片360体验窗口
 		private var customScrollBar:CustomScrollBar;//自定义滚动条
 		private var picturePlayer:PicturePlayer;                //mp3播放器
@@ -188,17 +189,17 @@ package plugins.lxfa.normalWindow
 		    viewer360.scaleX=0.64;
 		    viewer360.scaleY=0.9;
 		    viewer360.addEventListener(Event.COMPLETE,onViewer360Complete);
-		    viewer360.addEventListener(Event.CLEAR,onView360Clear);
+		    viewer360.addEventListener(Event.ID3,onView360Clear);
 		    dp.Btn_Close.addEventListener(MouseEvent.CLICK,onClick);//360图片加载完之后才能添加关闭事件
 		    if(pictureUrl=="" || pictureUrl==null)//如果没有360图片。就抛出CLEAR事件，只是作为区别，并不是真正的CLEAR
 		    {
-		    	viewer360.dispatchEvent(new Event(Event.CLEAR));
+		    	viewer360.dispatchEvent(new Event(Event.ID3));
 		    }
 		}
 		//没有360图片的情况
 		private function onView360Clear(e:Event):void
 		{
-			viewer360.removeEventListener(Event.CLEAR,onView360Clear);//清除事件
+			viewer360.removeEventListener(Event.ID3,onView360Clear);//清除事件
 			dp.Btn_Close.addEventListener(MouseEvent.CLICK,onClick);
 			initFlvPlayer();
 			initPicturePlayer();
@@ -206,7 +207,7 @@ package plugins.lxfa.normalWindow
 		//图片浏览器
 		private function initPicturePlayer():void
 		{
-			picturePlayer=new PicturePlayer(this.pictureUrls);
+			picturePlayer=new PicturePlayer(this.pictureUrls,dp.panel3);
 			picturePlayer.x=25;
 			picturePlayer.y=230;
 			dp.panel3.addChild(picturePlayer);
@@ -272,7 +273,7 @@ package plugins.lxfa.normalWindow
 			}
 			if(picturePlayer!=null)
 			{
-				picturePlayer.close();
+				picturePlayer.dispose();
 				picturePlayer=null;
 			}
 			dp=null;

@@ -120,9 +120,12 @@ package plugins.lsd.CustomWindow
 		
 		
 		public function dispose():void{
-			MemoryRecovery.getInstance().gcFun(customUp.up,MouseEvent.CLICK,up_click);
-			MemoryRecovery.getInstance().gcFun(customUp.down,MouseEvent.CLICK,down_click);
-			MemoryRecovery.getInstance().gcFun(customUp.Btn_Close,MouseEvent.CLICK,close_click);
+			if(customUp!=null)
+			{
+				MemoryRecovery.getInstance().gcFun(customUp.up,MouseEvent.CLICK,up_click);
+				MemoryRecovery.getInstance().gcFun(customUp.down,MouseEvent.CLICK,down_click);
+				MemoryRecovery.getInstance().gcFun(customUp.Btn_Close,MouseEvent.CLICK,close_click);
+			}
 			MemoryRecovery.getInstance().gcFun(swfPlayer,ProgressEvent.PROGRESS,on_flv_progress);
 			MemoryRecovery.getInstance().gcFun(swfPlayer,Event.COMPLETE,on_swf_complete);
 			if(swfPlayer!=null)

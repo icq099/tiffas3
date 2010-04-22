@@ -18,7 +18,16 @@
 
 			public function dispose():void
 			{
-				yangMengBaGuiBase.dispose();
+				if(yangMengBaGuiBase!=null)
+				{
+					if(yangMengBaGuiBase.parent!=null)
+					{
+						yangMengBaGuiBase.parent.removeChild(yangMengBaGuiBase);
+					}
+					yangMengBaGuiBase.dispose();
+					yangMengBaGuiBase=null;
+				}
+				YangMengBaGuiStatic.currentName=null;
 			}
 		]]>
 	</mx:Script>

@@ -43,15 +43,20 @@ package
 			PluginManager.getInstance().init(Application.application);//初始化插件管理者，并且以Application.application为容器
 			SceneManager.getInstance();                               //初始化场景管理者
 			dispose();
-			PluginManager.getInstance().showPluginById("GeHaiQingYunModule");
 		}
 		//回收内存
 		private function dispose():void
 		{
 			ModelManager.getInstance().removeEventListener(ProgressEvent.PROGRESS,on_progress);
 			ModelManager.getInstance().removeEventListener(Event.COMPLETE,on_model_loaded);
-			loadingMC.parent.removeChild(loadingMC);
-			loadingMC=null;
+			if(loadingMC!=null)
+			{
+				if(loadingMC.parent!=null)
+				{
+					loadingMC.parent.removeChild(loadingMC);
+				}
+				loadingMC=null;
+			}
 		}
 	}
 }

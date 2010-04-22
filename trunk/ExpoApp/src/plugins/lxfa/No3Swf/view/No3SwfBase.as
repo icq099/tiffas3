@@ -7,6 +7,7 @@ package plugins.lxfa.No3Swf.view
 	import core.manager.pluginManager.PluginManager;
 	import core.manager.pluginManager.event.PluginEvent;
 	import core.manager.sceneManager.SceneManager;
+	import core.manager.sceneManager.event.SceneChangeEvent;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -67,7 +68,7 @@ package plugins.lxfa.No3Swf.view
 			MainSystem.getInstance().showPluginById("MainMenuTopModule");
 			BackGroundMusicManager.getInstance().loadBackGroundMusic("http://audio.pavilion.expo.cn/p5006/audio/backgroundmusic/bg1.mp3");
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
-			MainSystem.getInstance().addSceneChangeCompleteHandler(removeCurrentModule,[]);
+			SceneManager.getInstance().addEventListener(SceneChangeEvent.COMPLETE,removeCurrentModule);
 			MainSystem.getInstance().removePluginById("No3Module");
 		}
 		private function onClick(e:MouseEvent):void
@@ -78,20 +79,21 @@ package plugins.lxfa.No3Swf.view
 				MemoryRecovery.getInstance().gcFun(unrealCompassSwc,MouseEvent.CLICK,onClick);
 			}
 		}
-		private function removeCurrentModule():void
+		private function removeCurrentModule(e:SceneChangeEvent):void
 		{
 			 PluginManager.getInstance().removePluginById("No3SwfModule");
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(SceneManager.getInstance(),SceneChangeEvent.COMPLETE,removeCurrentModule);
 			MemoryRecovery.getInstance().gcFun(unrealCompassSwc,MouseEvent.CLICK,onClick);
+			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,ProgressEvent.PROGRESS,on_progress);
+			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,Event.COMPLETE,onComplete);
 			if(unrealCompassSwc.parent!=null)
 			{
 				unrealCompassSwc.parent.removeChild(unrealCompassSwc);
 			}
 			unrealCompassSwc=null;
-			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,ProgressEvent.PROGRESS,on_progress);
-			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,Event.COMPLETE,onComplete);
 			flowerFlvSwf.enabled=false;
 			flowerFlvSwf.dispose();
 		    if(flowerFlvSwf.parent!=null)

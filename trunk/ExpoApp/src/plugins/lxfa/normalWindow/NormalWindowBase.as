@@ -1,7 +1,7 @@
 package plugins.lxfa.normalWindow
 {
-	import communication.Event.MainSystemEvent;
-	import communication.MainSystem;
+	import core.manager.scriptManager.ScriptManager;
+	import core.manager.scriptManager.ScriptName;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -16,12 +16,12 @@ package plugins.lxfa.normalWindow
 		private var isPoped:Boolean;
 		public function NormalWindowBase()
 		{
-			MainSystem.getInstance().addAPI("showNormalWindow",showNormalWindow);
+			ScriptManager.getInstance().addApi(ScriptName.SHOWNORMALWINDOW,showNormalWindow);
 		}
 		public function showNormalWindow(id:String,sid:int=0):void
 		{
-			MainSystem.getInstance().stopRender();
-			MainSystem.getInstance().runAPIDirectDirectly("removeAnimate",[]);
+			ScriptManager.getInstance().runScriptByName(ScriptName.STOPRENDER,[]);
+			ScriptManager.getInstance().runScriptByName(ScriptName.REMOVEANIMATE,[]);
 			if(!isPoped)
 			{
 				isPoped=true;
@@ -37,7 +37,7 @@ package plugins.lxfa.normalWindow
 		{
 			this.dispatchEvent(e);
 			isPoped=false;
-			MainSystem.getInstance().startRender();
+			ScriptManager.getInstance().runScriptByName(ScriptName.STARTRENDER,[]);
 		}
 	}
 }

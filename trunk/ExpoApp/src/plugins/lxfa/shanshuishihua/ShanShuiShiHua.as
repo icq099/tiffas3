@@ -4,6 +4,7 @@ package  plugins.lxfa.shanshuishihua
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import memory.MemoryRecovery;
@@ -25,7 +26,6 @@ package  plugins.lxfa.shanshuishihua
 		}
 		private function init():void
 		{
-			
 			ScriptManager.getInstance().runScriptByName(ScriptName.STOPRENDER,[]);
 			shanShuiShiHuaSwc=new ShanShuiShiHuaSwc();
 			this.addChild(shanShuiShiHuaSwc);
@@ -37,6 +37,11 @@ package  plugins.lxfa.shanshuishihua
 			flatWall3D_Reflection.x=14;
 			flatWall3D_Reflection.y=80;
 			this.addChild(flatWall3D_Reflection);
+			this.addEventListener(Event.ADDED_TO_STAGE,onAdded);
+		}
+		private function onAdded(e:Event):void
+		{
+			MemoryRecovery.getInstance().gcFun(this,Event.ADDED_TO_STAGE,onAdded);
 			shanShuiShiHuaSwc.close.addEventListener(MouseEvent.CLICK,onCloseClick);
 		}
 		//关闭按钮点击事件

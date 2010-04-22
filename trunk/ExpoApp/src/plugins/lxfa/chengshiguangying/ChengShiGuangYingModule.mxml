@@ -12,9 +12,15 @@
 			}
 			public function dispose():void
 			{
-				chengShiGuangYingBase.dispose(null);
-				chengShiGuangYingBase.parent.removeChild(chengShiGuangYingBase);
-				chengShiGuangYingBase=null;
+				if(chengShiGuangYingBase!=null)
+				{
+					if(chengShiGuangYingBase.parent!=null)
+					{
+						chengShiGuangYingBase.parent.removeChild(chengShiGuangYingBase);
+					}
+					chengShiGuangYingBase.dispose(null);
+					chengShiGuangYingBase=null;
+				}
 			}
 		]]>
 	</mx:Script>

@@ -11,8 +11,15 @@
 			}
 			public function dispose():void
 			{
-				no3swf.dispose();
-				no3swf=null
+				if(no3swf!=null)
+				{
+					if(no3swf.parent!=null)
+					{
+						no3swf.parent.removeChild(no3swf);
+					}
+					no3swf.dispose();
+					no3swf=null;
+				}
 			}
 		]]>
 	</mx:Script>

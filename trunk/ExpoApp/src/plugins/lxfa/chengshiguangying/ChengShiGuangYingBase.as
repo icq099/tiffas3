@@ -5,6 +5,8 @@ package plugins.lxfa.chengshiguangying
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
+	import flash.events.Event;
+	
 	import memory.MemoryRecovery;
 	
 	import mx.core.UIComponent;
@@ -21,10 +23,8 @@ package plugins.lxfa.chengshiguangying
 		private var ID:int;
 		public function ChengShiGuangYingBase()
 		{
-			ScriptManager.getInstance().addApi("initChengShiGuangYing", init);
-			init(14);
+			ScriptManager.getInstance().addApi(ScriptName.SHOWCHENGSHIGUANGYING, init);
 		}
-
 		private function init(ID:int):void
 		{
 			this.ID=ID;
@@ -32,9 +32,13 @@ package plugins.lxfa.chengshiguangying
 			itemModel=new ItemModel();
 			customWindow=new CustomWindow(itemModel.getSwfUrl(ID), itemModel.getText(ID));
 			customWindow.addEventListener(CustomWindowEvent.SWF_COMPLETE, on_swf_complete);
-			customWindow.addEventListener(CustomWindowEvent.WINDOW_CLOSE, on_customWindow_close);
 		}
-
+		private function onAdded(e:Event):void
+		{
+			customWindow.addEventListener(CustomWindowEvent.WINDOW_CLOSE, on_customWindow_close);
+			MemoryRecovery.getInstance().gcFun(flatWall3D_Reflection,Event.ADDED_TO_STAGE,onAdded);
+			PluginManager.getInstance().removePluginById("ChengShiGuangYingModule");
+		}
 		private function on_swf_complete(e:CustomWindowEvent):void
 		{
 			this.addChild(customWindow);
@@ -46,23 +50,26 @@ package plugins.lxfa.chengshiguangying
 			flatWall3D_Reflection=new FlatWall3D_Reflection(ID);
 			flatWall3D_Reflection.x=14;
 			flatWall3D_Reflection.y=80;
+			flatWall3D_Reflection.addEventListener(Event.ADDED_TO_STAGE,onAdded);
 			customWindow.addChild(flatWall3D_Reflection);
 		}
-
-
 		private function on_customWindow_close(e:CustomWindowEvent):void
 		{
 			PluginManager.getInstance().removePluginById("ChengShiGuangYingModule");
 		}
-
 		public function dispose(e:CustomWindowEvent):void
 		{
 			if (!MainSystem.getInstance().isBusy)
 			{
-				
-				customWindow.removeChild(flatWall3D_Reflection);
-				flatWall3D_Reflection.dispose();
-				flatWall3D_Reflection=null;
+				if(flatWall3D_Reflection!=null)
+				{
+					if(flatWall3D_Reflection.parent!=null)
+					{
+						flatWall3D_Reflection.parent.removeChild(flatWall3D_Reflection);
+					}
+					flatWall3D_Reflection.dispose();
+					flatWall3D_Reflection=null;
+				}
 				MemoryRecovery.getInstance().gcFun(customWindow, CustomWindowEvent.SWF_COMPLETE, on_swf_complete);
 				MemoryRecovery.getInstance().gcFun(customWindow, CustomWindowEvent.WINDOW_CLOSE, on_customWindow_close);
 				if(customWindow!=null)

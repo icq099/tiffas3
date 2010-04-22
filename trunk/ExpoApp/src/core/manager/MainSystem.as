@@ -7,10 +7,12 @@ package core.manager
 	
 	import flash.events.EventDispatcher;
 	
+	import mx.managers.CursorManager;
+	
 	public class MainSystem extends EventDispatcher
 	{
 	    private static var instance:MainSystem
-	    public var isBusy:Boolean=false;
+	    public var _isBusy:Boolean=false;
 	    public var currentScene:int;
 	    public var currentHotpoint:*;
 		public function MainSystem()
@@ -87,6 +89,23 @@ package core.manager
 		public function dispacherChangeCompleteEvent(id:int):void
 		{
 			SceneManager.getInstance().dispacherChangeCompleteEvent(id);
+		}
+		private var oldBusyState:Boolean=false;
+		public function set isBusy(val:Boolean):void
+		{
+			_isBusy=val;
+			if(_isBusy && oldBusyState==false)
+			{
+				CursorManager.setBusyCursor();
+			}else if(!_isBusy && oldBusyState==true)
+			{
+				CursorManager.removeBusyCursor();
+			}
+			oldBusyState=_isBusy;
+		}
+		public function get isBusy():Boolean
+		{
+			return _isBusy;
 		}
 	}
 }
