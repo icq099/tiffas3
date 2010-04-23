@@ -24,6 +24,8 @@ package plugins.lsd.AnimatePlayer.control
 		}
 		private function init(id:int,controlRender:Boolean=false):AnimatePlayer
 		{
+			this.parent.x=0;
+			this.parent.y=0;
 			animatePlayer=new AnimatePlayer();
 			if(id!=-1)//-1就不显示桂娃了
 			{

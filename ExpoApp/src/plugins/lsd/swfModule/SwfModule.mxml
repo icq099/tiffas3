@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="core.manager.pluginManager.IPlugin">
+		<mx:Script>
+		<![CDATA[
+		    private var swfModuleBase:SwfModuleBase;
+			private function init():void
+			{
+				swfModuleBase=new SwfModuleBase();
+				this.addChild(swfModuleBase);
+			}
+			public function dispose():void
+			{
+			}
+		]]>
+	</mx:Script>
+</mx:Module>

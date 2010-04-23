@@ -12,12 +12,11 @@ package plugins.lxfa.normalWindow
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
-	import memory.MemoryRecovery;
+	import memory.MyGC;
 	
 	import mx.containers.Canvas;
 	import mx.core.UIComponent;
 	import mx.managers.PopUpManager;
-	import mx.modules.ModuleLoader;
 	
 	import plugins.lxfa.normalWindow.event.NormalWindowEvent;
 	import plugins.model.ItemModel;
@@ -69,7 +68,6 @@ package plugins.lxfa.normalWindow
 			normalWindow=new NormalWindow(picture360Url,videoUrl,pictureUrls,text,picture360Name,videoName,pictureName);
 			this.addChild(normalWindow);
 			createAnimate(animateId);
-			normalWindow.addEventListener(Event.CLOSE,onnormalWindowClose);
 			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 		private function createAnimate(animateId:int):void
@@ -86,22 +84,29 @@ package plugins.lxfa.normalWindow
 			}
 		}
 		//标准窗关闭的时候
-		private function onnormalWindowClose(e:Event):void
+		public function dispose():void
 		{
 			if(!MainSystem.getInstance().isBusy)
 			{
 				MainSystem.getInstance().dispatchEvent(new NormalWindowEvent(NormalWindowEvent.REMOVE));
-				MemoryRecovery.getInstance().gcFun(e.currentTarget,Event.CLOSE,onnormalWindowClose);
-				BackGroundMusicManager.getInstance().reload();
-				ScriptManager.getInstance().runScriptByName(ScriptName.STOPRENDER,[]);
-				this.dispatchEvent(new Event(Event.CLOSE));
-				normalWindow=null;
+				if(normalWindow!=null)
+				{
+					normalWindow.dispose();
+					if(normalWindow.parent!=null)
+					{
+						normalWindow.parent.removeChild(normalWindow);
+					}
+					normalWindow=null;
+				}
+				ScriptManager.getInstance().runScriptByName(ScriptName.REMOVEANIMATE,[]);
 				if(animate!=null)
 				{
+					animate.x=2000;
 					animateParent.addChild(animate);
 				}
 				PopUpManager.removePopUp(this);
-				ScriptManager.getInstance().runScriptByName(ScriptName.REMOVEANIMATE,[]);
+				BackGroundMusicManager.getInstance().reload();
+				MyGC.gc();
 			}
 		}
 	}

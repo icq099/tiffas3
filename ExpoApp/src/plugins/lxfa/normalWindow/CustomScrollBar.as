@@ -1,0 +1,160 @@
+package plugins.lxfa.normalWindow
+{
+	import flash.display.Sprite;
+	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
+	import flash.geom.Rectangle;
+	
+	import memory.MemoryRecovery;
+	
+	import mx.core.Application;
+	
+	public class CustomScrollBar extends Sprite
+	{
+		private var normalWindowSwc:NormalWindowSwc//标准窗的引用
+		private var minMouseY:int;//鼠标点击的有效范围的最小值
+		private var maxMouseY:int;//鼠标点击的有效范围的最大值
+		private var center:ScrollCenter;
+		public function CustomScrollBar(dp:NormalWindowSwc,text:String)
+		{
+			normalWindowSwc=dp;
+			initText(text);
+			if(normalWindowSwc.text.maxScrollV>1)
+			{
+				initScrollCenter();
+				initScrollDown();
+				initScrollUp();
+			}else
+			{
+				normalWindowSwc.scrollDown.visible=false;
+				normalWindowSwc.scrollUp.visible=false;
+				normalWindowSwc.center.visible=false;
+			}
+		}
+		//初始化“下降按钮”
+		private function initScrollDown():void
+		{
+			maxMouseY=normalWindowSwc.scrollDown.y-center.height-8;
+			normalWindowSwc.scrollDown.addEventListener(MouseEvent.CLICK,onScrollDownClick);
+		}
+		//"下降按钮"的点击事件
+		private function onScrollDownClick(e:MouseEvent):void
+		{
+			if(normalWindowSwc.text.scrollV<normalWindowSwc.text.numLines)
+			{
+				normalWindowSwc.text.scrollV+=1;
+				updateScrollCenterLocation();
+			}
+		}
+		//初始化"上升按钮"
+		private function initScrollUp():void
+		{
+			minMouseY=normalWindowSwc.scrollUp.y+normalWindowSwc.scrollUp.height-8;
+			normalWindowSwc.scrollUp.addEventListener(MouseEvent.CLICK,onScrollUpClick);
+		}
+		//"上升按钮"的点击事件
+		private function onScrollUpClick(e:MouseEvent):void
+		{
+			if(normalWindowSwc.text.scrollV>1)
+			{
+				normalWindowSwc.text.scrollV-=1;
+				updateScrollCenterLocation();
+			}
+		}
+		//加载文本
+		private function initText(text:String):void
+		{
+			if(text==null)
+			{
+				normalWindowSwc.text.text="";
+			}
+			else
+			{
+				normalWindowSwc.text.text="    "+text;
+			}
+		}
+		private var filter:GlowFilter=new GlowFilter(0xffff3,1,30,30);
+		private function initScrollCenter():void
+		{
+			normalWindowSwc.removeChild(normalWindowSwc.center);
+			center=new ScrollCenter();
+			center.x=784;
+			center.y=85;
+			center.mouseEnabled=true;
+			this.addChild(center);
+			if(normalWindowSwc.text.maxScrollV<normalWindowSwc.text.numLines)
+			{
+				center.visible=true;
+			}
+			else
+			{
+				center.visible=false;
+			}
+			center.addEventListener(MouseEvent.MOUSE_DOWN,onMouseDownHandler);
+			center.addEventListener(MouseEvent.MOUSE_OVER,center_over);
+			center.addEventListener(MouseEvent.MOUSE_OUT,center_out);
+		}
+		private function center_over(e:MouseEvent):void
+		{
+			center.filters=[filter];
+		}
+		private function center_out(e:MouseEvent):void
+		{
+			center.filters=[];
+		}
+		private function onMouseDownHandler( e : MouseEvent ):void {
+			   center.startDrag(true,new Rectangle(center.x,minMouseY,0,maxMouseY-minMouseY));
+		       Application.application.stage.addEventListener( MouseEvent.MOUSE_MOVE, onMoveHandler );
+		       Application.application.stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUpHandler );
+		}
+		
+		private function onMouseUpHandler( e : MouseEvent ):void {
+			   center.stopDrag();
+		       if ( Application.application.stage.stage.hasEventListener( MouseEvent.MOUSE_MOVE ) ) {
+		             Application.application.stage.stage.removeEventListener( MouseEvent.MOUSE_MOVE, onMoveHandler );
+		       }
+		       if ( Application.application.stage.stage.hasEventListener( MouseEvent.MOUSE_UP ) ) {
+		              Application.application.stage.stage.removeEventListener( MouseEvent.MOUSE_UP, onMouseUpHandler );
+		       }
+		}
+		private function onMoveHandler( e : MouseEvent ):void {
+		       if( mouseY > minMouseY &&  mouseY < maxMouseY )
+		       {
+			       	updateText();
+		       }
+		}
+		private function updateText():void
+		{
+			var scrollHeight:Number=maxMouseY-minMouseY;//滚动条的长度
+			var distance:Number=center.y-minMouseY;//滑块与上面按钮的距离
+			normalWindowSwc.text.scrollV=distance/scrollHeight*normalWindowSwc.text.numLines;
+		}
+		private function updateScrollCenterLocation():void
+		{
+			var scrollHeight:Number=maxMouseY-minMouseY;//滚动条的长度
+			center.y=normalWindowSwc.text.scrollV/normalWindowSwc.text.maxScrollV*scrollHeight+minMouseY;
+		}
+		public function dispose():void
+		{
+			MemoryRecovery.getInstance().gcFun(Application.application.stage,MouseEvent.MOUSE_MOVE, onMoveHandler );
+			MemoryRecovery.getInstance().gcFun(Application.application.stage, MouseEvent.MOUSE_UP, onMouseUpHandler );
+			MemoryRecovery.getInstance().gcFun(center,MouseEvent.MOUSE_DOWN,onMouseDownHandler);
+			MemoryRecovery.getInstance().gcFun(center,MouseEvent.MOUSE_OVER,center_over);
+			MemoryRecovery.getInstance().gcFun(center,MouseEvent.MOUSE_OUT,center_out);
+			MemoryRecovery.getInstance().gcFun(normalWindowSwc.scrollDown,MouseEvent.CLICK,onScrollDownClick);
+			MemoryRecovery.getInstance().gcFun(normalWindowSwc.scrollUp,MouseEvent.CLICK,onScrollUpClick);
+			normalWindowSwc.center=null;
+			normalWindowSwc=null;
+			if(center!=null)
+			{
+				center.stopDrag();
+				center.filters=null;
+				if(center.parent!=null)
+				{
+					center.parent.removeChild(center);
+				}
+				center=null;
+			}
+		}
+	}
+}
