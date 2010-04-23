@@ -4,6 +4,7 @@ package yzhkof.debug
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
+	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
 	import yzhkof.ui.DragPanel;
@@ -18,6 +19,7 @@ package yzhkof.debug
 		private var run_btn:TextPanel=new TextPanel(0xffff00);
 		private var target_btn:TextPanel=new TextPanel(0xffff00);
 		private var import_btn:TextPanel=new TextPanel(0xffff00);
+		private var import_text:TextField=new TextField();
 		private const textWidth:Number=500;
 		private const textHeight:Number=300;
 		private var importCount:uint=0;
@@ -31,6 +33,7 @@ package yzhkof.debug
 		{
 			ScriptRuner.target=target;
 			target_btn.text=getQualifiedClassName(target);
+			btn_container.updataChildPosition();
 		}
 		private function init():void
 		{
@@ -40,11 +43,16 @@ package yzhkof.debug
 			btn_container.addChild(run_btn);
 			btn_container.addChild(target_btn);
 			btn_container.addChild(import_btn);
+			btn_container.addChild(import_text);
 			
 			run_btn.text="run";
 			import_btn.text="import";
 			target_btn.text=getQualifiedClassName(ScriptRuner.target);
 			run_btn.drawBackGround();
+			
+			import_text.border=true;
+			import_text.type=TextFieldType.INPUT;
+			import_text.height=20;
 			textField.y=30;
 			textField.type=TextFieldType.INPUT;
 			textField.width=textWidth;
@@ -66,13 +74,24 @@ package yzhkof.debug
 //		}
 		private function __onImportClick(e:Event):void
 		{
-			textField.text=StringUtil.addString(textField.text,"namespace n"+importCount+" = \"****\"; use namespace n"+importCount+";\n",0);
+			textField.text=StringUtil.addString(textField.text,"namespace n"+importCount+" = \""+getPackageName()+"\"; use namespace n"+importCount+";\n",0);
 			importCount++;
+		}
+		private function getPackageName():String
+		{
+			if(import_text.text)
+			{
+//				var re_text:String="";
+//				var class_string:String=getDefinitionByName(import_text.text);
+//				re_text=class_string.split("::")[0];
+				return import_text.text;
+			}
+			return "****";
 		}
 		private function __onTargetClick(e:Event):void
 		{
 			var text_content:String=textField.text;
-			textField.text=StringUtil.addString(textField.text,"ScriptRuner.target",textField.caretIndex);
+			textField.text=StringUtil.replaceString(textField.text,"ScriptRuner.target",textField.selectionBeginIndex,textField.selectionEndIndex);
 		}
 		private function __onRunBtnClick(e:Event):void
 		{
