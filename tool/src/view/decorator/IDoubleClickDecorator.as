@@ -1,4 +1,4 @@
-package view
+package view.decorator
 {
 	public interface IDoubleClickDecorator
 	{

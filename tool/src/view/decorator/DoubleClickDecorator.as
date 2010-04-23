@@ -1,7 +1,10 @@
-package view
+package  view.decorator
 {
 	import flash.events.MouseEvent;
-	
+	/**
+	 * 模拟双击
+	 * 只要传入要实现双击的对象就行，但需要双击的对象必须实现IDoubleClickDecorator接口，否则报错
+	 * */
 	public class DoubleClickDecorator
 	{
 		private var s:int=0;
