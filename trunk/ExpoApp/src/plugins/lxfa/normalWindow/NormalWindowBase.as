@@ -17,12 +17,13 @@ package plugins.lxfa.normalWindow
 		public function NormalWindowBase()
 		{
 			ScriptManager.getInstance().addApi(ScriptName.SHOWNORMALWINDOW,showNormalWindow);
+			ScriptManager.getInstance().addApi(ScriptName.REMOVENORMALWINDOW,dispose);
 		}
 		public function showNormalWindow(id:String,sid:int=0):void
 		{
 			ScriptManager.getInstance().runScriptByName(ScriptName.STOPRENDER,[]);
 			ScriptManager.getInstance().runScriptByName(ScriptName.REMOVEANIMATE,[]);
-			if(!isPoped)
+			if(!isPoped)//让弹出的标准窗保持只有一个
 			{
 				isPoped=true;
 				normalWindowFactory=new NormalWindowFactory(int(id));
@@ -30,13 +31,13 @@ package plugins.lxfa.normalWindow
 	            PopUpManager.centerPopUp(normalWindowFactory);
 	            normalWindowFactory.x=33;
 	            normalWindowFactory.y=80;
-	            normalWindowFactory.addEventListener(Event.CLOSE,onnormalWindowFactoryClose);
 			}
 		}
-		private function onnormalWindowFactoryClose(e:Event):void
+		private function dispose():void
 		{
-			this.dispatchEvent(e);
 			isPoped=false;
+			normalWindowFactory.dispose();
+			normalWindowFactory=null;
 			ScriptManager.getInstance().runScriptByName(ScriptName.STARTRENDER,[]);
 		}
 	}

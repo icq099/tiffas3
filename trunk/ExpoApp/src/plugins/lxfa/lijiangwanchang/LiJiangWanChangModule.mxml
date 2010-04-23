@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="core.manager.pluginManager.IPlugin">
+	<mx:Script>
+		<![CDATA[
+		    private var liJiangWanChang:LiJiangWanChang;
+			private function init():void
+			{
+				liJiangWanChang=new LiJiangWanChang();
+				this.addChild(liJiangWanChang);
+			}
+			public function dispose():void
+			{
+				if(liJiangWanChang!=null)
+				{
+					if(liJiangWanChang.parent!=null)
+					{
+						liJiangWanChang.parent.removeChild(liJiangWanChang);
+					}
+					liJiangWanChang.dispose();
+					liJiangWanChang=null;
+				}
+			}
+		]]>
+	</mx:Script>
+</mx:Module>

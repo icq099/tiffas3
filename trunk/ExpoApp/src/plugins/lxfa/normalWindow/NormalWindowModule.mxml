@@ -9,17 +9,11 @@
    		{
    			MainSystem.getInstance().runAPI(ScriptName.STOPRENDER,[]);
    			normalWindowBase=new NormalWindowBase();
-   			normalWindowBase.addEventListener(Event.CLOSE,onClose);
-   		}
-   		private function onClose(e:Event):void
-   		{
-   			dispatchEvent(new Event(Event.CLOSE));
    		}
    		//回收内存
    		public function dispose():void
    		{
    			normalWindowBase=null;
-   			dispatchEvent(new Event(Event.CLOSE));
    		}
    	]]>
    </mx:Script>

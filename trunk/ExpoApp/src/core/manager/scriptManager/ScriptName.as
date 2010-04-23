@@ -37,5 +37,6 @@ package core.manager.scriptManager
 		public static const ADDSWFCOMPLETESCRIPT:String="addSwfCompleteScript";                //添加SWF载入完毕时的脚本
 		//plugins/lxfa/normalWindow/NormalWindowBase
 		public static const SHOWNORMALWINDOW:String="showNormalWindow";                        //显示指定的标准窗
+		public static const REMOVENORMALWINDOW:String="removeNormalWindow";                    //删除指定的标准窗
 	}
 }

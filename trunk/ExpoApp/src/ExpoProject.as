@@ -6,6 +6,7 @@ package
 	
 	import flash.events.Event;
 	import flash.events.ProgressEvent;
+	import flash.system.Security;
 	
 	import mx.core.Application;
 	
@@ -20,6 +21,8 @@ package
 		private var loadingMC:LoadingWaveRota;//显示数据加载的进度
 		private function init():void
 		{
+			Security.allowDomain("http://pavilion.expo.cn/p5006/ssize/project/xml/crossdomain.xml");
+			Security.loadPolicyFile("http://pavilion.expo.cn/p5006/ssize/project/xml/crossdomain.xml");
 			initModelManager();
 		}
 		private function initModelManager():void

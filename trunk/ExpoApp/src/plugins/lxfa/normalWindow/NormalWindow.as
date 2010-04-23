@@ -6,9 +6,14 @@ package plugins.lxfa.normalWindow
 	 * 标准窗加载顺序：
 	 * 当标准窗被加载进主容器里面的时候，开始加载360体验窗口，加载完360体验窗口时，就开始加载视频窗口和音乐播放，文本加载就随意
 	 */
+	import core.manager.scriptManager.ScriptManager;
+	import core.manager.scriptManager.ScriptName;
+	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextFieldAutoSize;
+	
+	import memory.MemoryRecovery;
 	
 	import mx.core.UIComponent;
 	
@@ -164,7 +169,7 @@ package plugins.lxfa.normalWindow
 		//*按钮的点击事件
 		private function onClick(e:MouseEvent):void
 		{
-			close();
+			ScriptManager.getInstance().runScriptByName(ScriptName.REMOVENORMALWINDOW,[]);
 		}
 		//加载视频播放
 		private function initFlvPlayer():void
@@ -242,10 +247,6 @@ package plugins.lxfa.normalWindow
 			dp.panel1.visible=false;
 			dp.panel2.visible=true;
 			dp.panel3.visible=false;
-			if(flvPlayer!=null)
-			{
-//				flvPlayer.play();//暂停播放
-			}
 		}
 		//音频按钮的点击事件
 		private function onMusicClick(e:MouseEvent):void
@@ -253,32 +254,153 @@ package plugins.lxfa.normalWindow
 			dp.panel1.visible=false;
 			dp.panel2.visible=false;
 			dp.panel3.visible=true;
-			if(flvPlayer!=null)
-			{
-//				flvPlayer.pause();//暂停播放
-			}
 		}
 		//标准窗关闭，清除内存
-		private function close():void
+		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(this,Event.ADDED,onADDED);
+			MemoryRecovery.getInstance().gcFun(dp.btn_360,MouseEvent.CLICK,on360Click);
+			MemoryRecovery.getInstance().gcFun(dp.btn_video,MouseEvent.CLICK,onVideoClick);
+			MemoryRecovery.getInstance().gcFun(dp.btn_picture,MouseEvent.CLICK,onMusicClick);
+			MemoryRecovery.getInstance().gcFun(viewer360,Event.COMPLETE,onViewer360Complete);
+			MemoryRecovery.getInstance().gcFun(viewer360,Event.ID3,onView360Clear);
+			MemoryRecovery.getInstance().gcFun(dp.Btn_Close,MouseEvent.CLICK,onClick);
+			if(customScrollBar!=null)
+			{
+				if(customScrollBar.parent!=null)
+				{
+					customScrollBar.parent.removeChild(customScrollBar);
+				}
+				customScrollBar.dispose();
+				customScrollBar=null;
+			}
 			if(viewer360!=null)
 			{
+				if(viewer360.parent!=null)
+				{
+					viewer360.parent.removeChild(viewer360);
+				}
 				viewer360=null;
 			}
 			if(flvPlayer!=null)
 			{
 				flvPlayer.stopAll();
-				dp.panel2.removeChild(flvPlayer);
+				if(flvPlayer.parent!=null)
+				{
+					flvPlayer.parent.removeChild(flvPlayer);
+				}
 				flvPlayer=null;
 			}
 			if(picturePlayer!=null)
 			{
+				if(picturePlayer.parent!=null)
+				{
+					picturePlayer.parent.removeChild(picturePlayer);
+				}
 				picturePlayer.dispose();
 				picturePlayer=null;
 			}
-			dp=null;
-			this.dispatchEvent(new Event(Event.CLOSE));
-			this.parent.removeChild(this);
+			if(dp!=null)
+			{
+				if(dp.btn_360!=null)
+				{
+					if(dp.btn_360.parent!=null)
+					{
+						dp.btn_360.parent.removeChild(dp.btn_360);
+					}
+					dp.btn_360=null;
+				}
+				if(dp.btn_360_text!=null)
+				{
+					if(dp.btn_360_text.parent!=null)
+					{
+						dp.btn_360_text.parent.removeChild(dp.btn_360_text);
+					}
+					dp.btn_360_text=null;
+				}
+				if(dp.Btn_Close!=null)
+				{
+					if(dp.Btn_Close.parent!=null)
+					{
+						dp.Btn_Close.parent.removeChild(dp.Btn_Close);
+					}
+					dp.Btn_Close=null;
+				}
+				if(dp.btn_picture!=null)
+				{
+					if(dp.btn_picture.parent!=null)
+					{
+						dp.btn_picture.parent.removeChild(dp.btn_picture);
+					}
+					dp.btn_picture=null;
+				}
+				if(dp.btn_picture_text!=null)
+				{
+					if(dp.btn_picture_text.parent!=null)
+					{
+						dp.btn_picture_text.parent.removeChild(dp.btn_picture_text);
+					}
+					dp.btn_picture_text=null;
+				}
+				if(dp.btn_video!=null)
+				{
+					if(dp.btn_video.parent!=null)
+					{
+						dp.btn_video.parent.removeChild(dp.btn_video);
+					}
+					dp.btn_video=null;
+				}
+				if(dp.btn_video_text!=null)
+				{
+					if(dp.btn_video_text.parent!=null)
+					{
+						dp.btn_video_text.parent.removeChild(dp.btn_video_text);
+					}
+					dp.btn_video_text=null;
+				}
+				if(dp.center!=null)
+				{
+					if(dp.center.parent!=null)
+					{
+						dp.center.parent.removeChild(dp.center);
+					}
+					dp.center=null;
+				}
+				if(dp.panel1!=null)
+				{
+					if(dp.panel1.parent!=null)
+					{
+						dp.panel1.parent.removeChild(dp.panel1);
+					}
+					dp.panel1=null;
+				}
+				if(dp.panel2!=null)
+				{
+					if(dp.panel2.parent!=null)
+					{
+						dp.panel2.parent.removeChild(dp.panel2);
+					}
+					dp.panel2=null;
+				}
+				if(dp.panel3!=null)
+				{
+					if(dp.panel3.parent!=null)
+					{
+						dp.panel3.parent.removeChild(dp.panel3);
+					}
+					dp.panel3=null;
+				}
+				dp.stop();
+				if(dp.parent!=null)
+				{
+					dp.parent.removeChild(dp);
+				}
+				dp=null;
+			}
+			pictureUrl=null;
+			videoUrl=null;
+			pictureUrls=null;
+			text=null;
 		}
 	}
 }
