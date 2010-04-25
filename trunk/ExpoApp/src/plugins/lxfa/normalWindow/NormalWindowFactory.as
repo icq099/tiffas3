@@ -11,6 +11,7 @@ package plugins.lxfa.normalWindow
 	
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.geom.Point;
 	
 	import memory.MyGC;
 	
@@ -36,6 +37,7 @@ package plugins.lxfa.normalWindow
 		private var animate:DisplayObject          //桂娃
 		private var animateParent:Canvas;    //桂娃的父亲容器
 		private var normalWindow:NormalWindow;
+		private var animatePosition:Point=new Point(); //桂娃刚开始的位置
 		public function NormalWindowFactory(ID:int)
 		{
 			BackGroundMusicManager.getInstance().dispose();
@@ -78,6 +80,8 @@ package plugins.lxfa.normalWindow
 		        ScriptManager.getInstance().runScriptByName(ScriptName.ADD_ANIMATE,[animateId]);
 		        animate=PluginManager.getInstance().getPlugin("AnimateModule");
 		        animateParent=Canvas(animate.parent);
+		        animatePosition.x= animate.x;
+		        animatePosition.y= animate.y;
 		        animate.x=-20;
 		        animate.y=300;
 			    this.addChild(animate);
@@ -101,7 +105,8 @@ package plugins.lxfa.normalWindow
 				ScriptManager.getInstance().runScriptByName(ScriptName.REMOVE_ANIMATE,[]);
 				if(animate!=null)
 				{
-					animate.x=2000;
+					animate.x=animatePosition.x;
+					animate.y=animatePosition.y;
 					animateParent.addChild(animate);
 				}
 				PopUpManager.removePopUp(this);

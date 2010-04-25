@@ -1,9 +1,10 @@
 package plugins.lsd.AnimatePlayer.control
 {
+	import core.manager.MainSystem;
 	import core.manager.modelManager.ModelManager;
 	import core.manager.pluginManager.PluginManager;
-	import core.manager.sceneManager.SceneManager;
 	import core.manager.sceneManager.SceneChangeEvent;
+	import core.manager.sceneManager.SceneManager;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
@@ -12,6 +13,7 @@ package plugins.lsd.AnimatePlayer.control
 	import mx.core.UIComponent;
 	
 	import plugins.lsd.AnimatePlayer.view.AnimatePlayer;
+	import plugins.lxfa.normalWindow.event.NormalWindowEvent;
 	
 	public class AnimatePlayerCtr extends UIComponent
 	{
@@ -33,8 +35,14 @@ package plugins.lsd.AnimatePlayer.control
 				this.addChild(animatePlayer);
 				animatePlayer.load(ModelManager.getInstance().xmlAnimate.Animate[ID].@url);
 				SceneManager.getInstance().addEventListener(SceneChangeEvent.INIT,on_init);
+				MainSystem.getInstance().addEventListener(NormalWindowEvent.SHOW,onNormalWindowShow);//弹标准窗的时候也要删掉自己
 			}
 			return null;
+		}
+		private function onNormalWindowShow(e:SceneChangeEvent):void
+		{
+			MemoryRecovery.getInstance().gcFun(MainSystem.getInstance(),NormalWindowEvent.SHOW,onNormalWindowShow);
+			ScriptManager.getInstance().runScriptByName(ScriptName.REMOVE_ANIMATE,[]);
 		}
 		private function on_init(e:SceneChangeEvent):void
 		{
@@ -43,6 +51,7 @@ package plugins.lsd.AnimatePlayer.control
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(MainSystem.getInstance(),NormalWindowEvent.SHOW,onNormalWindowShow);
 			MemoryRecovery.getInstance().gcFun(SceneManager.getInstance(),SceneChangeEvent.INIT,on_init);
 			if(animatePlayer!=null)
 			{
