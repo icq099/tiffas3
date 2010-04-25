@@ -14,8 +14,7 @@ package core.manager
 	{
 	    private static var instance:MainSystem
 	    public var _isBusy:Boolean=false;
-	    public var currentScene:int;
-	    public var currentHotpoint:*;
+ 	    public var currentHotpoint:*;
 		public function MainSystem()
 		{
 		   if(instance==null)
@@ -59,14 +58,14 @@ package core.manager
 		public function set isBusy(val:Boolean):void
 		{
 			_isBusy=val;
-			if(_isBusy && oldBusyState==false)
-			{
-				CursorManager.setBusyCursor();
-			}else if(!_isBusy && oldBusyState==true)
-			{
-				CursorManager.removeBusyCursor();
-			}
-			oldBusyState=_isBusy;
+//			if(_isBusy && oldBusyState==false)
+//			{
+//				CursorManager.setBusyCursor();
+//			}else if(!_isBusy && oldBusyState==true)
+//			{
+//				CursorManager.removeBusyCursor();
+//			}
+//			oldBusyState=_isBusy;
 		}
 		public function get isBusy():Boolean
 		{

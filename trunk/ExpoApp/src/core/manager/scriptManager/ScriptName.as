@@ -30,6 +30,8 @@ package core.manager.scriptManager
 		public static const REMOVE_ANIMATE:String="removeAnimate";              //删除精灵
 		//plugins/lxfa/inquire/InquireBase
 		public static const SHOW_INQUIRE:String="showInquire";              //显示询问是否前进的窗口
+		public static const ADD_YES_CLICK_SCRIPT:String="addYesClickScript";              //添加点击了yes按钮之后，要触发的脚本
+		public static const CLEAR_YES_CLICK_SCRIPT:String="clearYesClickScript"; 
 		//plugins/lxfa/chengshiguangying/ChengShiGuangYingBase
 		public static const SHOW_CHENG_SHI_GUANG_YING:String="showChengShiGuangYing";              //显示城市光影
 		//plugins/lsd/swfModule/SwfModuleBase

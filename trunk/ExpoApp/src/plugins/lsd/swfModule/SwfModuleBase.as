@@ -1,8 +1,8 @@
 package plugins.lsd.swfModule
 {
 	import core.manager.MainSystem;
-	import core.manager.sceneManager.SceneManager;
 	import core.manager.sceneManager.SceneChangeEvent;
+	import core.manager.sceneManager.SceneManager;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
@@ -73,7 +73,7 @@ package plugins.lsd.swfModule
 				loading_mc=null;
 			}
 			this.addChild(swfPlayer);
-			SceneManager.getInstance().dispacherChangeCompleteEvent(MainSystem.getInstance().currentScene);
+			SceneManager.getInstance().dispacherJustBeforeCompleteEvent(SceneManager.getInstance().currentSceneId);
 			SceneManager.getInstance().addEventListener(SceneChangeEvent.COMPLETE,dispose);
 			SceneManager.getInstance().addEventListener(SceneChangeEvent.INIT,otherSceneInit);
 			MainSystem.getInstance().isBusy=false;
