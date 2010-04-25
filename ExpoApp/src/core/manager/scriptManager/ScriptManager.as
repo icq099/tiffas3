@@ -24,7 +24,7 @@ package core.manager.scriptManager
 			{
 				throw new Error("ScriptManager不能被实例化");
 			}
-			ScriptManager.getInstance().addApi(ScriptName.RUNSCRIPTUNTILSCRIPTEXIST,runScriptUntilScriptExist);
+			ScriptManager.getInstance().addApi(ScriptName.RUN_SCRIPT_UNTIL_SCRIPT_EXIST,runScriptUntilScriptExist);
 		}
 		public static function getInstance():ScriptManager
 		{

@@ -5,6 +5,7 @@
 	import flash.events.*;
 	import flash.filters.*;
 	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
 	
 	import memory.MemoryRecovery;
 	import memory.MyGC;
@@ -122,6 +123,7 @@
 		}
 		private function on3DPress(e:InteractiveScene3DEvent):void{
 			MainSystem.getInstance().runAPIDirectDirectly("showNormalWindow",[int(Plane(e.currentTarget).name)]);
+			trace(int(Plane(e.currentTarget).name));
 		}
 		private function onEventRender3D(e:Event):void {	
 			if(basicView!=null)
@@ -135,6 +137,17 @@
 			if(basicView!=null)
 			{
 				basicView.camera.rotationY=(mouseX/900)*(maxRotationY-minRotationY)+minRotationY;
+			}
+		}
+		public function stopRender():void
+		{
+			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,onEventRender3D);
+		}
+		public function startRender():void
+		{
+			if(!this.hasEventListener(Event.ENTER_FRAME))
+			{
+				this.addEventListener(Event.ENTER_FRAME, onEventRender3D,false,0,true);
 			}
 		}
 		public function dispose():void

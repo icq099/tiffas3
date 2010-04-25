@@ -23,12 +23,12 @@ package plugins.lxfa.chengshiguangying
 		private var ID:int;
 		public function ChengShiGuangYingBase()
 		{
-			ScriptManager.getInstance().addApi(ScriptName.SHOWCHENGSHIGUANGYING, init);
+			ScriptManager.getInstance().addApi(ScriptName.SHOW_CHENG_SHI_GUANG_YING, init);
 		}
 		private function init(ID:int):void
 		{
 			this.ID=ID;
-			ScriptManager.getInstance().runScriptByName(ScriptName.STOPRENDER,[]);
+			ScriptManager.getInstance().runScriptByName(ScriptName.STOP_RENDER,[]);
 			itemModel=new ItemModel();
 			customWindow=new CustomWindow(itemModel.getSwfUrl(ID), itemModel.getText(ID));
 			customWindow.addEventListener(CustomWindowEvent.SWF_COMPLETE, on_swf_complete);

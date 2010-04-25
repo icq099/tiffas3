@@ -3,6 +3,7 @@ package plugins.lxfa.No3.view
 	import core.manager.MainSystem;
 	import core.manager.pluginManager.PluginManager;
 	import core.manager.pluginManager.event.PluginEvent;
+	import core.manager.sceneManager.SceneManager;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
@@ -70,7 +71,7 @@ package plugins.lxfa.No3.view
 			}
 			MainSystem.getInstance().isBusy=false;
 			PluginManager.getInstance().removePluginById("IndexModule");
-			ScriptManager.getInstance().runScriptByName(ScriptName.ADDANIMATE,[0]);
+			ScriptManager.getInstance().runScriptByName(ScriptName.ADD_ANIMATE,[0]);
 			flvPlayer.addEventListener(Event.CLOSE,on_flvPlayer_close);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,flvPlayer_NetStatus_handler);
 		}
@@ -85,7 +86,7 @@ package plugins.lxfa.No3.view
 		public function step4():void
 		{
             PluginManager.getInstance().showPluginById("No3SwfModule");
-            PluginManager.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));
+            SceneManager.getInstance().dispacherSceneChangeInitEvent(-1);
 		}
 		public function dispose():void
 		{

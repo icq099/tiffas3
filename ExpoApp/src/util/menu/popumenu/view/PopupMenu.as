@@ -1,16 +1,13 @@
 package util.menu.popumenu.view
 {
-	import core.manager.MainSystem;
+	import core.manager.scriptManager.ScriptManager;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filters.GlowFilter;
 	import flash.text.TextFormat;
 	import flash.utils.getQualifiedClassName;
-	
-	import memory.MemoryRecovery;
 	
 	import mx.core.Application;
 	
@@ -47,7 +44,7 @@ package util.menu.popumenu.view
 			if(e.target.parent!=null)
 			{
 				var name:String=getQualifiedClassName(e.target.parent);
-				if(this.parent!=null && name!="lxfa.view.menu.popumenu.view::PopupMenu" &&name!="MainMenuTopSwc" &&name!="lxfa.view.menu.popumenu.view::SecondPopupMenu")
+				if(this.parent!=null && name!="util.menu.popumenu.view::PopupMenu" &&name!="MainMenuTopSwc" &&name!="util.menu.popumenu.view::SecondPopupMenu")
 				{
 					this.parent.removeChild(this);
 				}
@@ -77,11 +74,11 @@ package util.menu.popumenu.view
 			currentHeight+=pup.height;
 			for(var i:int=0;i<items.length;i++)
 			{
-				this.addChild(createItem(items[i].name,items[i].id));
+				this.addChild(createItem(items[i].name,items[i].script));
 			}
 		}
 		private var filter:GlowFilter=new GlowFilter(0xffff3,1,30,30);
-		private function createItem(name:String,id:int):PopuMenuRect
+		private function createItem(name:String,script:String):PopuMenuRect
 		{
 			var popr:PopuMenuRect=new PopuMenuRect();
 			popr.y=currentHeight;
@@ -94,7 +91,8 @@ package util.menu.popumenu.view
 			popr.text.mouseEnabled=false;
 			popr.buttonMode=true;
 			popr.addEventListener(MouseEvent.CLICK,function():void{
-				MainSystem.getInstance().runAPIDirectDirectly("showNormalWindow",[int(id)]);
+				removeMyShelf();
+				ScriptManager.getInstance().runScriptDirectly(script);
 			});
 			popr.addEventListener(MouseEvent.MOUSE_OVER,function(e:MouseEvent):void{
 				removeAllSecondPopupMenu();
@@ -169,14 +167,14 @@ package util.menu.popumenu.view
 			currentHeight+=up.height;
 			for(var i:int=0;i<menuItems[id].detail.length;i++)
 			{
-				container.addChild(createSecondItem(menuItems[id].detail[i].name,menuItems[id].detail[i].id));
+				container.addChild(createSecondItem(menuItems[id].detail[i].name,menuItems[id].detail[i].script));
 			}
 			var down:PopuMenuDown1=new PopuMenuDown1();
 			down.y=currentHeight;
 			container.addChild(down);
 			return container;
 		}
-		private function createSecondItem(name:String,id:int):PopuMenuMenuCenter1
+		private function createSecondItem(name:String,script:String):PopuMenuMenuCenter1
 		{
 			var popr:PopuMenuMenuCenter1=new PopuMenuMenuCenter1();
 			popr.y=currentHeight;
@@ -188,16 +186,24 @@ package util.menu.popumenu.view
 			}
 			popr.text.mouseEnabled=false;
 			popr.buttonMode=true;
-			popr.addEventListener(MouseEvent.CLICK,function():void{
-				MainSystem.getInstance().runAPIDirectDirectly("showNormalWindow",[int(id)]);
+			popr.addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void{
+				removeMyShelf();
+				ScriptManager.getInstance().runScriptDirectly(script);
 			});
-			popr.addEventListener(MouseEvent.MOUSE_OVER,function():void{
+			popr.addEventListener(MouseEvent.MOUSE_OVER,function(e:MouseEvent):void{
 				popr.text.filters=[filter];
 			});
-			popr.addEventListener(MouseEvent.MOUSE_OUT,function():void{
+			popr.addEventListener(MouseEvent.MOUSE_OUT,function(e:MouseEvent):void{
 				popr.text.filters=[];
 			});
 			return popr;
+		}
+		private function removeMyShelf():void
+		{
+			if(this.parent!=null)
+			{
+				this.parent.removeChild(this);
+			}
 		}
 	}
 }

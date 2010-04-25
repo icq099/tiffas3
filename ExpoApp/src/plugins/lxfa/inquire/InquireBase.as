@@ -8,6 +8,9 @@ package plugins.lxfa.inquire
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	
+	import memory.MemoryRecovery;
+	
 	import mx.containers.Canvas;
 	import mx.core.Application;
 	import mx.core.UIComponent;
@@ -21,15 +24,16 @@ package plugins.lxfa.inquire
 		private var animate:DisplayObject//桂娃
 		public function InquireBase()
 		{
-			ScriptManager.getInstance().addApi(ScriptName.SHOWINQUIRE,initInquireSwc);
+			ScriptManager.getInstance().addApi(ScriptName.SHOW_INQUIRE,initInquireSwc);
 		}
 		private function initInquireSwc(id:int):void
 		{
 			inquireSwc=new InquireSwc();
 			inquireContainer=new UIComponent();
 			inquireContainer.addChild(inquireSwc);
+			MainSystem.getInstance().dispachNormalWindowShowEvent();
 	        //显示桂娃
-	        ScriptManager.getInstance().runScriptByName(ScriptName.ADDANIMATE,[id]);
+	        ScriptManager.getInstance().runScriptByName(ScriptName.ADD_ANIMATE,[id]);
 	        animate=PluginManager.getInstance().getPlugin("AnimateModule");
 	        animateParent=Canvas(animate.parent);
 	        animate.x=-300;
@@ -48,32 +52,42 @@ package plugins.lxfa.inquire
 		//抛出打开下个场景的事件
 		private function on_yes_click(e:MouseEvent):void
 		{
-			if(!MainSystem.getInstance().isBusy)
-			{
-				this.dispatchEvent(new Event(Event.OPEN));
-				e.currentTarget.mouseEnabled=false;
-				dispose();
-			}
+			this.dispatchEvent(new Event(Event.OPEN));
+			e.currentTarget.mouseEnabled=false;
+			dispose();
 		}
 		//抛出关闭界面的事件
 		private function on_no_click(e:MouseEvent):void
 		{
-			if(!MainSystem.getInstance().isBusy)
-			{
-				this.dispatchEvent(new Event(Event.CLOSE));
-				e.currentTarget.mouseEnabled=false;
-				dispose();
-			}
+			this.dispatchEvent(new Event(Event.CLOSE));
+			MainSystem.getInstance().isBusy=false;
+			MainSystem.getInstance().dispachNormalWindowRemoveEvent();
+			e.currentTarget.mouseEnabled=false;
+			dispose();
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(inquireSwc,MouseEvent.CLICK,on_yes_click);
+			MemoryRecovery.getInstance().gcFun(inquireSwc,MouseEvent.CLICK,on_no_click);
+			if(inquireSwc!=null)
+			{
+				if(inquireSwc.parent!=null)
+				{
+					inquireSwc.parent.removeChild(inquireSwc);
+				}
+				inquireSwc=null;
+			}
+			if(animate!=null)
+			{
+				if(animate.parent!=null)
+				{
+					animate.parent.removeChild(animate);
+				}
+			}
+			ScriptManager.getInstance().runScriptByName(ScriptName.REMOVE_ANIMATE,[]);
+			animateParent.addChild(animate);
 			PopUpManager.removePopUp(inquireContainer);
 			inquireContainer=null;
-			if(MainSystem.getInstance().isBusy!=true)
-			{
-				ScriptManager.getInstance().runScriptByName(ScriptName.REMOVEANIMATE,[]);
-			}
-			animateParent.addChild(animate);
 		}
 	}
 }

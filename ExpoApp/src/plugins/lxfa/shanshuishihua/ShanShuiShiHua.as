@@ -26,7 +26,7 @@ package  plugins.lxfa.shanshuishihua
 		}
 		private function init():void
 		{
-			ScriptManager.getInstance().runScriptByName(ScriptName.STOPRENDER,[]);
+			ScriptManager.getInstance().runScriptByName(ScriptName.STOP_RENDER,[]);
 			shanShuiShiHuaSwc=new ShanShuiShiHuaSwc();
 			this.addChild(shanShuiShiHuaSwc);
 			initFlatWall3D_Reflection();
@@ -94,7 +94,7 @@ package  plugins.lxfa.shanshuishihua
 				}
 				shanShuiShiHuaSwc=null;
 			}
-			ScriptManager.getInstance().runScriptByName(ScriptName.STARTRENDER,[]);
+			ScriptManager.getInstance().runScriptByName(ScriptName.START_RENDER,[]);
 			MyGC.gc();
 		}
 	}

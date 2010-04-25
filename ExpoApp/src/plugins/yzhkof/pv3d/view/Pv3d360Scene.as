@@ -1,10 +1,12 @@
 ﻿package plugins.yzhkof.pv3d.view
 {
 	import core.manager.MainSystem;
+	import core.manager.sceneManager.SceneManager;
 	
 	import flash.display.*;
 	import flash.events.*;
 	import flash.filters.GlowFilter;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
@@ -74,7 +76,7 @@
 		protected var compass_plane:Plane;
 		protected var onComplete:Function;
 		protected var view_loader:LoadingLine;
-		protected var renderable:Boolean=true;
+		protected var renderable:Boolean=false;
 		protected var url_type:String;
 
 		private var stats_view:StatsView;
@@ -151,14 +153,6 @@
 			scene.addChild(sphere);
 
 			state=BROWSING;
-			//提示文字
-			addEventListener(Event.ENTER_FRAME, function(e:Event):void
-				{
-					tip_sprite.x=mouseX;
-					tip_sprite.y=mouseY;
-
-				})
-
 		}
 
 		//添加点击热点
@@ -176,58 +170,42 @@
 			hot_point_material.smooth=true;
 
 			var hot_point_plane:Plane=new Plane(hot_point_material, width, height, segmentsW, segmentsH, init_obj);
-
 			hot_points.push(hot_point_plane);
-
 			scene.addChild(hot_point_plane);
-
 			layer_hot_points.addDisplayObject3D(hot_point_plane);
-
 			if (tip_text != "")
 			{
-
 				hot_point_plane.extra={text: tip_text};
-
 				hot_point_plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, function(e:Event):void
 					{
-
 						addChild(tip_sprite);
 						e.currentTarget.scale=1.2;
 						updateHotpoints();
 						tip_sprite.text=e.currentTarget.extra.text;
-
 					});
 				hot_point_plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, function(e:Event):void
 					{
-
 						e.currentTarget.scale=1;
 						updateHotpoints();
 						removeChild(tip_sprite);
-
 					});
-
 			}
-			
 			return hot_point_plane;
-
 		}
 
 		//清除所有点击热点
 		public function cleanAllHotPoints():void
 		{
-
 			if (hot_points.length > 0)
 			{
 				for each (var item:Plane in hot_points)
 				{
-
 					layer_hot_points.removeDisplayObject3D(item);
 					scene.removeChild(item);
 					item.material.bitmap.dispose();
 					item.material.destroy();
 
 				}
-
 				hot_points=new Array();
 			}
 
@@ -236,10 +214,8 @@
 		//更改场景全景
 		public function changeBitmap(URL:String, type:String="", onComplete:Function=null):void
 		{
-
 			if (state != LOADING_IMG)
 			{
-
 				state=LOADING_IMG;
 
 				this.url_type=type;
@@ -248,29 +224,22 @@
 
 				if (view_loader != null)
 				{
-
 					view_loader.removeEventListener(Event.ENTER_FRAME, loadEnterFrameHandler);
-
 				}
 				view_loader=new LoadingLine();
 				view_loader.addEventListener(Event.ENTER_FRAME, loadEnterFrameHandler);
 				view_loader.percent_text.text="0%"
 				view_loader.percent_text.selectable=false;
 				Application.application.addChild(Fl2Mx.fl2Mx(view_loader));
-
 				pLoader.load(new URLRequest(URL));
 			}
 		}
-
 		public function setCompassRotation(rota:Number):void
 		{
-
 			compass_plane.rotationY=rota;
-
 		}
 		private var arrowMaterials:Array=new Array();
-
-		public function addArrow(rota:Number=0, tip_text:String=""):Plane
+		public function addArrow(destination:int,rota:Number=0, tip_text:String=""):Plane
 		{
 			var material_arrow:BitmapMaterial=new BitmapMaterial(arrow_bitmapdata.clone());
 			material_arrow.smooth=true;
@@ -284,7 +253,6 @@
 			plane.moveUp(14);
 			plane.y=-80;
 			scene.addChild(plane);
-//			layer_arrows.addDisplayObject3D(plane);
 			plane.useOwnContainer=true;
 			var glowFilter:GlowFilter=new GlowFilter(0x000055, 1, 16, 16, 2, 1, false, false);
 			if (tip_text.length > 0)
@@ -302,6 +270,9 @@
 						removeChild(tip_sprite);
 						plane.filters=[];
 					});
+				plane.addEventListener(InteractiveScene3DEvent.OBJECT_PRESS,function(e:InteractiveScene3DEvent):void{
+					SceneManager.getInstance().gotoScene(destination);
+				})
 			}
 			draw();
 			return plane;
@@ -330,13 +301,6 @@
 		//增加动画
 		public function addAminate(URL:String, init_obj:Object, cache:Boolean=false):Plane
 		{
-
-			/* var x:Number=init_obj["x"]?init_obj["x"]:0;
-			   var y:Number=init_obj["y"]?init_obj["y"]:0;
-			   var z:Number=init_obj["z"]?init_obj["z"]:0;
-			   var rotationX:Number=init_obj["rotationX"]?init_obj["rotationX"]:0;
-			   var rotationY:Number=init_obj["rotationY"]?init_obj["rotationY"]:0;
-			 var rotationZ:Number=init_obj["rotationZ"]?init_obj["rotationZ"]:0; */
 			var width:Number=init_obj["width"] ? init_obj["width"] : 100;
 			var height:Number=init_obj["height"] ? init_obj["height"] : 100;
 			var segmentsW:Number=init_obj["segmentsW"] ? init_obj["segmentsW"] : 2;
@@ -389,29 +353,23 @@
 				new UpDownMovement(plane_animate, maxHeight, minHeight, speed);
 			}
 			animates.push(plane_animate);
-
 			scene.addChild(plane_animate);
 			var loader:Loader=new Loader();
 			loader.load(new URLRequest(URL));
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e:Event):void
 				{
-
 					if (animates.indexOf(plane_animate) > -1)
 					{
-
 						var content:MovieClip=e.currentTarget.content
 						if (visible == 1) //如果是可见的就是LED墙
 						{
 							var material:MovieMaterial;
 							if (cache)
 							{
-
 								material=new MovieCacheMaterial(content, true, true, true, new Rectangle(0, 0, content.width, content.height));
-
 							}
 							else
 							{
-
 								material=new MovieMaterial(content, true, true, true, new Rectangle(0, 0, content.width, content.height));
 							}
 							material.allowAutoResize=false;
@@ -520,17 +478,14 @@
 //				});
 			}
 			return plane_animate;
-
 		}
 
 		public function cleanAllAnimate():void
 		{
-
 			if (animates.length > 0)
 			{
 				for each (var item:Plane in animates)
 				{
-
 					layer_animate.removeDisplayObject3D(item);
 					scene.removeChild(item)
 					if (item.material != null)
@@ -546,71 +501,54 @@
 						}
 					}
 				}
-
 				animates=new Array();
 			}
 		}
 
 		private function addToStageHandler(e:Event):void
 		{
-
 			this_stage=this.stage;
 			this_stage.addEventListener(Event.MOUSE_LEAVE, mouseLeaveHandler, false, 0, true);
 			this_stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler, false, 0, true);
-
 		}
 
 		private function mouseLeaveHandler(e:Event):void
 		{
-
-			_stopRend();
-
+			renderable=false;
 		}
 
 		private function mouseMoveHandler(e:MouseEvent):void
 		{
-
-			_startRend();
-
+			renderable=true;
 		}
 
 		private function loadProgessHandler(e:ProgressEvent):void
 		{
-
 			view_loader.percent_text.text=Math.round((e.bytesLoaded / e.bytesTotal) * 100) + "%";
-
 		}
 		protected function chageCompleteHandler(e:Event):void
 		{
-
 			TweenLite.to(view_loader, 0.5, {alpha: 0, onCompleteParams: [view_loader], onComplete: function(... arg):void
 				{
-
 					view_loader.removeEventListener(Event.ENTER_FRAME, loadEnterFrameHandler);
 					if(view_loader.parent!=null)
 					{
 						view_loader.parent.removeChild(view_loader);
 					}
 					view_loader=null;
-
 				}});
 
 			if (material != null)
 			{
 				try
 				{
-
 					material.bitmap.dispose();
-
 				}
 				catch (e:Error)
 				{
-
 				}
 				material.destroy();
-
 			}
-
 			switch (url_type)
 			{
 				case "movieclip":
@@ -720,46 +658,23 @@
 		{
 
 			addEventListener(Event.ADDED_TO_STAGE, addToStageHandler);
-			_startRend();
+			addEventListener(Event.ENTER_FRAME, onEnterFrameHandler);
 
 		}
-
 		private function onEnterFrameHandler(e:Event):void
 		{
-			draw();
-		}
-
-		private function _startRend():void
-		{
-
-			if (renderable)
+			if(renderable)
 			{
-				addEventListener(Event.ENTER_FRAME, onEnterFrameHandler)
+				draw();
 			}
-
 		}
-
-		private function _stopRend():void
-		{
-
-			removeEventListener(Event.ENTER_FRAME, onEnterFrameHandler)
-
-		}
-
 		public function startRend():void
 		{
-
 			renderable=true;
-			_startRend();
-
 		}
-
 		public function stopRend():void
 		{
-
 			renderable=false;
-			_stopRend();
-
 		}
 		private var loader:Loader;
 		private var task:Array=new Array();
@@ -801,7 +716,7 @@
 			loader.unload();
 			if(index==task.length)
 			{
-				MainSystem.getInstance().dispacherChangeCompleteEvent(MainSystem.getInstance().currentScene);
+				SceneManager.getInstance().dispacherJustBeforeCompleteEvent(SceneManager.getInstance().currentSceneId);
 				MemoryRecovery.getInstance().gcFun(Application.application,Event.ENTER_FRAME,refressAddon);
 				Application.application.addEventListener(Event.ENTER_FRAME,refressAddon);
 			}else
@@ -824,7 +739,11 @@
 				var currentBitmapData:BitmapData=BitmapData(addvanceArray.getValue(addvanceArray.index));
 				var temp:BitmapData=tempBitmaps[i];
 				material.bitmap.copyPixels(temp,new Rectangle(0,0,temp.width,temp.height),new Point(task[i].x,task[i].y));
-				material.bitmap.copyPixels(currentBitmapData,new Rectangle(0,0,currentBitmapData.width-1,currentBitmapData.height-1),new Point(task[i].x,task[i].y),null,null,true);
+//				material.bitmap.copyPixels(currentBitmapData,new Rectangle(0,0,currentBitmapData.width-1,currentBitmapData.height-1),new Point(task[i].x,task[i].y),null,null,true);
+				var matrix:Matrix=new Matrix();
+				matrix.tx=task[i].x;
+				matrix.ty=task[i].y;
+				material.bitmap.draw(currentBitmapData,matrix,null,null,null,false);
 				addvanceArray.index++;
 				if(addvanceArray.index==addvanceArray.length)
 				{
@@ -834,14 +753,12 @@
 		}
 		public function draw():void
 		{
-
+			if(tip_sprite!=null)
+			{
+				tip_sprite.x=mouseX;
+				tip_sprite.y=mouseY;
+			}
 			renderer.renderScene(scene, camera, viewport);
-//			updateHotpoints();
-		}
-
-		public function draw_layer():void
-		{
-//			renderer.renderLayers(scene,camera,viewport,[layer_arrows,layer_animate,layer_hot_points]);
 		}
 	}
 }

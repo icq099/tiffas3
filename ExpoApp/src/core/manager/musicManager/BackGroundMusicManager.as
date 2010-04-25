@@ -2,7 +2,9 @@ package core.manager.musicManager
 {
 	import core.manager.MainSystem;
 	import core.manager.musicManager.model.BackgroundMusicModel;
-	import core.manager.sceneManager.event.SceneChangeEvent;
+	import core.manager.sceneManager.SceneChangeEvent;
+	import core.manager.scriptManager.ScriptManager;
+	import core.manager.scriptManager.ScriptName;
 	
 	import flash.events.Event;
 	import flash.media.Sound;
@@ -43,6 +45,12 @@ package core.manager.musicManager
 				currentMusic=backGroundMusicModel.getMusicUrl(e.id);
 				loadBackGroundMusic(backGroundMusicModel.getMusicUrl(e.id));
 			});
+			initScript();
+		}
+		private function initScript():void
+		{
+			ScriptManager.getInstance().addApi(ScriptName.LOAD_BACKGROUND_MUSIC,loadBackGroundMusic);
+			ScriptManager.getInstance().addApi(ScriptName.DISPOSE_BACKGROUND_MUSIC,dispose);
 		}
 		public static function getInstance():BackGroundMusicManager
 		{
@@ -50,9 +58,9 @@ package core.manager.musicManager
 			return instance;
 		}
 		public function loadBackGroundMusic(url:String):void{
+			currentMusic=url;
 		    if(url!="" && url!=null && _hasBackGroundSound)
 		    {
-		    	currentMusic=url;
 			    sound=new Sound();
 				sound.load(new URLRequest(url),soundLoaderContext);
 				soundChannel=sound.play();

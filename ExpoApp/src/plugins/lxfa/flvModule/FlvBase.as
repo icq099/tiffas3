@@ -2,7 +2,8 @@ package plugins.lxfa.flvModule
 {
 	import caurina.transitions.Tweener;
 	
-	import core.manager.MainSystem;
+	import core.manager.sceneManager.SceneChangeEvent;
+	import core.manager.sceneManager.SceneManager;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
@@ -25,9 +26,9 @@ package plugins.lxfa.flvModule
 		private var loading_mc:LoadingWaveRota;
 		public function FlvBase()
 		{
-			ScriptManager.getInstance().addApi(ScriptName.SHOWFLV,initPlayer);
-			ScriptManager.getInstance().addApi(ScriptName.REMOVEFLV,dispose);
-			ScriptManager.getInstance().addApi(ScriptName.INITONFLVPLAYCOMPLETESCRIPT,initOnPlayCompleteScript);
+			ScriptManager.getInstance().addApi(ScriptName.SHOW_FLV,initPlayer);
+			ScriptManager.getInstance().addApi(ScriptName.REMOVE_FLV,dispose);
+			ScriptManager.getInstance().addApi(ScriptName.INIT_ON_FLV_PLAY_COMPLETE_SCRIPT,initOnPlayCompleteScript);
 		}
 		public function initPlayer(url:String,hasCloseButton:Boolean=false):void
 		{
@@ -42,7 +43,7 @@ package plugins.lxfa.flvModule
 			flvPlayer.addEventListener(Event.CLOSE,onClose);
 			flvPlayer.addEventListener(ProgressEvent.PROGRESS,PROGRESS_refresh);
 			flvPlayer.addEventListener(FLVPlayerEvent.COMPLETE,on_complete);
-			MainSystem.getInstance().addSceneChangeCompleteHandler(dispose);
+			SceneManager.getInstance().addEventListener(SceneChangeEvent.COMPLETE,dispose);
 		}
 		private function on_complete(e:FLVPlayerEvent):void
 		{
@@ -76,7 +77,7 @@ package plugins.lxfa.flvModule
 			onPlayCompleteScript=ScriptManager.getInstance().filterScript(onPlayCompleteScript);
 			this.onPlayCompleteScript=onPlayCompleteScript;
 		}
-		public function dispose():void
+		public function dispose(e:SceneChangeEvent):void
 		{
 			if(flvPlayer!=null)
 			{

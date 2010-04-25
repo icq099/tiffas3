@@ -15,7 +15,7 @@ package util.menu.popumenu.model
 			var temp:Array=new Array();
 			for(var i:int=0;i<xmlData.PopMenu[ID].Item.length();i++)
 			{
-				temp.push({name:xmlData.PopMenu[ID].Item[i].@name,id:xmlData.PopMenu[ID].Item[i].@id});
+				temp.push({name:xmlData.PopMenu[ID].Item[i].@name,script:xmlData.PopMenu[ID].Item[i].@script});
 			}
 			return temp;
 		}
@@ -27,7 +27,7 @@ package util.menu.popumenu.model
 				var temp:Array=new Array();
 				for(var j:int=0;j<xmlData.PopMenu[ID].MenuItem[i].Item.length();j++)
 				{
-					temp.push({name:xmlData.PopMenu[ID].MenuItem[i].Item[j].@name,id:xmlData.PopMenu[ID].MenuItem[i].Item[j].@id});
+					temp.push({name:xmlData.PopMenu[ID].MenuItem[i].Item[j].@name,script:xmlData.PopMenu[ID].MenuItem[i].Item[j].@script});
 				}
 				temp1.push({name:xmlData.PopMenu[ID].MenuItem[i].@name,detail:temp});
 			}

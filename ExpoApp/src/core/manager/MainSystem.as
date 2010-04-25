@@ -2,12 +2,13 @@ package core.manager
 {
 	import core.manager.pluginManager.PluginManager;
 	import core.manager.sceneManager.SceneManager;
-	import core.manager.sceneManager.event.SceneChangeEvent;
 	import core.manager.scriptManager.ScriptManager;
 	
 	import flash.events.EventDispatcher;
 	
 	import mx.managers.CursorManager;
+	
+	import plugins.lxfa.normalWindow.event.NormalWindowEvent;
 	
 	public class MainSystem extends EventDispatcher
 	{
@@ -54,42 +55,6 @@ package core.manager
 		{
 			PluginManager.getInstance().removePluginById(id);
 		}
-		//给插件添加自动关闭的事件
-		public function addSceneChangeInitHandler(fun:Function,param:Array=null):void
-		{
-			if(fun==null){
-				throw new Error("自动关闭的方法不能为空");
-			}else
-			{
-				SceneManager.getInstance().addEventListener(SceneChangeEvent.INIT,function on_scene_init(e:SceneChangeEvent):void{
-					var re:*;
-					re=fun.apply(NaN,param);	
-					if(getInstance().hasEventListener(SceneChangeEvent.INIT)) getInstance().removeEventListener(SceneChangeEvent.INIT,on_scene_init);
-				});
-			}
-		}
-		//给插件添加自动关闭的事件
-		public function addSceneChangeCompleteHandler(fun:Function,param:Array=null):void
-		{
-			if(fun==null){
-				throw new Error("自动关闭的方法不能为空");
-			}else
-			{
-				SceneManager.getInstance().addEventListener(SceneChangeEvent.COMPLETE,function on_scene_complete(e:SceneChangeEvent):void{
-					var re:*;
-					re=fun.apply(NaN,param);	
-					if(getInstance().hasEventListener(SceneChangeEvent.COMPLETE)) getInstance().removeEventListener(SceneChangeEvent.COMPLETE,on_scene_complete);
-				});
-			}
-		}
-		public function dispacherSceneChangeInitEvent(id:int):void
-		{
-			SceneManager.getInstance().dispacherSceneChangeInitEvent(id);
-		}
-		public function dispacherChangeCompleteEvent(id:int):void
-		{
-			SceneManager.getInstance().dispacherChangeCompleteEvent(id);
-		}
 		private var oldBusyState:Boolean=false;
 		public function set isBusy(val:Boolean):void
 		{
@@ -106,6 +71,16 @@ package core.manager
 		public function get isBusy():Boolean
 		{
 			return _isBusy;
+		}
+		//抛出标准窗显示的事件
+		public function dispachNormalWindowShowEvent():void
+		{
+			dispatchEvent(new NormalWindowEvent(NormalWindowEvent.SHOW));
+		}
+		//抛出标准窗关闭的事件
+		public function dispachNormalWindowRemoveEvent():void
+		{
+			dispatchEvent(new NormalWindowEvent(NormalWindowEvent.REMOVE));
 		}
 	}
 }

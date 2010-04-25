@@ -24,7 +24,7 @@ package plugins.lxfa.gehaiqingyun.view
 		private var list:ListBg;
 		public function GeHaiQingYun()
 		{
-			ScriptManager.getInstance().runScriptByName(ScriptName.STOPRENDER,[]);
+			ScriptManager.getInstance().runScriptByName(ScriptName.STOP_RENDER,[]);
 			initGeHaiQingYunSwc();
 		}
 		private function initGeHaiQingYunSwc():void
@@ -44,7 +44,7 @@ package plugins.lxfa.gehaiqingyun.view
 		{
 			list=new ListBg();
 			geHaiQingYunSwc.addChild(list);
-			geHaiQingYunSwc.playList.visible=false;
+			geHaiQingYunSwc.playList.x=90000;
 			list.visible=false;
 			list.x=605;list.y=325;
 		}
@@ -210,7 +210,7 @@ package plugins.lxfa.gehaiqingyun.view
 				playListCtr.dispose();
 				playListCtr=null;
 			}
-			ScriptManager.getInstance().runScriptByName(ScriptName.STARTRENDER,[]);
+			ScriptManager.getInstance().runScriptByName(ScriptName.START_RENDER,[]);
 			MyGC.gc();
 		}
 	}

@@ -75,7 +75,7 @@ package plugins.lxfa.normalWindow
 			//显示桂娃
 			if(animateId!=-1)
 			{
-		        ScriptManager.getInstance().runScriptByName(ScriptName.ADDANIMATE,[animateId]);
+		        ScriptManager.getInstance().runScriptByName(ScriptName.ADD_ANIMATE,[animateId]);
 		        animate=PluginManager.getInstance().getPlugin("AnimateModule");
 		        animateParent=Canvas(animate.parent);
 		        animate.x=-20;
@@ -98,7 +98,7 @@ package plugins.lxfa.normalWindow
 					}
 					normalWindow=null;
 				}
-				ScriptManager.getInstance().runScriptByName(ScriptName.REMOVEANIMATE,[]);
+				ScriptManager.getInstance().runScriptByName(ScriptName.REMOVE_ANIMATE,[]);
 				if(animate!=null)
 				{
 					animate.x=2000;

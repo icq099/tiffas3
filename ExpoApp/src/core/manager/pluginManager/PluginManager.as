@@ -6,15 +6,13 @@ package core.manager.pluginManager
 	import core.manager.scriptManager.ScriptName;
 	
 	import flash.display.DisplayObject;
-	import flash.display.Loader;
-	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
 	import flash.system.ApplicationDomain;
 	
 	import mx.containers.Canvas;
+	import mx.core.Application;
 	import mx.events.ModuleEvent;
+	import mx.managers.PopUpManager;
 	import mx.modules.ModuleLoader;
 	
 	import structure.HashMap;
@@ -47,8 +45,9 @@ package core.manager.pluginManager
 		//初始化插件管理者，已经初始化的话就不能再初始化了
 		public function init(parent:*):void
 		{
-			ScriptManager.getInstance().addApi(ScriptName.SHOWPLUGINBYID,showPluginById);//添加显示插件的脚本
-			ScriptManager.getInstance().addApi(ScriptName.SHOWSINGLEPLUGINBYID,showSinglePluginById);
+			ScriptManager.getInstance().addApi(ScriptName.SHOW_PLUGIN_BY_ID,showPluginById);//添加显示插件的脚本
+			ScriptManager.getInstance().addApi(ScriptName.SHOW_SINGLE_PLUGIN_BY_ID,showSinglePluginById);//添加插件，所添加的插件如果存在，就不添加了
+			ScriptManager.getInstance().addApi(ScriptName.POPUP_PLUGIN_BY_ID,popupPluginById);
 			if(this.parent==null && parent!=null)
 			{
 				this.parent=parent;
@@ -122,6 +121,18 @@ package core.manager.pluginManager
 			if(_instance==null) _instance=new PluginManager();
 			return _instance;
 		}
+		//用popupManager显示指定的插件
+		public function popupPluginById(id:String):Boolean
+		{
+			var item:PluginItem=PluginItem(pluginDataIndex.getValue(id));
+			if(item==null)
+			{
+				trace("插件:"+id+"不存在");
+				return false;
+			}
+			showPlugin(item.id,item.url,item.floor,item.x,item.y,true);
+			return true;
+		}
 		//根据名字显示插件
 		public function showPluginById(id:String):Boolean
 		{
@@ -135,7 +146,7 @@ package core.manager.pluginManager
 			return true;
 		}
 		//根据详细参数显示插件
-		public function showPlugin(id:String,url:String,floor:int,x:int,y:int):void
+		public function showPlugin(id:String,url:String,floor:int,x:int,y:int,popup:Boolean=false):void
 		{
 			var loader:ModuleLoader=new ModuleLoader();
 			loader.applicationDomain=ApplicationDomain.currentDomain;
@@ -145,7 +156,7 @@ package core.manager.pluginManager
 				if(!loader.child is IPlugin){
 					throw new Error(url+"插件必需实现IPlugin接口!");
 				}
-				var object:Object={id:id,url:url,floor:floor,plugin:loader.child,loader:loader};
+				var object:Object={id:id,url:url,floor:floor,plugin:loader.child,loader:loader,isPop:popup};
 				pluginList.put(id,object);
 				PluginManager.getInstance().dispatchEvent(new PluginEvent(PluginEvent.READY,id,floor,loader.child));
 			});
@@ -162,20 +173,28 @@ package core.manager.pluginManager
 				}
 			});
 			loader.url=url;
-			if(floor<0)
+			//显示loader
+			if(popup)
 			{
-				floorList[0].addChild(loader);
-				trace("PluginManager::指定的层次小于0，将使用0号层存储插件");
-			}
-			else if(floor<floorList.length)
-			{
-				floorList[floor].addChild(loader);
-				loader.x=x;loader.y=y;
+				PopUpManager.addPopUp(loader,DisplayObject(Application.application), true);
+	            PopUpManager.centerPopUp(loader);
 			}else
 			{
-				floorList[floorList.length-1].addChild(loader);
-				trace("PluginManager::指定的层次大于最高层次，将使用最高层存储插件!");
+				if(floor<0)
+				{
+					floorList[0].addChild(loader);
+					trace("PluginManager::指定的层次小于0，将使用0号层存储插件");
+				}
+				else if(floor<floorList.length)
+				{
+					floorList[floor].addChild(loader);
+				}else
+				{
+					floorList[floorList.length-1].addChild(loader);
+					trace("PluginManager::指定的层次大于最高层次，将使用最高层存储插件!");
+				}
 			}
+			loader.x=x;loader.y=y;
 		}
 		//删除插件
 		public function removePluginById(id:String):Boolean{
@@ -185,7 +204,13 @@ package core.manager.pluginManager
 				var moduleLoader:ModuleLoader=pluginObj.loader;
 				pluginList.remove(id);
 				IPlugin(moduleLoader.child).dispose();
-				floorList[pluginObj.floor].removeChild(moduleLoader);
+				if(pluginObj.isPop)
+				{
+					PopUpManager.removePopUp(moduleLoader);
+				}else
+				{
+					floorList[pluginObj.floor].removeChild(moduleLoader);
+				}
 				moduleLoader.child=null;
 				moduleLoader.unloadModule();
 				moduleLoader=null;
