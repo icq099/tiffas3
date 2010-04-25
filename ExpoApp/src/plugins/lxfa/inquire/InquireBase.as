@@ -6,8 +6,8 @@ package plugins.lxfa.inquire
 	import core.manager.scriptManager.ScriptName;
 	
 	import flash.display.DisplayObject;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	import memory.MemoryRecovery;
 	
@@ -22,8 +22,12 @@ package plugins.lxfa.inquire
 		private var inquireContainer:UIComponent;//仅仅是为了把能扔进PopManager
 		private var animateParent:Canvas;//桂娃的父亲容器
 		private var animate:DisplayObject//桂娃
+		private var yesClickScript:String="";
+		private var oldAnimatePosition:Point=new Point(0,0);
 		public function InquireBase()
 		{
+			ScriptManager.getInstance().addApi(ScriptName.CLEAR_YES_CLICK_SCRIPT,clearYesClickScript);
+			ScriptManager.getInstance().addApi(ScriptName.ADD_YES_CLICK_SCRIPT,addYesClickScript);
 			ScriptManager.getInstance().addApi(ScriptName.SHOW_INQUIRE,initInquireSwc);
 		}
 		private function initInquireSwc(id:int):void
@@ -36,6 +40,8 @@ package plugins.lxfa.inquire
 	        ScriptManager.getInstance().runScriptByName(ScriptName.ADD_ANIMATE,[id]);
 	        animate=PluginManager.getInstance().getPlugin("AnimateModule");
 	        animateParent=Canvas(animate.parent);
+	        oldAnimatePosition.x=animate.x;
+	        oldAnimatePosition.y=animate.y;
 	        animate.x=-300;
 	        animate.y=20;
 	        inquireContainer.addChild(animate);
@@ -49,17 +55,26 @@ package plugins.lxfa.inquire
 	        inquireSwc.yes.addEventListener(MouseEvent.CLICK,on_yes_click);
 	        inquireSwc.no.addEventListener(MouseEvent.CLICK,on_no_click);
 		}
+		private function addYesClickScript(script:String):void
+		{
+			script=ScriptManager.getInstance().filterScript(script);
+			yesClickScript+=script;
+		}
+		private function clearYesClickScript():void
+		{
+			yesClickScript="";
+		}
 		//抛出打开下个场景的事件
 		private function on_yes_click(e:MouseEvent):void
 		{
-			this.dispatchEvent(new Event(Event.OPEN));
+			ScriptManager.getInstance().runScriptDirectly(yesClickScript);
+			MainSystem.getInstance().dispachNormalWindowRemoveEvent();
 			e.currentTarget.mouseEnabled=false;
 			dispose();
 		}
 		//抛出关闭界面的事件
 		private function on_no_click(e:MouseEvent):void
 		{
-			this.dispatchEvent(new Event(Event.CLOSE));
 			MainSystem.getInstance().isBusy=false;
 			MainSystem.getInstance().dispachNormalWindowRemoveEvent();
 			e.currentTarget.mouseEnabled=false;
@@ -86,6 +101,8 @@ package plugins.lxfa.inquire
 			}
 			ScriptManager.getInstance().runScriptByName(ScriptName.REMOVE_ANIMATE,[]);
 			animateParent.addChild(animate);
+			animate.x=oldAnimatePosition.x;//恢复桂娃的位置
+			animate.y=oldAnimatePosition.y;
 			PopUpManager.removePopUp(inquireContainer);
 			inquireContainer=null;
 		}
