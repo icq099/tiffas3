@@ -14,9 +14,9 @@ package plugins.yzhkof.pv3d.control
 	import mx.core.UIComponent;
 	
 	import org.papervision3d.cameras.FreeCamera3D;
-	import org.papervision3d.events.InteractiveScene3DEvent;
 	import org.papervision3d.objects.primitives.Plane;
 	
+	import plugins.lxfa.normalWindow.event.NormalWindowEvent;
 	import plugins.yzhkof.pv3d.view.Pv3d360Scene;
 	import plugins.yzhkof.pv3d.view.Pv3d360SceneCompass;
 	
@@ -33,17 +33,33 @@ package plugins.yzhkof.pv3d.control
 		private var controlerCompleteScript:String="";
 		public function Pv3dSceneCtr()
 		{
-			ScriptManager.getInstance().addApi(ScriptName.DISABLE360SYSTEM,disable360System);//删除全景
-			ScriptManager.getInstance().addApi(ScriptName.ENABLE360SYSTEM,enable360System);  //enable全景
-			ScriptManager.getInstance().addApi(ScriptName.GETCAMERA,get360Camera);           //获取全景镜头
-			ScriptManager.getInstance().addApi(ScriptName.GOTO3DSCENE,gotoScene);              //跳场景
-			ScriptManager.getInstance().addApi(ScriptName.STARTRENDER,startRender);          //开始渲染
-			ScriptManager.getInstance().addApi(ScriptName.STOPRENDER,stopRender);            //停止渲染
-			ScriptManager.getInstance().addApi(ScriptName.SETCAMERA,setCamera);              //设置镜头的相关参数
-			ScriptManager.getInstance().addApi(ScriptName.SETCAMERAROTATIONX,setCameraRotationX);
-			ScriptManager.getInstance().addApi(ScriptName.SETCAMERAROTATIONY,setCameraRotationY);
-			ScriptManager.getInstance().addApi(ScriptName.SETCAMERAFOCUS,setCameraFocus);
-			ScriptManager.getInstance().addApi(ScriptName.ADDCONTROLERCOMPLETESCRIPT,initControlerCompleteScript);
+			initScript();
+			initListener();
+		}
+		private function initScript():void
+		{
+			ScriptManager.getInstance().addApi(ScriptName.DISABLE_360_SYSTEM,disable360System);//删除全景
+			ScriptManager.getInstance().addApi(ScriptName.ENABLE_360_SYSTEM,enable360System);  //enable全景
+			ScriptManager.getInstance().addApi(ScriptName.GET_CAMERA,get360Camera);           //获取全景镜头
+			ScriptManager.getInstance().addApi(ScriptName.GOTO_3D_SCENE,gotoScene);              //跳场景
+			ScriptManager.getInstance().addApi(ScriptName.START_RENDER,startRender);          //开始渲染
+			ScriptManager.getInstance().addApi(ScriptName.STOP_RENDER,stopRender);            //停止渲染
+			ScriptManager.getInstance().addApi(ScriptName.SET_CAMERA,setCamera);              //设置镜头的相关参数
+			ScriptManager.getInstance().addApi(ScriptName.SET_CAMERA_ROTATION_X,setCameraRotationX);
+			ScriptManager.getInstance().addApi(ScriptName.SET_CAMERA_ROTATION_Y,setCameraRotationY);
+			ScriptManager.getInstance().addApi(ScriptName.SET_CAMERA_FOCUS,setCameraFocus);
+			ScriptManager.getInstance().addApi(ScriptName.ADD_CONTROLER_COMPLETE_SCRIPT,initControlerCompleteScript);
+		}
+		private function initListener():void
+		{
+			MainSystem.getInstance().addEventListener(NormalWindowEvent.SHOW,function(e:NormalWindowEvent):void//显示标准窗的时候就停止渲染
+			{
+				pv3d.stopRend();
+			});
+			MainSystem.getInstance().addEventListener(NormalWindowEvent.REMOVE,function(e:NormalWindowEvent):void//关闭标准窗的时候就开始渲染
+			{
+				pv3d.startRend();
+			});
 		}
 		private function initControlerCompleteScript(script:String):void
 		{
@@ -70,7 +86,7 @@ package plugins.yzhkof.pv3d.control
 					controler=new CameraRotationControler(pv3d,get360Camera());
 					controler.addEventListener(CamereaControlerEvent.UPDATA,onCameraUpdata);
 					controler.addEventListener(CamereaControlerEvent.UPDATAED,onCameraUpdataed);
-					ScriptManager.getInstance().addApi(ScriptName.SETGOTOROTATION,controler.setGotoRotation);
+					ScriptManager.getInstance().addApi(ScriptName.SET_GOTO_ROTATION,controler.setGotoRotation);
 				});
 			}
 			startRender();
@@ -82,7 +98,7 @@ package plugins.yzhkof.pv3d.control
 		private function gotoScene(id:int):void
 		{
 			enable360System();
-			currentSceneXml=ModelManager.getInstance().xmlBasic.Travel.Scene[id];
+			currentSceneXml=ModelManager.getInstance().xmlPv3d.Scene[id];
 			var onComplete:Function=function ():void{//全景图片加载完毕的时候调用
 				updataArrows(id);
 				updataHotPoints(id);
@@ -100,11 +116,7 @@ package plugins.yzhkof.pv3d.control
 			var xml_compass:XMLList=currentSceneXml.Compass;
 			pv3d.cleanAllArrow();
 			for(var i:int=0;i<xml_compass.Arrow.length();i++){
-				var arrow:Plane=pv3d.addArrow(xml_compass.Arrow[i].@rotation,xml_compass.Arrow[i].@tip);
-				var destination:int=xml_compass.Arrow[i].@destination;
-				arrow.addEventListener(InteractiveScene3DEvent.OBJECT_RELEASE,function(e:InteractiveScene3DEvent):void{
-					SceneManager.getInstance().gotoScene(destination);
-				})
+				var arrow:Plane=pv3d.addArrow(xml_compass.Arrow[i].@destination,xml_compass.Arrow[i].@rotation,xml_compass.Arrow[i].@tip);
 			}
 		}
 		private function updataHotPoints(id:int):void
@@ -117,10 +129,16 @@ package plugins.yzhkof.pv3d.control
 				var plane:Plane=pv3d.addAminate(xml_animate[i].@url,{x:xml_animate[i].@x,y:xml_animate[i].@y,z:xml_animate[i].@z,rotationX:xml_animate[i].@rotationX,rotationY:xml_animate[i].@rotationY,rotationZ:xml_animate[i].@rotationZ,width:xml_animate[i].@width,height:xml_animate[i].@height,segmentsW:xml_animate[i].@segmentsW,segmentsH:xml_animate[i].@segmentsH,offset:xml_animate[i].@offset,angle:xml_animate[i].@angle,force:xml_animate[i].@force,onClick:xml_animate[i].@onClick,visible:xml_animate[i].@visible,tip:xml_animate[i].@tip,scaleX:xml_animate[i].@scaleX,scaleY:xml_animate[i].@scaleY,movement:xml_animate[i].@movement,speed:xml_animate[i].@speed,maxHeight:xml_animate[i].@maxHeight,minHeight:xml_animate[i].@minHeight,filter:xml_animate[i].@filter,sign:xml_animate[i].@sign,debuge:xml_animate[i].@debuge,autoKeep:xml_animate[i].@autoKeep},cache);
 			}
 		}
-		private function updateShpereAddon():void
+		private function updateShpereAddon():Boolean
 		{
 			var xml_ShpereAddon:XMLList=currentSceneXml.ShpereAddon;
+			if(xml_ShpereAddon.length()==0)
+			{
+				SceneManager.getInstance().dispacherJustBeforeCompleteEvent(SceneManager.getInstance().currentSceneId);
+				return false;
+			}
 			pv3d.updateAddons(xml_ShpereAddon);
+			return true;
 		}
 		private function startRender():void
 		{
@@ -153,7 +171,7 @@ package plugins.yzhkof.pv3d.control
 		}
 		private function setCamera(rotationX:Number,rotationY:Number):void
 		{
-			MainSystem.getInstance().runAPIDirectDirectly(ScriptName.SETGOTOROTATION,[rotationX-get360Camera().rotationX,rotationY-get360Camera().rotationY]);
+			MainSystem.getInstance().runAPIDirectDirectly(ScriptName.SET_GOTO_ROTATION,[rotationX-get360Camera().rotationX,rotationY-get360Camera().rotationY]);
 		}
 		private function setCameraRotationX(rotationX:Number):void
 		{

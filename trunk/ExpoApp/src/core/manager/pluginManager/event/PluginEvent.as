@@ -1,5 +1,7 @@
 package core.manager.pluginManager.event
 {
+	import core.manager.sceneManager.SceneManager;
+	
 	import flash.events.Event;
 
 	public class PluginEvent extends Event

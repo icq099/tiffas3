@@ -131,13 +131,14 @@ package plugins.lxfa.normalWindow
 			dp.btn_360.addEventListener(MouseEvent.CLICK,on360Click);
 			dp.btn_video.addEventListener(MouseEvent.CLICK,onVideoClick);
 			dp.btn_picture.addEventListener(MouseEvent.CLICK,onMusicClick);
+			dp.Btn_Close.addEventListener(MouseEvent.CLICK,onClick);
 			this.addEventListener(Event.ADDED,onADDED);
 		}
 		//如果标准窗被加载进了主容器中，才加载360体验窗
 		private function onADDED(e:Event):void
 		{
 			this.removeEventListener(Event.ADDED,onADDED);
-				initViewer360();
+			initViewer360();
 		}
 		//加载标准窗的背景
 		private function initDp(pictureUrl:String=null,videoUrl:String=null,pictureUrls:Array=null):void
@@ -169,7 +170,7 @@ package plugins.lxfa.normalWindow
 		//*按钮的点击事件
 		private function onClick(e:MouseEvent):void
 		{
-			ScriptManager.getInstance().runScriptByName(ScriptName.REMOVENORMALWINDOW,[]);
+			ScriptManager.getInstance().runScriptByName(ScriptName.REMOVE_NORMAL_WINDOW,[]);
 		}
 		//加载视频播放
 		private function initFlvPlayer():void
@@ -195,7 +196,6 @@ package plugins.lxfa.normalWindow
 		    viewer360.scaleY=0.9;
 		    viewer360.addEventListener(Event.COMPLETE,onViewer360Complete);
 		    viewer360.addEventListener(Event.ID3,onView360Clear);
-		    dp.Btn_Close.addEventListener(MouseEvent.CLICK,onClick);//360图片加载完之后才能添加关闭事件
 		    if(pictureUrl=="" || pictureUrl==null)//如果没有360图片。就抛出CLEAR事件，只是作为区别，并不是真正的CLEAR
 		    {
 		    	viewer360.dispatchEvent(new Event(Event.ID3));

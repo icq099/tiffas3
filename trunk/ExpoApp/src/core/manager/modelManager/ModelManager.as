@@ -13,14 +13,15 @@ package core.manager.modelManager
 	public class ModelManager extends EventDispatcher
 	{
 		private static var _instance:ModelManager;
-		private const totalXml:int=6;
-		private var xmlLoaded:int=0;//已经加载的XML数目
-		private var _animateXml:XML;
-		private var _basicXml:XML;
-		private var _gehaiqingyunXml:XML;
-		private var _itemXml:XML;
-		private var _pluginXml:XML;
-		private var _popumenuXml:XML;
+		private const totalXml:int=7;               //总的XML数目，要是要添加或减少XML，记得修改这个数值
+		private var xmlLoaded:int=0;                //已经加载的XML数目
+		private var _animateXml:XML;                //桂娃的XML
+		private var _basicXml:XML;                  //业务逻辑的XML
+		private var _gehaiqingyunXml:XML;           //歌海情韵的数据
+		private var _itemXml:XML;                   //标准窗的数据
+		private var _pluginXml:XML;                 //插件的数据
+		private var _popumenuXml:XML;               //1，2级菜单的数据
+		private var _pv3dXml:XML;                   //PV3D的数据
 		public function ModelManager()
 		{
 			if(_instance==null)
@@ -43,6 +44,7 @@ package core.manager.modelManager
 			loader.addItem("item","xml/item.xml");
 			loader.addItem("plugin","xml/plugin.xml");
 			loader.addItem("popumenu","xml/popumenu.xml");
+			loader.addItem("pv3d","xml/pv3d.xml");
 			MyGC.gc();
 			loader.addEventListener(SerialXmlLoaderEvent.ALLCOMPLETE,function on_all_complete(e:SerialXmlLoaderEvent):void{
 				_animateXml=loader.getValue("animate");
@@ -51,6 +53,7 @@ package core.manager.modelManager
 				_itemXml=loader.getValue("item");
 				_pluginXml=loader.getValue("plugin");
 				_popumenuXml=loader.getValue("popumenu");
+				_pv3dXml=loader.getValue("pv3d");
 				loader.removeEventListener(SerialXmlLoaderEvent.ALLCOMPLETE,on_all_complete);
 				loader.dispose();
 				loader=null
@@ -98,10 +101,15 @@ package core.manager.modelManager
 			if(_pluginXml==null) return null;
 			return _pluginXml.copy();
 		}	
-		public function get xmlPopumenu():XML//插件的数据
+		public function get xmlPopumenu():XML//1,2级菜单的数据
 		{
 			if(_popumenuXml==null) return null;
 			return _popumenuXml.copy();
+		}	
+		public function get xmlPv3d():XML//pv3d的数据
+		{
+			if(_pv3dXml==null) return null;
+			return _pv3dXml.copy();
 		}	
 	}
 }

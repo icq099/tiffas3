@@ -7,7 +7,7 @@ package core.manager.musicManager
 	import flash.net.URLRequest;
 	
 	import manager.sceneManager.SceneManager;
-	import manager.sceneManager.event.SceneChangeEvent;
+	import manager.sceneManager.SceneChangeEvent;
 	
 	import memory.MemoryRecovery;
 	

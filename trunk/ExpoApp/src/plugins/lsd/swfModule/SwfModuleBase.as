@@ -2,7 +2,7 @@ package plugins.lsd.swfModule
 {
 	import core.manager.MainSystem;
 	import core.manager.sceneManager.SceneManager;
-	import core.manager.sceneManager.event.SceneChangeEvent;
+	import core.manager.sceneManager.SceneChangeEvent;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
@@ -25,9 +25,9 @@ package plugins.lsd.swfModule
 		private var completeScript:String="";             //SWF加载完毕的时候要执行的脚本
 		public function SwfModuleBase()
 		{
-			ScriptManager.getInstance().addApi(ScriptName.ADDSWFINITSCRIPT,addInitScript);
-			ScriptManager.getInstance().addApi(ScriptName.ADDSWFCOMPLETESCRIPT,addCompleteScript);
-			ScriptManager.getInstance().addApi(ScriptName.SHOWSWF,showSwf);
+			ScriptManager.getInstance().addApi(ScriptName.ADD_SWF_INIT_SCRIPT,addInitScript);
+			ScriptManager.getInstance().addApi(ScriptName.ADD_SWF_COMPLETE_SCRIPT,addCompleteScript);
+			ScriptManager.getInstance().addApi(ScriptName.SHOW_SWF,showSwf);
 		}
 		//添加swf刚开始载入的时的脚本
 		private function addInitScript(script:String):void

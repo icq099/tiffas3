@@ -6,7 +6,7 @@ package plugins.lxfa.yangmengbagui.view
 	import core.manager.pluginManager.PluginManager;
 	import core.manager.pluginManager.event.PluginEvent;
 	import core.manager.sceneManager.SceneManager;
-	import core.manager.sceneManager.event.SceneChangeEvent;
+	import core.manager.sceneManager.SceneChangeEvent;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
@@ -42,7 +42,7 @@ package plugins.lxfa.yangmengbagui.view
 			MainMenuStatic.currentSceneId=6;
 			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
 			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.INIT,6));
-			ScriptManager.getInstance().runScriptByName(ScriptName.STOPRENDER,[]);
+			ScriptManager.getInstance().runScriptByName(ScriptName.STOP_RENDER,[]);
 			showYangMengBaGui(withMovie);
 			MainSystem.getInstance().isBusy=true;
 		}
@@ -123,10 +123,9 @@ package plugins.lxfa.yangmengbagui.view
 			}});
 			initYangMengBaGuiSwc();
 			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.COMPLETE,6));
+			SceneManager.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.COMPLETE,6));
 			SceneManager.getInstance().addEventListener(SceneChangeEvent.COMPLETE,close,false,0,true);
 			SceneManager.getInstance().addEventListener(SceneChangeEvent.INIT,on_other_scene_init,false,0,true);
-			close(null);
 		}
 		private function on_other_scene_init(e:SceneChangeEvent):void
 		{
@@ -145,13 +144,9 @@ package plugins.lxfa.yangmengbagui.view
 			yangMengBaGuiSwc=new YangMengBaGuiSwc();
 			yangMengBaGuiSwc.x=461;
 			yangMengBaGuiSwc.y=115;
-			yangMengBaGuiSwc.addEventListener(MouseEvent.CLICK,on_yangMengBaGuiSwc_click);
-			yangMengBaGuiSwc.buttonMode=true;
+			yangMengBaGuiSwc.yangmengbagui.mouseEnabled=false;
+			yangMengBaGuiSwc.mouseEnabled=false;
 			this.addChild(yangMengBaGuiSwc);
-		}
-		private function on_yangMengBaGuiSwc_click(e:MouseEvent):void
-		{
-			MainSystem.getInstance().runAPIDirectDirectly("showNormalWindow",[45]);
 		}
 		//添加LED墙
 		private function initLED():void
@@ -160,6 +155,8 @@ package plugins.lxfa.yangmengbagui.view
 			this.addChild(LED);
 			LED.x=109;
 			LED.y=403;
+			LED.scaleX=0.145;
+			LED.scaleY=0.12;
 			LED.rotation=-1.5;
 			LED.buttonMode=true;
 			LED.addEventListener(MouseEvent.CLICK,on_LED_Click);
@@ -170,10 +167,18 @@ package plugins.lxfa.yangmengbagui.view
 		}
 		private function on_normalwindow_show(e:NormalWindowEvent):void
 		{
+			if(view3d!=null)
+			{
+				view3d.stopRender();
+			}
 			LED.pause();//暂停LED播放
 		}
 		private function on_normalwindow_remove(e:NormalWindowEvent):void
 		{
+			if(view3d!=null)
+			{
+				view3d.startRender();
+			}
 			LED.resume();
 			LED.mouseEnabled=true;
 		}
@@ -188,7 +193,7 @@ package plugins.lxfa.yangmengbagui.view
 			LED.pause();//暂停LED播放
 			LED.mouseEnabled=false;
 			//显示标准窗
-			MainSystem.getInstance().runAPIDirectDirectly("showNormalWindow",[44]);
+			MainSystem.getInstance().runAPIDirectDirectly("showNormalWindow",[51]);
 		}
 		private function close(e:SceneChangeEvent):void
 		{
@@ -253,7 +258,7 @@ package plugins.lxfa.yangmengbagui.view
 				view3d.dispose()
 				view3d=null;
 			}
-			ScriptManager.getInstance().runScriptByName(ScriptName.STARTRENDER,[]);
+			ScriptManager.getInstance().runScriptByName(ScriptName.START_RENDER,[]);
 			MyGC.gc();
 		}
 	}

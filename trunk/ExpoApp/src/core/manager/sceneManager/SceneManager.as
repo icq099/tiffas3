@@ -2,11 +2,13 @@ package core.manager.sceneManager
 {
 	import core.manager.MainSystem;
 	import core.manager.modelManager.ModelManager;
-	import core.manager.sceneManager.event.SceneChangeEvent;
+	import core.manager.sceneManager.SceneChangeEvent;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
 	import flash.events.EventDispatcher;
+	
+	import mx.managers.BrowserManager;
 	[Event(name="init", type="manager.sceneManager.event.SceneChangeEvent")]
 	[Event(name="complete", type="manager.sceneManager.event.SceneChangeEvent")]
 	public class SceneManager extends EventDispatcher
@@ -30,7 +32,7 @@ package core.manager.sceneManager
 		{
 			sceneXml=ModelManager.getInstance().xmlBasic;                         //存储的引用
 			maxSceneNum=sceneXml.Travel.Scene.length();                           //存储最大场景数目
-			ScriptManager.getInstance().addApi(ScriptName.GOTOSCENE,gotoScene);   //添加更换场景的API
+			ScriptManager.getInstance().addApi(ScriptName.GO_TO_SCENE,gotoScene);   //添加更换场景的API
 		}
 		public static function getInstance():SceneManager
 		{
@@ -43,50 +45,49 @@ package core.manager.sceneManager
 			{
 				return false;
 			}
+			BrowserManager.getInstance().setFragment("scene="+sceneId);   //修改地址栏的地址
 			dispacherSceneChangeInitEvent(sceneId);                       //抛出更换场景的事件
 			MainSystem.getInstance().isBusy=true;                         //加锁，避免用户重复点击
 			var oldSceneId:int=currentSceneId;                            //存储旧的场景ID
 			currentSceneId=sceneId;                                       //更换场景ID
 			//读取所要去的场景的数据库
 			var currentSceneXmlData:XML=sceneXml.Travel.Scene[currentSceneId];
-			var backGroundMusic:String=currentSceneXmlData.Music.BackgroundMusic?currentSceneXmlData.Music.BackgroundMusic:null;  
 			var sceneInitScript:String;                                    //指定ID的脚本
-			var sceneChangedScript:String;                               
+			var sceneJustBeforeCompleteScript:String;                               
 			var defaultInitScript:String;                                 //默认的脚本
-			var defaultChangedScript:String;           
-			for(var i:int=0;i<currentSceneXmlData.Script.length();i++)
+			var defaultJustBeforeCompleteScript:String;           
+			for(var j:int=0;j<currentSceneXmlData.Script.length();j++)    //搜索默认的脚本,其他场景跳到当前场景，如果没有匹配的ID，就采用默认的脚本
+			{
+				if(currentSceneXmlData.Script[j].@fromId=="default")
+				{
+					defaultInitScript=currentSceneXmlData.Script[j].@sceneInitScript;
+					defaultJustBeforeCompleteScript=currentSceneXmlData.Script[j].@sceneJustBeforeCompleteScript;
+				}
+			}
+			for(var i:int=0;i<currentSceneXmlData.Script.length();i++)    //搜索匹配ID的脚本
 			{
 				var tempId:int=int(currentSceneXmlData.Script[i].@fromId);   
 				if(oldSceneId==tempId)
 				{
 					sceneInitScript=currentSceneXmlData.Script[i].@sceneInitScript;
-					sceneChangedScript=currentSceneXmlData.Script[i].@sceneChangedScript;
-				}else if(tempId==-1)
-				{
-					defaultInitScript=currentSceneXmlData.Script[i].@sceneInitScript;
-					defaultChangedScript=currentSceneXmlData.Script[i].@sceneChangedScript;
+					sceneJustBeforeCompleteScript=currentSceneXmlData.Script[i].@sceneJustBeforeCompleteScript;
+					break;
 				}
 			}
-			if(sceneInitScript!=null || sceneInitScript!="")
+			if(i==currentSceneXmlData.Script.length())                    //找不到匹配的ID,就采用默认的脚本
 			{
-				ScriptManager.getInstance().runScriptDirectly(sceneInitScript);
-			}else
-			{
-				ScriptManager.getInstance().runScriptDirectly(defaultInitScript);
+				sceneInitScript=defaultInitScript;
+				sceneJustBeforeCompleteScript=defaultJustBeforeCompleteScript;
 			}
-			addEventListener(SceneChangeEvent.COMPLETE,function onComplete(e:SceneChangeEvent):void
+			ScriptManager.getInstance().runScriptDirectly(sceneInitScript);
+			addEventListener(SceneChangeEvent.JUST_BEFORE_COMPLETE,function onComplete(e:SceneChangeEvent):void
 			{
-				MainSystem.getInstance().isBusy=false;
 				if(e.id==sceneId)//如果完成加载的场景的编号为当前场景编号
 				{
-					if(sceneChangedScript!=null || sceneChangedScript!="")
-					{
-						ScriptManager.getInstance().runScriptDirectly(sceneChangedScript);
-					}else
-					{
-						ScriptManager.getInstance().runScriptDirectly(defaultInitScript);
-					}
-					removeEventListener(SceneChangeEvent.COMPLETE,onComplete);
+					ScriptManager.getInstance().runScriptDirectly(sceneJustBeforeCompleteScript);
+					removeEventListener(SceneChangeEvent.JUST_BEFORE_COMPLETE,onComplete);
+					MainSystem.getInstance().isBusy=false;
+					dispacherChangeCompleteEvent(e.id);
 				}
 			});
 			return true;
@@ -94,6 +95,10 @@ package core.manager.sceneManager
 		public function dispacherSceneChangeInitEvent(id:int):void
 		{
 			dispatchEvent(new SceneChangeEvent(SceneChangeEvent.INIT,id));
+		}
+		public function dispacherJustBeforeCompleteEvent(id:int):void
+		{
+			dispatchEvent(new SceneChangeEvent(SceneChangeEvent.JUST_BEFORE_COMPLETE,id));
 		}
 		public function dispacherChangeCompleteEvent(id:int):void
 		{

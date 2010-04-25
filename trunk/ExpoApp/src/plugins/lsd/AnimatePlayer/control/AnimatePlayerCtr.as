@@ -1,9 +1,9 @@
 package plugins.lsd.AnimatePlayer.control
 {
-	import core.manager.MainSystem;
 	import core.manager.modelManager.ModelManager;
 	import core.manager.pluginManager.PluginManager;
-	import core.manager.pluginManager.event.PluginEvent;
+	import core.manager.sceneManager.SceneManager;
+	import core.manager.sceneManager.SceneChangeEvent;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
@@ -19,8 +19,8 @@ package plugins.lsd.AnimatePlayer.control
 		private var ID:int;
 		public function AnimatePlayerCtr()
 		{
-			ScriptManager.getInstance().addApi(ScriptName.ADDANIMATE,init);
-			ScriptManager.getInstance().addApi(ScriptName.REMOVEANIMATE,dispose);
+			ScriptManager.getInstance().addApi(ScriptName.ADD_ANIMATE,init);
+			ScriptManager.getInstance().addApi(ScriptName.REMOVE_ANIMATE,dispose);
 		}
 		private function init(id:int,controlRender:Boolean=false):AnimatePlayer
 		{
@@ -32,17 +32,18 @@ package plugins.lsd.AnimatePlayer.control
 				this.ID=id;
 				this.addChild(animatePlayer);
 				animatePlayer.load(ModelManager.getInstance().xmlAnimate.Animate[ID].@url);
-				PluginManager.getInstance().addEventListener(PluginEvent.UPDATE,on_update);
+				SceneManager.getInstance().addEventListener(SceneChangeEvent.INIT,on_init);
 			}
 			return null;
 		}
-		private function on_update(e:PluginEvent):void
+		private function on_init(e:SceneChangeEvent):void
 		{
-			PluginManager.getInstance().removeEventListener(PluginEvent.UPDATE,on_update);
-			ScriptManager.getInstance().runScriptByName(ScriptName.REMOVEANIMATE,[]);
+			PluginManager.getInstance().removeEventListener(SceneChangeEvent.INIT,on_init);
+			ScriptManager.getInstance().runScriptByName(ScriptName.REMOVE_ANIMATE,[]);
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(SceneManager.getInstance(),SceneChangeEvent.INIT,on_init);
 			if(animatePlayer!=null)
 			{
 				if(animatePlayer.parent!=null)

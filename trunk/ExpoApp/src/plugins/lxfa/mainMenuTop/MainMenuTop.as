@@ -67,34 +67,6 @@ package plugins.lxfa.mainMenuTop
 		{
 			top.prevFrame();
 		}
-		private function lvsejiayuanClick():void
-		{
-			customGoto3DScene(0);
-		}
-		private function lansemengxiangClick():void
-		{
-			customGoto3DScene(1);
-		}
-		private function meiguantianxiaClick():void
-		{
-			customGoto3DScene(2);
-		}
-		private function jinxiuhuazhangClick():void
-		{
-			customGoto3DScene(3);
-		}
-		private function shengshihexieClick():void
-		{
-			customGoto3DScene(4);
-		}
-		private function zonghengsihaiClick():void
-		{
-			customGoto2DScene(5,"ZongHengSiHaiModule");
-		}
-		private function yangmengbaguiClick():void
-		{
-			customGoto2DScene(6,"YangMengBaGuiModule");
-		}
 		private function initLaba():void
 		{
 			top.laba.buttonMode=true;
