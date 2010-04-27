@@ -6,6 +6,7 @@ package plugins.lxfa.normalWindow
 	import core.manager.MainSystem;
 	import core.manager.musicManager.BackGroundMusicManager;
 	import core.manager.pluginManager.PluginManager;
+	import core.manager.popupManager.CustomPopupManager;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
@@ -17,9 +18,7 @@ package plugins.lxfa.normalWindow
 	
 	import mx.containers.Canvas;
 	import mx.core.UIComponent;
-	import mx.managers.PopUpManager;
 	
-	import plugins.lxfa.normalWindow.event.NormalWindowEvent;
 	import plugins.model.ItemModel;
 	
 	public class NormalWindowFactory extends UIComponent
@@ -53,7 +52,6 @@ package plugins.lxfa.normalWindow
 		//数据库加载完毕
 		private function onComplete():void
 		{
-			MainSystem.getInstance().dispatchEvent(new NormalWindowEvent(NormalWindowEvent.SHOW));
 			createWindow(null);
 		}
 		private function createWindow(e:Event):void
@@ -92,7 +90,6 @@ package plugins.lxfa.normalWindow
 		{
 			if(!MainSystem.getInstance().isBusy)
 			{
-				MainSystem.getInstance().dispatchEvent(new NormalWindowEvent(NormalWindowEvent.REMOVE));
 				if(normalWindow!=null)
 				{
 					normalWindow.dispose();
@@ -109,8 +106,8 @@ package plugins.lxfa.normalWindow
 					animate.y=animatePosition.y;
 					animateParent.addChild(animate);
 				}
-				PopUpManager.removePopUp(this);
 				BackGroundMusicManager.getInstance().reload();
+				CustomPopupManager.getInstance().removePopUp(this);
 				MyGC.gc();
 			}
 		}

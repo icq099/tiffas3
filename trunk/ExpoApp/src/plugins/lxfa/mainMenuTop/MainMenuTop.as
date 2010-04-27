@@ -8,13 +8,15 @@ package plugins.lxfa.mainMenuTop
 	import flash.events.MouseEvent;
 	
 	import memory.MemoryRecovery;
+	
 	import mx.core.Application;
+	import mx.core.UIComponent;
 	
 	import util.menu.popumenu.view.PopupMenuManager;
 	
 	import view.fl2mx.Fl2Mx;
 	
-	public class MainMenuTop extends MainMenu
+	public class MainMenuTop extends UIComponent
 	{
 		private var top:MainMenuTopSwc;
 		private var hasBackGround:Boolean=true;

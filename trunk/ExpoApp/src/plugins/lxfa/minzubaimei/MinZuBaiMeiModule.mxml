@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="400" height="300" creationComplete="init()" implements="core.manager.pluginManager.IPlugin">
+	<mx:Script>
+		<![CDATA[
+			import plugins.lxfa.minzubaimei.view.MinZuBaiMei;
+		    private var minzubaimei:MinZuBaiMei;
+			private function init():void
+			{
+				initMinZuBaiMei();
+			}
+			private function initMinZuBaiMei():void
+			{
+				minzubaimei=new MinZuBaiMei();
+				this.addChild(minzubaimei);
+			}
+			public function dispose():void
+			{
+				if(minzubaimei!=null)
+				{
+					if(minzubaimei.parent!=null)
+					{
+						minzubaimei.parent.removeChild(minzubaimei);
+					}
+					minzubaimei.dispose();
+					minzubaimei=null;
+				}
+			}
+		]]>
+	</mx:Script>
+</mx:Module>

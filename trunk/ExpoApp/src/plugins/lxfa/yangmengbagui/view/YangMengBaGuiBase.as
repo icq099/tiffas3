@@ -5,8 +5,10 @@ package plugins.lxfa.yangmengbagui.view
 	import core.manager.MainSystem;
 	import core.manager.pluginManager.PluginManager;
 	import core.manager.pluginManager.event.PluginEvent;
-	import core.manager.sceneManager.SceneManager;
+	import core.manager.popupManager.CustomPopupManager;
+	import core.manager.popupManager.PopupManagerEvent;
 	import core.manager.sceneManager.SceneChangeEvent;
+	import core.manager.sceneManager.SceneManager;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
@@ -22,7 +24,6 @@ package plugins.lxfa.yangmengbagui.view
 	import mx.core.UIComponent;
 	
 	import plugins.lxfa.mainMenuBottom.MainMenuStatic;
-	import plugins.lxfa.normalWindow.event.NormalWindowEvent;
 	
 	import util.view.player.FLVPlayer;
 	import util.view.player.event.FLVPlayerEvent;
@@ -40,8 +41,6 @@ package plugins.lxfa.yangmengbagui.view
 		public function YangMengBaGuiBase(withMovie:Boolean=false)
 		{
 			MainMenuStatic.currentSceneId=6;
-			MainSystem.getInstance().dispatchEvent(new PluginEvent(PluginEvent.UPDATE));//抛出插件刷新事件
-			MainSystem.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.INIT,6));
 			ScriptManager.getInstance().runScriptByName(ScriptName.STOP_RENDER,[]);
 			showYangMengBaGui(withMovie);
 			MainSystem.getInstance().isBusy=true;
@@ -123,7 +122,7 @@ package plugins.lxfa.yangmengbagui.view
 			}});
 			initYangMengBaGuiSwc();
 			MainSystem.getInstance().isBusy=false;
-			SceneManager.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.COMPLETE,6));
+			SceneManager.getInstance().dispatchEvent(new SceneChangeEvent(SceneChangeEvent.JUST_BEFORE_COMPLETE,6));
 			SceneManager.getInstance().addEventListener(SceneChangeEvent.COMPLETE,close,false,0,true);
 			SceneManager.getInstance().addEventListener(SceneChangeEvent.INIT,on_other_scene_init,false,0,true);
 		}
@@ -162,25 +161,31 @@ package plugins.lxfa.yangmengbagui.view
 			LED.addEventListener(MouseEvent.CLICK,on_LED_Click);
 			LED.resume();
 			LED.addEventListener(NetStatusEvent.NET_STATUS,on_LED_play_complete);
-			MainSystem.getInstance().addEventListener(NormalWindowEvent.SHOW,on_normalwindow_show);
-			MainSystem.getInstance().addEventListener(NormalWindowEvent.REMOVE,on_normalwindow_remove);
+			CustomPopupManager.getInstance().addEventListener(PopupManagerEvent.SHOW_POPUP,on_normalwindow_show);
+			CustomPopupManager.getInstance().addEventListener(PopupManagerEvent.REMOVE_POPUP,on_normalwindow_remove);
 		}
-		private function on_normalwindow_show(e:NormalWindowEvent):void
+		private function on_normalwindow_show(e:PopupManagerEvent):void
 		{
 			if(view3d!=null)
 			{
 				view3d.stopRender();
 			}
-			LED.pause();//暂停LED播放
+			if(LED!=null)
+			{
+				LED.pause();//暂停LED播放
+			}
 		}
-		private function on_normalwindow_remove(e:NormalWindowEvent):void
+		private function on_normalwindow_remove(e:PopupManagerEvent):void
 		{
 			if(view3d!=null)
 			{
 				view3d.startRender();
 			}
-			LED.resume();
-			LED.mouseEnabled=true;
+			if(LED!=null)
+			{
+				LED.resume();
+				LED.mouseEnabled=true;
+			}
 		}
 		//播放完毕就重播
 		private function on_LED_play_complete(e:NetStatusEvent):void
@@ -210,8 +215,8 @@ package plugins.lxfa.yangmengbagui.view
 			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,ProgressEvent.PROGRESS,on_progress);
 			MemoryRecovery.getInstance().gcFun(LED,MouseEvent.CLICK,on_LED_Click);
 			MemoryRecovery.getInstance().gcFun(LED,NetStatusEvent.NET_STATUS,on_LED_play_complete);
-			MemoryRecovery.getInstance().gcFun(MainSystem.getInstance(),NormalWindowEvent.SHOW,on_normalwindow_show);
-			MemoryRecovery.getInstance().gcFun(MainSystem.getInstance(),NormalWindowEvent.REMOVE,on_normalwindow_remove);
+			MemoryRecovery.getInstance().gcFun(CustomPopupManager.getInstance(),PopupManagerEvent.SHOW_POPUP,on_normalwindow_show);
+			MemoryRecovery.getInstance().gcFun(CustomPopupManager.getInstance(),PopupManagerEvent.REMOVE_POPUP,on_normalwindow_remove);
 			MemoryRecovery.getInstance().gcFun(SceneManager.getInstance(),SceneChangeEvent.INIT,on_other_scene_init);
 			MemoryRecovery.getInstance().gcFun(SceneManager.getInstance(),SceneChangeEvent.COMPLETE,close);
 			if(flvPlayer!=null)

@@ -10,8 +10,6 @@ package plugins.yzhkof.pv3d.view
 		}
 		public function set compass_visible(value:Boolean):void{
 			_compass_visible=value
-			layer_arrows.visible=value;
-			layer_compass.visible=value;
 		}
 		public function get compass_visible():Boolean{
 			return _compass_visible;

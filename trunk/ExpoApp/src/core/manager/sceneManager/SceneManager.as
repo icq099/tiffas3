@@ -49,9 +49,8 @@ package core.manager.sceneManager
 			dispacherSceneChangeInitEvent(sceneId);                       //抛出更换场景的事件
 			MainSystem.getInstance().isBusy=true;                         //加锁，避免用户重复点击
 			var oldSceneId:int=currentSceneId;                            //存储旧的场景ID
-			currentSceneId=sceneId;                                       //更换场景ID
 			//读取所要去的场景的数据库
-			var currentSceneXmlData:XML=sceneXml.Travel.Scene[currentSceneId];
+			var currentSceneXmlData:XML=sceneXml.Travel.Scene[sceneId];
 			var sceneInitScript:String;                                    //指定ID的脚本
 			var sceneJustBeforeCompleteScript:String;                               
 			var defaultInitScript:String;                                 //默认的脚本
@@ -80,16 +79,17 @@ package core.manager.sceneManager
 				sceneJustBeforeCompleteScript=defaultJustBeforeCompleteScript;
 			}
 			ScriptManager.getInstance().runScriptDirectly(sceneInitScript);
-			addEventListener(SceneChangeEvent.JUST_BEFORE_COMPLETE,function onComplete(e:SceneChangeEvent):void
+			if(!hasEventListener(SceneChangeEvent.JUST_BEFORE_COMPLETE))
 			{
-				if(e.id==sceneId)//如果完成加载的场景的编号为当前场景编号
+				addEventListener(SceneChangeEvent.JUST_BEFORE_COMPLETE,function onComplete(e:SceneChangeEvent):void
 				{
 					ScriptManager.getInstance().runScriptDirectly(sceneJustBeforeCompleteScript);
 					removeEventListener(SceneChangeEvent.JUST_BEFORE_COMPLETE,onComplete);
+					currentSceneId=sceneId;                                       //全部完成了才更换场景ID
 					MainSystem.getInstance().isBusy=false;
 					dispacherChangeCompleteEvent(e.id);
-				}
-			});
+				});
+			}
 			return true;
 		}
 		public function dispacherSceneChangeInitEvent(id:int):void

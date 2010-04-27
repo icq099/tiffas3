@@ -39,6 +39,7 @@
 <module application="src/ExpoApp.mxml" destPath="plugins/lxfa/yangmengbagui/YangMengBaGuiModule.swf" optimize="true" sourcePath="src/plugins/lxfa/yangmengbagui/YangMengBaGuiModule.mxml"/>
 <module application="src/ExpoApp.mxml" destPath="plugins/lxfa/normalWindow/NormalWindowModule.swf" optimize="true" sourcePath="src/plugins/lxfa/normalWindow/NormalWindowModule.mxml"/>
 <module application="src/ExpoApp.mxml" destPath="plugins/lxfa/flvModule/FlvModule.swf" optimize="true" sourcePath="src/plugins/lxfa/flvModule/FlvModule.mxml"/>
+<module application="src/ExpoApp.mxml" destPath="plugins/lxfa/minzubaimei/MinZuBaiMeiModule.swf" optimize="true" sourcePath="src/plugins/lxfa/minzubaimei/MinZuBaiMeiModule.mxml"/>
 </modules>
 <buildCSSFiles/>
 </actionScriptProperties>

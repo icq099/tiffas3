@@ -1,14 +1,11 @@
 package plugins.lxfa.normalWindow
 {
 	import core.manager.MainSystem;
+	import core.manager.popupManager.CustomPopupManager;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
-	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	
-	import mx.core.Application;
-	import mx.managers.PopUpManager;
 	
 	public class NormalWindowBase extends Sprite
 	{
@@ -29,8 +26,8 @@ package plugins.lxfa.normalWindow
 				{
 					isPoped=true;
 					normalWindowFactory=new NormalWindowFactory(int(id));
-					PopUpManager.addPopUp(normalWindowFactory,DisplayObject(Application.application), true);
-		            PopUpManager.centerPopUp(normalWindowFactory);
+					CustomPopupManager.getInstance().addPopUp(normalWindowFactory);
+		            CustomPopupManager.getInstance().centerPopUp(normalWindowFactory);
 		            normalWindowFactory.x=33;
 		            normalWindowFactory.y=80;
 				}

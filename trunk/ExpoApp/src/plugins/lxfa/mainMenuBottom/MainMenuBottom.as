@@ -3,8 +3,8 @@ package plugins.lxfa.mainMenuBottom
 	import caurina.transitions.Tweener;
 	
 	import core.manager.MainSystem;
-	import core.manager.sceneManager.SceneManager;
 	import core.manager.sceneManager.SceneChangeEvent;
+	import core.manager.sceneManager.SceneManager;
 	import core.manager.scriptManager.ScriptName;
 	
 	import flash.events.Event;
@@ -14,10 +14,9 @@ package plugins.lxfa.mainMenuBottom
 	import memory.MemoryRecovery;
 	
 	import mx.core.Application;
+	import mx.core.UIComponent;
 	
-	import plugins.lxfa.mainMenuTop.MainMenu;
-	
-	public class MainMenuBottom extends MainMenu
+	public class MainMenuBottom extends UIComponent
 	{
 		private var bottom:MainMenuBottomSwc;
 		private var bottomSign:MainMenuBottomSign;
@@ -65,7 +64,7 @@ package plugins.lxfa.mainMenuBottom
 			bottomSign=new MainMenuBottomSign();
 			bottom.addChild(bottomSign);
 			bottomSign.y=500;
-			MainSystem.getInstance().addEventListener(SceneChangeEvent.INIT,changeColor);
+			SceneManager.getInstance().addEventListener(SceneChangeEvent.INIT,changeColor);
 		}
 		private function changeColor(e:SceneChangeEvent):void
 		{

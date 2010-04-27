@@ -1,7 +1,9 @@
 package core.manager.pluginManager
 {
+	import core.manager.MainSystem;
 	import core.manager.modelManager.ModelManager;
 	import core.manager.pluginManager.event.PluginEvent;
+	import core.manager.popupManager.CustomPopupManager;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
@@ -176,8 +178,8 @@ package core.manager.pluginManager
 			//显示loader
 			if(popup)
 			{
-				PopUpManager.addPopUp(loader,DisplayObject(Application.application), true);
-	            PopUpManager.centerPopUp(loader);
+				CustomPopupManager.getInstance().addPopUp(loader);
+	            CustomPopupManager.getInstance().centerPopUp(loader);
 			}else
 			{
 				if(floor<0)
@@ -206,7 +208,8 @@ package core.manager.pluginManager
 				IPlugin(moduleLoader.child).dispose();
 				if(pluginObj.isPop)
 				{
-					PopUpManager.removePopUp(moduleLoader);
+					CustomPopupManager.getInstance().removePopUp(moduleLoader);
+					MainSystem.getInstance().hasPopup=false;
 				}else
 				{
 					floorList[pluginObj.floor].removeChild(moduleLoader);
