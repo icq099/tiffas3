@@ -2,8 +2,10 @@ package yzhkof.debug
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.net.SharedObject;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
+	import flash.text.TextFormat;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
@@ -18,6 +20,8 @@ package yzhkof.debug
 		private var btn_container:TileContainer=new TileContainer();
 		private var run_btn:TextPanel=new TextPanel(0xffff00);
 		private var target_btn:TextPanel=new TextPanel(0xffff00);
+		private var save_btn:TextPanel=new TextPanel(0xffff00);
+		private var load_btn:TextPanel=new TextPanel(0xffff00);
 		private var import_btn:TextPanel=new TextPanel(0xffff00);
 		private var import_text:TextField=new TextField();
 		private const textWidth:Number=500;
@@ -42,12 +46,16 @@ package yzhkof.debug
 			
 			btn_container.addChild(run_btn);
 			btn_container.addChild(target_btn);
+			btn_container.addChild(save_btn);
+			btn_container.addChild(load_btn);
 			btn_container.addChild(import_btn);
 			btn_container.addChild(import_text);
 			
 			run_btn.text="run";
 			import_btn.text="import";
 			target_btn.text=getQualifiedClassName(ScriptRuner.target);
+			save_btn.text="save";
+			load_btn.text="load";
 			run_btn.drawBackGround();
 			
 			import_text.border=true;
@@ -58,11 +66,16 @@ package yzhkof.debug
 			textField.width=textWidth;
 			textField.height=textHeight;
 			textField.multiline=true;
+			var t_format:TextFormat=textField.getTextFormat();
+			t_format.size=15;
+			textField.defaultTextFormat=t_format;
 			drawBackGround();
 			
 			run_btn.addEventListener(MouseEvent.CLICK,__onRunBtnClick);
 			target_btn.addEventListener(MouseEvent.CLICK,__onTargetClick);
 			import_btn.addEventListener(MouseEvent.CLICK,__onImportClick);
+			save_btn.addEventListener(MouseEvent.CLICK,__onSaveClick);
+			load_btn.addEventListener(MouseEvent.CLICK,__onLoadClick);
 //			textField.addEventListener(KeyboardEvent.KEY_DOWN,__onKeyDown);
 		}
 //		private function __onKeyDown(e:KeyboardEvent):void
@@ -72,6 +85,19 @@ package yzhkof.debug
 //				__onRunBtnClick(null);
 //			}
 //		}
+		private function __onSaveClick(e:Event):void
+		{
+			var so:SharedObject=SharedObject.getLocal("scripts");
+			so.data["script"]=textField.text;
+			so.flush();
+			so.close();
+		}
+		private function __onLoadClick(e:Event):void
+		{
+			var so:SharedObject=SharedObject.getLocal("scripts");
+			textField.text=so.data["script"];
+			so.close()
+		}
 		private function __onImportClick(e:Event):void
 		{
 			textField.text=StringUtil.addString(textField.text,"namespace n"+importCount+" = \""+getPackageName()+"\"; use namespace n"+importCount+";\n",0);
