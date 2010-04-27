@@ -2,7 +2,7 @@ package core.manager.sceneManager
 {
 	import core.manager.MainSystem;
 	import core.manager.modelManager.ModelManager;
-	import core.manager.sceneManager.SceneChangeEvent;
+	import core.manager.sceneManager.SceneScript.SceneScript;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
@@ -39,53 +39,23 @@ package core.manager.sceneManager
 			if(instance==null) return new SceneManager();
 			return instance;
 		}
-		public function gotoScene(sceneId:int):Boolean
+		public function gotoScene(toId:int):Boolean
 		{
-			if(sceneId>maxSceneNum || currentSceneId==sceneId || MainSystem.getInstance().isBusy)//场景没变化或者主系统处于繁忙状态
+			if(toId>maxSceneNum || currentSceneId==toId || MainSystem.getInstance().isBusy)//场景没变化或者主系统处于繁忙状态
 			{
 				return false;
 			}
-			BrowserManager.getInstance().setFragment("scene="+sceneId);   //修改地址栏的地址
-			dispacherSceneChangeInitEvent(sceneId);                       //抛出更换场景的事件
+			BrowserManager.getInstance().setFragment("scene="+toId);   //修改地址栏的地址
+			dispacherSceneChangeInitEvent(toId);                       //抛出更换场景的事件
 			MainSystem.getInstance().isBusy=true;                         //加锁，避免用户重复点击
-			var oldSceneId:int=currentSceneId;                            //存储旧的场景ID
-			//读取所要去的场景的数据库
-			var currentSceneXmlData:XML=sceneXml.Travel.Scene[sceneId];
-			var sceneInitScript:String;                                    //指定ID的脚本
-			var sceneJustBeforeCompleteScript:String;                               
-			var defaultInitScript:String;                                 //默认的脚本
-			var defaultJustBeforeCompleteScript:String;           
-			for(var j:int=0;j<currentSceneXmlData.Script.length();j++)    //搜索默认的脚本,其他场景跳到当前场景，如果没有匹配的ID，就采用默认的脚本
-			{
-				if(currentSceneXmlData.Script[j].@fromId=="default")
-				{
-					defaultInitScript=currentSceneXmlData.Script[j].@sceneInitScript;
-					defaultJustBeforeCompleteScript=currentSceneXmlData.Script[j].@sceneJustBeforeCompleteScript;
-				}
-			}
-			for(var i:int=0;i<currentSceneXmlData.Script.length();i++)    //搜索匹配ID的脚本
-			{
-				var tempId:int=int(currentSceneXmlData.Script[i].@fromId);   
-				if(oldSceneId==tempId)
-				{
-					sceneInitScript=currentSceneXmlData.Script[i].@sceneInitScript;
-					sceneJustBeforeCompleteScript=currentSceneXmlData.Script[i].@sceneJustBeforeCompleteScript;
-					break;
-				}
-			}
-			if(i==currentSceneXmlData.Script.length())                    //找不到匹配的ID,就采用默认的脚本
-			{
-				sceneInitScript=defaultInitScript;
-				sceneJustBeforeCompleteScript=defaultJustBeforeCompleteScript;
-			}
-			ScriptManager.getInstance().runScriptDirectly(sceneInitScript);
+			SceneScript.runInitScript(currentSceneId,toId);
 			if(!hasEventListener(SceneChangeEvent.JUST_BEFORE_COMPLETE))
 			{
 				addEventListener(SceneChangeEvent.JUST_BEFORE_COMPLETE,function onComplete(e:SceneChangeEvent):void
 				{
-					ScriptManager.getInstance().runScriptDirectly(sceneJustBeforeCompleteScript);
+					SceneScript.runJustCompleteScript(currentSceneId,toId);
 					removeEventListener(SceneChangeEvent.JUST_BEFORE_COMPLETE,onComplete);
-					currentSceneId=sceneId;                                       //全部完成了才更换场景ID
+					currentSceneId=toId;                                       //全部完成了才更换场景ID
 					MainSystem.getInstance().isBusy=false;
 					dispacherChangeCompleteEvent(e.id);
 				});

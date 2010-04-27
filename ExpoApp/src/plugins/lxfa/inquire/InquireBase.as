@@ -58,7 +58,6 @@ package plugins.lxfa.inquire
 		}
 		private function addYesClickScript(script:String):void
 		{
-			script=ScriptManager.getInstance().filterScript(script);
 			yesClickScript+=script;
 		}
 		private function clearYesClickScript():void
