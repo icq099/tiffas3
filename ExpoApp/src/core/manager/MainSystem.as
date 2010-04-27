@@ -1,20 +1,19 @@
 package core.manager
 {
 	import core.manager.pluginManager.PluginManager;
-	import core.manager.sceneManager.SceneManager;
 	import core.manager.scriptManager.ScriptManager;
 	
 	import flash.events.EventDispatcher;
 	
 	import mx.managers.CursorManager;
 	
-	import plugins.lxfa.normalWindow.event.NormalWindowEvent;
 	
 	public class MainSystem extends EventDispatcher
 	{
 	    private static var instance:MainSystem
 	    public var _isBusy:Boolean=false;
  	    public var currentHotpoint:*;
+ 	    public var hasPopup:Boolean=false;//是否已经用popupmanager弹过东西
 		public function MainSystem()
 		{
 		   if(instance==null)
@@ -70,16 +69,6 @@ package core.manager
 		public function get isBusy():Boolean
 		{
 			return _isBusy;
-		}
-		//抛出标准窗显示的事件
-		public function dispachNormalWindowShowEvent():void
-		{
-			dispatchEvent(new NormalWindowEvent(NormalWindowEvent.SHOW));
-		}
-		//抛出标准窗关闭的事件
-		public function dispachNormalWindowRemoveEvent():void
-		{
-			dispatchEvent(new NormalWindowEvent(NormalWindowEvent.REMOVE));
 		}
 	}
 }

@@ -2,6 +2,11 @@ package util.loaders
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.ProgressEvent;
+	import flash.utils.Dictionary;
+	
+	import memory.MemoryRecovery;
 	
 	import mx.controls.SWFLoader;
 	
@@ -13,7 +18,7 @@ package util.loaders
 		private var loader:SWFLoader;
 		public function SerialSwfLoader()
 		{
-			super(this);
+			super();
 		}
 		public function add(id:String,url:String):void
 		{
@@ -29,10 +34,26 @@ package util.loaders
 		}
 		private function enter_frame(e:Event):void
 		{
-			var event:SerialSwfLoaderEvent=new SerialSwfLoaderEvent(SerialSwfLoaderEvent.PROGRESS);
-			event.byteLoaded=index/task.length+(loader.bytesLoaded/loader.bytesTotal)/task.length;
-			event.byteTotal=1;
-			this.dispatchEvent(event);
+			if(loader!=null)
+			{
+				var temp:Number=loader.bytesLoaded/loader.bytesTotal;
+				if(index!=task.length)
+				{
+					if(temp<=1)
+					{
+						var event:ProgressEvent=new ProgressEvent(ProgressEvent.PROGRESS);
+						event.bytesLoaded=(index/task.length+(loader.bytesLoaded/loader.bytesTotal)/task.length)*10000;
+						event.bytesTotal=10000;
+						this.dispatchEvent(event);
+					}
+				}else
+				{
+					MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,enter_frame);
+				}
+			}else
+			{
+				MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,enter_frame);
+			}
 		}
 		private function initLoader():void
 		{
@@ -73,13 +94,10 @@ package util.loaders
 		}
 		public function dispose():void
 		{
+			MemoryRecovery.getInstance().gcFun(this,Event.ENTER_FRAME,enter_frame);
 			task=null;
 			tempContainer=null;
-			if(loader!=null)
-			{
-				loader.unloadAndStop();
-				loader=null;
-			}
+			loader=null;
 		}
 	}
 }

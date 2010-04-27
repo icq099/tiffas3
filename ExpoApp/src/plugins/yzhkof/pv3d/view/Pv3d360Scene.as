@@ -30,13 +30,11 @@
 	import org.papervision3d.materials.BitmapMaterial;
 	import org.papervision3d.materials.ColorMaterial;
 	import org.papervision3d.materials.MovieMaterial;
-	import org.papervision3d.objects.DisplayObject3D;
 	import org.papervision3d.objects.primitives.Plane;
 	import org.papervision3d.objects.primitives.Sphere;
 	import org.papervision3d.render.BasicRenderEngine;
 	import org.papervision3d.scenes.Scene3D;
 	import org.papervision3d.view.Viewport3D;
-	import org.papervision3d.view.layer.ViewportLayer;
 	import org.papervision3d.view.stats.StatsView;
 	
 	import plugins.yzhkof.view.MapToolTip;
@@ -65,10 +63,6 @@
 		protected var material:MaterialObject3D;
 		protected var scene:Scene3D;
 		protected var viewport:Viewport3D;
-		protected var layer_animate:ViewportLayer;
-		protected var layer_arrows:ViewportLayer;
-		protected var layer_hot_points:ViewportLayer;
-		protected var layer_compass:ViewportLayer;
 
 		protected var pwidth:Number;
 		protected var pheight:Number;
@@ -92,7 +86,7 @@
 
 		public var animates:Array=new Array();
 		public var arrows:Array=new Array();
-		public var hot_points:Array=new Array();
+		private var movements:Array=new Array();
 		public var camera:FreeCamera3D;
 		public var render_type:String=REND_ALL;
 		private var addonLoader:SerialCacheMovieClipLoader=new SerialCacheMovieClipLoader();
@@ -124,93 +118,18 @@
 			sphere.scaleX*=-1
 			//设置罗盘
 			var material_compass:BitmapMaterial=new BitmapMaterial(compassBitmapdata.clone());
-			//material_compass.smooth=true;
 			material_compass.doubleSided=true;
 			compass_plane=new Plane(material_compass, 75, 75, 5, 5);
 			compass_plane.rotationX=-90;
 			compass_plane.y=-80;
 			compass_plane.z=1;
-			layer_compass=viewport.getChildLayer(compass_plane);
 
-			//设置viewportlayer
-//			viewport.containerSprite.sortMode=ViewportLayerSortMode.INDEX_SORT;
-			layer_animate=viewport.getChildLayer(new DisplayObject3D());
-			layer_animate.buttonMode=true;
-			layer_hot_points=viewport.getChildLayer(new DisplayObject3D());
-			layer_arrows=viewport.getChildLayer(new DisplayObject3D());
-			layer_arrows.buttonMode=true;
-			layer_hot_points.buttonMode=true;
-
-			layer_animate.layerIndex=0;
-			layer_hot_points.layerIndex=1;
-			layer_compass.layerIndex=2;
-			layer_arrows.layerIndex=3;
-
-			layer_compass.alpha=0.6;
-			layer_arrows.alpha=0.6;
 
 			scene.addChild(compass_plane);
 			scene.addChild(sphere);
 
 			state=BROWSING;
 		}
-
-		//添加点击热点
-		public function addHotPoint(init_obj:Object, tip_text:String="", icon:BitmapData=null, clone:Boolean=true):Plane
-		{
-
-			var width:Number=init_obj["width"] ? init_obj["width"] : 100;
-			var height:Number=init_obj["height"] ? init_obj["height"] : 100;
-			var segmentsW:Number=init_obj["segmentsW"] ? init_obj["segmentsW"] : 0;
-			var segmentsH:Number=init_obj["segmentsH"] ? init_obj["segmentsH"] : 0;
-
-			var hot_point_material:BitmapMaterial=new BitmapMaterial(clone ? icon.clone() : icon);
-
-			hot_point_material.interactive=true;
-			hot_point_material.smooth=true;
-
-			var hot_point_plane:Plane=new Plane(hot_point_material, width, height, segmentsW, segmentsH, init_obj);
-			hot_points.push(hot_point_plane);
-			scene.addChild(hot_point_plane);
-			layer_hot_points.addDisplayObject3D(hot_point_plane);
-			if (tip_text != "")
-			{
-				hot_point_plane.extra={text: tip_text};
-				hot_point_plane.addEventListener(InteractiveScene3DEvent.OBJECT_OVER, function(e:Event):void
-					{
-						addChild(tip_sprite);
-						e.currentTarget.scale=1.2;
-						updateHotpoints();
-						tip_sprite.text=e.currentTarget.extra.text;
-					});
-				hot_point_plane.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, function(e:Event):void
-					{
-						e.currentTarget.scale=1;
-						updateHotpoints();
-						removeChild(tip_sprite);
-					});
-			}
-			return hot_point_plane;
-		}
-
-		//清除所有点击热点
-		public function cleanAllHotPoints():void
-		{
-			if (hot_points.length > 0)
-			{
-				for each (var item:Plane in hot_points)
-				{
-					layer_hot_points.removeDisplayObject3D(item);
-					scene.removeChild(item);
-					item.material.bitmap.dispose();
-					item.material.destroy();
-
-				}
-				hot_points=new Array();
-			}
-
-		}
-
 		//更改场景全景
 		public function changeBitmap(URL:String, type:String="", onComplete:Function=null):void
 		{
@@ -238,14 +157,12 @@
 		{
 			compass_plane.rotationY=rota;
 		}
-		private var arrowMaterials:Array=new Array();
 		public function addArrow(destination:int,rota:Number=0, tip_text:String=""):Plane
 		{
 			var material_arrow:BitmapMaterial=new BitmapMaterial(arrow_bitmapdata.clone());
 			material_arrow.smooth=true;
 			material_arrow.doubleSided=true;
 			material_arrow.interactive=true;
-			arrowMaterials.push(material_arrow);
 			var plane:Plane=new Plane(material_arrow, 4.2, 25.2, 2, 4)
 			arrows.push(plane);
 			plane.rotationX=-90;
@@ -283,16 +200,21 @@
 
 			if (arrows.length > 0)
 			{
-				for each (var material:BitmapMaterial in arrowMaterials)
+				for each (var plane:Plane in arrows)
 				{
-					material.bitmap.dispose();
-					material=null;
-				}
-				for each (var item:Plane in arrows)
-				{
-
-					layer_arrows.removeDisplayObject3D(item)
-					scene.removeChild(item)
+					if(plane.parent!=null)
+					{
+						plane.parent.removeChild(plane);
+					}
+					if(plane.material!=null)
+					{
+						if(plane.material.bitmap!=null)
+						{
+							plane.material.bitmap.dispose();
+						}
+						plane.material.destroy();
+					}
+					plane=null;
 				}
 				arrows=new Array();
 			}
@@ -350,7 +272,8 @@
 			//添加运动
 			if (movement == 1)
 			{
-				new UpDownMovement(plane_animate, maxHeight, minHeight, speed);
+				var m:UpDownMovement=new UpDownMovement(plane_animate, maxHeight, minHeight, speed);
+				movements.push(m);
 			}
 			animates.push(plane_animate);
 			scene.addChild(plane_animate);
@@ -402,6 +325,7 @@
 						addChild(tip_sprite);
 					}
 					plane_animate.filters=[glowFilter];
+					MainSystem.getInstance().runScript(init_obj["onOver"]);
 				});
 			plane_animate.addEventListener(InteractiveScene3DEvent.OBJECT_OUT, function(e:InteractiveScene3DEvent):void
 				{
@@ -410,6 +334,7 @@
 						removeChild(tip_sprite);
 					}
 					plane_animate.filters=[];
+					MainSystem.getInstance().runScript(init_obj["onOut"]);
 				});
 			
 			var rotateSpeed:int=5;
@@ -482,24 +407,31 @@
 
 		public function cleanAllAnimate():void
 		{
+			if(movements.length>0)
+			{
+				for each(var m:UpDownMovement in movements)
+				{
+					m.dispose();
+					m=null;
+				}
+			}
 			if (animates.length > 0)
 			{
-				for each (var item:Plane in animates)
+				for each (var plane:Plane in animates)
 				{
-					layer_animate.removeDisplayObject3D(item);
-					scene.removeChild(item)
-					if (item.material != null)
+					if(plane.parent!=null)
 					{
-						if (item.material.bitmap != null)
-						{
-							item.material.bitmap.dispose();
-							item.material.destroy();
-						}
-						else
-						{
-							item.material.destroy();
-						}
+						plane.parent.removeChild(plane);
 					}
+					if(plane.material!=null)
+					{
+						if(plane.material.bitmap!=null)
+						{
+							plane.material.bitmap.dispose();
+						}
+						plane.material.destroy();
+					}
+					plane=null;
 				}
 				animates=new Array();
 			}
@@ -519,13 +451,17 @@
 
 		private function mouseMoveHandler(e:MouseEvent):void
 		{
-			renderable=true;
+			if(controlAble)
+			{
+				renderable=true;
+			}
 		}
 
 		private function loadProgessHandler(e:ProgressEvent):void
 		{
 			view_loader.percent_text.text=Math.round((e.bytesLoaded / e.bytesTotal) * 100) + "%";
 		}
+		private static var cacheShpereBitmap:BitmapData;
 		protected function chageCompleteHandler(e:Event):void
 		{
 			TweenLite.to(view_loader, 0.5, {alpha: 0, onCompleteParams: [view_loader], onComplete: function(... arg):void
@@ -537,17 +473,20 @@
 					}
 					view_loader=null;
 				}});
-
-			if (material != null)
+			if(material!=null && material.bitmap!=null)
 			{
-				try
-				{
-					material.bitmap.dispose();
-				}
-				catch (e:Error)
-				{
-				}
+				material.bitmap=null;
 				material.destroy();
+				material=null;
+			}
+			if(sphere.material!=null)
+			{
+				sphere.material=null;
+			}
+			if(cacheShpereBitmap!=null)
+			{
+				cacheShpereBitmap.dispose();
+				cacheShpereBitmap=null;
 			}
 			switch (url_type)
 			{
@@ -555,8 +494,10 @@
 					material=new MovieMaterial(MovieClip(pLoader.content), true, true,true);
 					break;
 				default:
-					material=new BitmapMaterial(Bitmap(pLoader.content).bitmapData, true);
-					cacheBitmap=material.bitmap.clone();
+				    cacheShpereBitmap=Bitmap(pLoader.content).bitmapData;
+				    pLoader.unload();
+					material=new BitmapMaterial(cacheShpereBitmap, true);
+					cacheBitmap=cacheShpereBitmap.clone();
 					break;
 			}
 			material.doubleSided=false;
@@ -572,86 +513,15 @@
 		}
 		private var cache:Array=new Array();
 		protected static var movieCache:Dictionary=new Dictionary();
-//		protected static var movieCache:Dictionary = new Dictionary(true);
 		private var cacheBitmap:BitmapData;
-//		private var temp:BitmapData;
-//		private var xx:Number=2217.15;
-//		private var yy:Number=457.2;
-		private function on_complete(e:Event):void
-		{
-//			var content:MovieClip=MovieClip(e.currentTarget.content);
-//			temp=new BitmapData(290,500);
-//			temp.copyPixels(cacheBitmap,new Rectangle(xx,yy,289.7,458),new Point(0,0));
-//			var index:int=0;
-//			var cacheComplete:Boolean=false;
-//			var b:BitmapData;
-//			var totalFrames:int=content.totalFrames;
-//			Application.application.addEventListener(Event.ENTER_FRAME,function(e:Event):void{
-//				index++;
-//				if(index==totalFrames)index=0;
-//				if(!cacheComplete)
-//				{
-//					b=ToolBitmapData.getInstance().drawDisplayObject(content);
-//					movieCache[content.currentFrame-1]=b;
-//					if(content.currentFrame==content.totalFrames)
-//					{
-//						cacheComplete=true;
-//						content.stop();
-//						content=null;
-//					}
-//				}else
-//				{
-//					if(movieCache[index]!=null)
-//					{
-//						b=movieCache[index];
-//					}
-//				}
-//				material.bitmap.copyPixels(temp,new Rectangle(0,0,290,458),new Point(xx,yy));
-//				material.bitmap.copyPixels(b,new Rectangle(0,0,289.7,458),new Point(xx,yy),null,null,true);
-//			});
-//			Application.application.stage.addEventListener(KeyboardEvent.KEY_DOWN,function(e:KeyboardEvent):void{
-//				var speed:Number=3;
-//				if(e.keyCode==87)
-//				{
-//					yy-=speed;
-//				}
-//				if(e.keyCode==83)
-//				{
-//					yy+=speed;
-//				}
-//				if(e.keyCode==65)
-//				{
-//					xx-=speed;
-//				}
-//				if(e.keyCode==68)
-//				{
-//					xx+=speed;
-//				}
-//				trace(xx+":"+yy);
-//			});
-		}
-		private function updateHotpoints():void
-		{
-
-			if (hot_points.length > 0)
-			{
-				for each (var item:Plane in hot_points)
-				{
-
-					item.lookAt(camera);
-					item.yaw(180);
-
-				}
-			}
-
-		}
 
 		private function loadEnterFrameHandler(e:Event):void
 		{
-
-			e.currentTarget.x=this_stage.mouseX;
-			e.currentTarget.y=this_stage.mouseY;
-
+			if(e.currentTarget!=null && this_stage!=null)
+			{
+				e.currentTarget.x=this_stage.mouseX;
+				e.currentTarget.y=this_stage.mouseY;
+			}
 		}
 
 		private function initListener():void
@@ -668,12 +538,15 @@
 				draw();
 			}
 		}
+		private var controlAble:Boolean=false;
 		public function startRend():void
 		{
+			controlAble=true;
 			renderable=true;
 		}
 		public function stopRend():void
 		{
+			controlAble=false;
 			renderable=false;
 		}
 		private var loader:Loader;
@@ -697,6 +570,14 @@
 				loader.load(new URLRequest(xml_ShpereAddon[0].@url));
 				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onCacheMovieClipLoaded);
 			}
+		}
+		public function disposeCacheBitMap():void
+		{
+				if(cacheBitmap!=null)
+				{
+					cacheBitmap.dispose();
+					cacheBitmap=null;
+				}
 		}
 		private function onCacheMovieClipLoaded(e:Event):void
 		{

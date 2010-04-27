@@ -1,13 +1,13 @@
 package core.manager.musicManager
 {
+	import core.manager.scriptManager.ScriptManager;
+	import core.manager.scriptManager.ScriptName;
+	
 	import flash.events.Event;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.media.SoundLoaderContext;
 	import flash.net.URLRequest;
-	
-	import manager.sceneManager.SceneManager;
-	import manager.sceneManager.SceneChangeEvent;
 	
 	import memory.MemoryRecovery;
 	
@@ -17,7 +17,6 @@ package core.manager.musicManager
 	   private var sound:Sound;
 	   private var soundChannel:SoundChannel;
 	   private var resumeTime:Number;
-//	   private var customMusicModel:CustomMusicModel;
 	   private var soundLoaderContext:SoundLoaderContext;
 		public function CustomMusicManager()
 		{
@@ -32,14 +31,9 @@ package core.manager.musicManager
 		}
 		private function init():void
 		{
-//			customMusicModel=new CustomMusicModel();
 			soundLoaderContext=new SoundLoaderContext(1000,true);
-			SceneManager.getInstance().addEventListener(SceneChangeEvent.INIT,function(e:SceneChangeEvent):void{
-				dispose();
-			});
-			SceneManager.getInstance().addEventListener(SceneChangeEvent.COMPLETE,function(e:SceneChangeEvent):void{
-//				loadCustomMusic(customMusicModel.getMusicUrl(e.id));
-			});
+			ScriptManager.getInstance().addApi(ScriptName.LOAD_CUSTOM_MUSIC,loadCustomMusic);
+			ScriptManager.getInstance().addApi(ScriptName.DISPOSE_CUSTOM_MUSIC,dispose);
 		}
 		public static function getInstance():CustomMusicManager
 		{

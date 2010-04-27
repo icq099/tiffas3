@@ -1,6 +1,7 @@
 package
 {
 	import core.manager.modelManager.ModelManager;
+	import core.manager.musicManager.CustomMusicManager;
 	import core.manager.pluginManager.PluginManager;
 	import core.manager.sceneManager.SceneManager;
 	
@@ -45,6 +46,7 @@ package
 		{
 			PluginManager.getInstance().init(Application.application);//初始化插件管理者，并且以Application.application为容器
 			SceneManager.getInstance();                               //初始化场景管理者
+			CustomMusicManager.getInstance();                         //初始化自定义音乐管理者
 			dispose();
 		}
 		//回收内存

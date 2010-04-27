@@ -2,6 +2,7 @@ package plugins.lxfa.inquire
 {
 	import core.manager.MainSystem;
 	import core.manager.pluginManager.PluginManager;
+	import core.manager.popupManager.CustomPopupManager;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
 	
@@ -32,10 +33,10 @@ package plugins.lxfa.inquire
 		}
 		private function initInquireSwc(id:int):void
 		{
+			CustomPopupManager.getInstance().dispacheShowEvent();
 			inquireSwc=new InquireSwc();
 			inquireContainer=new UIComponent();
 			inquireContainer.addChild(inquireSwc);
-			MainSystem.getInstance().dispachNormalWindowShowEvent();
 	        //显示桂娃
 	        ScriptManager.getInstance().runScriptByName(ScriptName.ADD_ANIMATE,[id]);
 	        animate=PluginManager.getInstance().getPlugin("AnimateModule");
@@ -46,7 +47,7 @@ package plugins.lxfa.inquire
 	        animate.y=20;
 	        inquireContainer.addChild(animate);
 			//POP出来
-			PopUpManager.addPopUp(inquireContainer,DisplayObject(Application.application), true);
+			PopUpManager.addPopUp(inquireContainer,DisplayObject(Application.application),true);
 	        PopUpManager.centerPopUp(inquireContainer); 
 	        //调整位置
 	        inquireContainer.x=300;
@@ -68,17 +69,17 @@ package plugins.lxfa.inquire
 		private function on_yes_click(e:MouseEvent):void
 		{
 			ScriptManager.getInstance().runScriptDirectly(yesClickScript);
-			MainSystem.getInstance().dispachNormalWindowRemoveEvent();
 			e.currentTarget.mouseEnabled=false;
 			dispose();
+			CustomPopupManager.getInstance().dispacheRemoveEvent();
 		}
 		//抛出关闭界面的事件
 		private function on_no_click(e:MouseEvent):void
 		{
 			MainSystem.getInstance().isBusy=false;
-			MainSystem.getInstance().dispachNormalWindowRemoveEvent();
 			e.currentTarget.mouseEnabled=false;
 			dispose();
+			CustomPopupManager.getInstance().dispacheRemoveEvent();
 		}
 		public function dispose():void
 		{

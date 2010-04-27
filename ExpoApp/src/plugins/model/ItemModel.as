@@ -111,6 +111,18 @@ package plugins.model
 			}
 			return pictureUrls;
 		}
+		//获取图片的所有名字
+		//获取图片的路径
+		public function getPictureNames(num:int):Array
+		{
+			var i:int;
+			var names:Array=new Array();
+			for(i=0;i<xmlData.Item[num+min].Picture.length();i++)
+			{
+				names.push(xmlData.Item[num+min].Picture[i].@name);
+			}
+			return names;
+		}
 		//获取swf的路径
 		public function getSwfUrl(num:int):String
 		{

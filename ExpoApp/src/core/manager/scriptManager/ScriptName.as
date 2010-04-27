@@ -44,5 +44,8 @@ package core.manager.scriptManager
 		//core/manager/scriptManager/ScriptManager
 		public static const LOAD_BACKGROUND_MUSIC:String="loadBackGroundMusic";                    //加载背景音乐
 		public static const DISPOSE_BACKGROUND_MUSIC:String="disposeBackGroundMusic";                    //加载背景音乐
+		//core/manager/musicManager/CustomMusicManager
+		public static const LOAD_CUSTOM_MUSIC:String="loadCustomMusic";
+		public static const DISPOSE_CUSTOM_MUSIC:String="disposeCustomMusic";
 	}
 }

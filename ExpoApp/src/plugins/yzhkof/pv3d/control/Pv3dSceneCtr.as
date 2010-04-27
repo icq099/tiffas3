@@ -2,6 +2,8 @@ package plugins.yzhkof.pv3d.control
 {
 	import core.manager.MainSystem;
 	import core.manager.modelManager.ModelManager;
+	import core.manager.popupManager.CustomPopupManager;
+	import core.manager.popupManager.PopupManagerEvent;
 	import core.manager.sceneManager.SceneManager;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
@@ -16,7 +18,6 @@ package plugins.yzhkof.pv3d.control
 	import org.papervision3d.cameras.FreeCamera3D;
 	import org.papervision3d.objects.primitives.Plane;
 	
-	import plugins.lxfa.normalWindow.event.NormalWindowEvent;
 	import plugins.yzhkof.pv3d.view.Pv3d360Scene;
 	import plugins.yzhkof.pv3d.view.Pv3d360SceneCompass;
 	
@@ -52,11 +53,11 @@ package plugins.yzhkof.pv3d.control
 		}
 		private function initListener():void
 		{
-			MainSystem.getInstance().addEventListener(NormalWindowEvent.SHOW,function(e:NormalWindowEvent):void//显示标准窗的时候就停止渲染
+			CustomPopupManager.getInstance().addEventListener(PopupManagerEvent.SHOW_POPUP,function(e:PopupManagerEvent):void//关闭标准窗的时候就开始渲染
 			{
 				pv3d.stopRend();
 			});
-			MainSystem.getInstance().addEventListener(NormalWindowEvent.REMOVE,function(e:NormalWindowEvent):void//关闭标准窗的时候就开始渲染
+			CustomPopupManager.getInstance().addEventListener(PopupManagerEvent.REMOVE_POPUP,function(e:PopupManagerEvent):void//关闭标准窗的时候就开始渲染
 			{
 				pv3d.startRend();
 			});
@@ -100,9 +101,11 @@ package plugins.yzhkof.pv3d.control
 			enable360System();
 			currentSceneXml=ModelManager.getInstance().xmlPv3d.Scene[id];
 			var onComplete:Function=function ():void{//全景图片加载完毕的时候调用
-				updataArrows(id);
-				updataHotPoints(id);
-				updateShpereAddon();
+				updataArrows();
+				updataHotPoints();
+//				updateShpereAddon();
+				SceneManager.getInstance().dispacherJustBeforeCompleteEvent(SceneManager.getInstance().currentSceneId);
+				pv3d.disposeCacheBitMap();
 				pv3d.draw();
 				MyGC.gc();
 			}
@@ -111,22 +114,22 @@ package plugins.yzhkof.pv3d.control
 			updata_type=type;
 			pv3d.changeBitmap(url,type,onComplete);
 		}
-		private function updataArrows(id:int):void
+		private function updataArrows():void
 		{
 			var xml_compass:XMLList=currentSceneXml.Compass;
 			pv3d.cleanAllArrow();
 			for(var i:int=0;i<xml_compass.Arrow.length();i++){
-				var arrow:Plane=pv3d.addArrow(xml_compass.Arrow[i].@destination,xml_compass.Arrow[i].@rotation,xml_compass.Arrow[i].@tip);
+				pv3d.addArrow(xml_compass.Arrow[i].@destination,xml_compass.Arrow[i].@rotation,xml_compass.Arrow[i].@tip);
 			}
 		}
-		private function updataHotPoints(id:int):void
+		private function updataHotPoints():void
 		{
 			var xml_animate:XMLList=currentSceneXml.Animate;
 			var cache:Boolean;
 			pv3d.cleanAllAnimate();
 			for(var i:int=0;i<xml_animate.length();i++){
 				cache=xml_animate[i].@cache==1?true:false;				
-				var plane:Plane=pv3d.addAminate(xml_animate[i].@url,{x:xml_animate[i].@x,y:xml_animate[i].@y,z:xml_animate[i].@z,rotationX:xml_animate[i].@rotationX,rotationY:xml_animate[i].@rotationY,rotationZ:xml_animate[i].@rotationZ,width:xml_animate[i].@width,height:xml_animate[i].@height,segmentsW:xml_animate[i].@segmentsW,segmentsH:xml_animate[i].@segmentsH,offset:xml_animate[i].@offset,angle:xml_animate[i].@angle,force:xml_animate[i].@force,onClick:xml_animate[i].@onClick,visible:xml_animate[i].@visible,tip:xml_animate[i].@tip,scaleX:xml_animate[i].@scaleX,scaleY:xml_animate[i].@scaleY,movement:xml_animate[i].@movement,speed:xml_animate[i].@speed,maxHeight:xml_animate[i].@maxHeight,minHeight:xml_animate[i].@minHeight,filter:xml_animate[i].@filter,sign:xml_animate[i].@sign,debuge:xml_animate[i].@debuge,autoKeep:xml_animate[i].@autoKeep},cache);
+				pv3d.addAminate(xml_animate[i].@url,{x:xml_animate[i].@x,y:xml_animate[i].@y,z:xml_animate[i].@z,rotationX:xml_animate[i].@rotationX,rotationY:xml_animate[i].@rotationY,rotationZ:xml_animate[i].@rotationZ,width:xml_animate[i].@width,height:xml_animate[i].@height,segmentsW:xml_animate[i].@segmentsW,segmentsH:xml_animate[i].@segmentsH,offset:xml_animate[i].@offset,angle:xml_animate[i].@angle,force:xml_animate[i].@force,onClick:xml_animate[i].@onClick,visible:xml_animate[i].@visible,tip:xml_animate[i].@tip,scaleX:xml_animate[i].@scaleX,scaleY:xml_animate[i].@scaleY,movement:xml_animate[i].@movement,speed:xml_animate[i].@speed,maxHeight:xml_animate[i].@maxHeight,minHeight:xml_animate[i].@minHeight,filter:xml_animate[i].@filter,sign:xml_animate[i].@sign,debuge:xml_animate[i].@debuge,autoKeep:xml_animate[i].@autoKeep,onOver:xml_animate[i].@onOver,onOut:xml_animate[i].@onOut},cache);
 			}
 		}
 		private function updateShpereAddon():Boolean
