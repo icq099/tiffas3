@@ -4,7 +4,6 @@ package plugins.lxfa.yangmengbagui.view
 	
 	import core.manager.MainSystem;
 	import core.manager.pluginManager.PluginManager;
-	import core.manager.pluginManager.event.PluginEvent;
 	import core.manager.popupManager.CustomPopupManager;
 	import core.manager.popupManager.PopupManagerEvent;
 	import core.manager.sceneManager.SceneChangeEvent;
@@ -26,9 +25,7 @@ package plugins.lxfa.yangmengbagui.view
 	import plugins.lxfa.mainMenuBottom.MainMenuStatic;
 	
 	import util.view.player.FLVPlayer;
-	import util.view.player.event.FLVPlayerEvent;
 	
-	import view.fl2mx.Fl2Mx;
 	import view.loadings.LoadingWaveRota;
 	import view.player.SwfPlayer;
 	
@@ -42,34 +39,8 @@ package plugins.lxfa.yangmengbagui.view
 		{
 			MainMenuStatic.currentSceneId=6;
 			ScriptManager.getInstance().runScriptByName(ScriptName.STOP_RENDER,[]);
-			showYangMengBaGui(withMovie);
+			initSwf();
 			MainSystem.getInstance().isBusy=true;
-		}
-		public function showYangMengBaGui(withMovie:Boolean):void
-		{
-			if(withMovie)
-			{
-				initPlayer();
-			}else
-			{
-				initSwf();
-			}
-		}
-		//过场动画
-		private function initPlayer():void
-		{
-			flvPlayer=new FLVPlayer("http://flv.pavilion.expo.cn/p5006/flv/scene_scene/zonghengsihai_yangmengbagui.flv",900,480,false);
-	        flvPlayer.y=70;
-			flvPlayer.addEventListener(FLVPlayerEvent.COMPLETE,on_download_complete);
-		}
-		private function on_download_complete(e:FLVPlayerEvent):void
-		{
-			if(flvPlayer!=null)
-			{
-				flvPlayer.resume();
-				Application.application.addChild(Fl2Mx.fl2Mx(flvPlayer));
-				flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,on_net_state_change);
-			}
 		}
 		//背景SWF
 		private var flowerFlvSwf:SwfPlayer;
@@ -210,7 +181,6 @@ package plugins.lxfa.yangmengbagui.view
 		//清除内存
 		public function dispose():void
 		{
-			MemoryRecovery.getInstance().gcFun(flvPlayer,FLVPlayerEvent.COMPLETE,on_download_complete);
 			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,Event.COMPLETE,onComplete);
 			MemoryRecovery.getInstance().gcFun(flowerFlvSwf,ProgressEvent.PROGRESS,on_progress);
 			MemoryRecovery.getInstance().gcFun(LED,MouseEvent.CLICK,on_LED_Click);
@@ -219,15 +189,6 @@ package plugins.lxfa.yangmengbagui.view
 			MemoryRecovery.getInstance().gcFun(CustomPopupManager.getInstance(),PopupManagerEvent.REMOVE_POPUP,on_normalwindow_remove);
 			MemoryRecovery.getInstance().gcFun(SceneManager.getInstance(),SceneChangeEvent.INIT,on_other_scene_init);
 			MemoryRecovery.getInstance().gcFun(SceneManager.getInstance(),SceneChangeEvent.COMPLETE,close);
-			if(flvPlayer!=null)
-			{
-				if(flvPlayer.parent!=null)
-				{
-					flvPlayer.parent.removeChild(flvPlayer);
-				}
-				flvPlayer.dispose();
-				flvPlayer=null;
-			}
 			if(flowerFlvSwf!=null)
 			{
 				if(flowerFlvSwf.parent!=null)

@@ -74,7 +74,6 @@ package plugins.lxfa.flvModule
 		//存储播放完毕时要调用的脚本
 		private function initOnPlayCompleteScript(onPlayCompleteScript:String):void
 		{
-			onPlayCompleteScript=ScriptManager.getInstance().filterScript(onPlayCompleteScript);
 			this.onPlayCompleteScript=onPlayCompleteScript;
 		}
 		public function dispose(e:SceneChangeEvent):void

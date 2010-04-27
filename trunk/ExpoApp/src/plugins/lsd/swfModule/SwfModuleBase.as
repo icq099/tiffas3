@@ -32,13 +32,11 @@ package plugins.lsd.swfModule
 		//添加swf刚开始载入的时的脚本
 		private function addInitScript(script:String):void
 		{
-			script=ScriptManager.getInstance().filterScript(script);
 			initScript+=script;
 		}
 		//添加SWF载入完毕时的脚本
 		private function addCompleteScript(script:String):void
 		{
-			script=ScriptManager.getInstance().filterScript(script);
 			completeScript+=script;
 		}
 		//显示SWF

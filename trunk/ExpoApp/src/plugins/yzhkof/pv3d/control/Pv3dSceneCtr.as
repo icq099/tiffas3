@@ -64,7 +64,6 @@ package plugins.yzhkof.pv3d.control
 		}
 		private function initControlerCompleteScript(script:String):void
 		{
-			script=ScriptManager.getInstance().filterScript(script);
 			controlerCompleteScript+=script;
 		}
 		private function disable360System():void

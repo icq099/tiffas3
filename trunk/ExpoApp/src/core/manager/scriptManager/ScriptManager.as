@@ -57,7 +57,6 @@ package core.manager.scriptManager
 		
 		public function runScriptUntilScriptExist(script:String):*
 		{
-			script=filterScript(script);
 			var funName:String=ScriptUtil.getFunctionName(script);
 			if(api.apiExist(funName))
 			{
