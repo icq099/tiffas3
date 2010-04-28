@@ -46,7 +46,7 @@ package yzhkof.debug
 		}
 		public static function run(script:String):void
 		{
-			var final_script:String=import_text;
+			var final_script:String=import_text+"namespace xmlud = \"yzhkof.debug\"; use namespace xmlud;\n";
 			final_script+=script;
 			var byte:ByteArray=runer.eval(final_script);
 			ByteLoader.loadBytes(byte);
