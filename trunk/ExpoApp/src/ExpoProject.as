@@ -11,6 +11,8 @@ package
 	
 	import mx.core.Application;
 	
+	import plugins.lxfa.animatePlayer.AnimatePlayer;
+	
 	import view.loadings.LoadingWaveRota;
 	
 	public class ExpoProject 

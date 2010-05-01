@@ -265,7 +265,6 @@
 				}
 				if(autoKeep==1)//如果要自动保存当前的对象
 				{
-					MainSystem.getInstance().currentHotpoint=plane_animate;
 					plane_animate.material.interactive=false;
 				}
 			});

@@ -48,6 +48,7 @@ package core.manager.sceneManager.SceneScript
                 break;
 				default:
 				ScriptManager.getInstance().runScriptByName(ScriptName.DISPOSE_BACKGROUND_MUSIC,[]);
+				ScriptManager.getInstance().runScriptByName(ScriptName.ADD_ANIMATE,[2]);//显示桂娃
 				ScriptManager.getInstance().runScriptByName(ScriptName.LOAD_BACKGROUND_MUSIC,["http://audio.pavilion.expo.cn/p5006/audio/backgroundmusic/bg1.mp3"]);
 				break;
 			}

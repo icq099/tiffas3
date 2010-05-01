@@ -57,7 +57,7 @@ package core.manager.sceneManager
 					removeEventListener(SceneChangeEvent.JUST_BEFORE_COMPLETE,onComplete);
 					currentSceneId=toId;                                       //全部完成了才更换场景ID
 					MainSystem.getInstance().isBusy=false;
-					dispacherChangeCompleteEvent(e.id);
+					dispacherChangeCompleteEvent(toId);
 				});
 			}
 			return true;

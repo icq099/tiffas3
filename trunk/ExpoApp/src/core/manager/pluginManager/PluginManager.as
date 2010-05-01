@@ -12,9 +12,7 @@ package core.manager.pluginManager
 	import flash.system.ApplicationDomain;
 	
 	import mx.containers.Canvas;
-	import mx.core.Application;
 	import mx.events.ModuleEvent;
-	import mx.managers.PopUpManager;
 	import mx.modules.ModuleLoader;
 	
 	import structure.HashMap;
@@ -209,7 +207,6 @@ package core.manager.pluginManager
 				if(pluginObj.isPop)
 				{
 					CustomPopupManager.getInstance().removePopUp(moduleLoader);
-					MainSystem.getInstance().hasPopup=false;
 				}else
 				{
 					floorList[pluginObj.floor].removeChild(moduleLoader);
@@ -239,6 +236,17 @@ package core.manager.pluginManager
 		}
 		public function getPluginFloor(id:String):int{
 			return pluginList.getValue(id).floor;
+		}
+		/**
+		 * 获取指定的层次
+		 */ 
+		public function getFloor(num:int):Canvas
+		{
+			if(floorList!=null && num<floorList.length && num>=0)
+			{
+				return floorList[num];
+			}
+			return null;
 		}
 	}
 }
