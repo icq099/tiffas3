@@ -64,7 +64,7 @@ package plugins.lxfa.mainMenuBottom
 			bottomSign=new MainMenuBottomSign();
 			bottom.addChild(bottomSign);
 			bottomSign.y=500;
-			SceneManager.getInstance().addEventListener(SceneChangeEvent.INIT,changeColor);
+			SceneManager.getInstance().addEventListener(SceneChangeEvent.COMPLETE,changeColor);
 		}
 		private function changeColor(e:SceneChangeEvent):void
 		{

@@ -31,7 +31,7 @@ package core.manager.sceneManager.SceneScript
 				ScriptManager.getInstance().runScriptByName(ScriptName.ADD_ANIMATE,[11]);
 				break;
 				default:
-//				ScriptManager.getInstance().runScriptByName(ScriptName.ADD_ANIMATE,[11]);
+				ScriptManager.getInstance().runScriptByName(ScriptName.ADD_ANIMATE,[11]);
 				break;
 			}
 		}

@@ -19,6 +19,7 @@ package plugins.lxfa.normalWindow
 	import mx.containers.Canvas;
 	import mx.core.UIComponent;
 	
+	import plugins.lxfa.animatePlayer.AnimatePlayer;
 	import plugins.model.ItemModel;
 	
 	public class NormalWindowFactory extends UIComponent
@@ -67,8 +68,11 @@ package plugins.lxfa.normalWindow
 			this.animateId=itemModel.getAnimateId(ID);
 			normalWindow=new NormalWindow(picture360Url,videoUrl,pictureUrls,text,picture360Name,videoName,pictureName);
 			this.addChild(normalWindow);
-			createAnimate(animateId);
 			this.dispatchEvent(new Event(Event.COMPLETE));
+			this.addEventListener(Event.ADDED_TO_STAGE,function():void
+			{
+				AnimatePlayer.getInstance().showAnimate(animateId);
+			});
 		}
 		private function createAnimate(animateId:int):void
 		{

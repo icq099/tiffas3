@@ -25,9 +25,6 @@ package core.manager.scriptManager
 		public static const POPUP_PLUGIN_BY_ID:String="popupPluginById";                       //用PopupManager显示指定的插件
 		//core/manager/scriptManager/ScriptManager
 		public static const RUN_SCRIPT_UNTIL_SCRIPT_EXIST:String="runScriptUntilScriptExist";
-		//plugins/lsd/AnimataPlayer/AnimatePlayerCtr
-		public static const ADD_ANIMATE:String="addAnimate";                    //添加精灵
-		public static const REMOVE_ANIMATE:String="removeAnimate";              //删除精灵
 		//plugins/lxfa/inquire/InquireBase
 		public static const SHOW_INQUIRE:String="showInquire";              //显示询问是否前进的窗口
 		public static const ADD_YES_CLICK_SCRIPT:String="addYesClickScript";              //添加点击了yes按钮之后，要触发的脚本
@@ -47,5 +44,10 @@ package core.manager.scriptManager
 		//core/manager/musicManager/CustomMusicManager
 		public static const LOAD_CUSTOM_MUSIC:String="loadCustomMusic";
 		public static const DISPOSE_CUSTOM_MUSIC:String="disposeCustomMusic";
+		//plugins/lxfa/animatePlayer/AnimatePlayer
+		public static const REFRESH_ANIMATE_TEXT:String="refreshAnimateText";
+		public static const REMOVE_ANIMATE:String="removeAnimate";
+		public static const ADD_ANIMATE:String="addAnimate";
+		public static const SHOW_ANIMATE_OUT:String="showAnimateOut";
 	}
 }

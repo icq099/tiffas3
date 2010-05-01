@@ -5,15 +5,14 @@ package core.manager
 	
 	import flash.events.EventDispatcher;
 	
-	import mx.managers.CursorManager;
-	
 	
 	public class MainSystem extends EventDispatcher
 	{
 	    private static var instance:MainSystem
 	    public var _isBusy:Boolean=false;
- 	    public var currentHotpoint:*;
- 	    public var hasPopup:Boolean=false;//是否已经用popupmanager弹过东西
+ 	    public static const ENGLISH:String="ENGLISH";//英文
+ 	    public static const CHINESE:String="CHINESE";//中文
+ 	    public var language:String=CHINESE;          //默认是中文
 		public function MainSystem()
 		{
 		   if(instance==null)

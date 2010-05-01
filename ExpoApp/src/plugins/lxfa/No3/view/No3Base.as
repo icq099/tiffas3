@@ -2,7 +2,6 @@ package plugins.lxfa.No3.view
 {
 	import core.manager.MainSystem;
 	import core.manager.pluginManager.PluginManager;
-	import core.manager.pluginManager.event.PluginEvent;
 	import core.manager.sceneManager.SceneManager;
 	import core.manager.scriptManager.ScriptManager;
 	import core.manager.scriptManager.ScriptName;
@@ -15,6 +14,8 @@ package plugins.lxfa.No3.view
 	
 	import mx.core.Application;
 	import mx.core.UIComponent;
+	
+	import plugins.lxfa.animatePlayer.AnimatePlayer;
 	
 	import util.view.player.FLVPlayer;
 	import util.view.player.event.FLVPlayerEvent;
@@ -71,7 +72,11 @@ package plugins.lxfa.No3.view
 			}
 			MainSystem.getInstance().isBusy=false;
 			PluginManager.getInstance().removePluginById("IndexModule");
-			ScriptManager.getInstance().runScriptByName(ScriptName.ADD_ANIMATE,[0]);
+			AnimatePlayer.getInstance().init();
+			AnimatePlayer.getInstance().addEventListener(Event.COMPLETE,function():void
+			{
+				AnimatePlayer.getInstance().showAnimate(0);
+			});
 			flvPlayer.addEventListener(Event.CLOSE,on_flvPlayer_close);
 			flvPlayer.addEventListener(NetStatusEvent.NET_STATUS,flvPlayer_NetStatus_handler);
 		}
