@@ -1,6 +1,7 @@
 package yzhkof.ui
 {
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import flash.geom.Point;
 	
 	import yzhkof.display.RenderSprite;
@@ -11,22 +12,28 @@ package yzhkof.ui
 		private var heightSize:Number=300;
 		private var paddingH:Number=10;
 		private var paddingV:Number=10;
+		private var _columnCount:uint=int.MAX_VALUE;//列数
+		private var _rowCount:uint=int.MAX_VALUE;//行数
 		
 		private var isChange:Boolean = false;
 		
 		public function TileContainer()
 		{
 			super();
+			init();
 		}
-		public override function addChild(child:DisplayObject):DisplayObject
+		private function init():void
+		{
+			addEventListener(Event.ADDED,__childAdd);
+			addEventListener(Event.REMOVED,__childRemove);
+		}
+		private function __childAdd(e:Event):void
 		{
 			isChange=true;
-			return super.addChild(child)
 		}
-		public override function removeChild(child:DisplayObject):DisplayObject
+		private function __childRemove(e:Event):void
 		{
 			isChange=true;
-			return super.removeChild(child);
 		}
 		public override function set width(value:Number):void
 		{
@@ -60,18 +67,21 @@ package yzhkof.ui
 			if(isChange)
 			{
 				updataChildPosition();
-				isChange=false;
 			}
 		}
 		public function updataChildPosition():void
 		{
+			isChange=false;
 			var position:Point=new Point();
 			var i:int;
 			var current_dobj:DisplayObject;
+			var t_column:uint=0;
+			var t_row:uint=0;
 			for (i=0;i<numChildren;i++)
 			{
 				var t_obj:DisplayObject=getChildAt(i);
-				if(t_obj.getBounds(this).y>heightSize)
+				t_obj.visible=true;
+				if((t_obj.getBounds(this).y>heightSize)||(t_row>rowCount))
 				{
 					t_obj.visible=false;
 					continue;
@@ -79,18 +89,46 @@ package yzhkof.ui
 				current_dobj=t_obj;
 				current_dobj.x=position.x;
 				current_dobj.y=position.y;
-				
+				//下个child的位置
 				position.x+=current_dobj.width+paddingH;
 				if((i+1)<numChildren)
 				{
-					if((getChildAt(i+1).width+paddingH+position.x)>widthSize)
+					if(((getChildAt(i+1).width+paddingH+position.x)>widthSize)||(t_column>=_columnCount))
 					{
 						position.y+=current_dobj.height+paddingV;
 						position.x=0;
+						t_column=0;
+						t_row++;
+					}else
+					{
+						t_column++;
 					}
 				}
 			}
 		}
+
+		public function get columnCount():uint
+		{
+			return _columnCount;
+		}
+
+		public function set columnCount(value:uint):void
+		{
+			_columnCount = value;
+			isChange=true;
+		}
+
+		public function get rowCount():uint
+		{
+			return _rowCount;
+		}
+
+		public function set rowCount(value:uint):void
+		{
+			_rowCount = value;
+			isChange=true;
+		}
+
 		
 	}
 }

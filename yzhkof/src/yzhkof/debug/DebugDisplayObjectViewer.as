@@ -275,7 +275,7 @@ package yzhkof.debug
 				{
 					t_text= new TextPanel(0xff0000);
 				}
-				else if(t_dobj.width==0||t_dobj.height==0)
+				else if(t_dobj.getBounds(t_dobj).width==0||t_dobj.getBounds(t_dobj).height==0)
 				{
 					t_text=new TextPanel(0x0000ff);
 				}
