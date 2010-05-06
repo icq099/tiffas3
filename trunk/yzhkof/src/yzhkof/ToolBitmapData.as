@@ -23,9 +23,9 @@ package yzhkof
 		}
 		public function drawDisplayObject(obj:DisplayObject=null):BitmapData{
 		
-			if(obj is Stage || (obj.width!=0&&obj.height!=0))
+			var rect:Rectangle=obj.getBounds(obj);
+			if(obj is Stage || (rect.width!=0&&rect.height!=0))
 			{
-				var rect:Rectangle=obj.getBounds(obj);
 				var bimap_rect:Rectangle=new Rectangle(0,0,Math.abs(rect.width),Math.abs(rect.height));
 				bimap_rect.width=bimap_rect.width>2880?2880:bimap_rect.width;
 				bimap_rect.height=bimap_rect.height>2880?2880:bimap_rect.height;

@@ -47,7 +47,7 @@ package yzhkof.debug
 				{
 					t = new TextPanel(0xff0000);
 				}
-				else if(dobj.width==0||dobj.height==0)
+				else if(dobj.getBounds(dobj).width==0||dobj.getBounds(dobj).height==0)
 				{
 					t = new TextPanel(0x0000ff);
 				}

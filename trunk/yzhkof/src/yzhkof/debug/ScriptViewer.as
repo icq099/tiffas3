@@ -44,6 +44,9 @@ package yzhkof.debug
 			_content.addChild(textField);
 			_content.addChild(btn_container);
 			
+			btn_container.width=500;
+			btn_container.height=10;
+			
 			btn_container.addChild(run_btn);
 			btn_container.addChild(target_btn);
 			btn_container.addChild(save_btn);

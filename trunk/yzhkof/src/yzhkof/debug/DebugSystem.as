@@ -69,6 +69,13 @@ package yzhkof.debug
 						break;
 					}
 				}
+				
+				switch(e.keyCode)
+				{
+					case 192:
+						displayObjectViewer.visible=!displayObjectViewer.visible;
+					break;
+				}
 			});
 		}
 		private static function initDisplayObjectViewer():void
