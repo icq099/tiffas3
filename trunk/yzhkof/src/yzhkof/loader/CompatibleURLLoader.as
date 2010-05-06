@@ -86,9 +86,9 @@ package yzhkof.loader
 		}		
 		private function set url_loader(value:URLLoader):void{
 			if(_url_loader!=null){
-				EventProxy.unProxy(_url_loader,this,[Event.COMPLETE,Event.OPEN,HTTPStatusEvent.HTTP_RESPONSE_STATUS,HTTPStatusEvent.HTTP_STATUS,ProgressEvent.PROGRESS,SecurityErrorEvent.SECURITY_ERROR,IOErrorEvent.IO_ERROR]);
+				EventProxy.unProxy(_url_loader,this,[Event.COMPLETE,Event.OPEN,HTTPStatusEvent.HTTP_STATUS,ProgressEvent.PROGRESS,SecurityErrorEvent.SECURITY_ERROR,IOErrorEvent.IO_ERROR]);
 			}
-			EventProxy.proxy(value,this,[Event.COMPLETE,Event.OPEN,HTTPStatusEvent.HTTP_RESPONSE_STATUS,HTTPStatusEvent.HTTP_STATUS,ProgressEvent.PROGRESS,SecurityErrorEvent.SECURITY_ERROR,IOErrorEvent.IO_ERROR]);
+			EventProxy.proxy(value,this,[Event.COMPLETE,Event.OPEN,HTTPStatusEvent.HTTP_STATUS,ProgressEvent.PROGRESS,SecurityErrorEvent.SECURITY_ERROR,IOErrorEvent.IO_ERROR]);
 			_url_loader=value;
 		}
 		private function get url_loader():URLLoader{

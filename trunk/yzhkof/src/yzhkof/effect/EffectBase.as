@@ -3,7 +3,7 @@ package yzhkof.effect
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	
-	import mx.core.FlexSprite;
+//	import mx.core.FlexSprite;
 	
 	import yzhkof.util.HashMap;
 	
@@ -18,7 +18,7 @@ package yzhkof.effect
 		{
 			_container=container;
 			_effector=effector;
-			_container is FlexSprite?isFlex=true:isFlex=false;
+//			_container is FlexSprite?isFlex=true:isFlex=false;
 		}
 		public function start():void{
 			if(effector_map.containsKey(effector)){
