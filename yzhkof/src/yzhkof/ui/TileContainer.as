@@ -128,7 +128,14 @@ package yzhkof.ui
 			_rowCount = value;
 			isChange=true;
 		}
-
+		public function get contentWidth():Number
+		{
+			return super.width;	
+		}
+		public function get contentHeight():Number
+		{
+			return super.height
+		}
 		
 	}
 }
