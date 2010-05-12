@@ -102,15 +102,15 @@ package yzhkof.debug
 			addChild(mask_background);
 			addChild(viewer);
 			
-			btn_container.addChild(up_btn);
-			btn_container.addChild(back_btn);
-			btn_container.addChild(stage_btn);
-			btn_container.addChild(text_btn);
-			btn_container.addChild(script_btn);
-			btn_container.addChild(refresh_btn);
-			btn_container.addChild(gc_btn);
-			btn_container.addChild(x_btn);
-			btn_container.addChild(focus_txt);
+			btn_container.appendItem(up_btn);
+			btn_container.appendItem(back_btn);
+			btn_container.appendItem(stage_btn);
+			btn_container.appendItem(text_btn);
+			btn_container.appendItem(script_btn);
+			btn_container.appendItem(refresh_btn);
+			btn_container.appendItem(gc_btn);
+			btn_container.appendItem(x_btn);
+			btn_container.appendItem(focus_txt);
 			
 			
 			container.y=120;
@@ -286,7 +286,7 @@ package yzhkof.debug
 				{
 					t_text= new TextPanel;
 				}
-				container.addChild(t_text);
+				container.appendItem(t_text);
 				t_text.text=getQualifiedClassName(t_dobj);
 				child_map.add(t_text,t_dobj);
 				t_text.doubleClickEnabled=true;
