@@ -1,5 +1,7 @@
 package yzhkof.loader
 {
+	import com.hurlant.eval.ast.StrictEqual;
+	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.HTTPStatusEvent;
@@ -21,10 +23,22 @@ package yzhkof.loader
 	{
 		private var text_data:String;
 		private var _url_loader:URLLoader
+			
 		
 		public function CompatibleURLLoader()
 		{
 		}
+
+		public function get dataFormat():String
+		{
+			return getURLLoader().dataFormat;
+		}
+
+		public function set dataFormat(value:String):void
+		{
+			getURLLoader().dataFormat=value;
+		}
+
 		public function load(request:Object):void{
 			if(request is String){
 				reInit();

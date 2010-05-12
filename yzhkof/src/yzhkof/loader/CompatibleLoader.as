@@ -141,7 +141,7 @@ package yzhkof.loader
 				loader.load(URLRequest(url),context);
 				return;
 			}else if(url is ByteArray){
-				loader.loadBytes(ByteArray(url));
+				loader.loadBytes(ByteArray(url),context);
 				return;
 			}else if(url is Loader){
 				if(_loader!=url){
