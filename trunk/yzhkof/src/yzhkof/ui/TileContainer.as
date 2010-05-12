@@ -145,8 +145,16 @@ package yzhkof.ui
 		}
 		public override function addChild(child:DisplayObject):DisplayObject
 		{
-			
 			throw new Error("use appendItem method!");
+		}
+		public override function removeChild(child:DisplayObject):DisplayObject
+		{
+			throw new Error("use removeItem method!");
+		}
+		public function removeItem(child:DisplayObject):void
+		{
+			super.removeChild(child);
+			delete layoutMap[child];
 		}
 		private var layoutMap:Dictionary=new Dictionary(true);
 		public function appendItem(child:DisplayObject,itemLayout:Object=null):void
