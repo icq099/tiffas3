@@ -47,12 +47,12 @@ package yzhkof.debug
 			btn_container.width=500;
 			btn_container.height=10;
 			
-			btn_container.addChild(run_btn);
-			btn_container.addChild(target_btn);
-			btn_container.addChild(save_btn);
-			btn_container.addChild(load_btn);
-			btn_container.addChild(import_btn);
-			btn_container.addChild(import_text);
+			btn_container.appendItem(run_btn);
+			btn_container.appendItem(target_btn);
+			btn_container.appendItem(save_btn);
+			btn_container.appendItem(load_btn);
+			btn_container.appendItem(import_btn);
+			btn_container.appendItem(import_text);
 			
 			run_btn.text="run";
 			import_btn.text="import";

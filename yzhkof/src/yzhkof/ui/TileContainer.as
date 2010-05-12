@@ -3,6 +3,8 @@ package yzhkof.ui
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
+	import flash.utils.Dictionary;
 	
 	import yzhkof.display.RenderSprite;
 
@@ -77,9 +79,14 @@ package yzhkof.ui
 			var current_dobj:DisplayObject;
 			var t_column:uint=0;
 			var t_row:uint=0;
+			var t_obj:DisplayObject
+			var layout:Object;
+			
 			for (i=0;i<numChildren;i++)
 			{
-				var t_obj:DisplayObject=getChildAt(i);
+				t_obj=getChildAt(i);
+				layout=getItemLayout(t_obj);
+				
 				t_obj.visible=true;
 				if((t_obj.getBounds(this).y>heightSize)||(t_row>rowCount))
 				{
@@ -90,12 +97,12 @@ package yzhkof.ui
 				current_dobj.x=position.x;
 				current_dobj.y=position.y;
 				//下个child的位置
-				position.x+=current_dobj.width+paddingH;
+				position.x+=layout.width+layout.paddingH;
 				if((i+1)<numChildren)
 				{
-					if(((getChildAt(i+1).width+paddingH+position.x)>widthSize)||(t_column>=_columnCount))
+					if(((getItemLayout(getChildAt(i+1)).width+layout.paddingH+position.x)>widthSize)||(t_column>=_columnCount))
 					{
-						position.y+=current_dobj.height+paddingV;
+						position.y+=layout.height+layout.paddingV;
 						position.x=0;
 						t_column=0;
 						t_row++;
@@ -135,6 +142,32 @@ package yzhkof.ui
 		public function get contentHeight():Number
 		{
 			return super.height
+		}
+		public override function addChild(child:DisplayObject):DisplayObject
+		{
+			
+			throw new Error("use appendItem method!");
+		}
+		private var layoutMap:Dictionary=new Dictionary(true);
+		public function appendItem(child:DisplayObject,itemLayout:Object=null):void
+		{
+			if(itemLayout)
+				layoutMap[child]=itemLayout;
+			else
+				layoutMap[child]=new Object;
+			super.addChild(child);
+		}
+		private function getItemLayout(child:DisplayObject):Object
+		{
+			var re_lo:Object=new Object;
+			var lo:Object=layoutMap[child];
+			var bound_child:Rectangle=child.getBounds(this);
+
+			re_lo.width=lo.width||bound_child.width;
+			re_lo.height=lo.height||bound_child.height;
+			re_lo.paddingV=lo.paddingV||paddingV;
+			re_lo.paddingH=lo.paddingH||paddingH;
+			return re_lo;
 		}
 		
 	}

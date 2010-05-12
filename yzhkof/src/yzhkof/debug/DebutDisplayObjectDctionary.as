@@ -96,7 +96,7 @@ package yzhkof.debug
 			for (i=0;i<length;i++)
 			{
 				var tdobj:TextPanel=TextPanel(text_arr.pop());
-				addChild(tdobj);
+				appendItem(tdobj);
 			}
 			
 		}
