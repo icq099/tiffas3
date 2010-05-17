@@ -12,8 +12,8 @@ package yzhkof.ui
 	{
 		private var widthSize:Number=400;
 		private var heightSize:Number=300;
-		private var paddingH:Number=10;
-		private var paddingV:Number=10;
+		private var _paddingH:Number=10;
+		private var _paddingV:Number=10;
 		private var _columnCount:uint=int.MAX_VALUE;//列数
 		private var _rowCount:uint=int.MAX_VALUE;//行数
 		
@@ -71,6 +71,10 @@ package yzhkof.ui
 				updataChildPosition();
 			}
 		}
+		/**
+		 * 手动更新布局 
+		 * 
+		 */
 		public function updataChildPosition():void
 		{
 			isChange=false;
@@ -157,6 +161,12 @@ package yzhkof.ui
 			delete layoutMap[child];
 		}
 		private var layoutMap:Dictionary=new Dictionary(true);
+		/**
+		 * 添加Item（实现方式为直接addChild，显示外的visible为false） 
+		 * @param child
+		 * @param itemLayout {width:(自定义当前child的width大小，默认为child.width),height:(与width相同,但多行多列时一般不对此属性赋值),paddingH:(此child与下一个child之前的水平空隙，默认为空中的paddingH的值),paddingV:(同paddingH，但多行多列时一般不对此属性赋值)}
+		 * 
+		 */	
 		public function appendItem(child:DisplayObject,itemLayout:Object=null):void
 		{
 			if(itemLayout)
@@ -177,6 +187,27 @@ package yzhkof.ui
 			re_lo.paddingH=lo.paddingH||paddingH;
 			return re_lo;
 		}
+
+		public function get paddingH():Number
+		{
+			return _paddingH;
+		}
+
+		public function set paddingH(value:Number):void
+		{
+			_paddingH = value;
+		}
+
+		public function get paddingV():Number
+		{
+			return _paddingV;
+		}
+
+		public function set paddingV(value:Number):void
+		{
+			_paddingV = value;
+		}
+
 		
 	}
 }

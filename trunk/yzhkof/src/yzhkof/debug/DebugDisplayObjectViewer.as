@@ -287,7 +287,7 @@ package yzhkof.debug
 					t_text= new TextPanel;
 				}
 				container.appendItem(t_text);
-				t_text.text=getQualifiedClassName(t_dobj);
+				t_text.text= new RegExp("instance").test(t_dobj.name)?getQualifiedClassName(t_dobj):t_dobj.name
 				child_map.add(t_text,t_dobj);
 				t_text.doubleClickEnabled=true;
 				t_text.addEventListener(MouseEvent.CLICK,__onItemClick);

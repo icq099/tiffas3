@@ -2,10 +2,13 @@ package yzhkof.debug
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.net.FileFilter;
+	import flash.net.FileReference;
 	import flash.net.SharedObject;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
+	import flash.utils.ByteArray;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
@@ -44,7 +47,7 @@ package yzhkof.debug
 			_content.addChild(textField);
 			_content.addChild(btn_container);
 			
-			btn_container.width=500;
+			btn_container.width=1000;
 			btn_container.height=10;
 			
 			btn_container.appendItem(run_btn);
@@ -90,16 +93,28 @@ package yzhkof.debug
 //		}
 		private function __onSaveClick(e:Event):void
 		{
-			var so:SharedObject=SharedObject.getLocal("scripts");
-			so.data["script"]=textField.text;
-			so.flush();
-			so.close();
+//			var so:SharedObject=SharedObject.getLocal("scripts");
+//			so.data["script"]=textField.text;
+//			so.flush();
+//			so.close();
+			var file:FileReference=new FileReference();
+			file.save(textField.text,"script.txt");
 		}
 		private function __onLoadClick(e:Event):void
 		{
-			var so:SharedObject=SharedObject.getLocal("scripts");
-			textField.text=so.data["script"];
-			so.close()
+//			var so:SharedObject=SharedObject.getLocal("scripts");
+//			textField.text=so.data["script"];
+//			so.close()
+			var file:FileReference=new FileReference();
+			file.browse([new FileFilter("script txt","*.txt")]);
+			file.addEventListener(Event.SELECT,function(e:Event):void{
+				file.load();
+			})
+			file.addEventListener(Event.COMPLETE,function(e:Event):void
+			{
+				
+				textField.text=String(file.data);
+			});
 		}
 		private function __onImportClick(e:Event):void
 		{
