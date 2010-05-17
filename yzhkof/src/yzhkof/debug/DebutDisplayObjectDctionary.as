@@ -55,8 +55,7 @@ package yzhkof.debug
 				{
 					t = new TextPanel();
 				}
-				
-				t.text=getQualifiedClassName(dobj);
+				t.text=(new RegExp("instance").test(dobj.name)?getQualifiedClassName(dobj):dobj.name)||getQualifiedClassName(dobj);
 				text_arr.push(t);
 				text_arr.push(arrow);
 				dobj_map.add(t,dobj);
