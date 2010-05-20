@@ -26,16 +26,7 @@ package yzhkof.ui
 		}
 		private function init():void
 		{
-			addEventListener(Event.ADDED,__childAdd);
-			addEventListener(Event.REMOVED,__childRemove);
-		}
-		private function __childAdd(e:Event):void
-		{
-			isChange=true;
-		}
-		private function __childRemove(e:Event):void
-		{
-			isChange=true;
+			
 		}
 		public override function set width(value:Number):void
 		{
@@ -159,6 +150,7 @@ package yzhkof.ui
 		{
 			super.removeChild(child);
 			delete layoutMap[child];
+			isChange=true;
 		}
 		private var layoutMap:Dictionary=new Dictionary(true);
 		/**
@@ -174,6 +166,8 @@ package yzhkof.ui
 			else
 				layoutMap[child]=new Object;
 			super.addChild(child);
+			
+			isChange=true;
 		}
 		private function getItemLayout(child:DisplayObject):Object
 		{
