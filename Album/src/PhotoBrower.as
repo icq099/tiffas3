@@ -73,18 +73,58 @@ package
 		{
 			if(!img_big)
 			{
-				var data:PhotoData=PhotoData(e.obj);
-				img_big=new ImageBigViewer(data);
-				img_big.buttonMode=true;
-				addChild(img_big);
-				AddToStageSetter.setObjToMiddleOfStage(img_big);
-				img_big.addEventListener(MouseEvent.CLICK,__bigClick);
+				addNewBigImage(PhotoData(e.obj));
 			}
 		}
-		private function __bigClick(e:Event):void
+		private var data:PhotoData;
+		private function __imageClickLeft(e:Event):void
+		{
+			closeBigImage();
+			var t_data:PhotoData = Mxml.Instance.getPrePhotoData(data);
+			if(t_data!=null)
+			{
+				addNewBigImage(t_data);
+			}
+		}
+		private function addNewBigImage(data:PhotoData):void
+		{
+			var index:int = -1;
+			this.data = data;
+			if(img_big)
+			{
+				index = getChildIndex(img_big)-1;
+			}
+			img_big=new ImageBigViewer(data);
+			img_big.buttonMode=true;
+			if(index> 0)
+			{
+				addChildAt(img_big,index);
+			}else
+			{
+				addChild(img_big);
+			}
+			AddToStageSetter.setObjToMiddleOfStage(img_big);
+			img_big.addEventListener("click_left",__imageClickLeft);
+			img_big.addEventListener("click_right",__imageClickRight);
+			img_big.addEventListener("click_close",__imageClickClose);
+		}
+		private function __imageClickRight(e:Event):void
+		{
+			closeBigImage();
+			var t_data:PhotoData = Mxml.Instance.getNextPhotoData(data);
+			if(t_data!=null)
+			{
+				addNewBigImage(t_data);
+			}			
+		}
+		private function __imageClickClose(e:Event):void
+		{
+			closeBigImage();
+		}
+		private function closeBigImage():void
 		{
 			img_big.removeFromDisplayList();
-			img_big=null;
+			img_big = null;
 		}
 	}
 }

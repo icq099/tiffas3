@@ -45,9 +45,24 @@ package
 			}
 			return re_arr;
 		}
+		public function getNextPhotoData(data:PhotoData):PhotoData
+		{
+			var index:int = photoDataSet.indexOf(data);
+			if(index >= photoDataSet.length -1)
+				return null;
+			return photoDataSet[index+1]
+		}
+		public function getPrePhotoData(data:PhotoData):PhotoData
+		{
+			var index:int = photoDataSet.indexOf(data);
+			if(index <= 0)
+				return null;
+			return photoDataSet[index-1]
+		}
 		private function init():void
 		{
-			loader.loadURL("album2/config.xml");
+			loader.loadURL("album1/config.xml");
+//			loader.loadURL("config.xml");
 			EventProxy.proxy(loader,this,[Event.COMPLETE]);
 			this.addEventListener(Event.COMPLETE,__xmlLoadComplete);
 		}

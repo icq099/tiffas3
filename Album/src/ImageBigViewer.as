@@ -11,7 +11,9 @@ package
 	import gs.easing.Quart;
 	import gs.easing.Strong;
 	
+	import yzhkof.AddToStageSetter;
 	import yzhkof.effect.MyEffect;
+	import yzhkof.ui.mouse.MouseManager;
 
 	public class ImageBigViewer extends ImageViewer
 	{
@@ -22,6 +24,8 @@ package
 		
 		private var data:PhotoData;
 		
+		private static const mouseAsset:MouseAsset = new MouseAsset;
+		
 		public function ImageBigViewer(data:PhotoData)
 		{
 			this.data=data;
@@ -30,6 +34,59 @@ package
 			WIDTH=300;
 			HEIGHT=300;
 			updataDisplay();
+			addEventListener(MouseEvent.ROLL_OUT,__mouseOut);
+			addEventListener(MouseEvent.CLICK,__mouseClick);
+			AddToStageSetter.delayExcuteAfterAddToStage(this,function():void
+			{
+				addEventListener(Event.ENTER_FRAME,__enterFrame);
+			});
+		}
+		private function __mouseClick(e:MouseEvent):void
+		{
+			switch(mouseAsset.currentFrame)
+			{
+				case 1:
+					dispatchEvent(new Event("click_right"));
+				break;
+				case 2:
+					dispatchEvent(new Event("click_left"));
+				break;
+				case 3:
+					dispatchEvent(new Event("click_close"));
+				break;
+			}
+		}
+		private function __mouseOut(e:MouseEvent):void
+		{
+			MouseManager.cursor = null;
+		}
+		private function __enterFrame(e:Event):void
+		{
+			updataMouseCursor();	
+		}
+		private function updataMouseCursor():void
+		{
+			if(this.hitTestPoint(stage.mouseX,stage.mouseY,true))
+			{
+				if(mouseX<this.width/2)
+				{
+					mouseAsset.gotoAndStop(2);
+					MouseManager.cursor = mouseAsset;
+				}
+				if(mouseX>this.width/2)
+				{
+					mouseAsset.gotoAndStop(1);
+					MouseManager.cursor = mouseAsset;
+				}
+				if(mouseY>loader.height + OFFSET)
+				{
+					mouseAsset.gotoAndStop(3);
+					MouseManager.cursor = mouseAsset;
+				}	
+			}else
+			{
+				MouseManager.cursor = null;
+			}
 		}
 		protected override function init():void
 		{
@@ -49,6 +106,7 @@ package
 			textfield.visible=false;
 			textfield.height=BOTTOM-OFFSET;
 			textfield.text=data.text;
+			textfield.selectable = false;
 			
 			TweenLite.from(this,0.5,{alpha:0,overwrite:0});
 		}
@@ -85,6 +143,10 @@ package
 		}
 		public override function removeFromDisplayList():void
 		{
+			removeEventListener(Event.ENTER_FRAME,__enterFrame);
+			removeEventListener(MouseEvent.ROLL_OUT,__mouseOut);
+			removeEventListener(MouseEvent.CLICK,__mouseClick);
+			MouseManager.cursor = null;
 			MyEffect.removeChild(new EffectPv3dRota(parent,this,1,false,1,0,0.5));
 		}
 		
