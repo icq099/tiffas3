@@ -63,8 +63,10 @@ package yzhkof.ui.mouse
 		}
 		private function unSetCursor():void
 		{
-			cursorContainer.removeChild(cursor);
-			StageManager.stage.addEventListener(MouseEvent.MOUSE_MOVE,__mouseMove);
+			if(cursor&&cursor.parent)
+				cursorContainer.removeChild(cursor);
+			Mouse.show();
+			StageManager.stage.removeEventListener(MouseEvent.MOUSE_MOVE,__mouseMove);
 		}
 		private function __mouseMove(e:MouseEvent):void
 		{
