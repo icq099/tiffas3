@@ -28,15 +28,10 @@ package yzhkof.ui.mouse
 		}
 		private function init():void
 		{
-			StageManager.stage.addChild(cursorContainer);
-			StageManager.stage.addEventListener(Event.ADDED,__onStageAdd);
+			StageManager.addChildToStageUpperDisplayList(cursorContainer);
 			
 			cursorContainer.mouseChildren=false;
 			cursorContainer.mouseEnabled=false;
-		}
-		private function __onStageAdd(e:Event):void
-		{
-			StageManager.stage.setChildIndex(cursorContainer,StageManager.stage.numChildren-1);
 		}
 		public static function getInstance():MouseManager
 		{
