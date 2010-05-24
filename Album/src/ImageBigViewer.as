@@ -1,5 +1,6 @@
 package
 {
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filters.BlurFilter;
@@ -14,6 +15,7 @@ package
 	import yzhkof.AddToStageSetter;
 	import yzhkof.effect.MyEffect;
 	import yzhkof.ui.mouse.MouseManager;
+	import yzhkof.ui.tip.TipManager;
 
 	public class ImageBigViewer extends ImageViewer
 	{
@@ -25,48 +27,66 @@ package
 		private var data:PhotoData;
 		
 		private static const mouseAsset:MouseAsset = new MouseAsset;
+		private var closeBtn:Sprite = new CloseAsset;
+		
+		private var isMouseOnLoader:Boolean = false;
 		
 		public function ImageBigViewer(data:PhotoData)
 		{
 			this.data=data;
-			
 			super(data.url);
+//			TipManager.getInstance().addTipTo(back,new CloseAsset,{offsetX:25,offsetY:25});
+			loader.x=OFFSET;
+			loader.y=OFFSET;
 			WIDTH=300;
 			HEIGHT=300;
 			updataDisplay();
-			addEventListener(MouseEvent.ROLL_OUT,__mouseOut);
+			
 			addEventListener(MouseEvent.CLICK,__mouseClick);
-			AddToStageSetter.delayExcuteAfterAddToStage(this,function():void
-			{
-				addEventListener(Event.ENTER_FRAME,__enterFrame);
-			});
+//			AddToStageSetter.delayExcuteAfterAddToStage(this,function():void
+//			{
+//				addEventListener(Event.ENTER_FRAME,__enterFrame);
+//			});
+			loader.addEventListener(MouseEvent.MOUSE_MOVE,__mouseMove);
+			loader.addEventListener(MouseEvent.ROLL_OUT,__loaderMouseOut);
+			loader.addEventListener(MouseEvent.ROLL_OVER,__loaderMouseOver);
+		}
+		private function __loaderMouseOut(e:Event):void
+		{
+			updataMouseCursor();
+			MouseManager.cursor = null;
+			isMouseOnLoader = false;
+		}
+		private function __loaderMouseOver(e:Event):void
+		{
+			isMouseOnLoader = true;
+			updataMouseCursor();
 		}
 		private function __mouseClick(e:MouseEvent):void
 		{
-			switch(mouseAsset.currentFrame)
+			if(MouseManager.cursor == null)
 			{
-				case 1:
-					dispatchEvent(new Event("click_right"));
-				break;
-				case 2:
-					dispatchEvent(new Event("click_left"));
-				break;
-				case 3:
-					dispatchEvent(new Event("click_close"));
-				break;
+				dispatchEvent(new Event("click_close"));
+			}else
+			{
+				switch(mouseAsset.currentFrame)
+				{
+					case 1:
+						dispatchEvent(new Event("click_right"));
+					break;
+					case 2:
+						dispatchEvent(new Event("click_left"));
+					break;
+				}
 			}
 		}
-		private function __mouseOut(e:MouseEvent):void
-		{
-			MouseManager.cursor = null;
-		}
-		private function __enterFrame(e:Event):void
+		private function __mouseMove(e:Event):void
 		{
 			updataMouseCursor();	
 		}
 		private function updataMouseCursor():void
 		{
-			if(this.hitTestPoint(stage.mouseX,stage.mouseY,true))
+			if(isMouseOnLoader)
 			{
 				if(mouseX<this.width/2)
 				{
@@ -78,11 +98,6 @@ package
 					mouseAsset.gotoAndStop(1);
 					MouseManager.cursor = mouseAsset;
 				}
-				if(mouseY>loader.height + OFFSET)
-				{
-					mouseAsset.gotoAndStop(3);
-					MouseManager.cursor = mouseAsset;
-				}	
 			}else
 			{
 				MouseManager.cursor = null;
@@ -91,6 +106,8 @@ package
 		protected override function init():void
 		{
 			super.init();
+			addChild(closeBtn);
+			closeBtn.buttonMode = true;
 			textfield=new TextField;
 			addChild(textfield);
 			
@@ -103,16 +120,21 @@ package
 			textfield.multiline=true;
 			textfield.wordWrap=true;
 			textfield.filters=[new BlurFilter(0,0,0)]
-			textfield.visible=false;
 			textfield.height=BOTTOM-OFFSET;
-			textfield.text=data.text;
 			textfield.selectable = false;
+			textfield.mouseEnabled = false;
 			
 			TweenLite.from(this,0.5,{alpha:0,overwrite:0});
+		}
+		private function updateClosePostion():void
+		{
+			closeBtn.x = back.width - closeBtn.width - OFFSET*2;
+			closeBtn.y = OFFSET - 10;
 		}
 		protected override function updataDisplay():void
 		{
 			super.updataDisplay();
+			updateClosePostion()
 			updataTextfieldPos();
 			
 		}
@@ -125,9 +147,15 @@ package
 		protected override function __onComplete(e:Event):void
 		{
 			super.__onComplete(e);
-			loader.x=OFFSET;
-			loader.y=OFFSET;
+			updateSizeAndPosition();
+//			loader.removeEventListener(Event.COMPLETE,__onComplete);
+//			loader.addEventListener(Event.COMPLETE,super.__onComplete);
+		}
+		private function updateSizeAndPosition():void
+		{
 			loader.visible=false;
+			textfield.visible=false;
+			textfield.text=data.text;
 			var width_final:Number=loader.width+OFFSET*2;
 			var height_final:Number=loader.height+OFFSET*2+BOTTOM;
 			
@@ -139,13 +167,18 @@ package
 				TweenLite.from(loader,0.5,{alpha:0});
 				updataTextfieldPos();
 				TweenLite.from(textfield,1,{alpha:0,delay:0.5});
+			},onUpdate:function():void
+			{
+				updateClosePostion();
 			},ease:Strong.easeInOut});
 		}
 		public override function removeFromDisplayList():void
 		{
-			removeEventListener(Event.ENTER_FRAME,__enterFrame);
-			removeEventListener(MouseEvent.ROLL_OUT,__mouseOut);
+			loader.removeEventListener(MouseEvent.MOUSE_MOVE,__mouseMove);
+			loader.removeEventListener(MouseEvent.ROLL_OUT,__loaderMouseOut);
+			loader.removeEventListener(MouseEvent.ROLL_OVER,__loaderMouseOver);
 			removeEventListener(MouseEvent.CLICK,__mouseClick);
+//			TipManager.getInstance().removeTipFrom(back);
 			MouseManager.cursor = null;
 			MyEffect.removeChild(new EffectPv3dRota(parent,this,1,false,1,0,0.5));
 		}

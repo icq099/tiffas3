@@ -59,22 +59,22 @@ package
 		private function getImageViewer(url:String):ImageSmallViewer
 		{
 			var image:ImageSmallViewer=new ImageSmallViewer(url);
-			TweenMax.to(image, 0, {colorMatrixFilter:{colorize:0xffffff, amount:0.5, brightness:1}});
-			image.alpha = 0.7
+//			TweenMax.to(image, 0, {colorMatrixFilter:{colorize:0xffffff, amount:0.5, brightness:1}});
+//			image.alpha = 0.7
 			image.buttonMode=true;
 			image.addEventListener(MouseEvent.CLICK,__imageClick);
-			image.addEventListener(MouseEvent.ROLL_OVER,__imageOver);
-			image.addEventListener(MouseEvent.ROLL_OUT,__imageOut);
+//			image.addEventListener(MouseEvent.ROLL_OVER,__imageOver);
+//			image.addEventListener(MouseEvent.ROLL_OUT,__imageOut);
 			return image;
 		}
-		private function __imageOver(e:Event):void
-		{
-			TweenMax.to(e.currentTarget, 0.5, {alpha:1,colorMatrixFilter:{colorize:0xffffff, amount:0, brightness:1},ease:Strong.easeInOut});
-		}
-		private function __imageOut(e:Event):void
-		{
-			TweenMax.to(e.currentTarget, 5, {alpha:0.7,colorMatrixFilter:{colorize:0xffffff, amount:0.5, brightness:1},ease:Strong.easeOut});
-		}
+//		private function __imageOver(e:Event):void
+//		{
+//			TweenMax.to(e.currentTarget, 0.5, {alpha:1,colorMatrixFilter:{colorize:0xffffff, amount:0, brightness:1},ease:Strong.easeInOut});
+//		}
+//		private function __imageOut(e:Event):void
+//		{
+//			TweenMax.to(e.currentTarget, 5, {alpha:0.7,colorMatrixFilter:{colorize:0xffffff, amount:0.5, brightness:1},ease:Strong.easeOut});
+//		}
 		private function __imageClick(e:Event):void
 		{
 			dispatchEvent(new ObjectEvent("image_click",false,false,click_map[e.currentTarget]));
