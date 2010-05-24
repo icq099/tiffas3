@@ -1,86 +1,90 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<flexLibProperties version="1">
-<includeClasses>
-<classEntry path="yzhkof.util.HashMap"/>
-<classEntry path="yzhkof.display.render.RenderEngineBasic"/>
-<classEntry path="yzhkof.EfficiencyTestor"/>
-<classEntry path="yzhkof.loader.LoaderBaseItem"/>
-<classEntry path="yzhkof.util.QNameUtil"/>
-<classEntry path="yzhkof.loadings.IYzhkofProgressLoading"/>
-<classEntry path="yzhkof.loader.SerialLoaderBase"/>
-<classEntry path="yzhkof.debug.debugObjectTrace"/>
-<classEntry path="yzhkof.loader.LoaderEvent"/>
-<classEntry path="yzhkof.TimeCounter"/>
-<classEntry path="yzhkof.MyGraphy"/>
-<classEntry path="yzhkof.debug.DebugDisplayObjectViewer"/>
-<classEntry path="yzhkof.debug.traceObject"/>
-<classEntry path="yzhkof.loader.LoaderArray"/>
-<classEntry path="yzhkof.file.SimpleDecoder"/>
-<classEntry path="yzhkof.ui.DragPanel"/>
-<classEntry path="yzhkof.loader.SerialCompatibleURLLoader"/>
-<classEntry path="yzhkof.tiff.TiffAnalyser"/>
-<classEntry path="yzhkof.BasicCameraContrler"/>
-<classEntry path="yzhkof.util.StringUtil"/>
-<classEntry path="yzhkof.effect.MyEffect"/>
-<classEntry path="yzhkof.KeyMy"/>
-<classEntry path="yzhkof.util.XmlUtil"/>
-<classEntry path="yzhkof.PositionSeter"/>
-<classEntry path="yzhkof.util.WeakMap"/>
-<classEntry path="yzhkof.util.delayCallNextFrame"/>
-<classEntry path="yzhkof.debug.TextTrace"/>
-<classEntry path="yzhkof.debug.ScriptViewer"/>
-<classEntry path="yzhkof.ui.BackGroudContainer"/>
-<classEntry path="yzhkof.display.event.DisplayEvent"/>
-<classEntry path="yzhkof.loader.proxy.CompatibleLoaderProxy"/>
-<classEntry path="yzhkof.CamereaControlerEvent"/>
-<classEntry path="yzhkof.AddToStageSetter"/>
-<classEntry path="yzhkof.display.render.RenderDispatcher"/>
-<classEntry path="yzhkof.loader.CompatibleURLLoader"/>
-<classEntry path="yzhkof.loader.SeriaCompatibleLoader"/>
-<classEntry path="yzhkof.loader.LoaderMap"/>
-<classEntry path="yzhkof.tiff.TiffDecoder"/>
-<classEntry path="yzhkof.display.DisplacementMapSprite"/>
-<classEntry path="yzhkof.FPSfromA3d"/>
-<classEntry path="yzhkof.ui.TextPanel"/>
-<classEntry path="yzhkof.loader.proxy.NormalLoaderProxy"/>
-<classEntry path="yzhkof.file.SimpleEncoder"/>
-<classEntry path="yzhkof.loader.proxy.IManageLoader"/>
-<classEntry path="yzhkof.loadings.IYzhkofLoading"/>
-<classEntry path="yzhkof.loader.LoaderManager"/>
-<classEntry path="yzhkof.util.DebugUtil"/>
-<classEntry path="yzhkof.util.DualMap"/>
-<classEntry path="yzhkof.display.RenderSprite"/>
-<classEntry path="yzhkof.debug.DebutDisplayObjectDctionary"/>
-<classEntry path="yzhkof.BytesUtil"/>
-<classEntry path="yzhkof.debug.DebugSystem"/>
-<classEntry path="yzhkof.effect.EffectBase"/>
-<classEntry path="yzhkof.loader.CompatibleLoaderItem"/>
-<classEntry path="yzhkof.debug.SnapshotDisplayViewer"/>
-<classEntry path="yzhkof.loadings.LoadingWaveRota"/>
-<classEntry path="yzhkof.ToolBitmapData"/>
-<classEntry path="yzhkof.effect.EffectBitmapBase"/>
-<classEntry path="yzhkof.debug.TextUtil"/>
-<classEntry path="yzhkof.loader.NormalLoaderItem"/>
-<classEntry path="yzhkof.debug.ScriptRuner"/>
-<classEntry path="yzhkof.loader.CompatibleLoader"/>
-<classEntry path="yzhkof.ui.TileContainer"/>
-<classEntry path="yzhkof.loader.proxy.LoaderProxy"/>
-<classEntry path="yzhkof.display.BitmapSprite"/>
-<classEntry path="yzhkof.CameraRotationControler"/>
-<classEntry path="yzhkof.MyGC"/>
-<classEntry path="yzhkof.util.SampleUtil"/>
-<classEntry path="yzhkof.BasicAsProject"/>
-<classEntry path="yzhkof.Toolyzhkof"/>
-<classEntry path="yzhkof.util.EventProxy"/>
-<classEntry path="yzhkof.display.TailSprite"/>
-<classEntry path="yzhkof.debug.debugTrace"/>
-<classEntry path="yzhkof.util.BitReader"/>
-<classEntry path="yzhkof.loadings.LoadingSimpleProgressBar"/>
-<classEntry path="yzhkof.display.render.event.RenderEvent"/>
-<classEntry path="yzhkof.display.render.FrameRenderEngine"/>
-</includeClasses>
-<includeResources>
-<resourceEntry destPath="yzhkof/loadings/asset/myloadings.swf" sourcePath="yzhkof/loadings/asset/myloadings.swf"/>
-</includeResources>
-<namespaceManifests/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="false" version="1">
+  <includeClasses>
+    <classEntry path="yzhkof.AddToStageSetter"/>
+    <classEntry path="yzhkof.BasicAsProject"/>
+    <classEntry path="yzhkof.BasicCameraContrler"/>
+    <classEntry path="yzhkof.BytesUtil"/>
+    <classEntry path="yzhkof.CameraRotationControler"/>
+    <classEntry path="yzhkof.CamereaControlerEvent"/>
+    <classEntry path="yzhkof.EfficiencyTestor"/>
+    <classEntry path="yzhkof.FPSfromA3d"/>
+    <classEntry path="yzhkof.KeyMy"/>
+    <classEntry path="yzhkof.MyGC"/>
+    <classEntry path="yzhkof.MyGraphy"/>
+    <classEntry path="yzhkof.PositionSeter"/>
+    <classEntry path="yzhkof.TimeCounter"/>
+    <classEntry path="yzhkof.ToolBitmapData"/>
+    <classEntry path="yzhkof.Toolyzhkof"/>
+    <classEntry path="yzhkof.debug.DebugDisplayObjectViewer"/>
+    <classEntry path="yzhkof.debug.DebugSystem"/>
+    <classEntry path="yzhkof.debug.DebutDisplayObjectDctionary"/>
+    <classEntry path="yzhkof.debug.ScriptRuner"/>
+    <classEntry path="yzhkof.debug.ScriptViewer"/>
+    <classEntry path="yzhkof.debug.SnapshotDisplayViewer"/>
+    <classEntry path="yzhkof.debug.TextTrace"/>
+    <classEntry path="yzhkof.debug.TextUtil"/>
+    <classEntry path="yzhkof.debug.debugObjectTrace"/>
+    <classEntry path="yzhkof.debug.debugTrace"/>
+    <classEntry path="yzhkof.debug.traceObject"/>
+    <classEntry path="yzhkof.display.BitmapSprite"/>
+    <classEntry path="yzhkof.display.DisplacementMapSprite"/>
+    <classEntry path="yzhkof.display.RenderSprite"/>
+    <classEntry path="yzhkof.display.TailSprite"/>
+    <classEntry path="yzhkof.display.event.DisplayEvent"/>
+    <classEntry path="yzhkof.display.render.FrameRenderEngine"/>
+    <classEntry path="yzhkof.display.render.RenderDispatcher"/>
+    <classEntry path="yzhkof.display.render.RenderEngineBasic"/>
+    <classEntry path="yzhkof.display.render.event.RenderEvent"/>
+    <classEntry path="yzhkof.effect.EffectBase"/>
+    <classEntry path="yzhkof.effect.EffectBitmapBase"/>
+    <classEntry path="yzhkof.effect.MyEffect"/>
+    <classEntry path="yzhkof.file.SimpleDecoder"/>
+    <classEntry path="yzhkof.file.SimpleEncoder"/>
+    <classEntry path="yzhkof.loader.CompatibleLoader"/>
+    <classEntry path="yzhkof.loader.CompatibleLoaderItem"/>
+    <classEntry path="yzhkof.loader.CompatibleURLLoader"/>
+    <classEntry path="yzhkof.loader.LoaderArray"/>
+    <classEntry path="yzhkof.loader.LoaderBaseItem"/>
+    <classEntry path="yzhkof.loader.LoaderEvent"/>
+    <classEntry path="yzhkof.loader.LoaderManager"/>
+    <classEntry path="yzhkof.loader.LoaderMap"/>
+    <classEntry path="yzhkof.loader.NormalLoaderItem"/>
+    <classEntry path="yzhkof.loader.SeriaCompatibleLoader"/>
+    <classEntry path="yzhkof.loader.SerialCompatibleURLLoader"/>
+    <classEntry path="yzhkof.loader.SerialLoaderBase"/>
+    <classEntry path="yzhkof.loader.proxy.CompatibleLoaderProxy"/>
+    <classEntry path="yzhkof.loader.proxy.IManageLoader"/>
+    <classEntry path="yzhkof.loader.proxy.LoaderProxy"/>
+    <classEntry path="yzhkof.loader.proxy.NormalLoaderProxy"/>
+    <classEntry path="yzhkof.loadings.IYzhkofLoading"/>
+    <classEntry path="yzhkof.loadings.IYzhkofProgressLoading"/>
+    <classEntry path="yzhkof.loadings.LoadingSimpleProgressBar"/>
+    <classEntry path="yzhkof.loadings.LoadingWaveRota"/>
+    <classEntry path="yzhkof.tiff.TiffAnalyser"/>
+    <classEntry path="yzhkof.tiff.TiffDecoder"/>
+    <classEntry path="yzhkof.ui.BackGroudContainer"/>
+    <classEntry path="yzhkof.ui.DragPanel"/>
+    <classEntry path="yzhkof.ui.TextPanel"/>
+    <classEntry path="yzhkof.ui.TileContainer"/>
+    <classEntry path="yzhkof.util.BitReader"/>
+    <classEntry path="yzhkof.util.DebugUtil"/>
+    <classEntry path="yzhkof.util.DisplayObjectUtil"/>
+    <classEntry path="yzhkof.util.DualMap"/>
+    <classEntry path="yzhkof.util.EventProxy"/>
+    <classEntry path="yzhkof.util.HashMap"/>
+    <classEntry path="yzhkof.util.QNameUtil"/>
+    <classEntry path="yzhkof.util.SampleUtil"/>
+    <classEntry path="yzhkof.util.StringUtil"/>
+    <classEntry path="yzhkof.util.WeakMap"/>
+    <classEntry path="yzhkof.util.XmlUtil"/>
+    <classEntry path="yzhkof.util.delayCallNextFrame"/>
+    <classEntry path="yzhkof.util.Helpers"/>
+    <classEntry path="yzhkof.loader.SWCLoader"/>
+    <classEntry path="yzhkof.loader.event.SWCLoaderEvent"/>
+  </includeClasses>
+  <includeResources>
+    <resourceEntry destPath="yzhkof/loadings/asset/myloadings.swf" sourcePath="yzhkof/loadings/asset/myloadings.swf"/>
+  </includeResources>
+  <namespaceManifests/>
 </flexLibProperties>
