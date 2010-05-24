@@ -27,22 +27,32 @@ package
 		{
 			addChild(back);
 			addChild(loader);
-			addChild(preloader);
 			
-			loader.load(url);
+			loadURL(url);
+			
 			loader.addEventListener(Event.COMPLETE,__onComplete);
 		}
 		protected function updataDisplay():void
 		{
 			back.width=WIDTH;
-			back.height=HEIGHT;
+			back.height=HEIGHT;	
 			preloader.x=back.width/2;
 			preloader.y=back.height/2;
-			
 		}
 		protected function __onComplete(e:Event):void
 		{
+			loader.visible=true;
 			removeChild(preloader);
+		}
+		public function loadURL(url:String):void
+		{
+			this.url=url;
+			loader.visible = false;
+			loader.load(url);
+			addChild(preloader);
+			preloader.x=back.width/2;
+			preloader.y=back.height/2;
+			
 		}
 		public function removeFromDisplayList():void
 		{

@@ -74,7 +74,7 @@ package
 			for(i=0;i<length;i++)
 			{
 				var photo_xml:XML=xml.photo[i];
-				photoDataSet.push(new PhotoData(photo_xml.@smallurl,photo_xml.@url,photo_xml));
+				photoDataSet.push(new PhotoData(photo_xml.@smallurl?photo_xml.@smallurl:photo_xml.@url,photo_xml.@url,photo_xml));
 			}
 		}
 	}

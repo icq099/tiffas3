@@ -18,7 +18,7 @@ package
 	{
 		public function Album()
 		{
-			DebugSystem.init(this.stage);
+//			DebugSystem.init(this.stage);
 			Mxml.Instance.addEventListener(Event.COMPLETE,__onLoadComplete);
 		}
 		private function init():void

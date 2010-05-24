@@ -79,11 +79,12 @@ package
 		private var data:PhotoData;
 		private function __imageClickLeft(e:Event):void
 		{
-			closeBigImage();
+//			closeBigImage();
 			var t_data:PhotoData = Mxml.Instance.getPrePhotoData(data);
+			this.data = t_data;
 			if(t_data!=null)
 			{
-				addNewBigImage(t_data);
+				img_big.loadURL(t_data.url);
 			}
 		}
 		private function addNewBigImage(data:PhotoData):void
@@ -110,11 +111,12 @@ package
 		}
 		private function __imageClickRight(e:Event):void
 		{
-			closeBigImage();
+//			closeBigImage();
 			var t_data:PhotoData = Mxml.Instance.getNextPhotoData(data);
+			this.data = t_data;
 			if(t_data!=null)
 			{
-				addNewBigImage(t_data);
+				img_big.loadURL(t_data.url);
 			}			
 		}
 		private function __imageClickClose(e:Event):void
