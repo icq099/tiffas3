@@ -4,18 +4,14 @@ package
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filters.BlurFilter;
-	import flash.filters.GlowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
 	import gs.TweenLite;
-	import gs.easing.Quart;
 	import gs.easing.Strong;
 	
-	import yzhkof.AddToStageSetter;
 	import yzhkof.effect.MyEffect;
 	import yzhkof.ui.mouse.MouseManager;
-	import yzhkof.ui.tip.TipManager;
 
 	public class ImageBigViewer extends ImageViewer
 	{
@@ -23,9 +19,7 @@ package
 		private const BOTTOM:Number=50;
 		
 		private var textfield:TextField;
-		
-		private var data:PhotoData;
-		
+				
 		private static const mouseAsset:MouseAsset = new MouseAsset;
 		private var closeBtn:Sprite = new CloseAsset;
 		
@@ -33,8 +27,8 @@ package
 		
 		public function ImageBigViewer(data:PhotoData)
 		{
-			this.data=data;
-			super(data.url);
+			urlDataOn = "url";
+			super(data);
 //			TipManager.getInstance().addTipTo(back,new CloseAsset,{offsetX:25,offsetY:25});
 			loader.x=OFFSET;
 			loader.y=OFFSET;
@@ -43,10 +37,6 @@ package
 			updataDisplay();
 			
 			addEventListener(MouseEvent.CLICK,__mouseClick);
-//			AddToStageSetter.delayExcuteAfterAddToStage(this,function():void
-//			{
-//				addEventListener(Event.ENTER_FRAME,__enterFrame);
-//			});
 			loader.addEventListener(MouseEvent.MOUSE_MOVE,__mouseMove);
 			loader.addEventListener(MouseEvent.ROLL_OUT,__loaderMouseOut);
 			loader.addEventListener(MouseEvent.ROLL_OVER,__loaderMouseOver);

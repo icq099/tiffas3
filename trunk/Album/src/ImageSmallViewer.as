@@ -1,17 +1,15 @@
 package
 {
-	import flash.display.Sprite;
 	import flash.events.Event;
-	
-	import yzhkof.loader.CompatibleLoader;
 	
 	public class ImageSmallViewer extends ImageViewer
 	{
 		protected const GAP:Number=10;
 		
-		public function ImageSmallViewer(url:String="")
+		public function ImageSmallViewer(data:PhotoData)
 		{
-			super(url);
+			urlDataOn = "smallUrl";
+			super(data);
 			WIDTH=150;
 			HEIGHT=100;
 			updataDisplay();
