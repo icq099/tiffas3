@@ -12,14 +12,15 @@ package
 		protected var HEIGHT:Number;
 		protected var preloader:Preloader=new Preloader();
 		
-		protected var url:String="";
+		protected var data:PhotoData;
+		protected var urlDataOn:String = "url";
 		protected var loader:CompatibleLoader=new CompatibleLoader();
-		public function ImageViewer(url:String="")
+		public function ImageViewer(data:PhotoData)
 		{
 			super();
+			this.data = data;
 			WIDTH=200;
 			HEIGHT=200;
-			this.url=url;
 			init();
 			updataDisplay();
 		}
@@ -28,7 +29,7 @@ package
 			addChild(back);
 			addChild(loader);
 			
-			loadURL(url);
+			loadData(data);
 			
 			loader.addEventListener(Event.COMPLETE,__onComplete);
 		}
@@ -44,11 +45,11 @@ package
 			loader.visible=true;
 			removeChild(preloader);
 		}
-		public function loadURL(url:String):void
+		public function loadData(data:PhotoData):void
 		{
-			this.url=url;
+			this.data = data;
 			loader.visible = false;
-			loader.load(url);
+			loader.load(data[urlDataOn]);
 			addChild(preloader);
 			preloader.x=back.width/2;
 			preloader.y=back.height/2;

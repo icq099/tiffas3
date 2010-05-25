@@ -44,7 +44,7 @@ package
 			click_map=new Dictionary();
 			for each(var i:PhotoData in data)
 			{
-				var image:ImageSmallViewer=getImageViewer(i.smallUrl);				
+				var image:ImageSmallViewer=getImageViewer(i);				
 				appendItem(image);
 				click_map[image]=i;
 				image_arr.push(image);
@@ -56,9 +56,9 @@ package
 				TweenLite.from(image_arr[j],0.3,{alpha:0,x:width/2-50,y:height/2-20});
 			}
 		}
-		private function getImageViewer(url:String):ImageSmallViewer
+		private function getImageViewer(data:PhotoData):ImageSmallViewer
 		{
-			var image:ImageSmallViewer=new ImageSmallViewer(url);
+			var image:ImageSmallViewer=new ImageSmallViewer(data);
 //			TweenMax.to(image, 0, {colorMatrixFilter:{colorize:0xffffff, amount:0.5, brightness:1}});
 //			image.alpha = 0.7
 			image.buttonMode=true;

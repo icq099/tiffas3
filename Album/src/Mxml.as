@@ -61,8 +61,8 @@ package
 		}
 		private function init():void
 		{
-			loader.loadURL("album1/config.xml");
-//			loader.loadURL("config.xml");
+//			loader.loadURL("album2/config.xml");
+			loader.loadURL("config.xml");
 			EventProxy.proxy(loader,this,[Event.COMPLETE]);
 			this.addEventListener(Event.COMPLETE,__xmlLoadComplete);
 		}

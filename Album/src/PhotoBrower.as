@@ -81,10 +81,10 @@ package
 		{
 //			closeBigImage();
 			var t_data:PhotoData = Mxml.Instance.getPrePhotoData(data);
-			this.data = t_data;
 			if(t_data!=null)
 			{
-				img_big.loadURL(t_data.url);
+				this.data = t_data;
+				img_big.loadData(t_data);
 			}
 		}
 		private function addNewBigImage(data:PhotoData):void
@@ -113,10 +113,10 @@ package
 		{
 //			closeBigImage();
 			var t_data:PhotoData = Mxml.Instance.getNextPhotoData(data);
-			this.data = t_data;
 			if(t_data!=null)
 			{
-				img_big.loadURL(t_data.url);
+				this.data = t_data;
+				img_big.loadData(t_data);
 			}			
 		}
 		private function __imageClickClose(e:Event):void
@@ -125,6 +125,9 @@ package
 		}
 		private function closeBigImage():void
 		{
+			img_big.removeEventListener("click_left",__imageClickLeft);
+			img_big.removeEventListener("click_right",__imageClickRight);
+			img_big.removeEventListener("click_close",__imageClickClose);
 			img_big.removeFromDisplayList();
 			img_big = null;
 		}
