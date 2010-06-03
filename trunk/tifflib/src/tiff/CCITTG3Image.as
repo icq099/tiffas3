@@ -158,16 +158,16 @@ public class CCITTG3Image extends RawImage {
 		if (firstStrip) {
 			
 			//跳过第一个eol
-			for (i=0,j=0;bytesArray[i]==0; i++) {;}
+			for (i=0,j=0;bytesArray[i]==0; i++) {}
 			j=i;
 
 
 			if (hiloBitOrder) {
 				var b:int= Converter.reverseByte(ByteUtil.toSign(bytesArray[j]));
-				for (i=0; (b>>i) != 1;i++) {;}
+				for (i=0; (b>>i) != 1;i++) {}
 			}
 			else {
-				for (i=0; (ByteUtil.toSign(bytesArray[j])>>i) != 1;i++) {;}
+				for (i=0; (ByteUtil.toSign(bytesArray[j])>>i) != 1;i++) {}
 			}
 			i += j*8;
 		}
