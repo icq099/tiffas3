@@ -26,7 +26,7 @@ package {
 			//loader=new URLLoader(new URLRequest("photo.tif"));
 			//loader=new URLLoader(new URLRequest("test.tif"));
 			//loader=new URLLoader(new URLRequest("testTXD.tif"));
-			loader=new URLLoader(new URLRequest("g:\aa.tiff"));//读取图片
+			loader=new URLLoader(new URLRequest("g3.tif"));//读取图片
 			//loader=new URLLoader(new URLRequest("g3.tif"));
 			loader.dataFormat=URLLoaderDataFormat.BINARY;
 			//loader.load();
@@ -42,7 +42,7 @@ package {
 			var d:DisplayObject
 			EfficiencyTestor.efficiencyOfFunctionTraceFormat(function():void{
 				
-				d=new Bitmap(t.getImage(1));//获得第二分页的图片
+				d=new Bitmap(t.getImage(0));//获得第一分页的图片
 			
 			});
 			//d.scaleX=d.scaleY=0.2
