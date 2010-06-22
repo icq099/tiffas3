@@ -17,6 +17,7 @@ package yzhkof.debug
 	import yzhkof.ui.TileContainer;
 	import yzhkof.util.DebugUtil;
 	import yzhkof.util.WeakMap;
+	import yzhkof.util.delayCallNextFrame;
 
 	public class DebugDisplayObjectViewer extends BackGroudContainer
 	{
@@ -81,8 +82,7 @@ package yzhkof.debug
 			
 			dictionary_viewer.setup(this);
 			dictionary_viewer.y = 25;
-			mask_background=MyGraphy.drawRectangle(_stage.stageWidth,_stage.stageHeight);
-			mask_background.alpha=0.5;
+			
 			btn_container.width=500;
 			btn_container.height=200;
 			
@@ -99,7 +99,7 @@ package yzhkof.debug
 			addChild(btn_container);
 			addChild(dictionary_viewer);
 			addChild(container);
-			addChild(mask_background);
+			setMaskBackGround(MyGraphy.drawRectangle(_stage.stageWidth,_stage.stageHeight));
 			addChild(viewer);
 			
 			btn_container.appendItem(up_btn);
@@ -112,17 +112,34 @@ package yzhkof.debug
 			btn_container.appendItem(x_btn);
 			btn_container.appendItem(focus_txt);
 			
-			
-			container.y=120;
 			container.width=_stage.stageWidth
 			viewer.visible=false;
 			mask_background.visible=false;
 			goto(_stage);
 			
 		}
+		private function setMaskBackGround(dobj:Sprite):void
+		{
+			if(mask_background)
+				removeChild(mask_background);
+			mask_background = dobj;
+			mask_background.alpha=0.5;
+			mask_background.visible = false;
+			addChildAt(mask_background,viewer.parent == this?getChildIndex(viewer):numChildren);
+			mask_background.addEventListener(MouseEvent.CLICK,function(e:Event):void
+			{
+				viewer.clearView();
+				mask_background.visible=false;
+			});
+		}
 		private function initEvent():void
 		{
 			_stage.addEventListener(MouseEvent.MOUSE_DOWN,__onStageClick,false,int.MAX_VALUE,true);
+			_stage.addEventListener(Event.RESIZE,function(e:Event):void{
+				setMaskBackGround(MyGraphy.drawRectangle(_stage.stageWidth,_stage.stageHeight));
+				container.width=_stage.stageWidth;
+				updataContainerPosition();
+			});
 			
 			up_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
@@ -150,11 +167,6 @@ package yzhkof.debug
 			script_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
 					DebugSystem.scriptViewer.visible=!DebugSystem.scriptViewer.visible;
-			});
-			mask_background.addEventListener(MouseEvent.CLICK,function(e:Event):void
-			{
-				viewer.clearView();
-				mask_background.visible=false;
 			});
 			viewer.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
@@ -238,6 +250,12 @@ package yzhkof.debug
 				trace(str);
 			}
 		}
+		private function updataContainerPosition():void
+		{
+			delayCallNextFrame(function():void{
+				container.y=dictionary_viewer.y+dictionary_viewer.contentHeight+10;
+			});
+		}
 		public function goto(dobjc:DisplayObjectContainer):void
 		{
 			if(dobjc!=null)
@@ -246,6 +264,7 @@ package yzhkof.debug
 				currentLeaf=dobjc;
 				dictionary_viewer.goto(dobjc);
 				refresh();
+				updataContainerPosition();
 			}else
 			{
 				goto(_stage);

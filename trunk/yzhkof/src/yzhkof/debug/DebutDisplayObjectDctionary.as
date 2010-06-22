@@ -1,9 +1,11 @@
 package yzhkof.debug
 {
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.utils.getQualifiedClassName;
 	
+	import yzhkof.AddToStageSetter;
 	import yzhkof.KeyMy;
 	import yzhkof.ui.TextPanel;
 	import yzhkof.ui.TileContainer;
@@ -17,7 +19,11 @@ package yzhkof.debug
 		public function DebutDisplayObjectDctionary()
 		{
 			super();
-			width = 1000;
+			AddToStageSetter.delayExcuteAfterAddToStage(this,function():void{
+				stage.addEventListener(Event.RESIZE,function(e:Event):void{
+					width = stage.stageWidth;
+				});
+			});
 			height = 100;
 		}
 		public function checkGC():void
