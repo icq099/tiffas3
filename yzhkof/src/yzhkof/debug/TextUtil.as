@@ -1,5 +1,7 @@
 package yzhkof.debug
 {
+	import com.hurlant.util.Hex;
+	
 	import flash.utils.ByteArray;
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
@@ -38,7 +40,7 @@ package yzhkof.debug
 									objname=obj.name;
 							}else
 							{
-								final_text+=addSpace("{"+x.@name+"} = [Type ByteArray]\n");
+								final_text+="{"+x.@name+"} = "+Hex.dump(obj[x.@name])+"\n";
 							}
 						}catch(e:Error)
 						{
@@ -56,7 +58,7 @@ package yzhkof.debug
 								final_text+=addSpace("{"+ob_p+"} = "+obj[ob_p])+"\n";
 							}else
 							{
-								final_text+=addSpace("{"+ob_p+"} = [Type ByteArray]\n");
+								final_text+="{"+ob_p+"} = "+Hex.dump(obj[x.@name])+"\n";
 							}
 						}
 					}

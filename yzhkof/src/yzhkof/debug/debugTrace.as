@@ -7,6 +7,7 @@ package yzhkof.debug
 			try{
 				
 				TextTrace.textPlus(i.toString()+" ");
+				TextTrace.visible = true;
 			
 			}catch(e:Error){
 			

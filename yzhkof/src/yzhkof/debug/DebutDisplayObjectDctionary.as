@@ -41,67 +41,82 @@ package yzhkof.debug
 		{
 			this.viewer=viewer;	
 		}
-		public function goto(dobj:DisplayObject):void
+		public function goto(dobj:*):void
 		{
 			var text_arr:Array=new Array;
 			dobj_map=new WeakMap;
 			removeAllChildren();
-			do
+			var __textPanelClickHandle:Function = function(e:MouseEvent):void
 			{
-				var t:TextPanel;
-				if(dobj.visible==false)
+				if(viewer)
 				{
-					t = new TextPanel(0xff0000);
-				}
-				else if(dobj.getBounds(dobj).width==0||dobj.getBounds(dobj).height==0)
-				{
-					t = new TextPanel(0x0000ff);
-				}
-				else
-				{
-					t = new TextPanel();
-				}
-				t.text=(new RegExp("instance").test(dobj.name)?getQualifiedClassName(dobj):dobj.name)||getQualifiedClassName(dobj);
-				text_arr.push(t);
-				text_arr.push(arrow);
-				dobj_map.add(t,dobj);
-				
-				t.addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void
-				{
-					if(viewer)
+					if(KeyMy.isDown(83))
 					{
-						if(KeyMy.isDown(83))
-						{
-							//debugTrace(SampleUtil.getInstanceCreatPath(dobj_map.getValue(e.currentTarget)));
-							debugTrace(DebugUtil.analyseInstance(dobj_map.getValue(e.currentTarget)));
-						}
-						else if(KeyMy.isDown(84))
-						{
-							DebugSystem.scriptViewer.setTarget(dobj_map.getValue(e.currentTarget));
-						}
-						else if(e.ctrlKey)
-						{
-							viewer.view(dobj_map.getValue(e.currentTarget));
-						}
-						else if(e.shiftKey)
-						{
-							debugObjectTrace(dobj_map.getValue(e.currentTarget));
-						}
-						else
-						{
-							viewer.goto(dobj_map.getValue(e.currentTarget));
-						}
+						//debugTrace(SampleUtil.getInstanceCreatPath(dobj_map.getValue(e.currentTarget)));
+						debugTrace(DebugUtil.analyseInstance(dobj_map.getValue(e.currentTarget)));
 					}
-				});
-				
-			}while(dobj=dobj.parent);
-			text_arr.pop();
-			var length:uint=text_arr.length
-			var i:int;
-			for (i=0;i<length;i++)
+					else if(KeyMy.isDown(84))
+					{
+						DebugSystem.scriptViewer.setTarget(dobj_map.getValue(e.currentTarget));
+					}
+					else if(e.ctrlKey)
+					{
+						viewer.view(dobj_map.getValue(e.currentTarget));
+					}
+					else if(e.shiftKey)
+					{
+						debugObjectTrace(dobj_map.getValue(e.currentTarget));
+					}
+					else
+					{
+						viewer.goto(dobj_map.getValue(e.currentTarget));
+					}
+				}
+			}
+			var t:TextPanel;
+			if(dobj is DisplayObject)
 			{
-				var tdobj:TextPanel=TextPanel(text_arr.pop());
-				appendItem(tdobj);
+				do
+				{					
+					if(dobj.visible==false)
+					{
+						t = new TextPanel(0xff0000);
+					}
+					else if(dobj.getBounds(dobj).width==0||dobj.getBounds(dobj).height==0)
+					{
+						t = new TextPanel(0x0000ff);
+					}
+					else
+					{
+						t = new TextPanel();
+					}
+					t.text=(new RegExp("instance").test(dobj.name)?getQualifiedClassName(dobj):dobj.name)||getQualifiedClassName(dobj);
+					text_arr.push(t);
+					text_arr.push(arrow);
+					dobj_map.add(t,dobj);
+					
+					t.addEventListener(MouseEvent.CLICK,__textPanelClickHandle);
+					
+				}while(dobj=dobj.parent);
+				text_arr.pop();
+				var length:uint=text_arr.length
+				var i:int;
+				for (i=0;i<length;i++)
+				{
+					var tdobj:TextPanel=TextPanel(text_arr.pop());
+					appendItem(tdobj);
+				}
+			}
+			else if(dobj is Array)
+			{
+				for each(var j:DisplayObject in dobj)
+				{
+					t = new TextPanel;
+					t.text = (new RegExp("instance").test(j.name)?getQualifiedClassName(j):j.name)||getQualifiedClassName(j);
+					t.addEventListener(MouseEvent.CLICK,__textPanelClickHandle);
+					dobj_map.add(t,j);
+					appendItem(t);
+				}
 			}
 			
 		}

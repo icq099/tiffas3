@@ -12,10 +12,10 @@ package yzhkof.debug
 	
 	public class DebugSystem
 	{
-		private static var _mainContainer:Sprite;
+		internal static var _mainContainer:Sprite;
 		private static var _stage:Stage;
 		
-		private static var displayObjectViewer:DebugDisplayObjectViewer;
+		internal static var displayObjectViewer:DebugDisplayObjectViewer;
 		public static var scriptViewer:ScriptViewer;
 		
 		public function DebugSystem()
@@ -42,9 +42,9 @@ package yzhkof.debug
 			scriptViewer.x=420;
 			TextTrace.init(_mainContainer);
 			
-			_mainContainer.visible=true;
+			_mainContainer.visible=false;
 			TextTrace.visible=false;
-			displayObjectViewer.visible=false;
+//			displayObjectViewer.visible=false;
 			scriptViewer.visible=false;
 			
 			TextTrace.view.y=200;
@@ -55,9 +55,9 @@ package yzhkof.debug
 				{
 					switch(e.keyCode)
 					{
-						case 13:
-							_mainContainer.visible=!_mainContainer.visible;
-						break;
+//						case 13:
+//							_mainContainer.visible=!_mainContainer.visible;
+//						break;
 						case 84:
 							TextTrace.visible=!TextTrace.visible;
 						break;
@@ -73,7 +73,7 @@ package yzhkof.debug
 				switch(e.keyCode)
 				{
 					case 192:
-						displayObjectViewer.visible=!displayObjectViewer.visible;
+						_mainContainer.visible=!_mainContainer.visible;
 					break;
 				}
 			});

@@ -1,12 +1,18 @@
 package yzhkof.debug
 {
+	import com.hurlant.eval.ast.In;
+	import com.hurlant.eval.ast.StrictEqual;
+	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
+	import flash.sampler.getMemberNames;
 	import flash.system.System;
+	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
 	import yzhkof.KeyMy;
@@ -21,23 +27,30 @@ package yzhkof.debug
 
 	public class DebugDisplayObjectViewer extends BackGroudContainer
 	{
+		public static var SIMPLE:String = "simple";
+		public static var DETAIL:String = "detail";
+		
 		private var container:TileContainer=new TileContainer();
 		private var btn_container:TileContainer=new TileContainer();
 		private var _currentLeaf:WeakMap;
 		private var _latestLeaf:WeakMap;
-		private var dictionary_viewer:DebutDisplayObjectDctionary;		
+		private var dictionary_viewer:DebutDisplayObjectDctionary;
+		private var currentRefreshType:String = "simple";
 		
 		private var _stage:Stage;
 		private var child_map:WeakMap;
 		private var up_btn:TextPanel;
 		private var back_btn:TextPanel;
 		private var stage_btn:TextPanel;
+		private var mode_btn_a:TextPanel;
+		private var mode_btn_b:TextPanel;
 		private var text_btn:TextPanel;
 		private var script_btn:TextPanel;
 		private var refresh_btn:TextPanel;
 		private var gc_btn:TextPanel;
 		private var focus_txt:TextPanel;
 		private var x_btn:TextPanel;
+		private var mode_container:Sprite;
 		private var mask_background:Sprite;
 		private var viewer:SnapshotDisplayViewer;
 		public function DebugDisplayObjectViewer(_stage:Stage)
@@ -48,28 +61,29 @@ package yzhkof.debug
 			init();
 			initEvent();
 		}
-		private function set currentLeaf(value:DisplayObjectContainer):void
+		private function set currentLeaf(value:*):void
 		{
 			_currentLeaf=new WeakMap();
 			_currentLeaf.add(0,value);
 		}
-		private function get currentLeaf():DisplayObjectContainer
+		private function get currentLeaf():*
 		{
-			return _currentLeaf.getValue(0) as DisplayObjectContainer;
+			return _currentLeaf.getValue(0);
 		}
-		private function set latestLeaf(value:DisplayObjectContainer):void
+		private function set latestLeaf(value:*):void
 		{
 			_latestLeaf=new WeakMap();
 			_latestLeaf.add(0,value);
 		}
-		private function get latestLeaf():DisplayObjectContainer
+		private function get latestLeaf():*
 		{
-			return _latestLeaf.getValue(0) as DisplayObjectContainer;
+			return _latestLeaf.getValue(0);
 		}
 		private function init():void
 		{
 			viewer=new SnapshotDisplayViewer();
 			dictionary_viewer=new DebutDisplayObjectDctionary();
+			mode_container = new Sprite;
 			up_btn=new TextPanel();
 			back_btn=new TextPanel();
 			stage_btn=new TextPanel();
@@ -79,6 +93,8 @@ package yzhkof.debug
 			gc_btn=new TextPanel();
 			focus_txt=new TextPanel();
 			x_btn=new TextPanel();
+			mode_btn_a = new TextPanel();
+			mode_btn_b = new TextPanel();
 			
 			dictionary_viewer.setup(this);
 			dictionary_viewer.y = 25;
@@ -92,6 +108,9 @@ package yzhkof.debug
 			stage_btn.text="舞台";
 			script_btn.text="脚本";
 			text_btn.text="文本";
+			mode_btn_a.text="简易";
+			mode_btn_b.text="详细";
+			
 			x_btn.text="隐藏";
 			gc_btn.text="GC";
 			
@@ -99,6 +118,9 @@ package yzhkof.debug
 			addChild(btn_container);
 			addChild(dictionary_viewer);
 			addChild(container);
+			mode_container.addChild(mode_btn_a);
+			mode_container.addChild(mode_btn_b);
+			mode_btn_b.visible = false;
 			setMaskBackGround(MyGraphy.drawRectangle(_stage.stageWidth,_stage.stageHeight));
 			addChild(viewer);
 			
@@ -109,6 +131,7 @@ package yzhkof.debug
 			btn_container.appendItem(script_btn);
 			btn_container.appendItem(refresh_btn);
 			btn_container.appendItem(gc_btn);
+			btn_container.appendItem(mode_container);
 			btn_container.appendItem(x_btn);
 			btn_container.appendItem(focus_txt);
 			
@@ -134,7 +157,7 @@ package yzhkof.debug
 		}
 		private function initEvent():void
 		{
-			_stage.addEventListener(MouseEvent.MOUSE_DOWN,__onStageClick,false,int.MAX_VALUE,true);
+			_stage.addEventListener(MouseEvent.MOUSE_DOWN,__onStageClick,true,int.MAX_VALUE,true);
 			_stage.addEventListener(Event.RESIZE,function(e:Event):void{
 				setMaskBackGround(MyGraphy.drawRectangle(_stage.stageWidth,_stage.stageHeight));
 				container.width=_stage.stageWidth;
@@ -150,6 +173,20 @@ package yzhkof.debug
 				{
 					goto(_stage);
 				}
+			});
+			mode_btn_a.addEventListener(MouseEvent.CLICK,function(e:Event):void
+			{
+				mode_btn_b.visible = true;
+				mode_btn_a.visible = false;
+				currentRefreshType = DETAIL;
+				refresh(currentRefreshType);
+			});
+			mode_btn_b.addEventListener(MouseEvent.CLICK,function(e:Event):void
+			{
+				mode_btn_b.visible = false;
+				mode_btn_a.visible = true;
+				currentRefreshType = SIMPLE;
+				refresh(currentRefreshType);
 			});
 			back_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
@@ -210,7 +247,7 @@ package yzhkof.debug
 			});
 			x_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
-				visible=!visible;
+				DebugSystem._mainContainer.visible=!DebugSystem._mainContainer.visible;
 			});
 			addEventListener(Event.ENTER_FRAME,function(e:Event):void
 			{
@@ -222,6 +259,27 @@ package yzhkof.debug
 			if(e.altKey)
 			{
 				var dobj:DisplayObject=DisplayObject(e.target);
+//				var getObjectUnderPoint:Function = function():DisplayObject
+//				{
+//					var t_arr:Array = _stage.getObjectsUnderPoint(new Point(e.stageX,e.stageY));
+//					var t_obj_arr:Array = [];
+//					for each(var dobj:DisplayObject in t_arr)
+//					{
+//						if(!(dobj is DisplayObjectContainer))
+//						{
+//							t_obj_arr.push(dobj);
+//						}
+//					}
+//					if(t_obj_arr.length>0)
+//					{
+//						return t_obj_arr.pop();
+//					}else
+//					{
+//						return t_arr.pop();
+//					}
+//				}
+//				var dobj:DisplayObject=getObjectUnderPoint();
+				var dobj_arr:Array =_stage.getObjectsUnderPoint(new Point(e.stageX,e.stageY));
 				var str:String="";
 				var go_dobj:DisplayObjectContainer;
 				do
@@ -243,9 +301,9 @@ package yzhkof.debug
 					}
 				}
 				while(dobj=dobj.parent)
-				if(go_dobj)
+				if(dobj_arr)
 				{
-					goto(go_dobj);
+					goto(dobj_arr);
 				}
 				trace(str);
 			}
@@ -256,14 +314,14 @@ package yzhkof.debug
 				container.y=dictionary_viewer.y+dictionary_viewer.contentHeight+10;
 			});
 		}
-		public function goto(dobjc:DisplayObjectContainer):void
+		public function goto(obj:*):void
 		{
-			if(dobjc!=null)
+			if(obj!=null)
 			{
 				latestLeaf=currentLeaf;
-				currentLeaf=dobjc;
-				dictionary_viewer.goto(dobjc);
-				refresh();
+				currentLeaf=obj;
+				dictionary_viewer.goto(obj);
+				refresh(currentRefreshType);
 				updataContainerPosition();
 			}else
 			{
@@ -276,40 +334,93 @@ package yzhkof.debug
 			viewer.visible=true;
 			mask_background.visible=true;
 		}
-		private function refresh():void
+		private function getTextPanel(obj:*):TextPanel
 		{
-			if(currentLeaf==null)
+			var t_text:TextPanel;
+			if(obj is DisplayObject)
+			{
+				if(obj.visible==false)
+				{
+					t_text = new TextPanel(0xff0000);
+				}
+				else if(obj.getBounds(obj).width==0||obj.getBounds(obj).height==0)
+				{
+					t_text = new TextPanel(0x0000ff);
+				}
+				else if(obj is DisplayObjectContainer)
+				{
+					t_text = new TextPanel(0xffff00);
+				}else
+				{
+					t_text = new TextPanel;
+					
+				}
+			}else
+			{
+				if(obj == null)
+				{
+					t_text = new TextPanel(0x888888);
+				}else
+				{
+					t_text = new TextPanel(0xff8888);
+				}
+			}
+			return t_text;
+		}
+		private function refresh(type:String = ""):void
+		{
+			var t_currentLeaf:* = currentLeaf;
+			var t_type:String = type == ""?currentRefreshType:type;
+			if(t_currentLeaf==null)
 			{
 				goto(_stage);
 			}
 			container.removeAllChildren();
 			child_map=new WeakMap;
-			var i:int;
-			var length:uint=currentLeaf.numChildren;
-			for(i=0;i<length;i++)
+			var t_text:TextPanel;
+			if(t_currentLeaf is DisplayObjectContainer)
 			{
-				var t_text:TextPanel;
-				var t_dobj:DisplayObject=currentLeaf.getChildAt(i);
-				if(t_dobj.visible==false)
+				var i:int;
+				var length:uint=t_currentLeaf.numChildren;
+				for(i=0;i<length;i++)
 				{
-					t_text= new TextPanel(0xff0000);
+					var t_dobj:DisplayObject=t_currentLeaf.getChildAt(i);
+					t_text = getTextPanel(t_dobj);
+					container.appendItem(t_text);
+					t_text.text= new RegExp("instance").test(t_dobj.name)?getQualifiedClassName(t_dobj):t_dobj.name
+					child_map.add(t_text,t_dobj);
+					t_text.addEventListener(MouseEvent.CLICK,__onItemClick);
 				}
-				else if(t_dobj.getBounds(t_dobj).width==0||t_dobj.getBounds(t_dobj).height==0)
+			}
+			
+			if(t_type == DETAIL)
+			{
+				var menber:Object = getMemberNames(t_currentLeaf);
+				for each(var q:QName in menber)
 				{
-					t_text=new TextPanel(0x0000ff);
+									
+					try{
+						var t_v:* = t_currentLeaf[q];
+						if(!(t_v is Function))
+						{
+							t_text = getTextPanel(t_v);
+							t_text.text = q.localName;
+							if(String(q.uri)!="")
+							{
+								child_map.add(t_text,t_v);
+							}
+							else
+							{
+								child_map.add(t_text,t_currentLeaf[String(q.localName)]);
+							}
+							container.appendItem(t_text);
+							t_text.addEventListener(MouseEvent.CLICK,__onItemClick);
+						}					
+					}catch(e:Error)
+					{
+						
+					}				
 				}
-				else if(t_dobj is DisplayObjectContainer)
-				{
-					t_text= new TextPanel(0xffff00);
-				}else
-				{
-					t_text= new TextPanel;
-				}
-				container.appendItem(t_text);
-				t_text.text= new RegExp("instance").test(t_dobj.name)?getQualifiedClassName(t_dobj):t_dobj.name
-				child_map.add(t_text,t_dobj);
-				t_text.doubleClickEnabled=true;
-				t_text.addEventListener(MouseEvent.CLICK,__onItemClick);
 			}
 			container.updataChildPosition();
 		}
@@ -326,7 +437,7 @@ package yzhkof.debug
 		}
 		private function __onItemClick(e:MouseEvent):void
 		{
-			var gotoObj:DisplayObject=child_map.getValue(e.currentTarget);
+			var gotoObj:*=child_map.getValue(e.currentTarget);
 			if(KeyMy.isDown(83))
 			{
 //				debugTrace(SampleUtil.getInstanceCreatPath(child_map.getValue(e.currentTarget)));
@@ -338,15 +449,33 @@ package yzhkof.debug
 			}
 			else if(e.ctrlKey)
 			{
-				view(child_map.getValue(e.currentTarget));
+				if(gotoObj is DisplayObject)
+					view(child_map.getValue(e.currentTarget));
 			}
 			else if(e.shiftKey)
 			{
 				debugObjectTrace(child_map.getValue(e.currentTarget));
 			}
-			else if(gotoObj is DisplayObjectContainer)
+			else
 			{
-				goto(DisplayObjectContainer(gotoObj));
+				if(gotoObj == null)
+				{
+					debugObjectTrace(gotoObj);
+				}else
+				{
+					switch(getDefinitionByName(getQualifiedClassName(gotoObj)))
+					{
+						case int:
+						case Number:
+						case String:
+							debugObjectTrace(gotoObj);
+						break;
+						default:
+							goto(gotoObj);
+						break;
+					}
+				}
+				
 			}
 		}
 		
