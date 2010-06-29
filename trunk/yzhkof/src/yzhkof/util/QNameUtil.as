@@ -2,6 +2,8 @@ package yzhkof.util
 {
 	import flash.sampler.getMemberNames;
 	
+	import yzhkof.debug.traceObject;
+	
 	public class QNameUtil
 	{
 		public static const LISTENERS:QName=new QName("flash.events:EventDispatcher","listeners");

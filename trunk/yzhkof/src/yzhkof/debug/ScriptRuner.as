@@ -3,6 +3,7 @@ package yzhkof.debug
 	import com.hurlant.eval.ByteLoader;
 	import com.hurlant.eval.CompiledESC;
 	import com.hurlant.eval.ast.StrictEqual;
+	import com.hurlant.util.Hex;
 	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -49,6 +50,7 @@ package yzhkof.debug
 			var final_script:String=import_text+"namespace xmlud = \"yzhkof.debug\"; use namespace xmlud;\n";
 			final_script+=script;
 			var byte:ByteArray=runer.eval(final_script);
+			traceObject(Hex.dump(byte));
 			ByteLoader.loadBytes(byte);
 		}
 		public static function set target(value:Object):void
