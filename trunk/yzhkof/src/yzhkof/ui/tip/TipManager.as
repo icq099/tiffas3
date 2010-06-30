@@ -14,8 +14,8 @@ package yzhkof.ui.tip
 	{
 		private static var instance:TipManager;
 		private static const tipContainer:Sprite=new Sprite;
-		private static const tipMap:Dictionary=new Dictionary(true);
-		private static const tipParamMap:Dictionary=new Dictionary(true);
+		private static const tipMap:Dictionary=new Dictionary();
+		private static const tipParamMap:Dictionary=new Dictionary();
 		
 		private static var currentTip:DisplayObject;
 		private static var currentParam:Object;
@@ -43,7 +43,7 @@ package yzhkof.ui.tip
 		 * @param tipParam {offsetX:X,offsetY:Y}
 		 * 
 		 */		
-		public function addTipTo(dobj:InteractiveObject,tip:DisplayObject,tipParam:Object=null):void
+		public function addTipTo(dobj:InteractiveObject,tip:Object,tipParam:Object=null):void
 		{
 			setTip(dobj,tip,tipParam);
 			dobj.addEventListener(MouseEvent.ROLL_OVER,__mouseOver);
@@ -59,8 +59,8 @@ package yzhkof.ui.tip
 		}
 		private function removeTip(dobj:Object):void
 		{
-			var tip:DisplayObject = getTip(dobj);
-			if(tip.parent)
+			var tip:DisplayObject = currentTip;
+			if(tip&&tip.parent)
 				tipContainer.removeChild(tip);
 			delete tipMap[dobj];
 			delete tipParamMap[dobj];
@@ -92,24 +92,35 @@ package yzhkof.ui.tip
 			}
 		}
 		private function __mouseOver(e:Event):void
-		{
+		{			
 			setCurrentTip(e.currentTarget);
 			tipContainer.addChild(currentTip);
 			upDateTipPosition()
 		}
 		private function __mouseOut(e:Event):void
 		{
-			tipContainer.removeChild(currentTip);
+			if(currentTip&&currentTip.parent)
+				tipContainer.removeChild(currentTip);
 			setCurrentTip(null);
 		}
-		private function setTip(dobj:Object,tip:DisplayObject,tipParam:Object):void
+		private function setTip(dobj:Object,tip:Object,tipParam:Object):void
 		{
 			tipMap[dobj] = tip;
-			tipParamMap[dobj] = tipParam;
+			tipParamMap[dobj] = tipParam||{offsetX:0,offsetY:0};
 		}
 		private function getTip(dobj:Object):DisplayObject
 		{
-			return tipMap[dobj];
+			var tipobj:Object = tipMap[dobj];
+			if(tipobj == null)
+				return null;
+			if(tipobj is DisplayObject)
+				return tipobj as DisplayObject;
+			if(tipobj is Function)
+				return tipobj();
+			if(tipobj is Class)
+				return tipobj();
+			throw new Error("不支持的Tip方式");
+			return null;
 		}
 	}
 }

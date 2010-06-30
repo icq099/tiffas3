@@ -101,6 +101,7 @@ package yzhkof.debug
 			
 			btn_container.width=500;
 			btn_container.height=200;
+			container.width=_stage.stageWidth;
 			
 			refresh_btn.text="刷新";
 			back_btn.text="后退";
@@ -161,7 +162,6 @@ package yzhkof.debug
 			_stage.addEventListener(Event.RESIZE,function(e:Event):void{
 				setMaskBackGround(MyGraphy.drawRectangle(_stage.stageWidth,_stage.stageHeight));
 				container.width=_stage.stageWidth;
-				updataContainerPosition();
 			});
 			
 			up_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
