@@ -20,6 +20,7 @@ package yzhkof.debug
 		{
 			super();
 			AddToStageSetter.delayExcuteAfterAddToStage(this,function():void{
+				width = stage.stageWidth;
 				stage.addEventListener(Event.RESIZE,function(e:Event):void{
 					width = stage.stageWidth;
 				});

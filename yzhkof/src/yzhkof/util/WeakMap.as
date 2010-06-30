@@ -110,9 +110,8 @@ package yzhkof.util
 					delete map[value];
 				}
 				_length--;
-				
-				key_set.splice(key_set.indexOf(key),1);
 			}
+			key_set.splice(key_set.indexOf(key),1);
 		}
 
 	}
