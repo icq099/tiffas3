@@ -8,7 +8,7 @@ package yzhkof.ui
 	
 	import yzhkof.display.RenderSprite;
 
-	public class TileContainer extends ComponentBase
+	public class TileContainer extends ComponentContainer
 	{
 		private var _paddingH:Number=10;
 		private var _paddingV:Number=10;

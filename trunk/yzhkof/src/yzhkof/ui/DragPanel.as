@@ -24,7 +24,6 @@ package yzhkof.ui
 			_dragContainer.addChild(MyGraphy.drawRectangle(20,20));
 			_content.y=20;
 			Sprite(_dragContainer).buttonMode=true;
-			drawBackGround();
 		}
 		private function initEvent():void
 		{
