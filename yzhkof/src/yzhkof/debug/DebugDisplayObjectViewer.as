@@ -301,9 +301,16 @@ package yzhkof.debug
 					}
 				}
 				while(dobj=dobj.parent)
+				
+				var parent_arr:Array = [];
 				if(dobj_arr)
 				{
-					goto(dobj_arr);
+					for each(var i:DisplayObject in dobj_arr)
+					{
+						if(i is DisplayObjectContainer) continue;
+						parent_arr.push(i.parent);
+					}
+					goto(parent_arr.concat(dobj_arr));
 				}
 				trace(str);
 			}
@@ -422,7 +429,7 @@ package yzhkof.debug
 					}				
 				}
 			}
-			container.updataChildPosition();
+			/*container.updataChildPosition();*/
 		}
 		public function checkGC():void
 		{

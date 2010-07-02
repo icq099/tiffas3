@@ -40,7 +40,7 @@ package yzhkof.debug
 		{
 			ScriptRuner.target=target;
 			target_btn.text=getQualifiedClassName(target);
-			btn_container.updataChildPosition();
+			/*btn_container.updataChildPosition();*/
 		}
 		private function init():void
 		{

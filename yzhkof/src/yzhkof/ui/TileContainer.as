@@ -8,16 +8,12 @@ package yzhkof.ui
 	
 	import yzhkof.display.RenderSprite;
 
-	public class TileContainer extends RenderSprite
+	public class TileContainer extends ComponentBase
 	{
-		private var widthSize:Number=400;
-		private var heightSize:Number=300;
 		private var _paddingH:Number=10;
 		private var _paddingV:Number=10;
 		private var _columnCount:uint=int.MAX_VALUE;//列数
 		private var _rowCount:uint=int.MAX_VALUE;//行数
-		
-		private var isChange:Boolean = false;
 		
 		public function TileContainer()
 		{
@@ -26,25 +22,8 @@ package yzhkof.ui
 		}
 		private function init():void
 		{
-			
-		}
-		public override function set width(value:Number):void
-		{
-			widthSize=value;
-			isChange=true;
-		}
-		public override function get width():Number
-		{
-			return widthSize;
-		}
-		public override function set height(value:Number):void
-		{
-			heightSize=value;
-			isChange=true;
-		}
-		public override function get height():Number
-		{
-			return heightSize;
+			_width = 400;
+			_height = 300;
 		}
 		public function removeAllChildren():void
 		{
@@ -55,20 +34,16 @@ package yzhkof.ui
 				removeChildAt(0);
 			}
 		}
-		protected override function onRend():void
+		/*protected override function onDraw():void
 		{
 			if(isChange)
 			{
 				updataChildPosition();
 			}
-		}
-		/**
-		 * 手动更新布局 
-		 * 
-		 */
-		public function updataChildPosition():void
+		}*/
+		
+		override protected function onDraw():void
 		{
-			isChange=false;
 			var position:Point=new Point();
 			var i:int;
 			var current_dobj:DisplayObject;
@@ -83,7 +58,7 @@ package yzhkof.ui
 				layout=getItemLayout(t_obj);
 				
 				t_obj.visible=true;
-				if((t_obj.getBounds(this).y>heightSize)||(t_row>rowCount))
+				if((t_obj.getBounds(this).y>height)||(t_row>rowCount))
 				{
 					t_obj.visible=false;
 					continue;
@@ -95,7 +70,7 @@ package yzhkof.ui
 				position.x+=layout.width+layout.paddingH;
 				if((i+1)<numChildren)
 				{
-					if(((getItemLayout(getChildAt(i+1)).width+layout.paddingH+position.x)>widthSize)||(t_column>=_columnCount))
+					if(((getItemLayout(getChildAt(i+1)).width+layout.paddingH+position.x)>width)||(t_column>=_columnCount))
 					{
 						position.y+=layout.height+layout.paddingV;
 						position.x=0;
@@ -117,7 +92,6 @@ package yzhkof.ui
 		public function set columnCount(value:uint):void
 		{
 			_columnCount = value;
-			isChange=true;
 		}
 
 		public function get rowCount():uint
@@ -128,15 +102,6 @@ package yzhkof.ui
 		public function set rowCount(value:uint):void
 		{
 			_rowCount = value;
-			isChange=true;
-		}
-		public function get contentWidth():Number
-		{
-			return super.width;	
-		}
-		public function get contentHeight():Number
-		{
-			return super.height
 		}
 		public override function addChild(child:DisplayObject):DisplayObject
 		{
@@ -150,7 +115,6 @@ package yzhkof.ui
 		{
 			super.removeChild(child);
 			delete layoutMap[child];
-			isChange=true;
 		}
 		private var layoutMap:Dictionary=new Dictionary(true);
 		/**
@@ -166,8 +130,6 @@ package yzhkof.ui
 			else
 				layoutMap[child]=new Object;
 			super.addChild(child);
-			
-			isChange=true;
 		}
 		private function getItemLayout(child:DisplayObject):Object
 		{
