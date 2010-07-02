@@ -40,7 +40,7 @@ package yzhkof.debug
 		{
 			ScriptRuner.target=target;
 			target_btn.text=getQualifiedClassName(target);
-			/*btn_container.updataChildPosition();*/
+			btn_container.draw();
 		}
 		private function init():void
 		{
@@ -62,7 +62,6 @@ package yzhkof.debug
 			target_btn.text=getQualifiedClassName(ScriptRuner.target);
 			save_btn.text="save";
 			load_btn.text="load";
-			run_btn.drawBackGround();
 			
 			import_text.border=true;
 			import_text.type=TextFieldType.INPUT;

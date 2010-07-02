@@ -18,7 +18,7 @@ package yzhkof.ui
 		public function set text(value:String):void
 		{
 			textfield.text=value||"";
-			drawBackGround();
+			commitChage("text_change");
 		}
 		public function get text():String
 		{

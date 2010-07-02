@@ -19,13 +19,14 @@ package yzhkof.debug
 	import yzhkof.MyGC;
 	import yzhkof.MyGraphy;
 	import yzhkof.ui.BackGroudContainer;
+	import yzhkof.ui.ComponentBase;
 	import yzhkof.ui.TextPanel;
 	import yzhkof.ui.TileContainer;
 	import yzhkof.util.DebugUtil;
 	import yzhkof.util.WeakMap;
 	import yzhkof.util.delayCallNextFrame;
 
-	public class DebugDisplayObjectViewer extends BackGroudContainer
+	public class DebugDisplayObjectViewer extends ComponentBase
 	{
 		public static var SIMPLE:String = "simple";
 		public static var DETAIL:String = "detail";
@@ -160,8 +161,7 @@ package yzhkof.debug
 		{
 			_stage.addEventListener(MouseEvent.MOUSE_DOWN,__onStageClick,true,int.MAX_VALUE,true);
 			_stage.addEventListener(Event.RESIZE,function(e:Event):void{
-				setMaskBackGround(MyGraphy.drawRectangle(_stage.stageWidth,_stage.stageHeight));
-				container.width=_stage.stageWidth;
+				commitChage("content_change");
 			});
 			
 			up_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
@@ -254,6 +254,12 @@ package yzhkof.debug
 				focus_txt.text="stage.focus = \""+getQualifiedClassName(_stage.focus)+"\"";	
 			});
 		}
+		override protected function onDraw():void
+		{ 
+			setMaskBackGround(MyGraphy.drawRectangle(_stage.stageWidth,_stage.stageHeight));
+			container.width=_stage.stageWidth;
+			container.y=dictionary_viewer.y+dictionary_viewer.contentHeight+10;
+		}
 		private function __onStageClick(e:MouseEvent):void
 		{
 			if(e.altKey)
@@ -315,12 +321,12 @@ package yzhkof.debug
 				trace(str);
 			}
 		}
-		private function updataContainerPosition():void
+		/*private function updataContainerPosition():void
 		{
 			delayCallNextFrame(function():void{
 				container.y=dictionary_viewer.y+dictionary_viewer.contentHeight+10;
 			});
-		}
+		}*/
 		public function goto(obj:*):void
 		{
 			if(obj!=null)
@@ -329,7 +335,7 @@ package yzhkof.debug
 				currentLeaf=obj;
 				dictionary_viewer.goto(obj);
 				refresh(currentRefreshType);
-				updataContainerPosition();
+				commitChage("content_size_change");
 			}else
 			{
 				goto(_stage);
@@ -429,7 +435,7 @@ package yzhkof.debug
 					}				
 				}
 			}
-			/*container.updataChildPosition();*/
+			container.draw();
 		}
 		public function checkGC():void
 		{

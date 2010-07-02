@@ -6,19 +6,16 @@ package yzhkof.ui
 	
 	public class ComponentBase extends Sprite
 	{
-		protected var _width:Number;
-		protected var _height:Number;
+		protected var _width:Number=0;
+		protected var _height:Number=0;
 		
-		protected var _chages:Object = {};
+		protected var _chages:Object;
 		
 		public static const SIZE_CHANGE:String = "size_change";
-		public static const CHILD_CHANGE:String = "child_change";
 		
 		public function ComponentBase()
 		{
-			super();
-			addEventListener(Event.ADDED,__childAdd);
-			addEventListener(Event.REMOVED,__childRemove);
+			super();			
 			addEventListener(Event.ADDED_TO_STAGE,__addToStage);
 		}
 		override public function get width():Number
@@ -55,6 +52,7 @@ package yzhkof.ui
 		}
 		protected function commitChage(changeType:String):void
 		{
+			if(_chages == null) _chages = {};
 			_chages[changeType] = true;
 			upDateNextRend();
 		}
@@ -74,19 +72,12 @@ package yzhkof.ui
 		{
 			upDateNextRend();
 		}
-		private function __childAdd(e:Event):void
-		{
-			commitChage(CHILD_CHANGE);
-		}
-		private function __childRemove(e:Event):void
-		{
-			commitChage(CHILD_CHANGE);
-		}
+		
 		public final function draw():void
 		{
 			onDraw();
 			removeEventListener(Event.RENDER,__onScreenRend);
-			_chages = {};
+			_chages = null;
 		}
 		private function __onScreenRend(e:Event):void
 		{

@@ -3,7 +3,7 @@ package yzhkof.ui
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 
-	public class BackGroudContainer extends Sprite
+	public class BackGroudContainer extends ComponentBase
 	{
 		private var _color:uint;
 		private var _alpha:Number;
@@ -13,28 +13,26 @@ package yzhkof.ui
 			this._color=color;
 			_alpha=alpha;
 		}
-		public override function addChild(child:DisplayObject):DisplayObject
-		{
-			super.addChild(child);
-			//drawBackGround();
-			return child;
-		}
 		public function get color():uint
 		{
 			return _color;
 		}
 		public function set color(value:uint):void
 		{
+			if(_color == value) return;
 			_color=value;
+			commitChage("color_chage");
+		}
+		override protected function onDraw():void
+		{
 			drawBackGround();
 		}
-		public function drawBackGround():void
+		protected function drawBackGround():void
 		{
 			graphics.clear();
 			graphics.beginFill(_color,_alpha);
-			graphics.drawRect(0,0,getBounds(this).width,getBounds(this).height);
+			graphics.drawRect(0,0,contentWidth,contentHeight);
 			graphics.endFill();
 		}
-		
 	}
 }
