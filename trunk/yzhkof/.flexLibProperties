@@ -82,6 +82,7 @@
     <classEntry path="yzhkof.util.Helpers"/>
     <classEntry path="yzhkof.loader.SWCLoader"/>
     <classEntry path="yzhkof.loader.event.SWCLoaderEvent"/>
+    <classEntry path="yzhkof.ui.ComponentBase"/>
   </includeClasses>
   <includeResources>
     <resourceEntry destPath="yzhkof/loadings/asset/myloadings.swf" sourcePath="yzhkof/loadings/asset/myloadings.swf"/>
