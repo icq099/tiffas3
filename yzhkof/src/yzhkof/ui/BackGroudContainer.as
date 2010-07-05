@@ -5,7 +5,7 @@ package yzhkof.ui
 
 	public class BackGroudContainer extends ComponentBase
 	{
-		private var _color:uint;
+		protected var _color:uint;
 		private var _alpha:Number;
 		public function BackGroudContainer(color:uint=0xffffff,alpha:Number=1)
 		{
@@ -21,7 +21,7 @@ package yzhkof.ui
 		{
 			if(_color == value) return;
 			_color=value;
-			commitChage("color_chage");
+			commitChage("color");
 		}
 		override protected function onDraw():void
 		{

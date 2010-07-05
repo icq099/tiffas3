@@ -5,8 +5,6 @@ package yzhkof.ui
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
-	
-	import yzhkof.display.RenderSprite;
 
 	public class TileContainer extends ComponentContainer
 	{

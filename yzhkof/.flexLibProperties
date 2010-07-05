@@ -84,6 +84,8 @@
     <classEntry path="yzhkof.loader.event.SWCLoaderEvent"/>
     <classEntry path="yzhkof.ui.ComponentBase"/>
     <classEntry path="yzhkof.ui.ComponentContainer"/>
+    <classEntry path="yzhkof.ui.DelayRendSprite"/>
+    <classEntry path="yzhkof.ui.ChangeableSprite"/>
   </includeClasses>
   <includeResources>
     <resourceEntry destPath="yzhkof/loadings/asset/myloadings.swf" sourcePath="yzhkof/loadings/asset/myloadings.swf"/>

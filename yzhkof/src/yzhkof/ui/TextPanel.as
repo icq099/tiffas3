@@ -17,8 +17,9 @@ package yzhkof.ui
 		}
 		public function set text(value:String):void
 		{
+			if(text == value) return;
 			textfield.text=value||"";
-			commitChage("text_change");
+			commitChage("text");
 		}
 		public function get text():String
 		{

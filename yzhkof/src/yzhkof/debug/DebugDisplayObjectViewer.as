@@ -161,7 +161,7 @@ package yzhkof.debug
 		{
 			_stage.addEventListener(MouseEvent.MOUSE_DOWN,__onStageClick,true,int.MAX_VALUE,true);
 			_stage.addEventListener(Event.RESIZE,function(e:Event):void{
-				commitChage("content_change");
+				commitChage();
 			});
 			
 			up_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
@@ -335,7 +335,7 @@ package yzhkof.debug
 				currentLeaf=obj;
 				dictionary_viewer.goto(obj);
 				refresh(currentRefreshType);
-				commitChage("content_size_change");
+				commitChage();
 			}else
 			{
 				goto(_stage);
