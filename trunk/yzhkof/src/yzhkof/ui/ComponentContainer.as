@@ -14,11 +14,11 @@ package yzhkof.ui
 		}
 		private function __childAdd(e:Event):void
 		{
-			commitChage(CHILD_CHANGE);
+			commitChage();
 		}
 		private function __childRemove(e:Event):void
 		{
-			commitChage(CHILD_CHANGE);
+			commitChage();
 		}
 	}
 }
