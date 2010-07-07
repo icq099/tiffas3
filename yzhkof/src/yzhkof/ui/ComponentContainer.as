@@ -12,13 +12,18 @@ package yzhkof.ui
 			addEventListener(Event.ADDED,__childAdd);
 			addEventListener(Event.REMOVED,__childRemove);
 		}
+		override protected function initChangeables():void
+		{
+			super.initChangeables();
+			registChangeableThings("child_change",false);
+		}
 		private function __childAdd(e:Event):void
 		{
-			commitChage();
+			commitChage(CHILD_CHANGE);
 		}
 		private function __childRemove(e:Event):void
 		{
-			commitChage();
+			commitChage(CHILD_CHANGE);
 		}
 	}
 }

@@ -9,24 +9,19 @@ package yzhkof.ui
 		protected var _width:Number=0;
 		protected var _height:Number=0;
 		
-//		protected var _chages:Object;
-		
-		public static const SIZE_CHANGE:String = "size_change";
-		
 		public function ComponentBase()
 		{
 			super();
 		}
-//		override protected function initChangealePropertys():void
-//		{
-//			registChangeableProperty("width");
-//			registChangeableProperty("height");
-//		}
+		override protected function initChangeables():void
+		{
+			registChangeableThings("width");
+			registChangeableThings("height");
+		}
 		override public function get width():Number
 		{
 			return _width;
 		}
-
 		override public function set width(value:Number):void
 		{
 			if(value == _width) return;
