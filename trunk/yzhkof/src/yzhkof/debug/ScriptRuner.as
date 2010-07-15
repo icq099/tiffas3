@@ -65,9 +65,9 @@ package yzhkof.debug
 		{
 			return getDefinitionByName(value);	
 		}
-		public static function trace(obj:Object,showFunctionReturn:Boolean=false):void
+		public static function trace(obj:Object):void
 		{
-			traceObject(obj,showFunctionReturn);
+			debugObjectTrace(obj);
 		}
 
 	}
