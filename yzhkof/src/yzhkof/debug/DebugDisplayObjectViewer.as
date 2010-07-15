@@ -265,26 +265,6 @@ package yzhkof.debug
 			if(e.altKey)
 			{
 				var dobj:DisplayObject=DisplayObject(e.target);
-//				var getObjectUnderPoint:Function = function():DisplayObject
-//				{
-//					var t_arr:Array = _stage.getObjectsUnderPoint(new Point(e.stageX,e.stageY));
-//					var t_obj_arr:Array = [];
-//					for each(var dobj:DisplayObject in t_arr)
-//					{
-//						if(!(dobj is DisplayObjectContainer))
-//						{
-//							t_obj_arr.push(dobj);
-//						}
-//					}
-//					if(t_obj_arr.length>0)
-//					{
-//						return t_obj_arr.pop();
-//					}else
-//					{
-//						return t_arr.pop();
-//					}
-//				}
-//				var dobj:DisplayObject=getObjectUnderPoint();
 				var dobj_arr:Array =_stage.getObjectsUnderPoint(new Point(e.stageX,e.stageY));
 				var str:String="";
 				var go_dobj:DisplayObjectContainer;

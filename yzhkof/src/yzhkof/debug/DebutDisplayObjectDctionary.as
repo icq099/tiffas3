@@ -25,7 +25,6 @@ package yzhkof.debug
 					width = stage.stageWidth;
 				});
 			});
-			height = 100;
 		}
 		public function checkGC():void
 		{

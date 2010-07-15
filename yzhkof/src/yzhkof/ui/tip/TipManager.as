@@ -1,5 +1,8 @@
 package yzhkof.ui.tip
 {
+	import com.gskinner.motion.GTween;
+	import com.gskinner.motion.GTweener;
+	
 	import flash.display.DisplayObject;
 	import flash.display.InteractiveObject;
 	import flash.display.Sprite;
@@ -9,6 +12,7 @@ package yzhkof.ui.tip
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
+	import slg.core.utils.GCWatcher;
 	import slg.core.utils.Helpers;
 	
 	public class TipManager
@@ -77,6 +81,12 @@ package yzhkof.ui.tip
 			dobj.removeEventListener(MouseEvent.ROLL_OVER,__mouseOver);
 			dobj.removeEventListener(MouseEvent.ROLL_OUT,__mouseOut);
 			dobj.removeEventListener(MouseEvent.MOUSE_MOVE,__mouseMove);
+			dobj.removeEventListener(MouseEvent.CLICK,__mouseClick);
+		}
+		public function refreshTip():void
+		{
+			setCurrentTip(currentInteractiveObj);
+			upDateTipPosition();
 		}
 		private function removeTip(dobj:Object):void
 		{
@@ -104,6 +114,8 @@ package yzhkof.ui.tip
 		}
 		private function setCurrentTip(dobj:Object):void
 		{
+			if(currentInteractiveObj&&dobj)
+				setCurrentTip(null);
 			if(dobj)
 			{
 				currentInteractiveObj = dobj as InteractiveObject;
@@ -114,6 +126,8 @@ package yzhkof.ui.tip
 				if(currentTip)
 				{
 					tipContainer.addChild(currentTip);
+					//					currentTip.alpha = 0;
+					//					GTweener.to(currentTip,0.1,{alpha:1});
 					if(currentParam["onAdd"]) currentParam["onAdd"](currentTip);
 				}
 			}
@@ -121,6 +135,13 @@ package yzhkof.ui.tip
 			{
 				if(currentTip&&currentTip.parent)
 				{
+					//					var gt:GTween = GTweener.to(currentTip,0.1,{alpha:0});
+					//					gt.data = currentParam;
+					//					gt.onComplete = function(g:GTween):void
+					//					{
+					//						tipContainer.removeChild(DisplayObject(g.target));
+					//						if(gt.data["onRemove"]) gt.data["onRemove"](g.target);
+					//					};
 					tipContainer.removeChild(currentTip);
 					if(currentParam["onRemove"]) currentParam["onRemove"](currentTip);
 				}
@@ -134,10 +155,16 @@ package yzhkof.ui.tip
 			setCurrentTip(e.currentTarget);	
 			upDateTipPosition();
 			currentInteractiveObj.addEventListener(MouseEvent.MOUSE_MOVE,__mouseMove);
+			currentInteractiveObj.addEventListener(MouseEvent.CLICK,__mouseClick);
+		}
+		private function __mouseClick(e:Event):void
+		{
+			refreshTip();
 		}
 		private function __mouseOut(e:Event):void
 		{
 			currentInteractiveObj.removeEventListener(MouseEvent.MOUSE_MOVE,__mouseMove);
+			currentInteractiveObj.removeEventListener(MouseEvent.CLICK,__mouseClick);
 			setCurrentTip(null);			
 		}
 		private function setTip(dobj:Object,tip:Object,tipParam:Object):void
