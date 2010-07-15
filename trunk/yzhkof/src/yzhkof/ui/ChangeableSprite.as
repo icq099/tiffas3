@@ -3,9 +3,19 @@ package yzhkof.ui
 	public class ChangeableSprite extends DelayRendSprite
 	{
 		protected var _lastPropertyValue:Object = {};
+		/**
+		 * 可以改变的属性(如果有属性跟上次屏幕渲染时的不一样，则调用onDraw方法) 
+		 */		
 		protected var _changeablePropertys:Array = [];
-		protected var _changeableThings:Array = ["default_change"];
+		/**
+		 * 可以改变的东西(只要这里面记录的东西有commitChange，不管属性跟上次渲染一不一样都调用onDraw)
+		 */		
+		protected var _changeableThings:Array = [DEFAULT_CHANGE];
+		/**
+		 * 记录当前的改变 
+		 */		
 		protected var _changes:Object = {};
+		public static const DEFAULT_CHANGE:String = "default_change";
 		
 		public function ChangeableSprite()
 		{
@@ -53,36 +63,29 @@ package yzhkof.ui
 		{
 			for(var i:String in _changes)
 			{
-				if(_changeableThings.indexOf(i)>=0) continue;
-				_lastPropertyValue[i] = this[i];
+				if(_changes[i])
+				{
+					if(_changeableThings.indexOf(i)>=0) 
+					{
+						_changes[i] = false;
+						continue;
+					}
+					_lastPropertyValue[i] = this[i];
+					_changes[i] = false;
+				}
 			}
 		}
 		private function checkCanDraw():Boolean
 		{
 			for(var i:String in _changes)
 			{
-				if(_changeableThings.indexOf(i)>=0) return true;
-				if(_lastPropertyValue[i] != this[i]) return true;
+				if(_changes[i])
+				{
+					if(_changeableThings.indexOf(i)>=0) return true;
+					if(_lastPropertyValue[i] != this[i]) return true;
+				}
 			}
 			return false;
 		}
-//		private function recordChanges():void
-//		{
-//			if(_lastPropertyValue == null) return;
-//			for (var i:String in _lastPropertyValue)
-//			{
-//				_lastPropertyValue[i] = this[i];	
-//			}
-//		}
-//		override protected function afterDraw():void
-//		{
-//			super.afterDraw();
-//			recordChanges();
-//		}
-//		override protected function cancelUpDataNextRend():void
-//		{
-//			super.cancelUpDataNextRend();
-//			_changeCount = 0;
-//		}
 	}
 }

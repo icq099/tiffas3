@@ -12,16 +12,27 @@ package yzhkof.ui
 		private var _paddingV:Number=10;
 		private var _columnCount:uint=int.MAX_VALUE;//列数
 		private var _rowCount:uint=int.MAX_VALUE;//行数
+		private var _autoVSize:Boolean = true;
+		private var _scrollY:int = 0;
+		private var _scrollX:int = 0;
+		private var _maxScrollX:int = 0;
+		private var _maxScroolY:int = 0;
 		
 		public function TileContainer()
 		{
 			super();
 			init();
 		}
+		override protected function initChangeables():void
+		{
+			super.initChangeables();
+			registChangeableThings("autoVSize");
+			registChangeableThings("scrollX");
+			registChangeableThings("scrollY");
+		}
 		private function init():void
 		{
-			_width = 400;
-			_height = 300;
+			width = 400;
 		}
 		public function removeAllChildren():void
 		{
@@ -31,15 +42,7 @@ package yzhkof.ui
 			{
 				removeChildAt(0);
 			}
-		}
-		/*protected override function onDraw():void
-		{
-			if(isChange)
-			{
-				updataChildPosition();
-			}
-		}*/
-		
+		}		
 		override protected function onDraw():void
 		{
 			var position:Point=new Point();
@@ -49,18 +52,28 @@ package yzhkof.ui
 			var t_row:uint=0;
 			var t_obj:DisplayObject
 			var layout:Object;
+			if(autoVSize)
+			{
+				scrollRect = null;
+			}
+			else
+			{
+				scrollRect = new Rectangle(scrollX,scrollY,width,height);
+			}
+			_maxScrollX = contentWidth - width;
+			_maxScroolY = contentHeight - height;
 			
 			for (i=0;i<numChildren;i++)
 			{
 				t_obj=getChildAt(i);
 				layout=getItemLayout(t_obj);
 				
-				t_obj.visible=true;
-				if((t_obj.getBounds(this).y>height)||(t_row>rowCount))
-				{
-					t_obj.visible=false;
-					continue;
-				}
+//				t_obj.visible=true;
+//				if((t_obj.getBounds(this).y>height)||(t_row>rowCount))
+//				{
+//					t_obj.visible=false;
+//					continue;
+//				}
 				current_dobj=t_obj;
 				current_dobj.x=position.x;
 				current_dobj.y=position.y;
@@ -81,12 +94,10 @@ package yzhkof.ui
 				}
 			}
 		}
-
 		public function get columnCount():uint
 		{
 			return _columnCount;
 		}
-
 		public function set columnCount(value:uint):void
 		{
 			_columnCount = value;
@@ -162,6 +173,50 @@ package yzhkof.ui
 			_paddingV = value;
 		}
 
-		
+		public function get autoVSize():Boolean
+		{
+			return _autoVSize;
+		}
+
+		public function set autoVSize(value:Boolean):void
+		{
+			if(_autoVSize == value) return;
+			_autoVSize = value;
+			commitChage("autoVSize");
+		}
+
+		public function get scrollY():int
+		{
+			return _scrollY;
+		}
+
+		public function set scrollY(value:int):void
+		{
+			if(_scrollY == value) return;
+			_scrollY = value;
+			commitChage("scrollY");
+		}
+
+		public function get scrollX():int
+		{
+			return _scrollX;
+		}
+
+		public function set scrollX(value:int):void
+		{
+			if(_scrollX == value) return;
+			_scrollX = value;
+			commitChage("scaleX");
+		}
+
+		public function get maxScrollX():int
+		{
+			return _maxScrollX;
+		}
+
+		public function get maxScroolY():int
+		{
+			return _maxScroolY;
+		}
 	}
 }
