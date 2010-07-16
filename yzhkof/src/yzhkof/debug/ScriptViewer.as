@@ -40,7 +40,6 @@ package yzhkof.debug
 		{
 			ScriptRuner.target=target;
 			target_btn.text=getQualifiedClassName(target);
-			btn_container.draw();
 		}
 		private function init():void
 		{
@@ -81,6 +80,7 @@ package yzhkof.debug
 			import_btn.addEventListener(MouseEvent.CLICK,__onImportClick);
 			save_btn.addEventListener(MouseEvent.CLICK,__onSaveClick);
 			load_btn.addEventListener(MouseEvent.CLICK,__onLoadClick);
+			target_btn.addEventListener(UPDATE,__btnSizeChange);
 //			textField.addEventListener(KeyboardEvent.KEY_DOWN,__onKeyDown);
 		}
 //		private function __onKeyDown(e:KeyboardEvent):void
@@ -90,6 +90,10 @@ package yzhkof.debug
 //				__onRunBtnClick(null);
 //			}
 //		}
+		private function __btnSizeChange(e:Event):void
+		{
+			btn_container.draw();
+		}
 		private function __onSaveClick(e:Event):void
 		{
 //			var so:SharedObject=SharedObject.getLocal("scripts");
