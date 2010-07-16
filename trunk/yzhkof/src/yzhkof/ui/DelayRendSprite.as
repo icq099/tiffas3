@@ -48,6 +48,14 @@ package yzhkof.ui
 		public final function draw():void
 		{
 			beforDraw();
+			onDraw();
+			afterDraw();
+			_isCaneled =false;
+			removeEventListener(Event.RENDER,__onScreenRend);
+		}
+		private function __onScreenRend(e:Event):void
+		{
+			beforDraw();
 			if(_isCaneled == false)
 			{
 				onDraw();
@@ -55,10 +63,6 @@ package yzhkof.ui
 			}
 			_isCaneled =false;
 			removeEventListener(Event.RENDER,__onScreenRend);
-		}
-		private function __onScreenRend(e:Event):void
-		{
-			draw();
 		}
 	}
 }

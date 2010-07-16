@@ -92,5 +92,39 @@ package yzhkof.ui.mouse
 			}
 			
 		}
+		/**
+		 * 为对象添加额外的鼠标事件
+		 *  
+		 * @param dobj
+		 * 
+		 */		
+		public static function registExtendMouseEvent(dobj:InteractiveObject):void
+		{
+			dobj.addEventListener(MouseEvent.MOUSE_DOWN,__dobjDown);
+		}
+		/**
+		 * 当在对象上按下鼠标再松开鼠标时派发(包括在对象外松开)
+		 */		
+		public static const STAGE_UP_EVENT:String="STAGE_UP_EVENT";
+		/**
+		 * 当在对象上按下鼠标再移动时派发(包括在对象外移动) 
+		 */		
+		public static const MOUSE_DOWN_AND_DRAGING_EVENT:String="MOUSE_DOWN_AND_DRAGING_EVENT";
+		private static function __dobjDown(e:MouseEvent):void
+		{
+			var dobj:InteractiveObject=e.currentTarget as InteractiveObject;
+			var fun_up:Function=function(e:MouseEvent):void
+			{
+				dobj.dispatchEvent(new Event(STAGE_UP_EVENT));
+				dobj.stage.removeEventListener(MouseEvent.MOUSE_UP,fun_up);
+				dobj.stage.removeEventListener(MouseEvent.MOUSE_MOVE,fun_move);
+			}
+			var fun_move:Function=function(e:MouseEvent):void
+			{
+				dobj.dispatchEvent(new Event(MOUSE_DOWN_AND_DRAGING_EVENT));
+			}
+			dobj.stage.addEventListener(MouseEvent.MOUSE_UP,fun_up);
+			dobj.stage.addEventListener(MouseEvent.MOUSE_MOVE,fun_move);
+		}
 	}
 }

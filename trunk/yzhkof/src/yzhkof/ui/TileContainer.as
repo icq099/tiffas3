@@ -5,7 +5,7 @@ package yzhkof.ui
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
-
+	
 	public class TileContainer extends ComponentContainer
 	{
 		private var _paddingH:Number=10;
@@ -15,8 +15,6 @@ package yzhkof.ui
 		private var _autoVSize:Boolean = true;
 		private var _scrollY:int = 0;
 		private var _scrollX:int = 0;
-		private var _maxScrollX:int = 0;
-		private var _maxScroolY:int = 0;
 		
 		public function TileContainer()
 		{
@@ -27,8 +25,6 @@ package yzhkof.ui
 		{
 			super.initChangeables();
 			registChangeableThings("autoVSize");
-			registChangeableThings("scrollX");
-			registChangeableThings("scrollY");
 		}
 		private function init():void
 		{
@@ -52,33 +48,18 @@ package yzhkof.ui
 			var t_row:uint=0;
 			var t_obj:DisplayObject
 			var layout:Object;
-			if(autoVSize)
-			{
-				scrollRect = null;
-			}
-			else
-			{
-				scrollRect = new Rectangle(scrollX,scrollY,width,height);
-			}
-			_maxScrollX = contentWidth - width;
-			_maxScroolY = contentHeight - height;
 			
 			for (i=0;i<numChildren;i++)
 			{
 				t_obj=getChildAt(i);
 				layout=getItemLayout(t_obj);
 				
-//				t_obj.visible=true;
-//				if((t_obj.getBounds(this).y>height)||(t_row>rowCount))
-//				{
-//					t_obj.visible=false;
-//					continue;
-//				}
 				current_dobj=t_obj;
 				current_dobj.x=position.x;
 				current_dobj.y=position.y;
 				//下个child的位置
 				position.x+=layout.width+layout.paddingH;
+				t_column++;
 				if((i+1)<numChildren)
 				{
 					if(((getItemLayout(getChildAt(i+1)).width+layout.paddingH+position.x)>width)||(t_column>=_columnCount))
@@ -87,9 +68,6 @@ package yzhkof.ui
 						position.x=0;
 						t_column=0;
 						t_row++;
-					}else
-					{
-						t_column++;
 					}
 				}
 			}
@@ -102,12 +80,12 @@ package yzhkof.ui
 		{
 			_columnCount = value;
 		}
-
+		
 		public function get rowCount():uint
 		{
 			return _rowCount;
 		}
-
+		
 		public function set rowCount(value:uint):void
 		{
 			_rowCount = value;
@@ -145,78 +123,54 @@ package yzhkof.ui
 			var re_lo:Object=new Object;
 			var lo:Object=layoutMap[child];
 			var bound_child:Rectangle=child.getBounds(this);
-
+			
 			re_lo.width=lo.width||bound_child.width;
 			re_lo.height=lo.height||bound_child.height;
 			re_lo.paddingV=lo.paddingV||paddingV;
 			re_lo.paddingH=lo.paddingH||paddingH;
 			return re_lo;
 		}
-
+		override public  function get height():Number
+		{
+			if(autoVSize)
+			{
+				return contentHeight;
+			}
+			else
+			{
+				return super.height;
+			}
+		}
 		public function get paddingH():Number
 		{
 			return _paddingH;
 		}
-
+		
 		public function set paddingH(value:Number):void
 		{
 			_paddingH = value;
 		}
-
+		
 		public function get paddingV():Number
 		{
 			return _paddingV;
 		}
-
+		
 		public function set paddingV(value:Number):void
 		{
 			_paddingV = value;
 		}
-
+		
 		public function get autoVSize():Boolean
 		{
 			return _autoVSize;
 		}
-
+		
 		public function set autoVSize(value:Boolean):void
 		{
 			if(_autoVSize == value) return;
 			_autoVSize = value;
 			commitChage("autoVSize");
-		}
-
-		public function get scrollY():int
-		{
-			return _scrollY;
-		}
-
-		public function set scrollY(value:int):void
-		{
-			if(_scrollY == value) return;
-			_scrollY = value;
-			commitChage("scrollY");
-		}
-
-		public function get scrollX():int
-		{
-			return _scrollX;
-		}
-
-		public function set scrollX(value:int):void
-		{
-			if(_scrollX == value) return;
-			_scrollX = value;
-			commitChage("scaleX");
-		}
-
-		public function get maxScrollX():int
-		{
-			return _maxScrollX;
-		}
-
-		public function get maxScroolY():int
-		{
-			return _maxScroolY;
 		}
 	}
 }
