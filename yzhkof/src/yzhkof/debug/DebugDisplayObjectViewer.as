@@ -39,7 +39,7 @@ package yzhkof.debug
 		private var currentRefreshType:String = "simple";
 		
 		private var _stage:Stage;
-		private var child_map:WeakMap;
+		private var _child_map:WeakMap;
 		private var up_btn:TextPanel;
 		private var back_btn:TextPanel;
 		private var stage_btn:TextPanel;
@@ -301,12 +301,6 @@ package yzhkof.debug
 				trace(str);
 			}
 		}
-		/*private function updataContainerPosition():void
-		{
-			delayCallNextFrame(function():void{
-				container.y=dictionary_viewer.y+dictionary_viewer.contentHeight+10;
-			});
-		}*/
 		public function goto(obj:*):void
 		{
 			if(obj!=null)
@@ -369,7 +363,7 @@ package yzhkof.debug
 				goto(_stage);
 			}
 			container.removeAllChildren();
-			child_map=new WeakMap;
+			_child_map=new WeakMap;
 			var t_text:TextPanel;
 			if(t_currentLeaf is DisplayObjectContainer)
 			{
@@ -378,14 +372,11 @@ package yzhkof.debug
 				for(i=0;i<length;i++)
 				{
 					var t_dobj:DisplayObject=t_currentLeaf.getChildAt(i);
-					t_text = getTextPanel(t_dobj);
+					t_text = getDebugTextButton(t_dobj,new RegExp("instance").test(t_dobj.name)?getQualifiedClassName(t_dobj):t_dobj.name);
 					container.appendItem(t_text);
-					t_text.text= new RegExp("instance").test(t_dobj.name)?getQualifiedClassName(t_dobj):t_dobj.name
 					child_map.add(t_text,t_dobj);
-					t_text.addEventListener(MouseEvent.CLICK,__onItemClick);
 				}
 			}
-			
 			if(t_type == DETAIL)
 			{
 				var menber:Object = getMemberNames(t_currentLeaf);
@@ -396,18 +387,16 @@ package yzhkof.debug
 						var t_v:* = t_currentLeaf[q];
 						if(!(t_v is Function))
 						{
-							t_text = getTextPanel(t_v);
-							t_text.text = q.localName;
+							t_text = getDebugTextButton(t_v,q.localName);
 							if(String(q.uri)!="")
 							{
-								child_map.add(t_text,t_v);
+								_child_map.add(t_text,t_v);
 							}
 							else
 							{
-								child_map.add(t_text,t_currentLeaf[String(q.localName)]);
+								_child_map.add(t_text,t_currentLeaf[String(q.localName)]);
 							}
 							container.appendItem(t_text);
-							t_text.addEventListener(MouseEvent.CLICK,__onItemClick);
 						}					
 					}catch(e:Error)
 					{
@@ -419,35 +408,45 @@ package yzhkof.debug
 		}
 		public function checkGC():void
 		{
-			var text_arr:Array=child_map.keySet;
+			var text_arr:Array=_child_map.keySet;
 			for each(var i:TextPanel in text_arr)
 			{
-				if(!child_map.getValue(i))
+				if(!_child_map.getValue(i))
 				{
 					i.color=0x00ff00;
 				};
 			}
 		}
+		public function getDebugTextButton(obj:*,text:String):TextPanel
+		{
+			var text_panel:TextPanel = getTextPanel(obj);
+			text_panel.text = text||"";
+			text_panel.addEventListener(MouseEvent.CLICK,__onItemClick);
+			return text_panel;
+		}
 		private function __onItemClick(e:MouseEvent):void
 		{
-			var gotoObj:*=child_map.getValue(e.currentTarget);
+			var gotoObj:*=_child_map.getValue(e.currentTarget);
+			if(gotoObj == null)
+			{
+				
+			}
 			if(KeyMy.isDown(83))
 			{
-//				debugTrace(SampleUtil.getInstanceCreatPath(child_map.getValue(e.currentTarget)));
-				debugTrace(DebugUtil.analyseInstance(child_map.getValue(e.currentTarget)));
+				debugTrace(DebugUtil.analyseInstance(gotoObj));
 			}
 			else if(KeyMy.isDown(84))
 			{
-				DebugSystem.scriptViewer.setTarget(child_map.getValue(e.currentTarget));
+				DebugSystem.scriptViewer.setTarget(gotoObj);
 			}
 			else if(e.ctrlKey)
 			{
 				if(gotoObj is DisplayObject)
-					view(child_map.getValue(e.currentTarget));
+					view(gotoObj);
 			}
 			else if(e.shiftKey)
 			{
-				debugObjectTrace(child_map.getValue(e.currentTarget));
+				debugObjectTrace(gotoObj);
 			}
 			else
 			{
@@ -471,6 +470,12 @@ package yzhkof.debug
 				
 			}
 		}
+
+		public function get child_map():WeakMap
+		{
+			return _child_map;
+		}
+
 		
 	}
 }

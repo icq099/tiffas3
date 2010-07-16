@@ -14,7 +14,7 @@ package yzhkof.debug
 
 	public class DebutDisplayObjectDctionary extends TileContainer
 	{
-		private var dobj_map:WeakMap;
+		internal var _dobj_map:WeakMap;
 		private var viewer:DebugDisplayObjectViewer;
 		public function DebutDisplayObjectDctionary()
 		{
@@ -28,10 +28,10 @@ package yzhkof.debug
 		}
 		public function checkGC():void
 		{
-			var text_arr:Array=dobj_map.keySet;
+			var text_arr:Array=_dobj_map.keySet;
 			for each(var i:TextPanel in text_arr)
 			{
-				if(!dobj_map.getValue(i))
+				if(!_dobj_map.getValue(i))
 				{
 					i.color=0x00ff00;
 				};
@@ -44,7 +44,7 @@ package yzhkof.debug
 		public function goto(dobj:*):void
 		{
 			var text_arr:Array=new Array;
-			dobj_map=new WeakMap;
+			_dobj_map=new WeakMap;
 			removeAllChildren();
 			var __textPanelClickHandle:Function = function(e:MouseEvent):void
 			{
@@ -53,23 +53,23 @@ package yzhkof.debug
 					if(KeyMy.isDown(83))
 					{
 						//debugTrace(SampleUtil.getInstanceCreatPath(dobj_map.getValue(e.currentTarget)));
-						debugTrace(DebugUtil.analyseInstance(dobj_map.getValue(e.currentTarget)));
+						debugTrace(DebugUtil.analyseInstance(_dobj_map.getValue(e.currentTarget)));
 					}
 					else if(KeyMy.isDown(84))
 					{
-						DebugSystem.scriptViewer.setTarget(dobj_map.getValue(e.currentTarget));
+						DebugSystem.scriptViewer.setTarget(_dobj_map.getValue(e.currentTarget));
 					}
 					else if(e.ctrlKey)
 					{
-						viewer.view(dobj_map.getValue(e.currentTarget));
+						viewer.view(_dobj_map.getValue(e.currentTarget));
 					}
 					else if(e.shiftKey)
 					{
-						debugObjectTrace(dobj_map.getValue(e.currentTarget));
+						debugObjectTrace(_dobj_map.getValue(e.currentTarget));
 					}
 					else
 					{
-						viewer.goto(dobj_map.getValue(e.currentTarget));
+						viewer.goto(_dobj_map.getValue(e.currentTarget));
 					}
 				}
 			}
@@ -93,7 +93,7 @@ package yzhkof.debug
 					t.text=(new RegExp("instance").test(dobj.name)?getQualifiedClassName(dobj):dobj.name)||getQualifiedClassName(dobj);
 					text_arr.push(t);
 					text_arr.push(arrow);
-					dobj_map.add(t,dobj);
+					_dobj_map.add(t,dobj);
 					
 					t.addEventListener(MouseEvent.CLICK,__textPanelClickHandle);
 					
@@ -114,7 +114,7 @@ package yzhkof.debug
 					t = new TextPanel;
 					t.text = (new RegExp("instance").test(j.name)?getQualifiedClassName(j):j.name)||getQualifiedClassName(j);
 					t.addEventListener(MouseEvent.CLICK,__textPanelClickHandle);
-					dobj_map.add(t,j);
+					_dobj_map.add(t,j);
 					appendItem(t);
 				}
 			}
@@ -126,6 +126,10 @@ package yzhkof.debug
 			re_t.text=">>";
 			return re_t;
 		}
-		
+
+		public function get dobj_map():WeakMap
+		{
+			return _dobj_map;
+		}
 	}
 }

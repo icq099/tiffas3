@@ -9,6 +9,7 @@ package yzhkof.debug
 	import flash.sampler.stopSampling;
 	
 	import yzhkof.KeyMy;
+	import yzhkof.ui.TextPanel;
 	
 	public class DebugSystem
 	{
@@ -16,7 +17,7 @@ package yzhkof.debug
 		private static var _stage:Stage;
 		
 		internal static var displayObjectViewer:DebugDisplayObjectViewer;
-		public static var scriptViewer:ScriptViewer;
+		internal static var scriptViewer:ScriptViewer;
 		
 		public function DebugSystem()
 		{
@@ -77,6 +78,10 @@ package yzhkof.debug
 					break;
 				}
 			});
+		}
+		internal function getDebugTextButton(obj:*,text:String):TextPanel
+		{
+			return displayObjectViewer.getDebugTextButton(obj,text);
 		}
 		private static function initDisplayObjectViewer():void
 		{
