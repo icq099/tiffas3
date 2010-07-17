@@ -27,18 +27,28 @@ package yzhkof.ui
 			addChild(rectContaner);
 			addChild(vScrollBar);
 			vScrollBar.addEventListener(Event.CHANGE,__scrollChange);
+			vScrollBar.addEventListener(UPDATE,__scrollBarUpdate);
 		}
 		private function __scrollChange(e:Event):void
 		{
 			viewRectangle.y = _scrollV = vScrollBar.scrollV;
 			rectContaner.scrollRect = viewRectangle;
 		}
+		private function __scrollBarUpdate(e:Event):void
+		{
+			commitChage();
+		}
 		private function updateScrollByContent():void
 		{
+			var percent:Number;
+			percent = _scrollV == 0?0:_scrollV / _maxScrollV;
+			
 			_maxScrollV = contentContainer.height - height;
 			if(_maxScrollV<0)
 				_maxScrollV = 0;
 			vScrollBar.maxScrollV = _maxScrollV
+				
+			_scrollV = _maxScrollV * percent;
 			if(_scrollV > _maxScrollV)
 			{
 				_scrollV = _maxScrollV;

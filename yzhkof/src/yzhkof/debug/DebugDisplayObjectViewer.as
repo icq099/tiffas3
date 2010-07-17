@@ -23,6 +23,7 @@ package yzhkof.debug
 	import yzhkof.ui.TextPanel;
 	import yzhkof.ui.TileContainer;
 	import yzhkof.util.DebugUtil;
+	import yzhkof.util.QNameUtil;
 	import yzhkof.util.WeakMap;
 	import yzhkof.util.delayCallNextFrame;
 
@@ -49,6 +50,7 @@ package yzhkof.debug
 		private var script_btn:TextPanel;
 		private var refresh_btn:TextPanel;
 		private var gc_btn:TextPanel;
+		private var log_btn:TextPanel;
 		private var focus_txt:TextPanel;
 		private var x_btn:TextPanel;
 		private var mode_container:Sprite;
@@ -92,6 +94,7 @@ package yzhkof.debug
 			script_btn=new TextPanel();
 			refresh_btn=new TextPanel();
 			gc_btn=new TextPanel();
+			log_btn=new TextPanel();
 			focus_txt=new TextPanel();
 			x_btn=new TextPanel();
 			mode_btn_a = new TextPanel();
@@ -115,6 +118,7 @@ package yzhkof.debug
 			
 			x_btn.text="隐藏";
 			gc_btn.text="GC";
+			log_btn.text="log";
 			
 			
 			addChild(btn_container);
@@ -133,6 +137,7 @@ package yzhkof.debug
 			btn_container.appendItem(script_btn);
 			btn_container.appendItem(refresh_btn);
 			btn_container.appendItem(gc_btn);
+			btn_container.appendItem(log_btn);
 			btn_container.appendItem(mode_container);
 			btn_container.appendItem(x_btn);
 			btn_container.appendItem(focus_txt);
@@ -140,8 +145,6 @@ package yzhkof.debug
 			container.width=_stage.stageWidth
 			viewer.visible=false;
 			mask_background.visible=false;
-			goto(_stage);
-			
 		}
 		private function setMaskBackGround(dobj:Sprite):void
 		{
@@ -221,6 +224,10 @@ package yzhkof.debug
 				checkGC();
 				dictionary_viewer.checkGC();
 			});
+			log_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
+			{
+				DebugSystem.logViewer.visible = !DebugSystem.logViewer.visible;
+			});
 			focus_txt.addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void
 			{
 				if(_stage.focus)
@@ -296,18 +303,25 @@ package yzhkof.debug
 						if(i is DisplayObjectContainer) continue;
 						parent_arr.push(i.parent);
 					}
-					goto(parent_arr.concat(dobj_arr));
+					goto(parent_arr.concat(dobj_arr),true);
 				}
 				trace(str);
 			}
 		}
-		public function goto(obj:*):void
+		public function goto(obj:*,select:Boolean = false):void
 		{
 			if(obj!=null)
 			{
 				latestLeaf=currentLeaf;
 				currentLeaf=obj;
-				dictionary_viewer.goto(obj);
+				if(select)
+				{
+					dictionary_viewer.select(obj);
+				}
+				else
+				{
+					dictionary_viewer.goto(obj);
+				}
 				refresh(currentRefreshType);
 				commitChage();
 			}else
@@ -394,7 +408,7 @@ package yzhkof.debug
 							}
 							else
 							{
-								_child_map.add(t_text,t_currentLeaf[String(q.localName)]);
+								_child_map.add(t_text,t_currentLeaf[QNameUtil.getObjectQname(t_currentLeaf,q)]);
 							}
 							container.appendItem(t_text);
 						}					
@@ -429,8 +443,14 @@ package yzhkof.debug
 			var gotoObj:*=_child_map.getValue(e.currentTarget);
 			if(gotoObj == null)
 			{
-				
+				gotoObj = dictionary_viewer._dobj_map.getValue(e.currentTarget);
 			}
+			if(gotoObj == null)
+			{
+				gotoObj = DebugSystem.logViewer.logMap[e.currentTarget]; 
+			}
+			
+			
 			if(KeyMy.isDown(83))
 			{
 				debugTrace(DebugUtil.analyseInstance(gotoObj));
@@ -438,6 +458,10 @@ package yzhkof.debug
 			else if(KeyMy.isDown(84))
 			{
 				DebugSystem.scriptViewer.setTarget(gotoObj);
+			}
+			else if(KeyMy.isDown(87))
+			{
+				DebugSystem.logViewer.addLog(gotoObj);
 			}
 			else if(e.ctrlKey)
 			{
@@ -475,7 +499,5 @@ package yzhkof.debug
 		{
 			return _child_map;
 		}
-
-		
 	}
 }
