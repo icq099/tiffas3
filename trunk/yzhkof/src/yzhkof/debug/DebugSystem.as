@@ -6,7 +6,6 @@ package yzhkof.debug
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
 	import flash.sampler.startSampling;
-	import flash.sampler.stopSampling;
 	
 	import yzhkof.KeyMy;
 	import yzhkof.ui.TextPanel;
@@ -18,9 +17,11 @@ package yzhkof.debug
 		
 		internal static var displayObjectViewer:DebugDisplayObjectViewer;
 		internal static var scriptViewer:ScriptViewer;
+		internal static var logViewer:DebugLogViewer;
 		
 		public function DebugSystem()
 		{
+			
 		}
 		public static function init(stage:Stage,useSample:Boolean=false):void
 		{
@@ -37,6 +38,10 @@ package yzhkof.debug
 			
 			_stage.addEventListener(Event.ADDED,onStageAdd)
 			
+			logViewer = new DebugLogViewer();
+			_mainContainer.addChild(logViewer);
+			logViewer.y = 100;
+			
 			initDisplayObjectViewer();
 			scriptViewer=new ScriptViewer();
 			_mainContainer.addChild(scriptViewer);
@@ -44,6 +49,7 @@ package yzhkof.debug
 			TextTrace.init(_mainContainer);
 			
 			_mainContainer.visible=false;
+			logViewer.visible =false;
 			TextTrace.visible=false;
 //			displayObjectViewer.visible=false;
 			scriptViewer.visible=false;
@@ -79,13 +85,14 @@ package yzhkof.debug
 				}
 			});
 		}
-		internal function getDebugTextButton(obj:*,text:String):TextPanel
+		internal static function getDebugTextButton(obj:*,text:String):TextPanel
 		{
 			return displayObjectViewer.getDebugTextButton(obj,text);
 		}
 		private static function initDisplayObjectViewer():void
 		{
 			displayObjectViewer=new DebugDisplayObjectViewer(_stage);
+			displayObjectViewer.goto(_stage);
 			_mainContainer.addChild(displayObjectViewer);
 			displayObjectViewer.addEventListener(FocusEvent.FOCUS_IN,function(e:FocusEvent):void
 			{

@@ -103,6 +103,7 @@ package yzhkof.ui
 			{
 				_scrollV = value;
 			}
+			dispatchEvent(new Event(Event.CHANGE));
 			commitChage("scrollV");
 		}
 	}

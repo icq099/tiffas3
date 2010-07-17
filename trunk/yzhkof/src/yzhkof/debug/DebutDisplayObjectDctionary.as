@@ -44,59 +44,16 @@ package yzhkof.debug
 		public function goto(dobj:*):void
 		{
 			var text_arr:Array=new Array;
-			_dobj_map=new WeakMap;
-			removeAllChildren();
-			var __textPanelClickHandle:Function = function(e:MouseEvent):void
-			{
-				if(viewer)
-				{
-					if(KeyMy.isDown(83))
-					{
-						//debugTrace(SampleUtil.getInstanceCreatPath(dobj_map.getValue(e.currentTarget)));
-						debugTrace(DebugUtil.analyseInstance(_dobj_map.getValue(e.currentTarget)));
-					}
-					else if(KeyMy.isDown(84))
-					{
-						DebugSystem.scriptViewer.setTarget(_dobj_map.getValue(e.currentTarget));
-					}
-					else if(e.ctrlKey)
-					{
-						viewer.view(_dobj_map.getValue(e.currentTarget));
-					}
-					else if(e.shiftKey)
-					{
-						debugObjectTrace(_dobj_map.getValue(e.currentTarget));
-					}
-					else
-					{
-						viewer.goto(_dobj_map.getValue(e.currentTarget));
-					}
-				}
-			}
+			reset();
 			var t:TextPanel;
 			if(dobj is DisplayObject)
 			{
 				do
-				{					
-					if(dobj.visible==false)
-					{
-						t = new TextPanel(0xff0000);
-					}
-					else if(dobj.getBounds(dobj).width==0||dobj.getBounds(dobj).height==0)
-					{
-						t = new TextPanel(0x0000ff);
-					}
-					else
-					{
-						t = new TextPanel();
-					}
-					t.text=(new RegExp("instance").test(dobj.name)?getQualifiedClassName(dobj):dobj.name)||getQualifiedClassName(dobj);
+				{
+					t = DebugSystem.getDebugTextButton(dobj,(new RegExp("instance").test(dobj.name)?getQualifiedClassName(dobj):dobj.name)||getQualifiedClassName(dobj));
 					text_arr.push(t);
 					text_arr.push(arrow);
 					_dobj_map.add(t,dobj);
-					
-					t.addEventListener(MouseEvent.CLICK,__textPanelClickHandle);
-					
 				}while(dobj=dobj.parent);
 				text_arr.pop();
 				var length:uint=text_arr.length
@@ -107,18 +64,22 @@ package yzhkof.debug
 					appendItem(tdobj);
 				}
 			}
-			else if(dobj is Array)
+		}
+		public function select(arr:Array):void
+		{
+			reset();
+			var t:TextPanel;
+			for each(var j:DisplayObject in arr)
 			{
-				for each(var j:DisplayObject in dobj)
-				{
-					t = new TextPanel;
-					t.text = (new RegExp("instance").test(j.name)?getQualifiedClassName(j):j.name)||getQualifiedClassName(j);
-					t.addEventListener(MouseEvent.CLICK,__textPanelClickHandle);
-					_dobj_map.add(t,j);
-					appendItem(t);
-				}
+				t = DebugSystem.getDebugTextButton(j,(new RegExp("instance").test(j.name)?getQualifiedClassName(j):j.name)||getQualifiedClassName(j));
+				_dobj_map.add(t,j);
+				appendItem(t);
 			}
-			
+		}
+		private function reset():void
+		{
+			_dobj_map=new WeakMap;
+			removeAllChildren();
 		}
 		private function get arrow():TextPanel
 		{
