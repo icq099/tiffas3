@@ -12,11 +12,11 @@ package yzhkof.debug
 	import yzhkof.util.DebugUtil;
 	import yzhkof.util.WeakMap;
 
-	public class DebutDisplayObjectDctionary extends TileContainer
+	public class DebugDisplayObjectDctionary extends TileContainer
 	{
 		internal var _dobj_map:WeakMap;
 		private var viewer:DebugDisplayObjectViewer;
-		public function DebutDisplayObjectDctionary()
+		public function DebugDisplayObjectDctionary()
 		{
 			super();
 			AddToStageSetter.delayExcuteAfterAddToStage(this,function():void{
