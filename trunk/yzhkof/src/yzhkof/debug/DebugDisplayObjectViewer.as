@@ -36,7 +36,7 @@ package yzhkof.debug
 		private var btn_container:TileContainer=new TileContainer();
 		private var _currentLeaf:WeakMap;
 		private var _latestLeaf:WeakMap;
-		private var dictionary_viewer:DebutDisplayObjectDctionary;
+		private var dictionary_viewer:DebugDisplayObjectDctionary;
 		private var currentRefreshType:String = "simple";
 		
 		private var _stage:Stage;
@@ -85,7 +85,7 @@ package yzhkof.debug
 		private function init():void
 		{
 			viewer=new SnapshotDisplayViewer();
-			dictionary_viewer=new DebutDisplayObjectDctionary();
+			dictionary_viewer=new DebugDisplayObjectDctionary();
 			mode_container = new Sprite;
 			up_btn=new TextPanel();
 			back_btn=new TextPanel();
@@ -265,7 +265,7 @@ package yzhkof.debug
 		{ 
 			setMaskBackGround(MyGraphy.drawRectangle(_stage.stageWidth,_stage.stageHeight));
 			container.width=_stage.stageWidth;
-			container.y=dictionary_viewer.y+dictionary_viewer.contentHeight+10;
+			container.y=dictionary_viewer.y+dictionary_viewer.contentHeight+25;
 		}
 		private function __onStageClick(e:MouseEvent):void
 		{
@@ -356,7 +356,12 @@ package yzhkof.debug
 					t_text = new TextPanel;
 					
 				}
-			}else
+			}
+			else if(obj is Function)
+			{
+				t_text = new TextPanel(0x8888ff);
+			}
+			else
 			{
 				if(obj == null)
 				{
@@ -378,6 +383,7 @@ package yzhkof.debug
 			}
 			container.removeAllChildren();
 			_child_map=new WeakMap;
+			reference_arr = new Array;
 			var t_text:TextPanel;
 			if(t_currentLeaf is DisplayObjectContainer)
 			{
@@ -399,19 +405,13 @@ package yzhkof.debug
 									
 					try{
 						var t_v:* = t_currentLeaf[q];
-						if(!(t_v is Function))
-						{
-							t_text = getDebugTextButton(t_v,q.localName);
-							if(String(q.uri)!="")
-							{
-								_child_map.add(t_text,t_v);
-							}
-							else
-							{
-								_child_map.add(t_text,t_currentLeaf[QNameUtil.getObjectQname(t_currentLeaf,q)]);
-							}
-							container.appendItem(t_text);
-						}					
+							
+						t_text = getDebugTextButton(t_v,q.localName);
+						container.appendItem(t_text);
+						
+						reference_arr.push(t_v);
+						_child_map.add(t_text,t_v);
+							
 					}catch(e:Error)
 					{
 						
@@ -420,6 +420,7 @@ package yzhkof.debug
 			}
 			container.draw();
 		}
+		private var reference_arr:Array = [];
 		public function checkGC():void
 		{
 			var text_arr:Array=_child_map.keySet;
@@ -477,7 +478,12 @@ package yzhkof.debug
 				if(gotoObj == null)
 				{
 					debugObjectTrace(gotoObj);
-				}else
+				}
+				else if(gotoObj is Function)
+				{
+					DebugSystem.scriptViewer.setTarget(gotoObj);
+				}
+				else
 				{
 					switch(getDefinitionByName(getQualifiedClassName(gotoObj)))
 					{
