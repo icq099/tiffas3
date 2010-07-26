@@ -4,6 +4,8 @@ package yzhkof.ui
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	
+	import yzhkof.ui.event.ComponentEvent;
 
 	public class ScrollPanel extends ComponentContainer
 	{
@@ -27,7 +29,7 @@ package yzhkof.ui
 			addChild(rectContaner);
 			addChild(vScrollBar);
 			vScrollBar.addEventListener(Event.CHANGE,__scrollChange);
-			vScrollBar.addEventListener(UPDATE,__scrollBarUpdate);
+			vScrollBar.addEventListener(ComponentEvent.UPDATE,__scrollBarUpdate);
 		}
 		private function __scrollChange(e:Event):void
 		{
@@ -101,7 +103,7 @@ package yzhkof.ui
 				contentContainer.addChild(_source);
 			updateScrollByContent();
 			if(_source is ComponentBase)
-				_source.addEventListener(UPDATE,__childSizeChange);
+				_source.addEventListener(ComponentEvent.UPDATE,__childSizeChange);
 			commitChage(CHILD_CHANGE);
 		}
 	}

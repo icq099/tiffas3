@@ -4,6 +4,8 @@ package yzhkof.ui
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import yzhkof.ui.event.ComponentEvent;
+	
 	public class ComponentBase extends ChangeableSprite
 	{
 		public static const UPDATE:String = "update"
@@ -50,7 +52,7 @@ package yzhkof.ui
 		override final protected function afterDraw():void
 		{
 			super.afterDraw()
-			dispatchEvent(new Event(UPDATE));
+			dispatchEvent(new ComponentEvent(ComponentEvent.UPDATE));
 		}
 	}
 }

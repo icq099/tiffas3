@@ -10,6 +10,7 @@ package yzhkof.debug
 	import yzhkof.ui.ScrollPanel;
 	import yzhkof.ui.TextPanel;
 	import yzhkof.ui.TileContainer;
+	import yzhkof.ui.event.ComponentEvent;
 	
 	public class DebugLogViewer extends DragPanel
 	{
@@ -54,7 +55,7 @@ package yzhkof.debug
 			scrollPanel.width = 500;
 			scrollPanel.height = 400;
 			tileContainer.width = scrollPanel .width - 10;
-			scrollPanel.addEventListener(UPDATE,__createComplete);
+			scrollPanel.addEventListener(ComponentEvent.UPDATE,__createComplete);
 		}
 		private function initEvent():void
 		{

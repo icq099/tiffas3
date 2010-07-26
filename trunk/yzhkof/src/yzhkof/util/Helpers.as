@@ -1,4 +1,4 @@
-package slg.core.utils
+package yzhkof.util
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
