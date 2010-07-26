@@ -83,6 +83,14 @@ package yzhkof.debug
 		public function addLog(obj:*,tag:String = ""):void
 		{
 			if(!isStart) return;
+				addLoged(obj,tag);
+		}
+		internal function addLogDirectly(obj:*,tag:String = ""):void
+		{
+			addLoged(obj,tag);
+		}
+		private function addLoged(obj:*,tag:String = ""):void
+		{
 			var text_button:TextPanel = DebugSystem.getDebugTextButton(obj,(tag==""?"":tag+" : ")+getQualifiedClassName(obj));
 			_logMap[text_button] = obj;
 			_logArr.push(text_button);
