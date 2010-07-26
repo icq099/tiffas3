@@ -462,7 +462,7 @@ package yzhkof.debug
 			}
 			else if(KeyMy.isDown(87))
 			{
-				DebugSystem.logViewer.addLog(gotoObj);
+				DebugSystem.logViewer.addLogDirectly(gotoObj,"<watch>");
 			}
 			else if(e.ctrlKey)
 			{
