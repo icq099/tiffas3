@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<config>
-	<import_namespace>flash.utils</import_namespace>
-	<import_namespace>flash.display</import_namespace>
-</config>
