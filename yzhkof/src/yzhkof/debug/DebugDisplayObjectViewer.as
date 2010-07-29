@@ -103,7 +103,7 @@ package yzhkof.debug
 			dictionary_viewer.setup(this);
 			dictionary_viewer.y = 25;
 			
-			btn_container.width=500;
+			btn_container.width=1000;
 			btn_container.height=200;
 			container.width=_stage.stageWidth;
 			

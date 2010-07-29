@@ -34,16 +34,28 @@ package yzhkof
 		public static function efficiencyOfFunctionTrace(fun:Function,ifTrace:Boolean=true):int{
 			
 			efficiencyOfFunction(fun);
-			ifTrace?trace(result()):null;
+			ifTrace&&trace(result());
 			return result();
 		
 		}
 		public static function efficiencyOfFunctionTraceFormat(fun:Function,ifTrace:Boolean=true):String{
 			
 			efficiencyOfFunction(fun);
-			ifTrace?trace(resultFormat()):null;
+			ifTrace&&trace(resultFormat());
 			return resultFormat();
-		
+		}
+		public static function efficiencyOFFunctionByExcuteMultiTimes(fun:Function,times:uint = 1000,ifTrace:Boolean=true):String
+		{
+			var i:int = 0
+			efficiencyOfFunction(function():void
+			{
+				for(i = 0;i<times;i++)
+				{
+					fun();
+				}
+			});
+			ifTrace&&trace(resultFormat());
+			return resultFormat();
 		}
 
 	}
