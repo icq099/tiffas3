@@ -5,7 +5,7 @@ package yzhkof.ui
 	
 	public class DelayRendSprite extends Sprite
 	{
-		private var _isCaneled:Boolean = false;
+		private var _isCanceled:Boolean = false;
 		public function DelayRendSprite()
 		{
 			super();
@@ -13,10 +13,11 @@ package yzhkof.ui
 		}
 		protected function upDateNextRend():void
 		{
-			_isCaneled = false;
+			_isCanceled = false;
 			if(stage)
 			{
 				stage.invalidate();
+				removeEventListener(Event.RENDER,__onScreenRend);
 				addEventListener(Event.RENDER,__onScreenRend);
 			}
 		}
@@ -26,7 +27,7 @@ package yzhkof.ui
 		}
 		protected function cancelCurrentRend():void
 		{
-			_isCaneled = true;
+			_isCanceled = true;
 		}
 		protected function beforDraw():void
 		{
@@ -50,18 +51,18 @@ package yzhkof.ui
 			beforDraw();
 			onDraw();
 			afterDraw();
-			_isCaneled =false;
+			_isCanceled =false;
 			removeEventListener(Event.RENDER,__onScreenRend);
 		}
 		private function __onScreenRend(e:Event):void
 		{
 			beforDraw();
-			if(_isCaneled == false)
+			if(_isCanceled == false)
 			{
 				onDraw();
 				afterDraw();
 			}
-			_isCaneled =false;
+			_isCanceled =false;
 			removeEventListener(Event.RENDER,__onScreenRend);
 		}
 	}

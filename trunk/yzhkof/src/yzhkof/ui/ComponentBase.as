@@ -6,9 +6,16 @@ package yzhkof.ui
 	
 	import yzhkof.ui.event.ComponentEvent;
 	
+	/**
+	 * 重绘完成发送 
+	 */	
+	[Event(name = "update",type = "yzhkof.ui.event.ComponentEvent")]
+	/**
+	 * 准备下次重绘发送 
+	 */	
+	[Event(name = "CHANGE_COMPONENT",type = "yzhkof.ui.event.ComponentEvent")]
 	public class ComponentBase extends ChangeableSprite
 	{
-		public static const UPDATE:String = "update"
 		protected var _width:Number=0;
 		protected var _height:Number=0;
 		
@@ -40,6 +47,12 @@ package yzhkof.ui
 			if(value == _height) return;
 			_height = value;
 			commitChage("height");
+		}
+		override protected function commitChage(changeThing:String="default_change"):void
+		{
+			super.commitChage(changeThing);
+			if(hasEventListener(ComponentEvent.CHANGE_COMPONENT))
+				dispatchEvent(new ComponentEvent(ComponentEvent.CHANGE_COMPONENT));
 		}
 		public function get contentWidth():Number
 		{

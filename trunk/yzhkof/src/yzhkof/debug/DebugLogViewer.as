@@ -79,7 +79,7 @@ package yzhkof.debug
 		private function __createComplete(e:Event):void
 		{
 			drawBackGround();
-			removeEventListener(UPDATE,__createComplete);
+			removeEventListener(ComponentEvent.UPDATE,__createComplete);
 		}
 		public function addLog(obj:*,tag:String = ""):void
 		{

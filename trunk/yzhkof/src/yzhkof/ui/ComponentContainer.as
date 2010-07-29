@@ -1,6 +1,9 @@
 package yzhkof.ui
 {
+	import flash.display.DisplayObject;
 	import flash.events.Event;
+	
+	import yzhkof.ui.event.ComponentEvent;
 
 	public class ComponentContainer extends ComponentBase
 	{		
@@ -20,10 +23,28 @@ package yzhkof.ui
 		private function __childAdd(e:Event):void
 		{
 			commitChage(CHILD_CHANGE);
+			addChildEvent(e.target);
 		}
 		private function __childRemove(e:Event):void
 		{
 			commitChage(CHILD_CHANGE);
+			removeChildEvent(e.target);
+		}
+		private function addChildEvent(child:Object):void
+		{
+			if(!(child is ComponentBase)) return;
+			var comp:ComponentBase = child as ComponentBase;
+			comp.addEventListener(ComponentEvent.CHANGE_COMPONENT,__childUpdate);
+		}
+		private function removeChildEvent(child:Object):void
+		{
+			if(!(child is ComponentBase)) return;
+			var comp:ComponentBase = child as ComponentBase;
+			comp.removeEventListener(ComponentEvent.CHANGE_COMPONENT,__childUpdate);
+		}
+		private function __childUpdate(e:Event):void
+		{
+//			commitChage(CHILD_CHANGE);
 		}
 	}
 }
