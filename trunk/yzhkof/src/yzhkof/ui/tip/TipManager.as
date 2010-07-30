@@ -1,8 +1,5 @@
 package yzhkof.ui.tip
 {
-	import com.gskinner.motion.GTween;
-	import com.gskinner.motion.GTweener;
-	
 	import flash.display.DisplayObject;
 	import flash.display.InteractiveObject;
 	import flash.display.Sprite;
@@ -12,8 +9,8 @@ package yzhkof.ui.tip
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
-	import slg.core.utils.GCWatcher;
-	import slg.core.utils.Helpers;
+	import yzhkof.core.StageManager;
+	import yzhkof.util.Helpers;
 	
 	public class TipManager
 	{
