@@ -2,13 +2,10 @@ package yzhkof.debug
 {
 	import com.hurlant.eval.ByteLoader;
 	import com.hurlant.eval.CompiledESC;
-	import com.hurlant.eval.ast.StrictEqual;
-	import com.hurlant.util.Hex;
 	
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
-	import flash.events.ProgressEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
@@ -22,6 +19,7 @@ package yzhkof.debug
 		private static var runer:CompiledESC;
 		private static var weakTarget:WeakMap=new WeakMap();
 		private static var xml:XML;
+		private static var script_xml:XMLList;
 		private static var import_text:String="";
 		public static var global:Object;
 		
@@ -30,7 +28,7 @@ package yzhkof.debug
 			if(!runer)
 				runer=new CompiledESC();
 			var loader:CompatibleURLLoader=new CompatibleURLLoader();
-			loader.loadURL("xml/debugConfig.xml");
+			loader.loadURL("../resource/debugConfig.xml");
 			loader.addEventListener(Event.COMPLETE,function(e:Event):void
 			{
 				xml=XML(loader.data);
@@ -50,6 +48,9 @@ package yzhkof.debug
 				import_text+="namespace xmlu"+i+" = \""+xml.import_namespace[i]+"\"; use namespace xmlu"+i+";\n";
 			}
 			import_text += "namespace xmlud = \"yzhkof.debug\"; use namespace xmlud;\n";
+			
+			script_xml = xml.script;
+			reFreshScript();
 		}
 		public static function run(script:String):void
 		{
@@ -75,6 +76,12 @@ package yzhkof.debug
 		{
 			debugObjectTrace(obj);
 		}
+		/**
+		 * 运行一个异步脚本 
+		 * @param url 脚本路径
+		 * @return 
+		 * 
+		 */		
 		public static function runScript(url:String):ScriptRun
 		{
 			var logic:ScriptRun = new ScriptRun;
@@ -101,6 +108,67 @@ package yzhkof.debug
 				loader.loadBytes(byte);
 			});
 			return logic;
+		}
+		private static var scripts:Object = new Object;
+		/**
+		 * 运行一个已编译好的脚本 
+		 * @param name
+		 * @param param
+		 * @param refresh
+		 * @return 
+		 * 
+		 */		
+		public static function runScriptSynchronous(name:String,param:Array,refresh:Boolean = false):*
+		{
+			if(refresh)
+				reFreshScript();
+			var script:Object = scripts[name];
+			if(!script)
+				throw new Error("脚本名字错误!");
+			return script.run.apply(null,param);
+		}
+		/**
+		 * 刷新所有script文件 
+		 * 
+		 */		
+		public static function reFreshScript():void
+		{
+			var length:uint = script_xml.length();
+			for each(var i:XML in script_xml)
+			{
+				loadScript(i,i.@name);
+			}
+		}
+		/**
+		 * 刷新单个script文件 
+		 * @param url
+		 * @param name
+		 * 
+		 */		
+		public static function loadScript(url:String,name:String = null):void
+		{
+			var urlloader:URLLoader = new URLLoader(new URLRequest(url));
+			var loader:Loader = new Loader();
+			var byte:ByteArray;
+			var script:String;
+			name = name||url;
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,function(e:Event):void
+			{
+			});
+			script = import_text;
+			urlloader.addEventListener(Event.COMPLETE,function(e:Event):void
+			{
+				script += urlloader.data as String;
+				script += ";ScriptRuner.addScript(this,\""+name+"\");";
+				script = convertImport(script);
+				byte = runer.eval(script);
+				byte = ByteLoader.wrapInSWF([byte]);
+				loader.loadBytes(byte);
+			});
+		}
+		public static function addScript(script_point:Object,name:String):void
+		{
+			scripts[name] = script_point;
 		}
 		/**
 		 * import 转换处理 
@@ -129,6 +197,8 @@ package yzhkof.debug
 		{
 			return "namespace importn"+importCount+" = \""+str+"\"; use namespace importn"+importCount+";\n"
 		}
+		/*******************************************************************************/
 		private static const tailText:String = ";ScriptRuner.global = this";
+//		private static const addScriptTailText:String = ";ScriptRuner.addScript(this);";
 	}
 }

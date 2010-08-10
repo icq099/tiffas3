@@ -62,9 +62,9 @@ package yzhkof.debug
 				{
 					switch(e.keyCode)
 					{
-//						case 13:
-//							_mainContainer.visible=!_mainContainer.visible;
-//						break;
+						case 13:
+							ScriptRuner.reFreshScript();
+						break;
 						case 84:
 							TextTrace.visible=!TextTrace.visible;
 						break;
