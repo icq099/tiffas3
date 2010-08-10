@@ -6,8 +6,11 @@ package yzhkof.logicdata
 	import flash.net.URLLoader;
 	import flash.utils.ByteArray;
 	
+	import yzhkof.debug.ScriptEvent;
 	import yzhkof.debug.ScriptRuner;
-
+	
+	[Event(name = "result",type = "yzhkof.debug.ScriptEvent")]
+	[Event(name = "complete",type = "flash.events.Event")]
 	public class ScriptRun extends EventDispatcher
 	{
 		public var data:Object;
@@ -15,7 +18,6 @@ package yzhkof.logicdata
 		private var _loader:Loader;
 		public var script:String;
 		public var bytes:ByteArray;
-		public var paramOfScriptRun:Object;
 		public function ScriptRun()
 		{
 		}
@@ -31,12 +33,16 @@ package yzhkof.logicdata
 			_loader = value;
 			addEventListener(Event.COMPLETE,__loaderComplete);
 		}
+		public function set result(value:*):void
+		{
+			dispatchEvent(new ScriptEvent(ScriptEvent.RESULT,value));
+		}
 		private function __loaderComplete(e:Event):void
 		{
 			if(ScriptRuner.global.run && ScriptRuner.global.run is Function)
 			{
 				if(ScriptRuner.global.run.length>0)
-					ScriptRuner.global.run(paramOfScriptRun);
+					ScriptRuner.global.run(this);
 				else
 					ScriptRuner.global.run();
 			}

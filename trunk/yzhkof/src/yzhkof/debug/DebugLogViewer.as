@@ -16,7 +16,7 @@ package yzhkof.debug
 	{
 		private var _logArr:Array = [];
 		private var _logMap:Dictionary = new Dictionary;
-		private var log_max_count:uint = 100;
+		private var log_max_count:uint = 200;
 		
 		private var scrollPanel:ScrollPanel = new ScrollPanel;
 		private var tileContainer:TileContainer = new TileContainer;

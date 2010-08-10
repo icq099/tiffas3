@@ -27,7 +27,12 @@ package yzhkof.debug
 				
 				if(!isSimple(obj))
 				{
-					var accessor_xmllist:XMLList=getAccessProperty(xml,isClass);				
+					var accessor_xmllist:XMLList=getAccessProperty(xml,isClass);
+					
+					if(obj is ByteArray)
+					{
+						final_text += "Bytes:\n" + Hex.dump(obj);
+					}
 					
 					for each(var x:XML in accessor_xmllist)
 					{
@@ -71,7 +76,8 @@ package yzhkof.debug
 						}
 					}else
 					{
-						final_text+=addSpace("[toString()] : "+obj.toString())+"\n";
+						if(!(obj is ByteArray))
+							final_text+=addSpace("[toString()] : "+obj.toString())+"\n";
 					}
 				}else
 				{
