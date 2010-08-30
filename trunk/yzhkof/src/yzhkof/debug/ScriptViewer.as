@@ -81,7 +81,7 @@ package yzhkof.debug
 			import_btn.addEventListener(MouseEvent.CLICK,__onImportClick);
 			save_btn.addEventListener(MouseEvent.CLICK,__onSaveClick);
 			load_btn.addEventListener(MouseEvent.CLICK,__onLoadClick);
-			target_btn.addEventListener(ComponentEvent.UPDATE,__btnSizeChange);
+			target_btn.addEventListener(ComponentEvent.DRAW_COMPLETE,__btnSizeChange);
 //			textField.addEventListener(KeyboardEvent.KEY_DOWN,__onKeyDown);
 		}
 //		private function __onKeyDown(e:KeyboardEvent):void
