@@ -1,20 +1,16 @@
 package yzhkof.ui
 {
-	import flash.display.DisplayObject;
-	import flash.display.Sprite;
-	import flash.events.Event;
-	
 	import yzhkof.ui.event.ComponentEvent;
 	
 	/**
 	 * 重绘完成发送 
 	 */	
-	[Event(name = "update",type = "yzhkof.ui.event.ComponentEvent")]
+	[Event(name = "DRAW_COMPLETE",type = "yzhkof.ui.event.ComponentEvent")]
 	/**
 	 * 准备下次重绘发送 
 	 */	
-	[Event(name = "CHANGE_COMPONENT",type = "yzhkof.ui.event.ComponentEvent")]
-	public class ComponentBase extends ChangeableSprite
+	[Event(name = "COMPONENT_CHANGE",type = "yzhkof.ui.event.ComponentEvent")]
+	public class ComponentBase extends CommitingSprite
 	{
 		protected var _width:Number=0;
 		protected var _height:Number=0;
@@ -22,11 +18,6 @@ package yzhkof.ui
 		public function ComponentBase()
 		{
 			super();
-		}
-		override protected function initChangeables():void
-		{
-			registChangeableThings("width");
-			registChangeableThings("height");
 		}
 		override public function get width():Number
 		{
@@ -51,8 +42,8 @@ package yzhkof.ui
 		override protected function commitChage(changeThing:String="default_change"):void
 		{
 			super.commitChage(changeThing);
-			if(hasEventListener(ComponentEvent.CHANGE_COMPONENT))
-				dispatchEvent(new ComponentEvent(ComponentEvent.CHANGE_COMPONENT));
+			if(hasEventListener(ComponentEvent.COMPONENT_CHANGE))
+				dispatchEvent(new ComponentEvent(ComponentEvent.COMPONENT_CHANGE));
 		}
 		public function get contentWidth():Number
 		{
@@ -62,10 +53,19 @@ package yzhkof.ui
 		{
 			return super.height;
 		}
+		/**
+		 * 子类覆盖drawComplete代替afterDraw; 
+		 * 
+		 */	
 		override final protected function afterDraw():void
 		{
 			super.afterDraw()
-			dispatchEvent(new ComponentEvent(ComponentEvent.UPDATE));
+			dispatchEvent(new ComponentEvent(ComponentEvent.DRAW_COMPLETE));
+			drawComplete();
+		}
+		protected function drawComplete():void
+		{
+			
 		}
 	}
 }
