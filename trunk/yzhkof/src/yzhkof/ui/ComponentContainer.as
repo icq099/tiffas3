@@ -15,11 +15,6 @@ package yzhkof.ui
 			addEventListener(Event.ADDED,__childAdd);
 			addEventListener(Event.REMOVED,__childRemove);
 		}
-		override protected function initChangeables():void
-		{
-			super.initChangeables();
-			registChangeableThings("child_change",false);
-		}
 		private function __childAdd(e:Event):void
 		{
 			commitChage(CHILD_CHANGE);
@@ -34,13 +29,13 @@ package yzhkof.ui
 		{
 			if(!(child is ComponentBase)) return;
 			var comp:ComponentBase = child as ComponentBase;
-			comp.addEventListener(ComponentEvent.CHANGE_COMPONENT,__childUpdate);
+			comp.addEventListener(ComponentEvent.COMPONENT_CHANGE,__childUpdate);
 		}
 		private function removeChildEvent(child:Object):void
 		{
 			if(!(child is ComponentBase)) return;
 			var comp:ComponentBase = child as ComponentBase;
-			comp.removeEventListener(ComponentEvent.CHANGE_COMPONENT,__childUpdate);
+			comp.removeEventListener(ComponentEvent.COMPONENT_CHANGE,__childUpdate);
 		}
 		private function __childUpdate(e:Event):void
 		{

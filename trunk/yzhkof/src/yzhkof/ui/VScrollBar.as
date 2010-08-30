@@ -7,7 +7,6 @@ package yzhkof.ui
 	
 	import yzhkof.MyGraphy;
 	import yzhkof.ui.mouse.MouseManager;
-	import yzhkof.util.Helpers;
 
 	public class VScrollBar extends ComponentBase
 	{
@@ -22,11 +21,6 @@ package yzhkof.ui
 		{
 			super();
 			init();
-		}
-		override protected function initChangeables():void
-		{
-			registChangeableThings("scrollV");
-			registChangeableThings("maxScrollV");
 		}
 		private function init():void
 		{

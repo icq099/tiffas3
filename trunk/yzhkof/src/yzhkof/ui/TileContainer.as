@@ -16,15 +16,13 @@ package yzhkof.ui
 		private var _scrollY:int = 0;
 		private var _scrollX:int = 0;
 		
-		public function TileContainer()
+		public var childBoundsSize:Boolean;
+		
+		public function TileContainer(childBoundsSize:Boolean = true)
 		{
 			super();
+			this.childBoundsSize = childBoundsSize;
 			init();
-		}
-		override protected function initChangeables():void
-		{
-			super.initChangeables();
-			registChangeableThings("autoVSize");
 		}
 		private function init():void
 		{
@@ -122,10 +120,17 @@ package yzhkof.ui
 		{
 			var re_lo:Object=new Object;
 			var lo:Object=layoutMap[child];
-			var bound_child:Rectangle=child.getBounds(this);
-			
-			re_lo.width=lo.width||bound_child.width;
-			re_lo.height=lo.height||bound_child.height;
+			if(childBoundsSize)
+			{
+				var bound_child:Rectangle=child.getBounds(this);
+				re_lo.width=lo.width||bound_child.width;
+				re_lo.height=lo.height||bound_child.height;
+			}
+			else
+			{
+				re_lo.width=lo.width||child.width;
+				re_lo.height=lo.height||child.height;
+			}
 			re_lo.paddingV=lo.paddingV||paddingV;
 			re_lo.paddingH=lo.paddingH||paddingH;
 			return re_lo;

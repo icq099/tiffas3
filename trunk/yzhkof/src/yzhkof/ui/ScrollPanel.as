@@ -29,7 +29,7 @@ package yzhkof.ui
 			addChild(rectContaner);
 			addChild(vScrollBar);
 			vScrollBar.addEventListener(Event.CHANGE,__scrollChange);
-			vScrollBar.addEventListener(ComponentEvent.UPDATE,__scrollBarUpdate);
+			vScrollBar.addEventListener(ComponentEvent.DRAW_COMPLETE,__scrollBarUpdate);
 		}
 		private function __scrollChange(e:Event):void
 		{
@@ -103,7 +103,7 @@ package yzhkof.ui
 				contentContainer.addChild(_source);
 			updateScrollByContent();
 			if(_source is ComponentBase)
-				_source.addEventListener(ComponentEvent.UPDATE,__childSizeChange);
+				_source.addEventListener(ComponentEvent.DRAW_COMPLETE,__childSizeChange);
 			commitChage(CHILD_CHANGE);
 		}
 	}

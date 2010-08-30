@@ -13,11 +13,6 @@ package yzhkof.ui
 			this._color=color;
 			_alpha=alpha;
 		}
-		override protected function initChangeables():void
-		{
-			super.initChangeables();
-			registChangeableThings("color");
-		}
 		public function get color():uint
 		{
 			return _color;
