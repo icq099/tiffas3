@@ -18,7 +18,7 @@
     <classEntry path="yzhkof.Toolyzhkof"/>
     <classEntry path="yzhkof.debug.DebugDisplayObjectViewer"/>
     <classEntry path="yzhkof.debug.DebugSystem"/>
-    <classEntry path="yzhkof.debug.DebutDisplayObjectDctionary"/>
+    <classEntry path="yzhkof.debug.DebugDisplayObjectDctionary"/>
     <classEntry path="yzhkof.debug.ScriptRuner"/>
     <classEntry path="yzhkof.debug.ScriptViewer"/>
     <classEntry path="yzhkof.debug.SnapshotDisplayViewer"/>
@@ -86,6 +86,15 @@
     <classEntry path="yzhkof.ui.ComponentContainer"/>
     <classEntry path="yzhkof.ui.DelayRendSprite"/>
     <classEntry path="yzhkof.ui.ChangeableSprite"/>
+    <classEntry path="yzhkof.ui.ScrollPanel"/>
+    <classEntry path="yzhkof.ui.VScrollBar"/>
+    <classEntry path="yzhkof.debug.DebugLogViewer"/>
+    <classEntry path="yzhkof.debug.log"/>
+    <classEntry path="yzhkof.ui.event.ComponentEvent"/>
+    <classEntry path="yzhkof.logicdata.ScriptRun"/>
+    <classEntry path="yzhkof.debug.ScriptEvent"/>
+    <classEntry path="yzhkof.ui.CommitingSprite"/>
+    <classEntry path="yzhkof.util.RightMenuUtil"/>
   </includeClasses>
   <includeResources>
     <resourceEntry destPath="yzhkof/loadings/asset/myloadings.swf" sourcePath="yzhkof/loadings/asset/myloadings.swf"/>
