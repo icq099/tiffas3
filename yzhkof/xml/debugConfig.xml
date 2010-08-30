@@ -2,10 +2,5 @@
 <config>
 	<import_namespace>flash.utils</import_namespace>
 	<import_namespace>flash.display</import_namespace>
-	<import_namespace>com.managers</import_namespace>
-	<import_namespace>slg.services.managers</import_namespace>
-	<import_namespace>flash.events</import_namespace>
-	<import_namespace>slg.core.utils</import_namespace>	
-	<import_namespace>slg.core.managers</import_namespace>
-	<script>../resource/script/NpcCreateScript.as</script>
+	<script></script>
 </config>
