@@ -7,11 +7,15 @@ package yzhkof.debug
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.sampler.getMemberNames;
 	import flash.system.System;
+	import flash.ui.ContextMenu;
+	import flash.ui.ContextMenuItem;
+	import flash.ui.Keyboard;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 	
@@ -24,6 +28,7 @@ package yzhkof.debug
 	import yzhkof.ui.TileContainer;
 	import yzhkof.util.DebugUtil;
 	import yzhkof.util.QNameUtil;
+	import yzhkof.util.RightMenuUtil;
 	import yzhkof.util.WeakMap;
 	import yzhkof.util.delayCallNextFrame;
 
@@ -400,6 +405,7 @@ package yzhkof.debug
 			if(t_type == DETAIL)
 			{
 				var menber:Object = getMemberNames(t_currentLeaf);
+				var text_buttons:Array = new Array;
 				for each(var q:QName in menber)
 				{
 									
@@ -407,7 +413,7 @@ package yzhkof.debug
 						var t_v:* = t_currentLeaf[q];
 							
 						t_text = getDebugTextButton(t_v,q.localName);
-						container.appendItem(t_text);
+						text_buttons.push(t_text);
 						
 						reference_arr.push(t_v);
 						_child_map.add(t_text,t_v);
@@ -416,6 +422,11 @@ package yzhkof.debug
 					{
 						
 					}				
+				}
+				text_buttons.sortOn("text");
+				for each (var element:TextPanel in text_buttons)
+				{
+					container.appendItem(element);
 				}
 			}
 			container.draw();
@@ -437,39 +448,63 @@ package yzhkof.debug
 			var text_panel:TextPanel = getTextPanel(obj);
 			text_panel.text = text||"";
 			text_panel.addEventListener(MouseEvent.CLICK,__onItemClick);
+			addTextButtonRightMenu(text_panel);
 			return text_panel;
+		}
+		private function addTextButtonRightMenu(text_panel:TextPanel):void
+		{
+			RightMenuUtil.hideDefaultMenus(text_panel);
+			var item:ContextMenuItem;
+			item = RightMenuUtil.addRightMenu(text_panel,"定位至脚本");
+			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+			item = RightMenuUtil.addRightMenu(text_panel,"快照");
+			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+			item = RightMenuUtil.addRightMenu(text_panel,"察看属性值");
+			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+			item = RightMenuUtil.addRightMenu(text_panel,"察看监听器");
+			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+			item = RightMenuUtil.addRightMenu(text_panel,"log");
+			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+		}
+
+		private function __rightMenuClick(event:ContextMenuEvent):void
+		{
+			doTextButtonAction(TextPanel(event.contextMenuOwner),ContextMenuItem(event.currentTarget).caption);
+			
 		}
 		private function __onItemClick(e:MouseEvent):void
 		{
-			var gotoObj:*=_child_map.getValue(e.currentTarget);
+			doTextButtonAction(TextPanel(e.currentTarget));
+		}
+		private function doTextButtonAction(target:TextPanel,rightMenuName:String = ""):void
+		{
+			var gotoObj:*=_child_map.getValue(target);
 			if(gotoObj == null)
 			{
-				gotoObj = dictionary_viewer._dobj_map.getValue(e.currentTarget);
+				gotoObj = dictionary_viewer._dobj_map.getValue(target);
 			}
 			if(gotoObj == null)
 			{
-				gotoObj = DebugSystem.logViewer.logMap[e.currentTarget]; 
-			}
-			
-			
-			if(KeyMy.isDown(83))
+				gotoObj = DebugSystem.logViewer.logMap[target]; 
+			}			
+			if((KeyMy.isDown(83))||(rightMenuName == "察看监听器"))
 			{
 				debugTrace(DebugUtil.analyseInstance(gotoObj));
 			}
-			else if(KeyMy.isDown(84))
+			else if((KeyMy.isDown(84))||(rightMenuName == "定位至脚本"))
 			{
 				DebugSystem.scriptViewer.setTarget(gotoObj);
 			}
-			else if(KeyMy.isDown(87))
+			else if((KeyMy.isDown(87))||(rightMenuName == "log"))
 			{
 				DebugSystem.logViewer.addLogDirectly(gotoObj,"<watch>");
 			}
-			else if(e.ctrlKey)
+			else if((KeyMy.isDown(17))||(rightMenuName == "快照"))
 			{
 				if(gotoObj is DisplayObject)
 					view(gotoObj);
 			}
-			else if(e.shiftKey)
+			else if((KeyMy.isDown(16))||(rightMenuName == "察看属性值"))
 			{
 				debugObjectTrace(gotoObj);
 			}

@@ -55,7 +55,7 @@ package yzhkof.debug
 			scrollPanel.width = 500;
 			scrollPanel.height = 400;
 			tileContainer.width = scrollPanel .width - 10;
-			scrollPanel.addEventListener(ComponentEvent.UPDATE,__createComplete);
+			scrollPanel.addEventListener(ComponentEvent.DRAW_COMPLETE,__createComplete);
 		}
 		private function initEvent():void
 		{
@@ -79,7 +79,7 @@ package yzhkof.debug
 		private function __createComplete(e:Event):void
 		{
 			drawBackGround();
-			removeEventListener(ComponentEvent.UPDATE,__createComplete);
+			removeEventListener(ComponentEvent.DRAW_COMPLETE,__createComplete);
 		}
 		public function addLog(obj:*,tag:String = ""):void
 		{
