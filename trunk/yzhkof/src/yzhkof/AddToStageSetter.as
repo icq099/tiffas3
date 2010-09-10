@@ -3,6 +3,8 @@ package yzhkof
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
+	import yzhkof.debug.locate;
+	
 	public class AddToStageSetter
 	{
 		public function AddToStageSetter()

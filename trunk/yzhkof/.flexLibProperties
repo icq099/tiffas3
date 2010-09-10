@@ -95,6 +95,7 @@
     <classEntry path="yzhkof.debug.ScriptEvent"/>
     <classEntry path="yzhkof.ui.CommitingSprite"/>
     <classEntry path="yzhkof.util.RightMenuUtil"/>
+    <classEntry path="yzhkof.debug.locate"/>
   </includeClasses>
   <includeResources>
     <resourceEntry destPath="yzhkof/loadings/asset/myloadings.swf" sourcePath="yzhkof/loadings/asset/myloadings.swf"/>

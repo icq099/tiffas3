@@ -12,7 +12,6 @@ package yzhkof.debug
 			}catch(e:Error){
 			
 			}
-		
 		}
 		TextTrace.textPlus("\n");
 		
