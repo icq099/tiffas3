@@ -21,6 +21,8 @@ package yzhkof.debug
 		private static var xml:XML;
 		private static var script_xml:XMLList;
 		private static var import_text:String="";
+		
+		private static const CONFIG_XML_URL:String = "../resource/debugConfig.xml";
 		public static var global:Object;
 		
 		public static function init():void
@@ -28,7 +30,7 @@ package yzhkof.debug
 			if(!runer)
 				runer=new CompiledESC();
 			var loader:CompatibleURLLoader=new CompatibleURLLoader();
-			loader.loadURL("../resource/debugConfig.xml");
+			loader.loadURL(CONFIG_XML_URL);
 			loader.addEventListener(Event.COMPLETE,function(e:Event):void
 			{
 				xml=XML(loader.data);
@@ -36,7 +38,7 @@ package yzhkof.debug
 			});
 			loader.addEventListener(IOErrorEvent.IO_ERROR,function(e:Event):void
 			{
-				trace("debug config fail!");
+				trace("debug config fail! at \"" + CONFIG_XML_URL + "\"");
 			});
 		}
 		private static function analyseXml():void
@@ -55,7 +57,7 @@ package yzhkof.debug
 		public static function run(script:String):void
 		{
 			var final_script:String=import_text;
-			final_script+=script;
+			final_script+= convertImport(script);
 			var byte:ByteArray=runer.eval(final_script);
 			ByteLoader.loadBytes(byte);
 		}

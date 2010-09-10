@@ -21,7 +21,6 @@ package yzhkof
 		public static function get stage():Stage{
 			
 			return _stage;
-		
 		}
 
 	}

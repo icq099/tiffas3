@@ -3,6 +3,7 @@ package yzhkof.debug
 	import com.hurlant.eval.ast.In;
 	import com.hurlant.eval.ast.StrictEqual;
 	
+	import flash.desktop.Clipboard;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
@@ -465,6 +466,8 @@ package yzhkof.debug
 			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
 			item = RightMenuUtil.addRightMenu(text_panel,"log");
 			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+			item = RightMenuUtil.addRightMenu(text_panel,"复制名字");
+			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
 		}
 
 		private function __rightMenuClick(event:ContextMenuEvent):void
@@ -507,6 +510,10 @@ package yzhkof.debug
 			else if((KeyMy.isDown(16))||(rightMenuName == "察看属性值"))
 			{
 				debugObjectTrace(gotoObj);
+			}else if(rightMenuName == "复制名字")
+			{
+				var name_arr:Array = target.text.split("::");
+				System.setClipboard(name_arr.length>1?name_arr[1]:name_arr[0]);
 			}
 			else
 			{
