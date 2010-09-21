@@ -1,37 +1,31 @@
 package yzhkof.debug
 {
-	import com.hurlant.eval.ast.In;
-	import com.hurlant.eval.ast.StrictEqual;
-	
-	import flash.desktop.Clipboard;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.sampler.getMemberNames;
 	import flash.system.System;
-	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
-	import flash.ui.Keyboard;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
+	import flash.utils.getQualifiedSuperclassName;
 	
 	import yzhkof.KeyMy;
 	import yzhkof.MyGC;
 	import yzhkof.MyGraphy;
-	import yzhkof.ui.BackGroudContainer;
 	import yzhkof.ui.ComponentBase;
 	import yzhkof.ui.TextPanel;
 	import yzhkof.ui.TileContainer;
 	import yzhkof.util.DebugUtil;
-	import yzhkof.util.QNameUtil;
 	import yzhkof.util.RightMenuUtil;
 	import yzhkof.util.WeakMap;
-	import yzhkof.util.delayCallNextFrame;
 
 	public class DebugDisplayObjectViewer extends ComponentBase
 	{
@@ -44,10 +38,12 @@ package yzhkof.debug
 		private var _latestLeaf:WeakMap;
 		private var dictionary_viewer:DebugDisplayObjectDctionary;
 		private var currentRefreshType:String = "simple";
+		private var _drager:DebugDrag;
 		
 		private var _stage:Stage;
 		private var _child_map:WeakMap;
-		private var up_btn:TextPanel;
+		private var fold_btn:TextPanel;
+//		private var extend_btn:TextPanel;
 		private var back_btn:TextPanel;
 		private var stage_btn:TextPanel;
 		private var mode_btn_a:TextPanel;
@@ -62,6 +58,8 @@ package yzhkof.debug
 		private var mode_container:Sprite;
 		private var mask_background:Sprite;
 		private var viewer:SnapshotDisplayViewer;
+		private var locateContainer:Sprite;
+		
 		public function DebugDisplayObjectViewer(_stage:Stage)
 		{
 			super();
@@ -90,10 +88,12 @@ package yzhkof.debug
 		}
 		private function init():void
 		{
+			_drager = new DebugDrag;
 			viewer=new SnapshotDisplayViewer();
+			locateContainer = new Sprite;
 			dictionary_viewer=new DebugDisplayObjectDctionary();
 			mode_container = new Sprite;
-			up_btn=new TextPanel();
+			fold_btn=new TextPanel();
 			back_btn=new TextPanel();
 			stage_btn=new TextPanel();
 			text_btn=new TextPanel();
@@ -112,10 +112,11 @@ package yzhkof.debug
 			btn_container.width=1000;
 			btn_container.height=200;
 			container.width=_stage.stageWidth;
+			locateContainer.mouseChildren = locateContainer.mouseEnabled = false;
 			
 			refresh_btn.text="刷新";
 			back_btn.text="后退";
-			up_btn.text="向上";
+			fold_btn.text="收起";
 			stage_btn.text="舞台";
 			script_btn.text="脚本";
 			text_btn.text="文本";
@@ -126,7 +127,6 @@ package yzhkof.debug
 			gc_btn.text="GC";
 			log_btn.text="log";
 			
-			
 			addChild(btn_container);
 			addChild(dictionary_viewer);
 			addChild(container);
@@ -135,8 +135,9 @@ package yzhkof.debug
 			mode_btn_b.visible = false;
 			setMaskBackGround(MyGraphy.drawRectangle(_stage.stageWidth,_stage.stageHeight));
 			addChild(viewer);
+			addChild(locateContainer);
 			
-			btn_container.appendItem(up_btn);
+			btn_container.appendItem(fold_btn);
 			btn_container.appendItem(back_btn);
 			btn_container.appendItem(stage_btn);
 			btn_container.appendItem(text_btn);
@@ -172,16 +173,9 @@ package yzhkof.debug
 			_stage.addEventListener(Event.RESIZE,function(e:Event):void{
 				commitChage();
 			});
-			
-			up_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
+			fold_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
-				if(currentLeaf.parent!=null)
-				{
-					goto(currentLeaf.parent);
-				}else
-				{
-					goto(_stage);
-				}
+				visible = false;
 			});
 			mode_btn_a.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
@@ -449,31 +443,71 @@ package yzhkof.debug
 			var text_panel:TextPanel = getTextPanel(obj);
 			text_panel.text = text||"";
 			text_panel.addEventListener(MouseEvent.CLICK,__onItemClick);
-			addTextButtonRightMenu(text_panel);
+			if(obj is DisplayObject)
+			{
+				text_panel.addEventListener(MouseEvent.ROLL_OVER,__onItemOver);
+				text_panel.addEventListener(MouseEvent.ROLL_OUT,__onItemOut);
+			}
+			addTextButtonRightMenu(text_panel,obj);
 			return text_panel;
 		}
-		private function addTextButtonRightMenu(text_panel:TextPanel):void
+
+		private function addTextButtonRightMenu(text_panel:TextPanel,obj:*):void
 		{
 			RightMenuUtil.hideDefaultMenus(text_panel);
 			var item:ContextMenuItem;
 			item = RightMenuUtil.addRightMenu(text_panel,"定位至脚本");
 			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
-			item = RightMenuUtil.addRightMenu(text_panel,"快照");
-			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+			if(obj is DisplayObject)
+			{
+				item = RightMenuUtil.addRightMenu(text_panel,"快照");
+				item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+				item = RightMenuUtil.addRightMenu(text_panel,"移动");
+				item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+			}
 			item = RightMenuUtil.addRightMenu(text_panel,"察看属性值");
 			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
-			item = RightMenuUtil.addRightMenu(text_panel,"察看监听器");
-			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+			if(obj is EventDispatcher)
+			{
+				item = RightMenuUtil.addRightMenu(text_panel,"察看监听器");
+				item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+			}
 			item = RightMenuUtil.addRightMenu(text_panel,"log");
 			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
 			item = RightMenuUtil.addRightMenu(text_panel,"复制名字");
+			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+			item = RightMenuUtil.addRightMenu(text_panel,"继承结构");
 			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
 		}
 
 		private function __rightMenuClick(event:ContextMenuEvent):void
 		{
 			doTextButtonAction(TextPanel(event.contextMenuOwner),ContextMenuItem(event.currentTarget).caption);
-			
+		}
+		private function __onItemOver(e:MouseEvent):void
+		{
+			var gotoObj:DisplayObject=_child_map.getValue(e.currentTarget);
+			if(gotoObj == null)
+			{
+				gotoObj = dictionary_viewer._dobj_map.getValue(e.currentTarget);
+			}
+			if(gotoObj == null)
+			{
+				gotoObj = DebugSystem.logViewer.logMap[e.currentTarget]; 
+			}
+			if(gotoObj&&gotoObj.stage)
+			{
+				var rect:Rectangle = gotoObj.getRect(stage);
+				locateContainer.graphics.lineStyle(2,0xff0000);
+				locateContainer.graphics.drawRect(rect.x,rect.y,rect.width,rect.height);
+				var point:Point = DisplayObject(gotoObj).localToGlobal(new Point);
+				locateContainer.graphics.drawCircle(point.x,point.y,10);
+				locateContainer.graphics.drawCircle(point.x,point.y,1);
+			}
+		}
+		private function __onItemOut(event:MouseEvent):void
+		{
+			locateContainer.graphics.clear();
 		}
 		private function __onItemClick(e:MouseEvent):void
 		{
@@ -489,7 +523,7 @@ package yzhkof.debug
 			if(gotoObj == null)
 			{
 				gotoObj = DebugSystem.logViewer.logMap[target]; 
-			}			
+			}
 			if((KeyMy.isDown(83))||(rightMenuName == "察看监听器"))
 			{
 				debugTrace(DebugUtil.analyseInstance(gotoObj));
@@ -510,10 +544,34 @@ package yzhkof.debug
 			else if((KeyMy.isDown(16))||(rightMenuName == "察看属性值"))
 			{
 				debugObjectTrace(gotoObj);
-			}else if(rightMenuName == "复制名字")
+			}
+			else if(rightMenuName == "移动")
+			{
+				if(gotoObj!=null && gotoObj is DisplayObject)
+					_drager.target = gotoObj;
+			}
+			else if(rightMenuName == "复制名字")
 			{
 				var name_arr:Array = target.text.split("::");
 				System.setClipboard(name_arr.length>1?name_arr[1]:name_arr[0]);
+			}
+			else if(rightMenuName == "继承结构")
+			{
+				if(gotoObj == null) return;
+				var str:String = "";
+				var current:* = gotoObj;
+				while(1)
+				{
+					try
+					{
+						current = getDefinitionByName(getQualifiedSuperclassName(current));
+						str = "->" + current + "\n" + str;
+					}catch(e:Error)
+					{
+						break;
+					};
+				}
+				debugObjectTrace(str);
 			}
 			else
 			{

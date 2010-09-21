@@ -5,6 +5,7 @@ package yzhkof.debug
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.sampler.startSampling;
 	
 	import yzhkof.KeyMy;
@@ -13,11 +14,12 @@ package yzhkof.debug
 	public class DebugSystem
 	{
 		internal static var _mainContainer:Sprite;
-		private static var _stage:Stage;
+		internal static var _stage:Stage;
 		
 		internal static var displayObjectViewer:DebugDisplayObjectViewer;
 		internal static var scriptViewer:ScriptViewer;
 		internal static var logViewer:DebugLogViewer;
+		private static var extend_btn:TextPanel;
 		
 		public function DebugSystem()
 		{
@@ -32,6 +34,10 @@ package yzhkof.debug
 			_mainContainer=new Sprite;
 			_stage=stage;
 			stage.addChild(_mainContainer);
+			
+			extend_btn = new TextPanel;
+			extend_btn.text = "展开";
+			_mainContainer.addChild(extend_btn);
 			
 			KeyMy.setStage(stage);
 			KeyMy.startListener(stage);
@@ -84,7 +90,12 @@ package yzhkof.debug
 					break;
 				}
 			});
+			extend_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
+			{
+				displayObjectViewer.visible = true;
+			});
 		}
+
 		internal static function getDebugTextButton(obj:*,text:String):TextPanel
 		{
 			return displayObjectViewer.getDebugTextButton(obj,text);
