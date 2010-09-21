@@ -8,8 +8,9 @@ package yzhkof.debug
 	public function locate(container:DisplayObjectContainer,x:Number,y:Number):void
 	{
 		var locatePoint:Sprite = new Sprite;
-		locatePoint.graphics.lineStyle(3);
+		locatePoint.graphics.lineStyle(3,0xff0000);
 		locatePoint.graphics.drawCircle(0,0,100);
+		locatePoint.graphics.drawCircle(0,0,2);
 		locatePoint.x = x;
 		locatePoint.y = y;
 		container.addChild(locatePoint);
