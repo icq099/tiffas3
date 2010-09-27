@@ -20,6 +20,7 @@ package yzhkof.debug
 		internal static var scriptViewer:ScriptViewer;
 		internal static var logViewer:DebugLogViewer;
 		private static var extend_btn:TextPanel;
+		private static var isInited:Boolean = false;
 		
 		public function DebugSystem()
 		{
@@ -27,6 +28,8 @@ package yzhkof.debug
 		}
 		public static function init(stage:Stage,useSample:Boolean=false):void
 		{
+			if(isInited) return;
+			isInited = true;
 			if(useSample)
 			{
 				startSampling();
