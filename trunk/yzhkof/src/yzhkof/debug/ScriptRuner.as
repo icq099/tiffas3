@@ -43,6 +43,8 @@ package yzhkof.debug
 		}
 		private static function analyseXml():void
 		{
+			DebugSystem._mainContainer.visible = xml.@hide == "false"?true:false;
+			
 			var length:uint=xml.import_namespace.length();
 			import_text="";
 			for(var i:int=0;i<length;i++)
