@@ -19,6 +19,7 @@ package yzhkof.debug
 		internal static var displayObjectViewer:DebugDisplayObjectViewer;
 		internal static var scriptViewer:ScriptViewer;
 		internal static var logViewer:DebugLogViewer;
+		internal static var watchViewer:DebugWatcherViewer;
 		private static var extend_btn:TextPanel;
 		private static var isInited:Boolean = false;
 		
@@ -51,6 +52,10 @@ package yzhkof.debug
 			_mainContainer.addChild(logViewer);
 			logViewer.y = 100;
 			
+			watchViewer = new DebugWatcherViewer;
+			_mainContainer.addChild(watchViewer);
+			watchViewer.y = 100;
+			
 			initDisplayObjectViewer();
 			scriptViewer=new ScriptViewer();
 			_mainContainer.addChild(scriptViewer);
@@ -59,6 +64,7 @@ package yzhkof.debug
 			
 			_mainContainer.visible=false;
 			logViewer.visible =false;
+			watchViewer.visible = false;
 			TextTrace.visible=false;
 //			displayObjectViewer.visible=false;
 			scriptViewer.visible=false;
