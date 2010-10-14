@@ -63,6 +63,12 @@ package yzhkof.debug
 			var byte:ByteArray=runer.eval(final_script);
 			ByteLoader.loadBytes(byte);
 		}
+		public static function compile(script:String):ByteArray
+		{
+			var final_script:String = "";
+			final_script+= convertImport(script);
+			return runer.eval(final_script);
+		}
 		public static function set target(value:Object):void
 		{
 			weakTarget=new WeakMap();

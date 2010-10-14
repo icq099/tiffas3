@@ -59,6 +59,7 @@ package yzhkof.debug
 		private var mask_background:Sprite;
 		private var viewer:SnapshotDisplayViewer;
 		private var locateContainer:Sprite;
+		private var watcher_btn:TextPanel;
 		
 		public function DebugDisplayObjectViewer(_stage:Stage)
 		{
@@ -101,6 +102,7 @@ package yzhkof.debug
 			refresh_btn=new TextPanel();
 			gc_btn=new TextPanel();
 			log_btn=new TextPanel();
+			watcher_btn=new TextPanel();
 			focus_txt=new TextPanel();
 			x_btn=new TextPanel();
 			mode_btn_a = new TextPanel();
@@ -126,6 +128,7 @@ package yzhkof.debug
 			x_btn.text="隐藏";
 			gc_btn.text="GC";
 			log_btn.text="log";
+			watcher_btn.text="查看";
 			
 			addChild(btn_container);
 			addChild(dictionary_viewer);
@@ -145,6 +148,7 @@ package yzhkof.debug
 			btn_container.appendItem(refresh_btn);
 			btn_container.appendItem(gc_btn);
 			btn_container.appendItem(log_btn);
+			btn_container.appendItem(watcher_btn);
 			btn_container.appendItem(mode_container);
 			btn_container.appendItem(x_btn);
 			btn_container.appendItem(focus_txt);
@@ -227,6 +231,10 @@ package yzhkof.debug
 			log_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
 				DebugSystem.logViewer.visible = !DebugSystem.logViewer.visible;
+			});
+			watcher_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
+			{
+				DebugSystem.watchViewer.visible = !DebugSystem.watchViewer.visible;
 			});
 			focus_txt.addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void
 			{
