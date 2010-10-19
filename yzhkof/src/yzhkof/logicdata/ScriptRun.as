@@ -15,9 +15,10 @@ package yzhkof.logicdata
 	{
 		public var data:Object;
 		public var urlLoader:URLLoader;
-		private var _loader:Loader;
+		private var _loader:Loader; 
 		public var script:String;
 		public var bytes:ByteArray;
+		public var param:*;
 		public function ScriptRun()
 		{
 		}
@@ -42,7 +43,7 @@ package yzhkof.logicdata
 			if(ScriptRuner.global.run && ScriptRuner.global.run is Function)
 			{
 				if(ScriptRuner.global.run.length>0)
-					ScriptRuner.global.run(this);
+					ScriptRuner.global.run(param);
 				else
 					ScriptRuner.global.run();
 			}
