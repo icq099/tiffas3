@@ -78,7 +78,8 @@ package yzhkof.debug
 						current_value = null;
 						break;
 					}
-					current_value = current_object[element];
+					
+					current_value = current_object.hasOwnProperty(element)?current_object[element]:"在 "+name+" 上找不到属性 "+element;
 					current_object = current_value;
 				}
 				textField_arr[i].text = (data.name||getQualifiedClassName(data.object)) + ":" + current_value; 
@@ -96,7 +97,7 @@ package yzhkof.debug
 			var data:WatchData = new WatchData;
 			data.object = obj;
 			data.property = property;
-			data.name = name;
+			data.name = name||property;
 			watch_arr.push(data);
 			var text:TextField = new TextField;
 			text.autoSize = TextFieldAutoSize.LEFT;

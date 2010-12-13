@@ -53,6 +53,7 @@ package yzhkof.debug
 		private var refresh_btn:TextPanel;
 		private var gc_btn:TextPanel;
 		private var log_btn:TextPanel;
+		private var weak_log_btn:TextPanel;
 		private var focus_txt:TextPanel;
 		private var x_btn:TextPanel;
 		private var mode_container:Sprite;
@@ -102,6 +103,7 @@ package yzhkof.debug
 			refresh_btn=new TextPanel();
 			gc_btn=new TextPanel();
 			log_btn=new TextPanel();
+			weak_log_btn=new TextPanel();
 			watcher_btn=new TextPanel();
 			focus_txt=new TextPanel();
 			x_btn=new TextPanel();
@@ -128,6 +130,7 @@ package yzhkof.debug
 			x_btn.text="隐藏";
 			gc_btn.text="GC";
 			log_btn.text="log";
+			weak_log_btn.text="回收监视";
 			watcher_btn.text="查看";
 			
 			addChild(btn_container);
@@ -148,6 +151,7 @@ package yzhkof.debug
 			btn_container.appendItem(refresh_btn);
 			btn_container.appendItem(gc_btn);
 			btn_container.appendItem(log_btn);
+			btn_container.appendItem(weak_log_btn);
 			btn_container.appendItem(watcher_btn);
 			btn_container.appendItem(mode_container);
 			btn_container.appendItem(x_btn);
@@ -227,10 +231,15 @@ package yzhkof.debug
 				MyGC.gc();
 				checkGC();
 				dictionary_viewer.checkGC();
+				DebugSystem.weakLogViewer.checkGC();
 			});
 			log_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
 				DebugSystem.logViewer.visible = !DebugSystem.logViewer.visible;
+			});
+			weak_log_btn.addEventListener(MouseEvent.CLICK,function():void
+			{
+				DebugSystem.weakLogViewer.visible = !DebugSystem.weakLogViewer.visible;
 			});
 			watcher_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
 			{
@@ -482,6 +491,10 @@ package yzhkof.debug
 			}
 			item = RightMenuUtil.addRightMenu(text_panel,"log");
 			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+			item = RightMenuUtil.addRightMenu(text_panel,"放入回收查看器");
+			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
+			item = RightMenuUtil.addRightMenu(text_panel,"放入回收查看器(所有子显示节点)");
+			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
 			item = RightMenuUtil.addRightMenu(text_panel,"复制名字");
 			item.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,__rightMenuClick);
 			item = RightMenuUtil.addRightMenu(text_panel,"继承结构");
@@ -502,6 +515,10 @@ package yzhkof.debug
 			if(gotoObj == null)
 			{
 				gotoObj = DebugSystem.logViewer.logMap[e.currentTarget]; 
+			}
+			if(gotoObj == null)
+			{
+				gotoObj = DebugSystem.weakLogViewer.weakMap.getValue(e.currentTarget);
 			}
 			if(gotoObj&&gotoObj.stage)
 			{
@@ -532,6 +549,10 @@ package yzhkof.debug
 			{
 				gotoObj = DebugSystem.logViewer.logMap[target]; 
 			}
+			if(gotoObj == null)
+			{
+				gotoObj = DebugSystem.weakLogViewer.weakMap.getValue(target);
+			}
 			if((KeyMy.isDown(83))||(rightMenuName == "察看监听器"))
 			{
 				debugTrace(DebugUtil.analyseInstance(gotoObj));
@@ -543,6 +564,14 @@ package yzhkof.debug
 			else if((KeyMy.isDown(87))||(rightMenuName == "log"))
 			{
 				DebugSystem.logViewer.addLogDirectly(gotoObj,"<watch>");
+			}
+			else if(rightMenuName == "放入回收查看器")
+			{
+				DebugSystem.weakLogViewer.addLogDirectly(gotoObj);
+			}
+			else if(rightMenuName == "放入回收查看器(所有子显示节点)")
+			{
+				logGC(gotoObj,"",true);
 			}
 			else if((KeyMy.isDown(17))||(rightMenuName == "快照"))
 			{
@@ -593,7 +622,15 @@ package yzhkof.debug
 				}
 				else
 				{
-					switch(getDefinitionByName(getQualifiedClassName(gotoObj)))
+					var classDef:Object;
+					try
+					{
+						classDef = getDefinitionByName(getQualifiedClassName(gotoObj));
+					}catch(e:Error)
+					{
+						classDef = null;
+					};
+					switch(classDef)
 					{
 						case int:
 						case Number:
