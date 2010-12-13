@@ -43,7 +43,7 @@ package yzhkof.debug
 			{
 				if(bitmapdata!=null)
 					bitmapdata.dispose();
-				bitmapdata=ToolBitmapData.getInstance().drawDisplayObject(source)
+				bitmapdata=ToolBitmapData.getInstance().drawDisplayObject(source);
 				if(bitmapdata!=null)
 				{
 					bitmap.bitmapData=bitmapdata;

@@ -8,6 +8,7 @@ package yzhkof.debug
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
+	import flash.ui.Mouse;
 	import flash.utils.ByteArray;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
@@ -82,15 +83,7 @@ package yzhkof.debug
 			save_btn.addEventListener(MouseEvent.CLICK,__onSaveClick);
 			load_btn.addEventListener(MouseEvent.CLICK,__onLoadClick);
 			target_btn.addEventListener(ComponentEvent.DRAW_COMPLETE,__btnSizeChange);
-//			textField.addEventListener(KeyboardEvent.KEY_DOWN,__onKeyDown);
 		}
-//		private function __onKeyDown(e:KeyboardEvent):void
-//		{
-//			if(e.ctrlKey&&KeyMy.isDown(13))
-//			{
-//				__onRunBtnClick(null);
-//			}
-//		}
 		private function __btnSizeChange(e:Event):void
 		{
 			btn_container.draw();

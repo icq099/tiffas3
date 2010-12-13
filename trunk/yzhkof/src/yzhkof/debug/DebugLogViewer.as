@@ -11,12 +11,14 @@ package yzhkof.debug
 	import yzhkof.ui.TextPanel;
 	import yzhkof.ui.TileContainer;
 	import yzhkof.ui.event.ComponentEvent;
+	import yzhkof.util.WeakMap;
 	
 	public class DebugLogViewer extends DragPanel
 	{
 		private var _logArr:Array = [];
 		private var _logMap:Dictionary = new Dictionary;
-		private var log_max_count:uint = 200;
+		private var _logWeakMap:WeakMap = new WeakMap;
+		private var log_max_count:uint = 2000;
 		
 		private var scrollPanel:ScrollPanel = new ScrollPanel;
 		private var tileContainer:TileContainer = new TileContainer;
@@ -27,10 +29,12 @@ package yzhkof.debug
 		private var start_stop_container:Sprite = new Sprite;
 		
 		private var isStart:Boolean = true;
+		private var _weak:Boolean = false;
 		
-		public function DebugLogViewer()
+		public function DebugLogViewer(weak:Boolean = false)
 		{
 			super();
+			_weak = weak;
 			init();
 			initEvent();
 		}
@@ -93,7 +97,8 @@ package yzhkof.debug
 		private function addLoged(obj:*,tag:String = ""):void
 		{
 			var text_button:TextPanel = DebugSystem.getDebugTextButton(obj,(tag==""?"":tag+" : ")+getQualifiedClassName(obj));
-			_logMap[text_button] = obj;
+//			_logMap[text_button] = obj;
+			addItem(text_button,obj);
 			_logArr.push(text_button);
 			tileContainer.appendItem(text_button);
 			
@@ -101,7 +106,8 @@ package yzhkof.debug
 			{
 				var shift_btn:TextPanel;
 				shift_btn = _logArr.shift();
-				delete _logMap[shift_btn];
+//				delete _logMap[shift_btn];
+				removeItem(shift_btn);
 				tileContainer.removeItem(shift_btn);
 			}
 		}
@@ -110,10 +116,48 @@ package yzhkof.debug
 			tileContainer.removeAllChildren();
 			_logArr = [];
 			_logMap = new Dictionary;
+			_logWeakMap = new WeakMap;
+		}
+		private function addItem(key:Object,value:Object):void
+		{
+			if(_weak)
+				_logWeakMap.add(key,value);
+			else
+				_logMap[key] = value;
+		}
+		private function getItem(key:*):*
+		{
+			if(_weak)
+				return _logWeakMap.getValue(key);
+			else
+				_logMap[key];
+		}
+		public function checkGC():void
+		{
+			if(_weak == false) return;
+			var text_arr:Array=_logWeakMap.keySet;
+			for each(var i:TextPanel in text_arr)
+			{
+				if(!_logWeakMap.getValue(i))
+				{
+					i.color=0x00ff00;
+				};
+			}
+		}
+		private function removeItem(key:*):void
+		{
+			if(_weak)
+				_logWeakMap.remove(key);
+			else
+				delete _logMap[key];
 		}
 		internal function get logMap():Dictionary
 		{
 			return _logMap;
+		}
+		internal function get weakMap():WeakMap
+		{
+			return _logWeakMap;
 		}
 	}
 }
