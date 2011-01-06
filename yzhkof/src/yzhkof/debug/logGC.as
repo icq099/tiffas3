@@ -5,6 +5,7 @@ package yzhkof.debug
 
 	public function logGC(obj:*,tag:String = "",allChild:Boolean = false):void
 	{
+		if(DebugSystem.isInited == false) return;
 		if(allChild == false)
 		{
 			DebugSystem.weakLogViewer.addLog(obj,tag);

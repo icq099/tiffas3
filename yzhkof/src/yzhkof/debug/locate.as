@@ -7,6 +7,7 @@ package yzhkof.debug
 
 	public function locate(container:DisplayObjectContainer,x:Number,y:Number):void
 	{
+		if(DebugSystem.isInited == false) return;
 		var locatePoint:Sprite = new Sprite;
 		locatePoint.graphics.lineStyle(3,0xff0000);
 		locatePoint.graphics.drawCircle(0,0,100);

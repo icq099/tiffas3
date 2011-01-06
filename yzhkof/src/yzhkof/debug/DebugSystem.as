@@ -22,7 +22,7 @@ package yzhkof.debug
 		internal static var weakLogViewer:DebugLogViewer;
 		internal static var watchViewer:DebugWatcherViewer;
 		private static var extend_btn:TextPanel;
-		private static var isInited:Boolean = false;
+		private static var _isInited:Boolean = false;
 		
 		public function DebugSystem()
 		{
@@ -30,8 +30,8 @@ package yzhkof.debug
 		}
 		public static function init(stage:Stage,useSample:Boolean=false):void
 		{
-			if(isInited) return;
-			isInited = true;
+			if(_isInited) return;
+			_isInited = true;
 			if(useSample)
 			{
 				startSampling();
@@ -131,6 +131,12 @@ package yzhkof.debug
     	{
     		_stage.setChildIndex(_mainContainer,_stage.numChildren-1);
     	}
+
+		public static function get isInited():Boolean
+		{
+			return _isInited;
+		}
+
 
 	}
 }
