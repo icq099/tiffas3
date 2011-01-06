@@ -2,6 +2,7 @@ package yzhkof.debug
 {
 	public function debugTrace(...text:Array):void
 	{
+		if(DebugSystem.isInited == false) return;
 		for each(var i:Object in text){
 			
 			try{
