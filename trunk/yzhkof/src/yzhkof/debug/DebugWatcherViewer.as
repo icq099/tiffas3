@@ -37,6 +37,7 @@ package yzhkof.debug
 		{
 			content.addChild(scrollPanel);
 			scrollPanel.source = tileContainer;
+			scrollPanel.y = 20;
 			scrollPanel.width = 500;
 			scrollPanel.height = 400;
 			tileContainer.width = scrollPanel .width - 10;
@@ -45,7 +46,6 @@ package yzhkof.debug
 			clear_btn.text = "清除";
 			btn_Container.appendItem(clear_btn);
 			content.addChild(btn_Container);
-			tileContainer.y = 20;
 		}
 		private function addEvent():void
 		{
