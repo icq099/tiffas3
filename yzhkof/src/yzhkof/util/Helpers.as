@@ -229,6 +229,10 @@ package yzhkof.util
 				setChildPos(in_arr[0],in_arr[1],in_arr[2]);
 			}
 		}
+		public static function isDebugerSwf():Boolean
+		{
+			return new Error().getStackTrace().search(/:[0-9]+]$/m) > -1;
+		}
 		public static function setup(stage:Stage):void
 		{
 			_stage=stage;
