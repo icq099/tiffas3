@@ -4,6 +4,7 @@ package yzhkof.debug
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.filters.DropShadowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
@@ -35,6 +36,7 @@ package yzhkof.debug
 		}
 		public static function init(dobj:DisplayObjectContainer):DisplayObjectContainer{
 			
+			back.filters = [new DropShadowFilter(0,0,0)];
 			drag_btn.buttonMode=true;
 			scaleX_btn.buttonMode=true;
 			clean_btn.text="清除";
