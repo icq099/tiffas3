@@ -30,7 +30,7 @@ package yzhkof
 				add_to_stage_function();
 			
 			}
-		
+			
 		}
 		
 		public static function setObjToMiddleOfStage(obj:DisplayObject,offset_x:Number=0,offset_y:Number=0):void{
