@@ -22,7 +22,7 @@ package yzhkof.debug
 		private static var script_xml:XMLList;
 		private static var import_text:String="";
 		
-		private static const CONFIG_XML_URL:String = "../resource/debugConfig.xml";
+		private static const CONFIG_XML_URL:String = "xml/debugConfig.xml";
 		public static var global:Object;
 		
 		public static function init():void
