@@ -18,7 +18,6 @@ package yzhkof
 		
 		public function BasicCameraContrler(active_object:DisplayObject,camera:Object,weak_reference:Boolean=true,move_speed:Number=10,rota_speed:Number=0.3)
 		{
-			
 			this.camera=camera;
 			this.active_object=active_object;
 			this.weak_reference=weak_reference;
