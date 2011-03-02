@@ -1,5 +1,6 @@
 package yzhkof.debug
 {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -28,24 +29,47 @@ package yzhkof.debug
 		{
 			
 		}
-		public static function init(stage:Stage,useSample:Boolean=false):void
+		public static function init(dobj:DisplayObject,useSample:Boolean=false):void
 		{
-			if(_isInited) return;
-			_isInited = true;
 			if(useSample)
 			{
 				startSampling();
 			}
+			if(dobj.stage)
+			{
+				_stage = dobj.stage;
+				setup();
+			}
+			else
+			{
+				dobj.addEventListener(Event.ADDED_TO_STAGE,__addToStage);
+			}
+			
+		}
+		
+		protected static function __addToStage(event:Event):void
+		{
+			// TODO Auto-generated method stub
+			DisplayObject(event.currentTarget).removeEventListener(Event.ADDED_TO_STAGE,__addToStage);
+			_stage = DisplayObject(event.currentTarget).stage
+			setup();
+		}
+		
+		private static function setup():void
+		{
+			// TODO Auto Generated method stub
+			if(_isInited) return;
+			_isInited = true;
+			
 			_mainContainer=new Sprite;
-			_stage=stage;
-			stage.addChild(_mainContainer);
+			_stage.addChild(_mainContainer);
 			
 			extend_btn = new TextPanel;
 			extend_btn.text = "展开";
 			_mainContainer.addChild(extend_btn);
 			
-			KeyMy.setStage(stage);
-			KeyMy.startListener(stage);
+			KeyMy.setStage(_stage);
+			KeyMy.startListener(_stage);
 			
 			_stage.addEventListener(Event.ADDED,onStageAdd)
 			
@@ -72,12 +96,12 @@ package yzhkof.debug
 			weakLogViewer.visible = false;
 			watchViewer.visible = false;
 			TextTrace.visible=false;
-//			displayObjectViewer.visible=false;
+			//			displayObjectViewer.visible=false;
 			scriptViewer.visible=false;
 			
 			TextTrace.view.y=200;
 			
-			stage.addEventListener(KeyboardEvent.KEY_DOWN,function(e:KeyboardEvent):void
+			_stage.addEventListener(KeyboardEvent.KEY_DOWN,function(e:KeyboardEvent):void
 			{
 				if((e.ctrlKey)&&(e.altKey))
 				{
@@ -85,16 +109,16 @@ package yzhkof.debug
 					{
 						case 13:
 							ScriptRuner.reFreshScript();
-						break;
+							break;
 						case 84:
 							TextTrace.visible=!TextTrace.visible;
-						break;
+							break;
 						case 68:
 							displayObjectViewer.visible=!displayObjectViewer.visible;
-						break;
+							break;
 						case 65:
 							scriptViewer.visible=!scriptViewer.visible;
-						break;
+							break;
 					}
 				}
 				
@@ -102,7 +126,7 @@ package yzhkof.debug
 				{
 					case 192:
 						_mainContainer.visible=!_mainContainer.visible;
-					break;
+						break;
 				}
 			});
 			extend_btn.addEventListener(MouseEvent.CLICK,function(e:Event):void
@@ -110,7 +134,8 @@ package yzhkof.debug
 				displayObjectViewer.visible = true;
 			});
 		}
-
+		
+		
 		internal static function getDebugTextButton(obj:*,text:String):TextPanel
 		{
 			return displayObjectViewer.getDebugTextButton(obj,text);
@@ -136,7 +161,7 @@ package yzhkof.debug
 		{
 			return _isInited;
 		}
-
+		
 
 	}
 }
