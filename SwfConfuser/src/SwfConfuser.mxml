@@ -2,7 +2,7 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
-			   width="1006" minWidth="955" minHeight="600">
+			   >
 	<fx:Script>
 		<![CDATA[
 			import bean.operation.FileBrowseAndLoadOperation;
@@ -238,6 +238,6 @@
 	<s:TextArea id="outLineText" left="29" right="24" top="119" bottom="40"/>
 	<s:Label x="29" y="10" fontSize="18" text="swf混淆器："/>
 	<s:Label right="26" bottom="8" fontSize="13" text="by yzhkof"/>
-	<s:Label x="55" y="49" width="847" height="41" fontSize="13"
+	<s:Label y="35" left="55" right="104" height="55" fontSize="13"
 			 text="暂时只支持单个swf混淆，as3.0工程。如果混淆后出现问题，请在排除列表里加入排除的类名和包名。（不支持flex项目，此swf已混淆）"/>
 </s:Application>
