@@ -4,7 +4,6 @@ package format.swf
 	
 	public class ABCFileStructs extends Reader
 	{
-		protected static var cpool_info:Cpool_info;
 		public function ABCFileStructs(byte:ByteArray)
 		{
 			super(byte);
@@ -22,32 +21,45 @@ package format.swf
 		}
 		public function readVariableLengthUnsigned32():uint
 		{
-			var b:int = byte.readUnsignedByte();
-    
-            var u32:uint = b;
-			
-			var bytes_count:uint = 1;
-			
-			var bit_mask:uint ;
-			
-			var mask:uint = 1<<7;
-			
-			while(true)
-			{
-				bit_mask = 1<<(bytes_count*7);
-				if( !(b & mask) )
-				{
-					break;
-				}
-				b = byte.readUnsignedByte();
-				u32 = u32 & (bit_mask-1) | (b<<(bytes_count*7));
-				bytes_count++;
-				if(bytes_count>5)
-				{
-					break;
-				}
-			}
-			return u32;
+			var result:int = byte.readUnsignedByte();
+			if (!(result & 0x00000080))
+				return result;
+			result = result & 0x0000007f | byte.readUnsignedByte()<<7;
+			if (!(result & 0x00004000))
+				return result;
+			result = result & 0x00003fff | byte.readUnsignedByte()<<14;
+			if (!(result & 0x00200000))
+				return result;
+			result = result & 0x001fffff | byte.readUnsignedByte()<<21;
+			if (!(result & 0x10000000))
+				return result;
+			return   result & 0x0fffffff | byte.readUnsignedByte()<<28;
+//			var b:int = byte.readUnsignedByte();
+//    
+//            var u32:uint = b;
+//			
+//			var bytes_count:uint = 1;
+//			
+//			var bit_mask:uint ;
+//			
+//			var mask:uint = 1<<7;
+//			
+//			while(true)
+//			{
+//				bit_mask = 1<<(bytes_count*7);
+//				if( !(b & mask) )
+//				{
+//					break;
+//				}
+//				b = byte.readUnsignedByte();
+//				u32 = u32 & (bit_mask-1) | (b<<(bytes_count*7));
+//				bytes_count++;
+//				if(bytes_count>5)
+//				{
+//					break;
+//				}
+//			}
+//			return u32;
     
             /*if( ! ( u32 & 0x00000080 ) )
             {
@@ -91,6 +103,13 @@ package format.swf
 		public function readUnsigned30():uint
 		{
 			return readVariableLengthUnsigned32()&0x3fffffff;
+		}
+		public function readS24():int
+		{
+			var b:int = byte.readUnsignedByte()
+			b |= byte.readUnsignedByte()<<8
+			b |= byte.readByte()<<16
+			return b
 		}
 
 	}

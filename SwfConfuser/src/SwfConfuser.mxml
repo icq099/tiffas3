@@ -23,6 +23,9 @@
 			import format.swf.writer.SwfWriter;
 			
 			import mx.events.FlexEvent;
+			import mx.resources.Locale;
+			import mx.resources.ResourceBundle;
+			import mx.resources.ResourceManager;
 
 			private var data:ByteArray;
 
@@ -73,13 +76,27 @@
 				for each (var o:DoABC in doABC_arr) 
 				{
 					allStrings = allStrings.concat(o.abcfile.constant_pool.string);
-//					for each (var p:Method_body_info in o.abcfile.method_body) 
-//					{
-//						if(p.code == 0x2c)
-//						{
-//							
-//						}
-//					}
+					//所有用过的string
+					for each (var p:Method_body_info in o.abcfile.method_body) 
+					{
+						for each (var q:int in p.opcodes.usedStrings) 
+						{
+							var codeString:String = o.abcfile.constant_pool.string[q].utf8str;
+							var qNameArr:Array = codeString.split("::");
+							var qNameArr2:Array = codeString.split(".");
+							if(qNameArr.length > 1)
+							{
+								outLineStringArr.push(qNameArr.pop());
+								outLineStringArr.push(qNameArr[0]);
+							}
+							if(qNameArr2.length > 1)
+							{
+								outLineStringArr.push(qNameArr2.pop());
+								outLineStringArr.push(qNameArr2.join("."));
+							}
+							outLineStringArr.push(codeString);
+						}
+					}
 				}
 				
 				stringIndexDic = new Dictionary;
@@ -216,8 +233,11 @@
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
 	<s:Button left="29" bottom="11" label="浏览" id="browseBtn" click="browseBtn_clickHandler(event)"/>
-	<s:Button right="28" bottom="10" label="混淆并保存" click="button1_clickHandler(event)"/>
-	<s:Label left="29" top="41" width="219" height="18" fontSize="13" text="排除的包名或类名(用回车分割)："/>
-	<s:TextArea id="outLineText" left="29" right="24" top="67" bottom="40"/>
-	<s:Label x="29" y="10" text="swf混淆器："/>
+	<s:Button left="107" bottom="11" width="80" label="混淆并保存" click="button1_clickHandler(event)"/>
+	<s:Label left="29" top="94" width="219" height="18" fontSize="13" text="排除的包名或类名(用回车分割)："/>
+	<s:TextArea id="outLineText" left="29" right="24" top="119" bottom="40"/>
+	<s:Label x="29" y="10" fontSize="18" text="swf混淆器："/>
+	<s:Label right="26" bottom="8" fontSize="13" text="by yzhkof"/>
+	<s:Label x="55" y="49" width="847" height="41" fontSize="13"
+			 text="暂时只支持单个swf混淆，as3.0工程。如果混淆后出现问题，请在排除列表里加入排除的类名和包名。（不支持flex项目，此swf已混淆）"/>
 </s:Application>

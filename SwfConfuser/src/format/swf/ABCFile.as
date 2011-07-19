@@ -46,7 +46,6 @@ package format.swf
 			minor_version=byte.readUnsignedShort();
 			major_version=byte.readUnsignedShort();
 			constant_pool=new Cpool_info(byte);
-			cpool_info=constant_pool;
 			method_count=readUnsigned30();
 			
 			for(var i:int=0;i<method_count;i++)

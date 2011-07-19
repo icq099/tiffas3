@@ -31,7 +31,6 @@ package format.swf
 		}
 		protected function read():void
 		{
-			
 		}
 
 	}

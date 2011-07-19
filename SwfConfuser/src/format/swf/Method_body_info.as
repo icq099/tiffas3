@@ -1,6 +1,7 @@
 package format.swf
 {
 	import flash.utils.ByteArray;
+	import flash.utils.Endian;
 
 	public class Method_body_info extends ABCFileStructs
 	{
@@ -20,17 +21,21 @@ package format.swf
 			traits_info trait[trait_count]
 		}
 		*/
+		
 		public var method:uint;
 		public var max_stack:uint;
 		public var local_count:uint;
 		public var init_scope_depth:uint;
 		public var max_scope_depth:uint;
 		public var code_length:uint;
-		public var code:Array=new Array;
+//		public var code:Array=new Array;
+		public var code:ByteArray = new ByteArray;
 		public var exception_count:uint;
 		public var exception:Array=new Array;
 		public var trait_count:uint;
 		public var trait:Array=new Array;
+		public var opcodes:OpCodes;
+		
 		public function Method_body_info(byte:ByteArray)
 		{
 			super(byte);
@@ -43,11 +48,18 @@ package format.swf
 			init_scope_depth=readUnsigned30();
 			max_scope_depth=readUnsigned30();
 			code_length=readUnsigned30();
+			
+			code.endian = Endian.LITTLE_ENDIAN;
+			byte.readBytes(code,0,code_length);
+			code.position = 0;
+			
+			opcodes = new OpCodes(code);
+			
 			var i:int;
-			for(i=0;i<code_length;i++)
-			{
-				code.push(byte.readUnsignedByte());
-			}
+//			for(i=0;i<code_length;i++)
+//			{
+//				code.push(byte.readUnsignedByte());
+//			}
 			exception_count=readUnsigned30();
 			for(i=0;i<exception_count;i++)
 			{
