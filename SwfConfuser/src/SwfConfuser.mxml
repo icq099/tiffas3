@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   width="1006" minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			import bean.operation.FileBrowseAndLoadOperation;
+			import bean.utils.FileUtil;
+			
+			import format.swf.DoABC;
+			import format.swf.Instance_info;
+			import format.swf.Method_body_info;
+			import format.swf.Multiname_info;
+			import format.swf.Namespace_info;
+			import format.swf.Script_info;
+			import format.swf.String_info;
+			import format.swf.SwfFile;
+			import format.swf.SymbolClass;
+			import format.swf.TagReader;
+			import format.swf.Traits_info;
+			import format.swf.tag.TagOfSwf;
+			import format.swf.writer.SwfWriter;
+			
+			import mx.events.FlexEvent;
+
+			private var data:ByteArray;
+
+			private var swf:SwfFile;
+
+			private var doABC_arr:Array;
+			
+			private var usedNames:Array;
+
+			private var stringIndexDic:Dictionary;
+
+			private var outLineStringArr:Array;
+
+			private var symbol_arr:Array;
+
+			private var op:FileBrowseAndLoadOperation;
+
+			protected function browseBtn_clickHandler(event:MouseEvent):void
+			{
+				op = FileUtil.browseAndLoadFile([new FileFilter("swf文件","*.swf")]);
+				op.onComplete.addListener(function():void
+				{
+					data = op.data;
+					doData();
+				});
+			}
+
+			private function doData():void
+			{
+				swf=new SwfFile(data);
+				doABC_arr = swf.tagReader.getTagReaderByType(TagOfSwf.DOABC);
+				symbol_arr = swf.tagReader.getTagReaderByType(TagOfSwf.SymbolClass);
+			}
+			
+			private function getStrings():void
+			{
+				var abccode:DoABC;
+				var string:Array;
+				var multiName_arr:Array;
+				var namespace_arr:Array;
+				var instance_arr:Array;
+				var class_arr:Array;
+				var method_arr:Array;
+				var allStrings:Array;
+				usedNames = new Array;
+				
+				allStrings = [];
+				for each (var o:DoABC in doABC_arr) 
+				{
+					allStrings = allStrings.concat(o.abcfile.constant_pool.string);
+//					for each (var p:Method_body_info in o.abcfile.method_body) 
+//					{
+//						if(p.code == 0x2c)
+//						{
+//							
+//						}
+//					}
+				}
+				
+				stringIndexDic = new Dictionary;
+//				flash.geom.ColorTransform
+				for each (var i:DoABC in doABC_arr) 
+				{
+					var stringIndexArr:Array = new Array;
+					stringIndexDic[i] = stringIndexArr;
+					abccode=i;
+					
+					namespace_arr = abccode.abcfile.constant_pool.namespace_abc;
+					string=abccode.abcfile.constant_pool.string;
+					multiName_arr = abccode.abcfile.constant_pool.multiname;
+					
+					instance_arr = abccode.abcfile.instance;
+					method_arr = abccode.abcfile.method;
+					
+					for each (var j:Instance_info in instance_arr) 
+					{
+						var m:Multiname_info = multiName_arr[j.name];
+						var ns:Namespace_info = namespace_arr[m.ns];
+						addString(string[ns.name]);
+						addString(string[m.name]);
+						function addString(stringInfo_t:String_info,isPackage:Boolean = false):void
+						{
+							if((stringInfo_t.utf8str == null)||(stringInfo_t.utf8str.length == 0))
+							{
+								return;
+							}
+							if(checkOutLineString(stringInfo_t.utf8str) == false)
+							{
+								var newName:String = getConfuseString(stringInfo_t.size);
+								stringIndexArr.push({info:stringInfo_t,name:newName});
+								
+								for each (var k:String_info in allStrings) 
+								{
+									if((k != stringInfo_t)&&(k.utf8str == stringInfo_t.utf8str))
+									{
+										stringIndexArr.push({info:k,name:newName});
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			private function createSwf():void
+			{
+				var newUncompressBytes:ByteArray = swf.bytesUncompressWithOutHeader;
+				
+				for each (var i:Array in stringIndexDic) 
+				{
+					for each (var j:Object in i) 
+					{
+						var stringInfo:String_info = String_info(j.info);
+						var stringBytes:ByteArray = stringInfo.getByteArray();
+						stringBytes.position = stringInfo.offset;
+						var length:int = stringInfo.readUnsigned30();
+						var str:String = j.name;
+						newUncompressBytes.position = stringBytes.position;
+						newUncompressBytes.writeUTFBytes(str);
+					}
+				}
+				
+				var new_swf:ByteArray = new ByteArray;
+				new_swf=SwfWriter.getSwfByteData(swf.bytesHeaderTag,newUncompressBytes);
+				var swffile_new:SwfFile=new SwfFile(new_swf);
+				var file:FileReference=new FileReference();
+				file.save(new_swf,"confused_" + op.name);
+			}
+			
+			private function getConfuseString(length:int):String
+			{
+				var re_str:String = getRandomName();
+				re_str = re_str.substr(0,length);
+				return re_str;
+			}
+			
+			private function getRandomName():String
+			{
+				var re_str:String = Math.random().toString();
+				if(usedNames.indexOf(re_str) >= 0)
+				{
+					return getRandomName();
+				}
+				else
+				{
+					usedNames.push(re_str);
+					return re_str;
+				}
+			}
+			
+			
+			private function checkOutLineString(str:String):Boolean
+			{
+				for each (var i:String in outLineStringArr) 
+				{
+					if(str == i)
+						return true;
+				}
+				return false;
+			}
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				getOutLineString();
+				getStrings();
+				createSwf();
+			}
+
+			private function getOutLineString():void
+			{
+				outLineStringArr = outLineText.text.split("\n");
+				
+				for each (var i:SymbolClass in symbol_arr) 
+				{
+					outLineStringArr = outLineStringArr.concat(i.name);
+					for each (var j:String in i.name)
+					{
+						var qNameArr:Array = j.split(".");
+						if(qNameArr.length > 1)
+						{
+							outLineStringArr.push(qNameArr.pop());
+							outLineStringArr.push(qNameArr.join("."));
+						}
+					}
+				}
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Button left="29" bottom="11" label="浏览" id="browseBtn" click="browseBtn_clickHandler(event)"/>
+	<s:Button right="28" bottom="10" label="混淆并保存" click="button1_clickHandler(event)"/>
+	<s:Label left="29" top="41" width="219" height="18" fontSize="13" text="排除的包名或类名(用回车分割)："/>
+	<s:TextArea id="outLineText" left="29" right="24" top="67" bottom="40"/>
+	<s:Label x="29" y="10" text="swf混淆器："/>
+</s:Application>
