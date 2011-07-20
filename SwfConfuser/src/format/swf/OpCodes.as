@@ -423,6 +423,7 @@ package format.swf
 		];
 		
 		public var usedStrings:Array = [];
+		public var usedPropertyMultiNames:Array = [];
 		public var opCount:int = 0;
 		
 		public function OpCodes(byte:ByteArray)
@@ -467,9 +468,7 @@ package format.swf
 						break;
 					case OP_getsuper: 
 					case OP_setsuper: 
-					case OP_getproperty: 
 					case OP_initproperty: 
-					case OP_setproperty: 
 					case OP_getlex: 
 					case OP_findpropstrict: 
 					case OP_findproperty:
@@ -481,6 +480,10 @@ package format.swf
 					case OP_getdescendants:
 						//					s += abc.names[readU32()]
 						readVariableLengthUnsigned32();
+						break;
+					case OP_getproperty: 
+					case OP_setproperty:
+						usedPropertyMultiNames.push(readVariableLengthUnsigned32());
 						break;
 					case OP_constructprop:
 					case OP_callproperty:
