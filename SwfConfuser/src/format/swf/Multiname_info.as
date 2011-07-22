@@ -74,7 +74,10 @@ package format.swf
 					ns_set=readUnsigned30(); 
 				break;
 				default:
-					throw new Error("unknown:" + kind.toString(16));
+					ns=readUnsigned30();
+					name=readUnsigned30();
+					ns_set=readUnsigned30();
+//					throw new Error("unknown:" + kind.toString(16));
 				break;
 			}
 			//byte.position+=passLength;

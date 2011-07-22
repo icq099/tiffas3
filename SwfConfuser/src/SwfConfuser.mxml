@@ -8,6 +8,10 @@
 			import bean.operation.FileBrowseAndLoadOperation;
 			import bean.utils.FileUtil;
 			
+			import flash.net.getClassByAlias;
+			import flash.net.navigateToURL;
+			import flash.net.registerClassAlias;
+			
 			import format.swf.DoABC;
 			import format.swf.Instance_info;
 			import format.swf.Method_body_info;
@@ -18,6 +22,7 @@
 			import format.swf.SwfFile;
 			import format.swf.SymbolClass;
 			import format.swf.TagReader;
+			import format.swf.Trait_Slot;
 			import format.swf.Traits_info;
 			import format.swf.tag.TagOfSwf;
 			import format.swf.writer.SwfWriter;
@@ -100,7 +105,7 @@
 				}
 				
 				stringIndexDic = new Dictionary;
-//				flash.geom.ColorTransform
+				
 				for each (var i:DoABC in doABC_arr) 
 				{
 					var stringIndexArr:Array = new Array;
@@ -118,6 +123,19 @@
 					{
 						var m:Multiname_info = multiName_arr[j.name];
 						var ns:Namespace_info = namespace_arr[m.ns];
+						
+//						for each (var r:Traits_info in j.trait) {
+////							if(r.data is Trait_Slot)
+////							{
+////								if(r.type == 0)
+////								{
+//									var mulName:Multiname_info = multiName_arr[r.name];
+////									addString(string[mulName.name]);
+//									trace(string[mulName.name].utf8str + "::" + r.type + "-----mulName.kind" + mulName.kind.toString(16));
+////								}
+////							}
+//						}
+						
 						addString(string[ns.name]);
 						addString(string[m.name]);
 						function addString(stringInfo_t:String_info,isPackage:Boolean = false):void
@@ -172,13 +190,25 @@
 			private function getConfuseString(length:int):String
 			{
 				var re_str:String = getRandomName();
-				re_str = re_str.substr(0,length);
+				function getRe_str():void
+				{
+					if(re_str.length>=length)
+					{
+						re_str = re_str.substr(0,length);
+					}
+					else
+					{
+						re_str = re_str + re_str;
+						getRe_str();
+					}
+				}
+				getRe_str();
 				return re_str;
 			}
 			
 			private function getRandomName():String
 			{
-				var re_str:String = Math.random().toString();
+				var re_str:String = Math.random().toString().substr(2);
 				if(usedNames.indexOf(re_str) >= 0)
 				{
 					return getRandomName();

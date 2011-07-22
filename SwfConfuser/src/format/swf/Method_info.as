@@ -54,8 +54,7 @@ package format.swf
 //			}catch(e:Error)
 //			{
 //				
-//			}  
-
+//			}
 			if((flags&0x08)!=0)
 			{
 				options=new Option_info(byte);

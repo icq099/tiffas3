@@ -21,11 +21,6 @@ package format.swf
 		protected override function read():void
 		{
 			option_count=readUnsigned30();
-			//debug;
-			if(option_count==0)
-			{
-				trace(this);	
-			}
 			option=new Array;
 			for(var i:int=0;i<option_count;i++)
 			{
