@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="application1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import bean.operation.FileBrowseAndLoadOperation;
+			import bean.utils.FileUtil;
+			
+			import mx.events.FlexEvent;
+
+			private var op:FileBrowseAndLoadOperation;
+
+			private var data:ByteArray;
+			
+			[Embed(source="./bin-debug/Encry.swf",mimeType="application/octet-stream")]
+			private var SwfLoader:Class;
+
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+			}
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				op = FileUtil.browseAndLoadFile([new FileFilter("swf文件","*.swf")]);
+				op.onComplete.addListener(function():void
+				{
+					data = op.data;
+					doData();
+				});
+			}
+
+
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+			}
+
+
+			private function doData():void
+			{
+				// TODO Auto Generated method stub
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Button x="10" y="10" label="加载" click="button1_clickHandler(event)"/>
+	<s:Button x="88" y="10" label="保存" click="button2_clickHandler(event)"/>
+</s:Application>
