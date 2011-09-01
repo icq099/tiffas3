@@ -12,7 +12,7 @@
 			import flash.net.navigateToURL;
 			import flash.net.registerClassAlias;
 			
-			import format.swf.DoABC;
+			import format.swf.tag.DoABC;
 			import format.swf.Instance_info;
 			import format.swf.Method_body_info;
 			import format.swf.Multiname_info;
@@ -20,7 +20,7 @@
 			import format.swf.Script_info;
 			import format.swf.String_info;
 			import format.swf.SwfFile;
-			import format.swf.SymbolClass;
+			import format.swf.tag.SymbolClass;
 			import format.swf.TagReader;
 			import format.swf.Trait_Slot;
 			import format.swf.Traits_info;

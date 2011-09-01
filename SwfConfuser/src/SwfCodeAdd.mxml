@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600" creationComplete="application1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import bean.core.utils.BytesUtils;
+			import bean.operation.FileBrowseAndLoadOperation;
+			import bean.utils.FileUtil;
+			
+			import format.swf.String_info;
+			import format.swf.SwfFile;
+			import format.swf.tag.DoABC;
+			import format.swf.tag.TagOfSwf;
+			import format.swf.writer.SwfWriter;
+			
+			import mx.events.FlexEvent;
+			
+			import yzhkof.BytesUtil;
+
+			private var op:FileBrowseAndLoadOperation;
+
+			private var data:ByteArray;
+			
+			[Embed(source="./bin-debug/DeEncryWithOutDataTag.swf",mimeType="application/octet-stream")]
+			private var SwfLoaderData:Class;
+			
+			private var DATA_TAG_OFFSET:int = 0x218;
+
+			private var loaderData:ByteArray;
+
+			private var loadReader:SwfFile;
+
+			private var finalData:ByteArray;
+
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				loaderData = ByteArray(new SwfLoaderData);
+			}
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				op = FileUtil.browseAndLoadFile([new FileFilter("swf文件","*.swf")]);
+				op.onComplete.addListener(function():void
+				{
+					data = op.data;
+					doData();
+				});
+			}
+
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				new FileReference().save(finalData,"addString_" + op.name);
+			}
+
+			private function doData():void
+			{
+				var lengthDelta:int;
+				var swfFile:SwfFile = new SwfFile(data);
+				var addCodeSwf:ByteArray = swfFile.bytesUncompressWithOutHeader;
+				
+				var doabc:DoABC = swfFile.tagReader.getTagReaderByType(TagOfSwf.DOABC)[0] as DoABC;
+				var stringsArr:Array = doabc.abcfile.constant_pool.string;
+				var offset:int = String_info(stringsArr[stringsArr.length-1]).offset;
+				var addStringByte:ByteArray = new ByteArray;
+				addStringByte.endian = Endian.LITTLE_ENDIAN;
+				SwfWriter.writeStringInfo(addStringByte,"padapon/stage/get");
+				SwfWriter.replayAndAddBytes(addCodeSwf,offset,0,addStringByte);//StringInfo写进swf;
+				
+				var stringCountOff:int = doabc.abcfile.constant_pool.string_offset
+				addCodeSwf.position = stringCountOff;
+				var stringCount:int = doabc.abcfile.constant_pool.string_count + 1;
+				lengthDelta = SwfWriter.replayVU32(addCodeSwf,stringCount);
+				
+				var addTagLengthByte:ByteArray = new ByteArray;
+				var oldTagHeaderLength:int = (doabc.tag.length >= 0x3f)?6:2;
+				SwfWriter.writeSwfTagCodeAndLength(addTagLengthByte,82,doabc.tag.length + addStringByte.length);
+				SwfWriter.replayAndAddBytes(addCodeSwf,doabc.tag.offset,oldTagHeaderLength,addTagLengthByte);//新的tag Header写进swf;
+				
+				var header:ByteArray = swfFile.bytesHeaderTag;
+				header.position = 4;
+				header.writeInt(addCodeSwf.length + 8);
+				finalData = SwfWriter.getSwfByteData(header,addCodeSwf);
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Button x="10" y="10" label="加载" click="button1_clickHandler(event)"/>
+	<s:Button x="88" y="10" label="保存" click="button2_clickHandler(event)"/>
+</s:Application>
