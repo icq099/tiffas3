@@ -53,7 +53,6 @@ package format.swf.writer
 		 */		
 		public static function replayAndAddBytes(src:ByteArray,position:int,length:int,byte:ByteArray):void
 		{
-			var oldPosition:int = src.position;
 			var tailByte:ByteArray = new ByteArray;
 			tailByte.endian = src.endian;
 //			trace(BytesUtils.ToHexDump("src",src,position,20));
@@ -63,7 +62,14 @@ package format.swf.writer
 			src.position = position;
 			src.writeBytes(byte);
 			src.writeBytes(tailByte);
-			src.position = oldPosition + byte.length;
+			src.position = position + byte.length;
+		}
+		
+		public static function writeMultiName(byte:ByteArray,kind:uint,ns:uint = 0 ,name:uint = 0):void//未完成
+		{
+			byte.writeByte(kind);
+			writeVU32(byte,ns);
+			writeVU32(byte,name);
 		}
 		
 		public static function writeVU32(byte:ByteArray,value:uint):int
@@ -89,6 +95,40 @@ package format.swf.writer
 			writeVU32(byte,str.length);
 			byte.writeUTFBytes(str);
 		}
+		
+		public static function writeMethodBody(byte:ByteArray,method:uint,max_stack:uint,local_count:uint,
+											   init_scope_depth:uint,max_scope_depth:uint,code_length:uint,
+											   opcodeBytes:ByteArray):void
+		{
+			writeVU32(byte,method);
+			writeVU32(byte,max_stack);
+			writeVU32(byte,local_count);
+			writeVU32(byte,init_scope_depth);
+			writeVU32(byte,max_scope_depth);
+			writeVU32(byte,code_length);
+			byte.writeBytes(opcodeBytes);
+			writeVU32(byte,0);//exception_count
+			writeVU32(byte,0);//trait_count
+		}
+		
+		public static function writeMethod(byte:ByteArray,param_count:uint,return_type:uint,param_type:Array,name:uint,
+										   flags:int):void
+		{
+			writeVU32(byte,param_count);
+			writeVU32(byte,return_type);
+			var i:int;
+			for(i=0;i<param_count;i++)
+			{
+				writeVU32(byte,param_type[i]);
+			}
+			writeVU32(byte,name);
+			writeVU32(byte,flags);
+		}
+		
+//		public static function writeTrait(byte:ByteArray):void
+//		{
+//			
+//		}
 		
 		public static function readVariableLengthUnsigned32(byte:ByteArray):uint
 		{

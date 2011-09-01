@@ -37,6 +37,17 @@ package format.swf
 		public var script:Array=new Array;
 		public var method_body_count:uint;
 		public var method_body:Array=new Array;
+
+		public var method_offset:uint;
+
+		public var metadata_offset:uint;
+
+		public var class_offset:uint;
+
+		public var script_offset:uint;
+
+		public var method_body_offset:uint;
+		
 		public function ABCFile(byte:ByteArray)
 		{
 			super(byte);
@@ -46,17 +57,22 @@ package format.swf
 			minor_version=byte.readUnsignedShort();
 			major_version=byte.readUnsignedShort();
 			constant_pool=new Cpool_info(byte);
-			method_count=readUnsigned30();
 			
+			method_offset = byte.position;
+			method_count = readUnsigned30();
 			for(var i:int=0;i<method_count;i++)
 			{
 				method.push(new Method_info(byte));
 			}
+			
+			metadata_offset = byte.position;
 			metadata_count=readUnsigned30();
 			for(i=0;i<metadata_count;i++)
 			{
 				metadata.push(new Metadata_info(byte));
 			}
+			
+			class_offset = byte.position;
 			class_count=readUnsigned30();
 			for(i=0;i<class_count;i++)
 			{
@@ -66,11 +82,15 @@ package format.swf
 			{
 				class_abc.push(new Class_info(byte));
 			}
+			
+			script_offset = byte.position;
 			script_count=readUnsigned30();
 			for(i=0;i<script_count;i++)
 			{
 				script.push(new Script_info(byte));
 			}
+			
+			method_body_offset = byte.position;
 			method_body_count=readUnsigned30();
 			for(i=0;i<method_body_count;i++)
 			{

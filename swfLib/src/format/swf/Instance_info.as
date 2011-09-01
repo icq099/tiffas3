@@ -27,6 +27,9 @@ package format.swf
 		public var iinit:uint;
 		public var trait_count:uint;
 		public var trait:Array=new Array;
+
+		public var trait_offset:uint;
+		
 		public function Instance_info(byte:ByteArray)
 		{
 			super(byte);
@@ -46,6 +49,8 @@ package format.swf
 				interface_abc.push(readUnsigned30());
 			}
 			iinit=readUnsigned30();
+			
+			trait_offset = byte.position;
 			trait_count=readUnsigned30();
 			for(i=0;i<trait_count;i++)
 			{
