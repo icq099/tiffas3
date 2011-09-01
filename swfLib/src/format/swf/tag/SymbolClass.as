@@ -1,18 +1,21 @@
-package format.swf
+package format.swf.tag
 {
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	
+	import format.swf.SwfTag;
+	import format.swf.TagReader;
+	
 	public class SymbolClass extends TagReader
 	{
 		public var numSymbols:int;
-		public var tag:Array = [];
+		public var Tag:Array = [];
 		public var name:Array = [];
 		public var tagToNameMap:Dictionary = new Dictionary;
 		
-		public function SymbolClass(byte:ByteArray)
+		public function SymbolClass(tag:SwfTag)
 		{
-			super(byte);
+			super(tag);
 		}
 		override protected function read():void
 		{
@@ -22,7 +25,7 @@ package format.swf
 				var t:int = byte.readUnsignedShort();
 				var n:String = readString();
 				tagToNameMap[t] = n;
-				tag.push(t);
+				Tag.push(t);
 				name.push(n);
 			}
 		}

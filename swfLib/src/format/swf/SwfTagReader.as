@@ -3,6 +3,9 @@ package format.swf
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	
+	import format.swf.tag.DefineBinaryData;
+	import format.swf.tag.DoABC;
+	import format.swf.tag.SymbolClass;
 	import format.swf.tag.TagOfSwf;
 	
 	import yzhkof.util.BitReader;
@@ -14,7 +17,6 @@ package format.swf
 		public var tagTypeArray:Array=new Array;//<int>
 		private var _hasNext:Boolean=true;
 		private var byte:ByteArray;
-		private var bitReader:BitReader;
 		public function SwfTagReader(byte:ByteArray)
 		{
 			this.byte=byte;
@@ -47,7 +49,6 @@ package format.swf
 		}
 		private function read():void
 		{
-			bitReader=new BitReader(byte);
 			while(hasNext)
 			{
 				var t:SwfTag=readNextTag();
@@ -69,6 +70,7 @@ package format.swf
 			var shortTagLength:int;
 			var longTagLength:int;
 			
+			tag.offset=byte.position;
 			var t:uint=byte.readUnsignedShort();
 			
 //			tag.data=new ByteArray();
@@ -82,7 +84,6 @@ package format.swf
 			}
 			var l:uint=longTagLength||shortTagLength;
 			//byte.position+=l;
-			tag.offset=byte.position;
 //			if(l>0)
 //				byte.readBytes(tag.data,0,l);
 			byte.position+=l;
@@ -102,9 +103,11 @@ package format.swf
 			switch(tag.type)
 			{
 				case TagOfSwf.DOABC:
-					return new DoABC(tag.data);
+					return new DoABC(tag);
 				case TagOfSwf.SymbolClass:
-					return new SymbolClass(tag.data);
+					return new SymbolClass(tag);
+				case TagOfSwf.DefineBinaryData:
+					return new DefineBinaryData(tag);
 			}
 			return null;
 		}
