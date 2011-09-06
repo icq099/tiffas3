@@ -69,6 +69,7 @@ package format.swf
 			var tag:SwfTag=new SwfTag(byte);
 			var shortTagLength:int;
 			var longTagLength:int;
+			var isLongLength:Boolean = false;
 			
 			tag.offset=byte.position;
 			var t:uint=byte.readUnsignedShort();
@@ -80,9 +81,11 @@ package format.swf
 			shortTagLength=BitReader.getBytesBits(t,16,10,16);
 			if(shortTagLength>=0x3f)
 			{
-				longTagLength=byte.readInt();	
+				longTagLength=byte.readInt();
+				isLongLength = true;
 			}
-			var l:uint=longTagLength||shortTagLength;
+			var l:uint=isLongLength?longTagLength:shortTagLength;
+			
 			//byte.position+=l;
 //			if(l>0)
 //				byte.readBytes(tag.data,0,l);

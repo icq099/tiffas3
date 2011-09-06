@@ -60,11 +60,11 @@ package format.swf
 			/**
 			*	未压缩的为头8字节 
 			*/			
-			headerLength=8+_uncompressBytes.position;
+			headerLength=_uncompressBytes.position;
 		}
 		public function get tagBytes():ByteArray
 		{
-			_uncompressBytes.position=headerLength-8;
+			_uncompressBytes.position=headerLength;
 			return _uncompressBytes;
 		}
 		public function get uncompressBytes():ByteArray

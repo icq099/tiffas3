@@ -63,7 +63,7 @@ package format.swf
 			uint_count=readUnsigned30();
 			uinteger=new Array;
 			uinteger.push(0);
-			for(i=0;i<uint_count;i++)
+			for(i=1;i<uint_count;i++)
 				uinteger.push(readVariableLengthUnsigned32());
 			
 			double_offset = byte.position;

@@ -19,8 +19,13 @@ package format.swf.writer
 			var headerTag_c:ByteArray=BytesUtils.copyBytes(headerTag);
 			var uncompressBytes_c:ByteArray=BytesUtils.copyBytes(uncompressBytes);
 			var swf:ByteArray=new ByteArray;
-			uncompressBytes_c.compress();
-			uncompressBytes_c.position=0;
+			headerTag_c.position = 0;
+			if(headerTag_c.readUTFBytes(3) == "CWS")
+			{
+				uncompressBytes_c.compress();
+				uncompressBytes_c.position=0;
+			}
+			
 			swf.writeBytes(headerTag_c);
 			swf.writeBytes(uncompressBytes_c);
 			swf.position=0;
@@ -69,6 +74,12 @@ package format.swf.writer
 		{
 			byte.writeByte(kind);
 			writeVU32(byte,ns);
+			writeVU32(byte,name);
+		}
+		
+		public static function writeNameSpaceInfo(byte:ByteArray,kind:uint,name:uint):void
+		{
+			byte.writeByte(kind);
 			writeVU32(byte,name);
 		}
 		
@@ -129,6 +140,13 @@ package format.swf.writer
 //		{
 //			
 //		}
+		public static function readS24(byte:ByteArray):int
+		{
+			var b:int = byte.readUnsignedByte()
+			b |= byte.readUnsignedByte()<<8
+			b |= byte.readByte()<<16
+			return b
+		}
 		
 		public static function readVariableLengthUnsigned32(byte:ByteArray):uint
 		{
