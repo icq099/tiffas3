@@ -3,6 +3,7 @@ package
 	import avmplus.INCLUDE_ACCESSORS;
 	
 	import flash.utils.ByteArray;
+	import flash.utils.Dictionary;
 	import flash.utils.Endian;
 	
 	import format.swf.ABCFile;
@@ -19,6 +20,7 @@ package
 	import format.swf.tag.DoABC;
 	import format.swf.tag.SymbolClass;
 	import format.swf.tag.TagOfSwf;
+	import format.swf.utils.SwfFileCode;
 	import format.swf.writer.SwfWriter;
 
 	public class StageAddOperation
@@ -27,12 +29,6 @@ package
 		
 		[Embed(source="./bin-debug/opcode",mimeType="application/octet-stream")]
 		private var opcodeClass:Class;
-		
-		private var DATA_TAG_OFFSET:int = 0x218;
-		
-		private var loaderData:ByteArray;
-		
-		private var loadReader:SwfFile;
 		
 		public var finalData:ByteArray;
 		
@@ -50,23 +46,13 @@ package
 		private function doData():void
 		{
 			lengthDelta = 0;
-			var swfFile:SwfFile = new SwfFile(data);
+			var swfFile:SwfFileCode = new SwfFileCode(data);
 			addCodeSwf = swfFile.bytesUncompressWithOutHeader;
 			var symbolClass_arr:Array = swfFile.tagReader.getTagReaderByType(TagOfSwf.SymbolClass);
-			var name_arr:Array = SymbolClass(symbolClass_arr[symbolClass_arr.length - 1]).name;
-			var documentName:String = name_arr[name_arr.length - 1];
+			if(symbolClass_arr == null) return;
 			
-			var doabc_arr:Array = swfFile.tagReader.getTagReaderByType(TagOfSwf.DOABC);
+			doabc = swfFile.documentDoabc;
 			
-			for each (var i:DoABC in doabc_arr) {
-				
-				if(i.name == documentName)
-				{
-					doabc = i;
-					break;
-				}
-			}
-			doabc = doabc||doabc_arr[0];
 //			doabc = swfFile.tagReader.getTagReaderByType(TagOfSwf.DOABC)[2] as DoABC;
 			
 			var object_mn:uint = 0;
@@ -83,12 +69,11 @@ package
 			var stringsArr:Array = doabc.abcfile.constant_pool.string;
 			addStringInfo("stage");
 			addStringInfo("Stage");
-			addStringInfo("DebugSystem/stage/get");
+			addStringInfo("SuperShopLoader/stage/get");
 			addStringInfo("prototype");
 			addStringInfo("Object");
 			addStringInfo("flash.display");
 			addStringInfo("");
-			
 			
 			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			var namespaceCountOff:int = doabc.abcfile.constant_pool.namespace_offset + lengthDelta;
@@ -134,18 +119,16 @@ package
 			var final_method_offset:int = Method_info(methodArr[methodArr.length-1]).offset +Method_info(methodArr[methodArr.length-1]).length + lengthDelta;
 			var addMethodByte:ByteArray = new ByteArray
 			addMethodByte.endian = Endian.LITTLE_ENDIAN;
-			SwfWriter.writeMethod(addMethodByte,0,multiNameArr.length + 1,[],stringsArr.length + 2,0);
+			SwfWriter.writeMethod(addMethodByte,0,Stage_mn,[],stringsArr.length + 2,0);
 			SwfWriter.replayAndAddBytes(addCodeSwf,final_method_offset,0,addMethodByte);//MethodInfo写进cpool;
 			lengthDelta += addMethodByte.length;
 			
 			
-			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-			var scriptInfo:Script_info = doabc.abcfile.script[doabc.abcfile.script_count - 1];
-			var documentIIIndex:uint = Trait_class(Traits_info(scriptInfo.trait[0]).data).classi;//找到文档类的instanceInfo
+//			var scriptInfo:Script_info = doabc.abcfile.script[doabc.abcfile.script_count - 1];
+//			documentIIIndex = Trait_class(Traits_info(scriptInfo.trait[0]).data).classi;//找到文档类的instanceInfo
 			
 			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-			var instanceArr:Array = doabc.abcfile.instance;
-			var documentInstance:Instance_info = Instance_info(instanceArr[documentIIIndex]);
+			var documentInstance:Instance_info = swfFile.documentInstance;
 			var final_traitCount_offset:int = documentInstance.trait_offset + lengthDelta;
 			var taintsCount:uint = documentInstance.trait_count  + 1   ;
 			addCodeSwf.position = final_traitCount_offset;
@@ -165,12 +148,10 @@ package
 			addCodeSwf.position = final_traitadd_offset;
 			var traitBytes:ByteArray = new ByteArray;//trait的bytesArray
 			traitBytes.endian = Endian.LITTLE_ENDIAN;
-			SwfWriter.writeVU32(traitBytes,multiNameArr.length);//trait的名字(方法的名字);
-			traitBytes.writeByte(0x62);
+			SwfWriter.writeVU32(traitBytes,stage_mn);//trait的名字(方法的名字);
+			traitBytes.writeByte(0x22);
 			SwfWriter.writeVU32(traitBytes,0);
 			SwfWriter.writeVU32(traitBytes,methodArr.length);//method的索引;
-			SwfWriter.writeVU32(traitBytes,1);
-			SwfWriter.writeVU32(traitBytes,0);
 			SwfWriter.replayAndAddBytes(addCodeSwf,final_traitadd_offset,0,traitBytes);//trait写进instance;
 			lengthDelta += traitBytes.length;
 			
@@ -197,7 +178,7 @@ package
 			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			var addTagLengthByte:ByteArray = new ByteArray;
 			var oldTagHeaderLength:int = (doabc.tag.length >= 0x3f)?6:2;
-			SwfWriter.writeSwfTagCodeAndLength(addTagLengthByte,82,doabc.tag.length + lengthDelta);
+			SwfWriter.writeSwfTagCodeAndLength(addTagLengthByte,swfFile.documentDoabcTag,doabc.tag.length + lengthDelta);
 			SwfWriter.replayAndAddBytes(addCodeSwf,doabc.tag.offset,oldTagHeaderLength,addTagLengthByte);//新的DoABC tag Header写进swf;
 			
 			
