@@ -35,6 +35,9 @@ package format.swf
 		public var trait_count:uint;
 		public var trait:Array=new Array;
 		public var opcodes:OpCodes;
+		public var code_offset:uint;
+		public var code_length_offset:uint;
+
 		
 		public function Method_body_info(byte:ByteArray)
 		{
@@ -47,13 +50,15 @@ package format.swf
 			local_count=readUnsigned30();
 			init_scope_depth=readUnsigned30();
 			max_scope_depth=readUnsigned30();
+			code_length_offset = byte.position;
 			code_length=readUnsigned30();
 			
 			code.endian = Endian.LITTLE_ENDIAN;
+			code_offset = byte.position;
 			byte.readBytes(code,0,code_length);
 			code.position = 0;
 			
-			opcodes = new OpCodes(code);
+//			opcodes = new OpCodes(code);
 			
 			var i:int;
 //			for(i=0;i<code_length;i++)

@@ -2,6 +2,7 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="format.swf.tag.DefineBinaryData"/>
+    <classEntry path="format.swf.utils.SwfFileCode"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

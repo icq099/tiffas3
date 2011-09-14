@@ -83,21 +83,21 @@ package format.swf
 			namespace_offset = byte.position;
 			namespace_count=readUnsigned30();
 			namespace_abc=new Array;
-			namespace_abc.push(0);
+			namespace_abc.push(new Namespace_info(new ByteArray));
 			for(i=1;i<namespace_count;i++)
 				namespace_abc.push(new Namespace_info(byte));
 			
 			ns_set_offset = byte.position;
 			ns_set_count=readUnsigned30();
 			ns_set=new Array;
-			ns_set.push(0);
+			ns_set.push(new Ns_set_info(new ByteArray));
 			for(i=1;i<ns_set_count;i++)
 				ns_set.push(new Ns_set_info(byte));
 			
 			multiname_offset = byte.position;
 			multiname_count=readUnsigned30();
 			multiname=new Array;
-			multiname.push(0);
+			multiname.push(new Multiname_info(new ByteArray));
 			for(i=1;i<multiname_count;i++)
 				multiname.push(new Multiname_info(byte));
 		}

@@ -11,14 +11,25 @@ package format.swf.tag
 		public var flags:uint;
 		public var name:String;
 		public var abcfile:ABCFile;
-		public function DoABC(tag:SwfTag)
+		private var doabcType:int = 0;
+		/**
+		 * 
+		 * @param tag
+		 * @param type 为0时代表正常DoABC标签，为1时代表特殊DoABC标签;
+		 * 
+		 */		
+		public function DoABC(tag:SwfTag,doabcType:int = 0)
 		{
+			this.doabcType = doabcType;
 			super(tag);
 		}
 		protected override function read():void
 		{
-			flags=byte.readUnsignedInt();
-			name=readString();
+			if(doabcType == 0)
+			{
+				flags=byte.readUnsignedInt();
+				name=readString();
+			}
 			abcfile=new ABCFile(byte);
 		}
 		

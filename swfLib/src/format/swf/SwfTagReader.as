@@ -106,7 +106,9 @@ package format.swf
 			switch(tag.type)
 			{
 				case TagOfSwf.DOABC:
-					return new DoABC(tag);
+					return new DoABC(tag,0);//82的DoABC;
+				case TagOfSwf.DOABC72:
+					return new DoABC(tag,1);//72的DoABC;
 				case TagOfSwf.SymbolClass:
 					return new SymbolClass(tag);
 				case TagOfSwf.DefineBinaryData:

@@ -56,8 +56,9 @@ package format.swf.writer
 		 * @param byte
 		 * 
 		 */		
-		public static function replayAndAddBytes(src:ByteArray,position:int,length:int,byte:ByteArray):void
+		public static function replayAndAddBytes(src:ByteArray,position:int,length:int,byte:ByteArray):int
 		{
+			var oldLength:uint = src.length;
 			var tailByte:ByteArray = new ByteArray;
 			tailByte.endian = src.endian;
 //			trace(BytesUtils.ToHexDump("src",src,position,20));
@@ -68,6 +69,8 @@ package format.swf.writer
 			src.writeBytes(byte);
 			src.writeBytes(tailByte);
 			src.position = position + byte.length;
+			
+			return src.length - oldLength;
 		}
 		
 		public static function writeMultiName(byte:ByteArray,kind:uint,ns:uint = 0 ,name:uint = 0):void//未完成
@@ -146,6 +149,19 @@ package format.swf.writer
 			b |= byte.readUnsignedByte()<<8
 			b |= byte.readByte()<<16
 			return b
+		}
+		
+		public static function writeS24(byte:ByteArray,value:int):void
+		{
+			byte.writeByte(value&0xff);
+			byte.writeByte((value>>>8)&0xff);
+			var b:uint = (value>>>16)&0xff;
+			if(value<0)
+			{
+				b |= 0x80;
+			}
+			byte.writeByte(b);
+				
 		}
 		
 		public static function readVariableLengthUnsigned32(byte:ByteArray):uint

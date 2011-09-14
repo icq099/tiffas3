@@ -439,6 +439,7 @@ package format.swf
 			while(byte.bytesAvailable > 0)
 			{
 				opcode = byte.readUnsignedByte();
+				trace(opNames[opcode]);
 				switch(opcode)
 				{
 					case OP_debugfile:
@@ -522,7 +523,7 @@ package format.swf
 						//						target = pos + readS24();
 						//						s += " " + labels.labelFor(target) // target + "("+(target-pos)+")"
 						//					}
-						readS24();
+						var defaultOffset:int = readS24();
 						var maxindex:int = readVariableLengthUnsigned32();
 						for (var i:int = 0; i <= maxindex; i++) 
 						{
@@ -530,6 +531,13 @@ package format.swf
 						}
 						break;
 					case OP_jump:
+						var jumpByteoff:int = readS24();
+						trace(byte.position + ":" + (byte.position + jumpByteoff) + ":" + byte.length)
+						if(jumpByteoff > 0)
+						{
+							byte.position += jumpByteoff;
+						}
+						break;
 					case OP_iftrue:		case OP_iffalse:
 					case OP_ifeq:		case OP_ifne:
 					case OP_ifge:		case OP_ifnge:
@@ -601,6 +609,7 @@ package format.swf
 						break
 				}
 			}
+			trace(">>>>>>>>>>>>>>>>>>>>>function End")
 		}
 	}
 }
