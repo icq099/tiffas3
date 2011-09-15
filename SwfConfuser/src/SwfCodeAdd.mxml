@@ -48,7 +48,6 @@
 			
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
-//				loaderData = ByteArray(new SwfLoaderData);
 			}
 
 			protected function button1_clickHandler(event:MouseEvent):void

@@ -2,15 +2,14 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
-			   width="243" height="138" minWidth="955" minHeight="600"
+			   width="421" height="138" minWidth="955" minHeight="600"
 			   creationComplete="application1_creationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
 			import bean.operation.FileBrowseAndLoadOperation;
 			import bean.utils.FileUtil;
 			
-			import format.swf.SwfFile;
-			import format.swf.writer.SwfWriter;
+			import format.swf.BytesUtils;
 			
 			import mx.events.FlexEvent;
 
@@ -18,33 +17,6 @@
 
 			private var data:ByteArray;
 			
-			[Embed(source="./bin-debug/DeEncryWithOutDataTag.swf",mimeType="application/octet-stream")]
-			private var SwfLoaderData:Class;
-			
-			private var DATA_TAG_OFFSET:int = 0x218;
-
-			private var loaderData:ByteArray;
-
-			private var v1:int = 20;
-			private var v2:int = 12;
-			private var v3:int = 17;
-			private var v4:int = 18;
-			private var v5:int = 19;
-			private var v6:int = 10;
-			private var v7:int = 13;
-			private var v8:int = 21;
-			
-			private var newData:ByteArray;
-
-			private var compressData:ByteArray;
-
-			private var restHeaderData:ByteArray;
-
-			private var unComperssData:ByteArray;
-
-			private var loaderHeaderLength:int;
-			
-			private var values:Array = [v3,v2,v1,v8,v4,v6,v7,v5];
 
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
@@ -55,26 +27,42 @@
 				op = FileUtil.browseAndLoadFile([new FileFilter("swf文件","*.swf")]);
 				op.onComplete.addListener(function():void
 				{
-					data = op.data;
-					doData();
 				});
 			}
 
 			protected function button2_clickHandler(event:MouseEvent):void
 			{
-				
+				doData();
 				var file:FileReference = new FileReference;
 				file.save(data,"encry_" + op.name);
 			}
 			
 			private function doData():void
 			{
-				data = new StageAddOperation(data).finalData;
-				data = new AddJumpOperation(data).finalData;
+				data = BytesUtils.copyBytes(op.data);
+				data = new URLCodeAddOperation(data).finalData;
 				data = new DoActionAddOperation(data).finalData;
-				data = new ShellAddOperation(data).finalData;
 				data = new AddJumpOperation(data).finalData;
-				data = new DoActionAddOperation(data).finalData;
+				if(checkBox.selected == true)
+				{
+					data = new StageAddOperation(data).finalData;
+					data = new ShellAddOperation(data).finalData;
+					data = new AddJumpOperation(data).finalData;
+					data = new DoActionAddOperation(data).finalData;
+				}
+			}
+
+
+			protected function checkbox1_changeHandler(event:Event):void
+			{
+				if(checkBox.selected == true)
+				{
+					tip_label.visible = true;
+				}
+				else
+				{
+					tip_label.visible = false;
+				}
 			}
 
 		]]>
@@ -82,7 +70,9 @@
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:Button x="9" y="103" label="加载" click="button1_clickHandler(event)"/>
-	<s:Button x="164" y="107" label="保存" click="button2_clickHandler(event)"/>
+	<s:Button x="65" y="107" label="加载" click="button1_clickHandler(event)"/>
+	<s:Button x="280" y="107" label="保存" click="button2_clickHandler(event)"/>
 	<s:Label x="10" y="10" fontSize="14" text="Swf加密器"/>
+	<s:CheckBox id="checkBox" x="11" y="83" label="加壳" fontSize="14" selected="true" change="checkbox1_changeHandler(event)"/>
+	<s:Label id="tip_label" x="65" y="89" fontSize="14" text="（强力反破解壳，如果此swf要被加载，请不要勾选此项）"/>
 </s:Application>

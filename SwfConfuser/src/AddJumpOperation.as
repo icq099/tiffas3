@@ -24,6 +24,7 @@ package
 		public function AddJumpOperation(data:ByteArray)
 		{
 			this.data = data;
+			finalData = data;
 			doData();
 		}
 		
@@ -33,9 +34,9 @@ package
 			var swfFile:SwfFileCode = new SwfFileCode(data);
 			var addCodeSwf:ByteArray = swfFile.bytesUncompressWithOutHeader;
 			var doabc:DoABC = swfFile.documentDoabc;
+			if(doabc == null) return;
 			
 //			methodBody = Method_body_info(doabc.abcfile.method_body[swfFile.documentInstance.iinit]);
-//			new OpCodes(methodBody.code);//test
 			var jumpCode:ByteArray = getJumpCode();
 			var methodBody_arr:Array = doabc.abcfile.method_body;
 			for(var i:int = methodBody_arr.length -1;i>=0;i--)

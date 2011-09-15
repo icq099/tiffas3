@@ -41,6 +41,7 @@ package
 		public function StageAddOperation(data:ByteArray)
 		{
 			this.data = data;
+			finalData = data;
 			doData();
 		}
 		private function doData():void
@@ -49,7 +50,7 @@ package
 			var swfFile:SwfFileCode = new SwfFileCode(data);
 			addCodeSwf = swfFile.bytesUncompressWithOutHeader;
 			var symbolClass_arr:Array = swfFile.tagReader.getTagReaderByType(TagOfSwf.SymbolClass);
-			if(symbolClass_arr == null) return;
+			if((symbolClass_arr == null)||(symbolClass_arr.length <= 0)) return;
 			
 			doabc = swfFile.documentDoabc;
 			
@@ -269,32 +270,6 @@ package
 //			@14     coerce Stage
 //			@15     returnvalue 
 			
-		}
-		
-		private function findMultiName(ns:uint,name:uint):uint
-		{
-			var mnArr:Array = doabc.abcfile.constant_pool.multiname;
-			for (var i:int = 0; i < mnArr.length; i++) 
-			{
-				var info:Multiname_info = mnArr[i] as Multiname_info;
-				if((info.ns == ns) && (info.name == name))
-				{
-					return i;
-				}
-			}
-			return 0;
-		}
-		
-		private function findString(str:String):uint
-		{
-			var stringArr:Array = doabc.abcfile.constant_pool.string;
-			for (var i:int = 0; i < stringArr.length; i++) 
-			{
-				var strInfo:String_info = stringArr[i] as String_info;
-				strInfo.utf8str == str;
-				return i;
-			}
-			return 0;
 		}
 	}
 }

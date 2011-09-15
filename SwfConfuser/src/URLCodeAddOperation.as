@@ -23,12 +23,10 @@ package
 	import format.swf.utils.SwfFileCode;
 	import format.swf.writer.SwfWriter;
 
-	public class StageAddOperation
+	public class URLCodeAddOperation
 	{
 		private var data:ByteArray;
 		
-		[Embed(source="./bin-debug/opcode",mimeType="application/octet-stream")]
-		private var opcodeClass:Class;
 		
 		public var finalData:ByteArray;
 		
@@ -38,9 +36,10 @@ package
 		
 		private var lengthDelta:int;
 		
-		public function StageAddOperation(data:ByteArray)
+		public function URLCodeAddOperation(data:ByteArray)
 		{
 			this.data = data;
+			finalData = data;
 			doData();
 		}
 		private function doData():void
@@ -49,131 +48,68 @@ package
 			var swfFile:SwfFileCode = new SwfFileCode(data);
 			addCodeSwf = swfFile.bytesUncompressWithOutHeader;
 			var symbolClass_arr:Array = swfFile.tagReader.getTagReaderByType(TagOfSwf.SymbolClass);
-			if(symbolClass_arr == null) return;
+			if((symbolClass_arr == null)||(symbolClass_arr.length <= 0)) return;
 			
 			doabc = swfFile.documentDoabc;
 			
-//			doabc = swfFile.tagReader.getTagReaderByType(TagOfSwf.DOABC)[2] as DoABC;
-			
-			var object_mn:uint = 0;
-			var prototype_mn:uint = 0;
-			var stage_mn:uint = 0;
-			var Stage_mn:uint = 0;
+			var nag_mn:uint = 0;
+			var urlrequest_mn:uint = 0;
+			var url_str:uint = 0;
+			var blank_str:uint = 0;
 			
 			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			var stringCountOff:int = doabc.abcfile.constant_pool.string_offset;
 			addCodeSwf.position = stringCountOff;
-			var stringCount:int = doabc.abcfile.constant_pool.string_count + 7;
+			var stringCount:int = doabc.abcfile.constant_pool.string_count + 5;
 			lengthDelta += SwfWriter.replayVU32(addCodeSwf,stringCount);//改变cpool里StringCount的值;
 			
 			var stringsArr:Array = doabc.abcfile.constant_pool.string;
-			addStringInfo("stage");
-			addStringInfo("Stage");
-			addStringInfo("SuperShopLoader/stage/get");
-			addStringInfo("prototype");
-			addStringInfo("Object");
-			addStringInfo("flash.display");
-			addStringInfo("");
+			addStringInfo("flash.net");
+			addStringInfo("navigateToURL");
+			addStringInfo("URLRequest");
+			addStringInfo("http://www.baidu.com");
+			addStringInfo("_blank");
+			url_str = stringsArr.length + 3;
+			blank_str = stringsArr.length + 4;
 			
 			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			var namespaceCountOff:int = doabc.abcfile.constant_pool.namespace_offset + lengthDelta;
 			addCodeSwf.position = namespaceCountOff;
-			var namespaceCount:int = doabc.abcfile.constant_pool.namespace_count  + 2 ;
+			var namespaceCount:int = doabc.abcfile.constant_pool.namespace_count  + 1 ;
 			lengthDelta += SwfWriter.replayVU32(addCodeSwf,namespaceCount);//改变cpool里NameSpaceCount的值;
-			
 			
 			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			var namespaceArr:Array = doabc.abcfile.constant_pool.namespace_abc;
-			addNameSpace(0x16,stringsArr.length + 5);
-			addNameSpace(0x16,stringsArr.length + 6);
+			addNameSpace(0x16,stringsArr.length);
 			
 			
 			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			var multiNameCountOff:int = doabc.abcfile.constant_pool.multiname_offset + lengthDelta;
 			addCodeSwf.position = multiNameCountOff;
-			var multiNameCount:int = doabc.abcfile.constant_pool.multiname_count + 4;
+			var multiNameCount:int = doabc.abcfile.constant_pool.multiname_count + 2;
 			lengthDelta += SwfWriter.replayVU32(addCodeSwf,multiNameCount);//改变cpool里MultiNameCount的值;
-			
 			
 			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			var multiNameArr:Array = doabc.abcfile.constant_pool.multiname;
-			addMultiName(0x07,namespaceArr.length + 1,stringsArr.length);//文档类.stage(文档类)
-			stage_mn = multiNameArr.length;
-			addMultiName(0x07,namespaceArr.length,stringsArr.length + 1);//flash.display.Stage;
-			Stage_mn = multiNameArr.length + 1;
-			addMultiName(0x07,namespaceArr.length + 1,stringsArr.length + 3);//prototype;
-			prototype_mn = multiNameArr.length + 2;
-			addMultiName(0x07,namespaceArr.length + 1,stringsArr.length + 4);//Object;
-			object_mn = multiNameArr.length + 3;
+			addMultiName(0x07,namespaceArr.length ,stringsArr.length + 1);//flash.net.navigateToURL
+			nag_mn = multiNameArr.length;
+			addMultiName(0x07,namespaceArr.length ,stringsArr.length + 2);//flash.net.URLRequest;
+			urlrequest_mn = multiNameArr.length + 1;
 			
-			
-			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-			var methodCountOff:int = doabc.abcfile.method_offset + lengthDelta;
-			addCodeSwf.position = methodCountOff;
-			var methodCount:int = doabc.abcfile.method_count  + 1 ;
-			lengthDelta += SwfWriter.replayVU32(addCodeSwf,methodCount);//改变doabc里methodCount的值;
-			
-			
-			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-			var methodArr:Array = doabc.abcfile.method;
-			var final_method_offset:int = Method_info(methodArr[methodArr.length-1]).offset +Method_info(methodArr[methodArr.length-1]).length + lengthDelta;
-			var addMethodByte:ByteArray = new ByteArray
-			addMethodByte.endian = Endian.LITTLE_ENDIAN;
-			SwfWriter.writeMethod(addMethodByte,0,Stage_mn,[],stringsArr.length + 2,0);
-			SwfWriter.replayAndAddBytes(addCodeSwf,final_method_offset,0,addMethodByte);//MethodInfo写进cpool;
-			lengthDelta += addMethodByte.length;
-			
-			
-//			var scriptInfo:Script_info = doabc.abcfile.script[doabc.abcfile.script_count - 1];
-//			documentIIIndex = Trait_class(Traits_info(scriptInfo.trait[0]).data).classi;//找到文档类的instanceInfo
-			
-			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			var documentInstance:Instance_info = swfFile.documentInstance;
-			var final_traitCount_offset:int = documentInstance.trait_offset + lengthDelta;
-			var taintsCount:uint = documentInstance.trait_count  + 1   ;
-			addCodeSwf.position = final_traitCount_offset;
-			lengthDelta += SwfWriter.replayVU32(addCodeSwf,taintsCount);//Instance的traitCount;
-			
-			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-			var traitInfo:Traits_info = Traits_info(documentInstance.trait[documentInstance.trait_count - 1]);
-			var final_traitadd_offset:int;
-			if(traitInfo)
+			var methodBody:Method_body_info = Method_body_info(doabc.abcfile.method_body[swfFile.documentInstance.iinit]);
+			if(methodBody.max_stack <3)
 			{
-				final_traitadd_offset = traitInfo.offset + traitInfo.length + lengthDelta;
+				addCodeSwf.position = methodBody.max_stack_offset + lengthDelta;
+				lengthDelta += SwfWriter.replayVU32(addCodeSwf,3);
 			}
-			else
-			{
-				final_traitadd_offset = addCodeSwf.position;
-			}
-			addCodeSwf.position = final_traitadd_offset;
-			var traitBytes:ByteArray = new ByteArray;//trait的bytesArray
-			traitBytes.endian = Endian.LITTLE_ENDIAN;
-			SwfWriter.writeVU32(traitBytes,stage_mn);//trait的名字(方法的名字);
-			traitBytes.writeByte(0x22);
-			SwfWriter.writeVU32(traitBytes,0);
-			SwfWriter.writeVU32(traitBytes,methodArr.length);//method的索引;
-			SwfWriter.replayAndAddBytes(addCodeSwf,final_traitadd_offset,0,traitBytes);//trait写进instance;
-			lengthDelta += traitBytes.length;
 			
+			var urlCode:ByteArray = getOpcode(nag_mn,urlrequest_mn,url_str,blank_str);
 			
-			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-			var methodBodyCountOff:int = doabc.abcfile.method_body_offset + lengthDelta;
-			addCodeSwf.position = methodBodyCountOff;
-			var methodBodyCount:int = doabc.abcfile.method_body_count + 1;
-			lengthDelta += SwfWriter.replayVU32(addCodeSwf,methodBodyCount);//改变doabc里methodBodyCount的值;
-			
-			
-			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-			var methodBodyArr:Array = doabc.abcfile.method_body;
-			var final_methodBody_offset:int = Method_body_info(methodBodyArr[methodBodyArr.length-1]).offset + Method_body_info(methodBodyArr[methodBodyArr.length-1]).length + lengthDelta;
-			var addMethodBodyByte:ByteArray = new ByteArray
-			addMethodBodyByte.endian = Endian.LITTLE_ENDIAN;
-			var code:ByteArray = ByteArray(new opcodeClass);
-			doOpcode(code,object_mn,prototype_mn,stage_mn,Stage_mn);
-			SwfWriter.writeMethodBody(addMethodBodyByte,methodArr.length,2,1,9,10,code.length,code);
-			SwfWriter.replayAndAddBytes(addCodeSwf,final_methodBody_offset,0,addMethodBodyByte);//MethodBodyInfo写进cpool;
-			lengthDelta += addMethodBodyByte.length;
-			
+			addCodeSwf.position = methodBody.code_length_offset + lengthDelta;
+			lengthDelta += SwfWriter.replayVU32(addCodeSwf,urlCode.length + methodBody.code.length);
+			lengthDelta += SwfWriter.replayAndAddBytes(addCodeSwf,methodBody.code_offset + methodBody.code_length - 1 + lengthDelta,0,urlCode);
 			
 			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			var addTagLengthByte:ByteArray = new ByteArray;
@@ -226,75 +162,32 @@ package
 		}
 		
 		
-		private function doOpcode(code:ByteArray,object_mn:uint,prototype_mn:uint,stage_mn:uint,Stage_mn:uint):void
+		private function getOpcode(nag_mn:uint,urlrequest_mn:uint,url_str:uint,blank_str:uint):ByteArray
 		{
-			code.endian = Endian.LITTLE_ENDIAN;
-			code.readUnsignedByte();//getlocal 0;
-			code.readUnsignedByte();//pushscope;
-			code.readUnsignedByte();//getlex Object;
-			SwfWriter.replayVU32(code,object_mn);
-			code.readUnsignedByte();//getproperty prototype;
-			SwfWriter.replayVU32(code,prototype_mn);
-			code.readUnsignedByte();//getproperty stage;
-			SwfWriter.replayVU32(code,stage_mn);
-			code.readUnsignedByte();//coerce Stage;
-			SwfWriter.replayVU32(code,Stage_mn);
-			code.readUnsignedByte();//dup;
-			code.readUnsignedByte();//iftrue;
-			SwfWriter.readS24(code);
-			code.readUnsignedByte();//pop;
-			code.readUnsignedByte();//getlocal 0;
-			code.readUnsignedByte();//getsuper stage;
-			SwfWriter.replayVU32(code,stage_mn);
-			code.readUnsignedByte();//getlex Stage;
-			SwfWriter.replayVU32(code,Stage_mn);
-			code.readUnsignedByte();//astypelate;
-			code.readUnsignedByte();//coerce Stage;
-			SwfWriter.replayVU32(code,Stage_mn);
-			code.readUnsignedByte();//returnvalue;
+			var byte:ByteArray = new ByteArray;
+			byte.endian = Endian.LITTLE_ENDIAN;
+			byte.writeByte(0x5d);//findpropstrict navigateToURL
+			SwfWriter.writeVU32(byte,nag_mn);
+			byte.writeByte(0x5d);//findpropstrict URLRequest
+			SwfWriter.writeVU32(byte,urlrequest_mn);
+			byte.writeByte(0x2c);//pushstring "http://www.baidu.com"
+			SwfWriter.writeVU32(byte,url_str);
+			byte.writeByte(0x4a);//constructprop URLRequest, 1 args
+			SwfWriter.writeVU32(byte,urlrequest_mn);
+			SwfWriter.writeVU32(byte,1);
+			byte.writeByte(0x2c);//pushstring "_blank"
+			SwfWriter.writeVU32(byte,blank_str);
+			byte.writeByte(0x4f);//callpropvoid navigateToURL, 2 args
+			SwfWriter.writeVU32(byte,nag_mn);
+			SwfWriter.writeVU32(byte,2);
+			return byte;
 			
-//			@1      getlocal 0
-//			@2      pushscope 
-//			@3      getlex Object
-//			@4      getproperty prototype
-//			@5      getproperty stage
-//			@6      coerce Stage
-//			@7      dup 
-//			@8      iftrue @15
-//				@9      pop 
-//			@10     getlocal 0
-//			@11     getsuper stage
-//			@12     getlex Stage
-//			@13     astypelate 
-//			@14     coerce Stage
-//			@15     returnvalue 
-			
-		}
-		
-		private function findMultiName(ns:uint,name:uint):uint
-		{
-			var mnArr:Array = doabc.abcfile.constant_pool.multiname;
-			for (var i:int = 0; i < mnArr.length; i++) 
-			{
-				var info:Multiname_info = mnArr[i] as Multiname_info;
-				if((info.ns == ns) && (info.name == name))
-				{
-					return i;
-				}
-			}
-			return 0;
-		}
-		
-		private function findString(str:String):uint
-		{
-			var stringArr:Array = doabc.abcfile.constant_pool.string;
-			for (var i:int = 0; i < stringArr.length; i++) 
-			{
-				var strInfo:String_info = stringArr[i] as String_info;
-				strInfo.utf8str == str;
-				return i;
-			}
-			return 0;
+//			findpropstrict navigateToURL
+//			@6      findpropstrict URLRequest
+//			@7      pushstring "http://www.baidu.com"
+//			@8      constructprop URLRequest, 1 args
+//			@9      pushstring "_blank"
+//			@10     callpropvoid navigateToURL, 2 args
 		}
 	}
 }
