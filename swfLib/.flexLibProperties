@@ -3,6 +3,7 @@
   <includeClasses>
     <classEntry path="format.swf.tag.DefineBinaryData"/>
     <classEntry path="format.swf.utils.SwfFileCode"/>
+    <classEntry path="format.swf.tag.FileAttributes"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

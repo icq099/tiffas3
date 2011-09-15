@@ -29,7 +29,7 @@ package format.swf.utils
 		private function doFile():void
 		{
 			var symbolClass_arr:Array = tagReader.getTagReaderByType(TagOfSwf.SymbolClass);
-			if(symbolClass_arr == null) return;
+			if((symbolClass_arr == null)||(symbolClass_arr.length <= 0)) return;
 			
 			for each (var m:SymbolClass in symbolClass_arr) 
 			{

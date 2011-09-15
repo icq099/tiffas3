@@ -37,6 +37,7 @@ package format.swf
 		public var opcodes:OpCodes;
 		public var code_offset:uint;
 		public var code_length_offset:uint;
+		public var max_stack_offset:uint;
 
 		
 		public function Method_body_info(byte:ByteArray)
@@ -46,6 +47,7 @@ package format.swf
 		protected override function read():void
 		{
 			method=readUnsigned30();
+			max_stack_offset = byte.position;
 			max_stack=readUnsigned30();
 			local_count=readUnsigned30();
 			init_scope_depth=readUnsigned30();
@@ -61,10 +63,7 @@ package format.swf
 //			opcodes = new OpCodes(code);
 			
 			var i:int;
-//			for(i=0;i<code_length;i++)
-//			{
-//				code.push(byte.readUnsignedByte());
-//			}
+			
 			exception_count=readUnsigned30();
 			for(i=0;i<exception_count;i++)
 			{

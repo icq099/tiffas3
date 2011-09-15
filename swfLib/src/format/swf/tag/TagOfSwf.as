@@ -6,6 +6,7 @@ package format.swf.tag
 		public static const DOABC72:int=72;
 		public static const SymbolClass:int = 76;
 		public static const DefineBinaryData:int = 87;
+		public static const FileAttributes:int = 69;
 
 	}
 }

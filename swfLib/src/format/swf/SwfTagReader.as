@@ -5,6 +5,7 @@ package format.swf
 	
 	import format.swf.tag.DefineBinaryData;
 	import format.swf.tag.DoABC;
+	import format.swf.tag.FileAttributes;
 	import format.swf.tag.SymbolClass;
 	import format.swf.tag.TagOfSwf;
 	
@@ -47,6 +48,7 @@ package format.swf
 		{
 			return hasTagType(58)||hasTagType(64);
 		}
+		
 		private function read():void
 		{
 			while(hasNext)
@@ -64,6 +66,7 @@ package format.swf
 					tagTypeArray.push(t.type);
 			}
 		}
+		
 		private function readNextTag():SwfTag
 		{
 			var tag:SwfTag=new SwfTag(byte);
@@ -113,6 +116,8 @@ package format.swf
 					return new SymbolClass(tag);
 				case TagOfSwf.DefineBinaryData:
 					return new DefineBinaryData(tag);
+				case TagOfSwf.FileAttributes:
+					return new FileAttributes(tag);
 			}
 			return null;
 		}
