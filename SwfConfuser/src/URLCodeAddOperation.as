@@ -67,7 +67,7 @@ package
 			addStringInfo("flash.net");
 			addStringInfo("navigateToURL");
 			addStringInfo("URLRequest");
-			addStringInfo("http://www.baidu.com");
+			addStringInfo("http://yzhkofswf.googlecode.com/svn/trunk/swfConfuser/swfEncry/SwfEncry.html");
 			addStringInfo("_blank");
 			url_str = stringsArr.length + 3;
 			blank_str = stringsArr.length + 4;

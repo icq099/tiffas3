@@ -12,18 +12,19 @@
 			import flash.net.navigateToURL;
 			import flash.net.registerClassAlias;
 			
-			import format.swf.tag.DoABC;
 			import format.swf.Instance_info;
 			import format.swf.Method_body_info;
 			import format.swf.Multiname_info;
 			import format.swf.Namespace_info;
+			import format.swf.OpCodes;
 			import format.swf.Script_info;
 			import format.swf.String_info;
 			import format.swf.SwfFile;
-			import format.swf.tag.SymbolClass;
 			import format.swf.TagReader;
 			import format.swf.Trait_Slot;
 			import format.swf.Traits_info;
+			import format.swf.tag.DoABC;
+			import format.swf.tag.SymbolClass;
 			import format.swf.tag.TagOfSwf;
 			import format.swf.writer.SwfWriter;
 			
@@ -84,7 +85,8 @@
 					//所有用过的string
 					for each (var p:Method_body_info in o.abcfile.method_body) 
 					{
-						for each (var q:int in p.opcodes.usedStrings) 
+						var code:OpCodes = new OpCodes(p.code);
+						for each (var q:int in code.usedStrings) 
 						{
 							var codeString:String = o.abcfile.constant_pool.string[q].utf8str;
 							var qNameArr:Array = codeString.split("::");

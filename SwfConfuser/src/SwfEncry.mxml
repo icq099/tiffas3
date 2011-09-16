@@ -11,6 +11,7 @@
 			
 			import format.swf.BytesUtils;
 			
+			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 
 			private var op:FileBrowseAndLoadOperation;
@@ -20,6 +21,7 @@
 
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
+				
 			}
 
 			protected function button1_clickHandler(event:MouseEvent):void
@@ -27,6 +29,7 @@
 				op = FileUtil.browseAndLoadFile([new FileFilter("swf文件","*.swf")]);
 				op.onComplete.addListener(function():void
 				{
+					
 				});
 			}
 
@@ -39,16 +42,22 @@
 			
 			private function doData():void
 			{
-				data = BytesUtils.copyBytes(op.data);
-				data = new URLCodeAddOperation(data).finalData;
-				data = new DoActionAddOperation(data).finalData;
-				data = new AddJumpOperation(data).finalData;
-				if(checkBox.selected == true)
+				try
 				{
-					data = new StageAddOperation(data).finalData;
-					data = new ShellAddOperation(data).finalData;
-					data = new AddJumpOperation(data).finalData;
+					data = BytesUtils.copyBytes(op.data);
+//					data = new URLCodeAddOperation(data).finalData;
 					data = new DoActionAddOperation(data).finalData;
+					data = new AddJumpOperation(data).finalData;
+					if(checkBox.selected == true)
+					{
+						data = new StageAddOperation(data).finalData;
+						data = new ShellAddOperation(data).finalData;
+						data = new AddJumpOperation(data).finalData;
+						data = new DoActionAddOperation(data).finalData;
+					}
+				}catch(e:Error)
+				{
+					Alert.show("处理出错!\n" + e.toString(),"出错啦");
 				}
 			}
 
@@ -70,9 +79,15 @@
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:Button x="65" y="107" label="加载" click="button1_clickHandler(event)"/>
-	<s:Button x="280" y="107" label="保存" click="button2_clickHandler(event)"/>
-	<s:Label x="10" y="10" fontSize="14" text="Swf加密器"/>
-	<s:CheckBox id="checkBox" x="11" y="83" label="加壳" fontSize="14" selected="true" change="checkbox1_changeHandler(event)"/>
-	<s:Label id="tip_label" x="65" y="89" fontSize="14" text="（强力反破解壳，如果此swf要被加载，请不要勾选此项）"/>
+	<s:Button x="55" y="107" label="加载" click="button1_clickHandler(event)" fontFamily="中易宋体"
+			  fontSize="13"/>
+	<s:Button x="226" y="107" label="保存" click="button2_clickHandler(event)" fontFamily="中易宋体"
+			  fontSize="13"/>
+	<s:Label x="10" y="10" fontFamily="中易宋体" fontSize="16" text="Swf Gguarder 1.0 (demo)"/>
+	<s:CheckBox id="checkBox" x="11" y="83" label="加壳" fontSize="14" selected="false" change="checkbox1_changeHandler(event)"/>
+	<s:Label id="tip_label" x="65" y="89" fontFamily="中易宋体" fontSize="13"
+			 text="（强力反破解壳，如果此swf要被加载，请不要勾选此项）"/>
+	<s:Label x="28" y="38" width="365" fontFamily="中易宋体" fontSize="13"
+			 text="        加密后的swf反编译软件打开直接卡死，仅支持as3.0,flash player 9以上版本的swf。"/>
+	<s:Label x="352" y="116" text="by yzhkof"/>
 </s:Application>
