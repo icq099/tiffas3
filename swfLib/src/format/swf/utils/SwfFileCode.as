@@ -19,6 +19,8 @@ package format.swf.utils
 		private var _documentName:String;
 
 		private var _documentInstance:Instance_info;
+
+		private var _doabc_array:Array;
 		
 		public function SwfFileCode(byte:ByteArray)
 		{
@@ -46,17 +48,17 @@ package format.swf.utils
 			
 			_documentDoabcTag = 82;
 			
-			var doabc_arr:Array;
-			doabc_arr = tagReader.getTagReaderByType(TagOfSwf.DOABC);
-			if((doabc_arr == null)||(doabc_arr.length <=0))
+			
+			_doabc_array = tagReader.getTagReaderByType(TagOfSwf.DOABC);
+			if((_doabc_array == null)||(_doabc_array.length <=0))
 			{
-				doabc_arr = tagReader.getTagReaderByType(TagOfSwf.DOABC72);
+				_doabc_array = tagReader.getTagReaderByType(TagOfSwf.DOABC72);
 				_documentDoabcTag = 72;
 			}
 			
-			if((doabc_arr == null)||(doabc_arr.length <=0)) return;
+			if((_doabc_array == null)||(_doabc_array.length <=0)) return;
 			
-			for each (var i:DoABC in doabc_arr) 
+			for each (var i:DoABC in _doabc_array) 
 			{
 				if(i.name == documentName)
 				{
@@ -65,7 +67,7 @@ package format.swf.utils
 				}
 			}
 			
-			_documentDoabc = _documentDoabc||doabc_arr[0];
+			_documentDoabc = _documentDoabc||_doabc_array[0];
 			
 			var multiNameArr:Array = documentDoabc.abcfile.constant_pool.multiname;
 			var namespaceArr:Array = documentDoabc.abcfile.constant_pool.namespace_abc;
@@ -118,6 +120,12 @@ package format.swf.utils
 		{
 			return _documentInstance;
 		}
+
+		public function get doabc_array():Array
+		{
+			return _doabc_array;
+		}
+
 		
 	}
 }

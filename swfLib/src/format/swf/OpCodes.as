@@ -439,7 +439,7 @@ package format.swf
 			while(byte.bytesAvailable > 0)
 			{
 				opcode = byte.readUnsignedByte();
-				trace(opNames[opcode]);
+//				trace(opNames[opcode]);
 				switch(opcode)
 				{
 					case OP_debugfile:
@@ -532,7 +532,7 @@ package format.swf
 						break;
 					case OP_jump:
 						var jumpByteoff:int = readS24();
-						trace(byte.position + ":" + (byte.position + jumpByteoff) + ":" + byte.length)
+//						trace(byte.position + ":" + (byte.position + jumpByteoff) + ":" + byte.length)
 						if(jumpByteoff > 0)
 						{
 							byte.position += jumpByteoff;
@@ -609,7 +609,7 @@ package format.swf
 						break
 				}
 			}
-			trace(">>>>>>>>>>>>>>>>>>>>>function End")
+//			trace(">>>>>>>>>>>>>>>>>>>>>function End")
 		}
 	}
 }
