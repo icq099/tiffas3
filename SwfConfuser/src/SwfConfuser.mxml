@@ -14,6 +14,7 @@
 			
 			import format.swf.Instance_info;
 			import format.swf.Method_body_info;
+			import format.swf.Method_info;
 			import format.swf.Multiname_info;
 			import format.swf.Namespace_info;
 			import format.swf.OpCodes;
@@ -22,6 +23,7 @@
 			import format.swf.SwfFile;
 			import format.swf.TagReader;
 			import format.swf.Trait_Slot;
+			import format.swf.Trait_method;
 			import format.swf.Traits_info;
 			import format.swf.tag.DoABC;
 			import format.swf.tag.SymbolClass;
@@ -81,10 +83,16 @@
 				allStrings = [];
 				for each (var o:DoABC in doABC_arr) 
 				{
+					instance_arr = o.abcfile.instance;
+					method_arr = o.abcfile.method;
+					string=o.abcfile.constant_pool.string;
+					multiName_arr = o.abcfile.constant_pool.multiname;
+					
 					allStrings = allStrings.concat(o.abcfile.constant_pool.string);
 					//所有用过的string
 					for each (var p:Method_body_info in o.abcfile.method_body) 
 					{
+						p.code.position = 0;
 						var code:OpCodes = new OpCodes(p.code);
 						for each (var q:int in code.usedStrings) 
 						{
@@ -104,6 +112,21 @@
 							outLineStringArr.push(codeString);
 						}
 					}
+//					for each (var s:Instance_info in instance_arr) 
+//					{
+//						for each (var t:Traits_info in s.trait) 
+//						{
+//							if(t.data is Trait_method)
+//							{
+//								var mulName:Multiname_info = multiName_arr[t.name];
+//								var trait_str:String_info = string[mulName.name];
+//								if(t.type == 0x2)
+//								{
+//									outLineStringArr.push(trait_str.utf8str);
+//								}
+//							}
+//						}
+//					}
 				}
 				
 				stringIndexDic = new Dictionary;
@@ -126,16 +149,22 @@
 						var m:Multiname_info = multiName_arr[j.name];
 						var ns:Namespace_info = namespace_arr[m.ns];
 						
-//						for each (var r:Traits_info in j.trait) {
-////							if(r.data is Trait_Slot)
-////							{
+//						for each (var r:Traits_info in j.trait) 
+//						{
+//							if(r.data is Trait_method)
+//							{
 ////								if(r.type == 0)
 ////								{
-//									var mulName:Multiname_info = multiName_arr[r.name];
-////									addString(string[mulName.name]);
-//									trace(string[mulName.name].utf8str + "::" + r.type + "-----mulName.kind" + mulName.kind.toString(16));
+////								var mulName:Multiname_info = string[Method_info(method_arr[Trait_method(r.data).method]).name];
+//								var mulName:Multiname_info = multiName_arr[r.name];
+//								var trait_str:String_info = string[mulName.name];
+//								if(r.type != 0x2)
+//								{
+//									addString(trait_str);
+//								}
+////								addString(string[Method_info(method_arr[Trait_method(r.data).method]).name]);
 ////								}
-////							}
+//							}
 //						}
 						
 						addString(string[ns.name]);

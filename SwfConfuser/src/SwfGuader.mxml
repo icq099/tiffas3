@@ -19,7 +19,6 @@
 			import swfguarder.DoActionAddOperation;
 			import swfguarder.ShellAddOperation;
 			import swfguarder.StageAddOperation;
-			import swfguarder.SwfGuarderOperation;
 			
 			import yzhkof.util.Helpers;
 
@@ -28,11 +27,33 @@
 			private var data:ByteArray;
 			
 			private var operationArr:Array = [];
+			
+			[Embed(source="./bin-debug/no.txt",mimeType="application/octet-stream")]
+			private var noTxt:Class;
+
+			private var no:String;
 
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
 				checkbox1_changeHandler(null);
 				save_btn.visible = false;
+				var notxt:ByteArray = ByteArray(new noTxt);
+				no = notxt.readUTFBytes(6);
+				
+				no_txt.text = no;
+				
+//				load_btn.visible = false;
+				
+//				var urlLoader:URLLoader = new URLLoader(new URLRequest("http://yzhkofswf.googlecode.com/svn/trunk/swfConfuser/swfEncry/no/" + no +".txt"));
+//				urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
+//				urlLoader.addEventListener(Event.COMPLETE,function(e:Event):void
+//				{
+//					trace(String(urlLoader.data));
+//					if(String(urlLoader.data) == "true")
+//					{
+//						load_btn.visible = true;
+//					}
+//				});
 			}
 
 			protected function button1_clickHandler(event:MouseEvent):void
@@ -73,6 +94,23 @@
 				
 				doOperation();
 				
+//				try
+//				{
+////					data = new URLCodeAddOperation(data).finalData;
+////					data = new DoActionAddOperation(data).finalData;
+////					data = new AddJumpOperation(data).finalData;
+//					data = new AddMethodOperation(data).finalData;
+//					if(checkBox.selected == true)
+//					{
+//						data = new StageAddOperation(data).finalData;
+//						data = new ShellAddOperation(data).finalData;
+//						data = new AddJumpOperation(data).finalData;
+////						data = new DoActionAddOperation(data).finalData;
+//					}
+//				}catch(e:Error)
+//				{
+//					Alert.show("处理出错!\n" + e.toString(),"出错啦");
+//				}
 			}
 			
 			private function doOperation():void
@@ -92,13 +130,8 @@
 				{
 					try
 					{
-						var opClass:Class = operationArr.shift();
-						var op:SwfGuarderOperation =  new opClass(data);
-						op["doData"]();
-						op.onComplete.addSingleListener(function():void
-						{
-							data = ByteArray(op["finalData"]);
-						});
+						var op:Class = operationArr.shift();
+						data = ByteArray(new op(data).finalData);
 					}
 					catch(e:Error)
 					{
@@ -134,11 +167,11 @@
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:Button x="7" y="111" label="加载" click="button1_clickHandler(event)" fontFamily="中易宋体"
+	<s:Button id="load_btn" x="7" y="111" label="加载" click="button1_clickHandler(event)" fontFamily="中易宋体"
 			  fontSize="13"/>
 	<s:Button x="81" y="111" label="加密" click="button2_clickHandler(event)" fontFamily="中易宋体"
 			  fontSize="13"/>
-	<s:Label x="10" y="10" fontFamily="中易宋体" fontSize="16" text="Swf Gguarder 1.2 (demo)"/>
+	<s:Label x="10" y="10" fontFamily="中易宋体" fontSize="16" text="Swf Gguarder 1.2"/>
 	<s:CheckBox id="checkBox" x="11" y="83" label="加壳" fontSize="14" selected="false" change="checkbox1_changeHandler(event)"/>
 	<s:Label id="tip_label" x="65" y="89" fontFamily="中易宋体" fontSize="13"
 			 text="（强力反破解壳，针对单个swf工程加密.多swf工程或运行出现异常请不要勾选此项）"/>
@@ -149,4 +182,5 @@
 			 text=""/>
 	<s:Button id="save_btn" x="155" y="111" label="保存" fontFamily="中易宋体"
 			  fontSize="13" click="button3_clickHandler(event)"/>
+	<s:Label id="no_txt" x="155" y="18" text=""/>
 </s:Application>
