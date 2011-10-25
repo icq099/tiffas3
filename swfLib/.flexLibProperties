@@ -4,6 +4,8 @@
     <classEntry path="format.swf.tag.DefineBinaryData"/>
     <classEntry path="format.swf.utils.SwfFileCode"/>
     <classEntry path="format.swf.tag.FileAttributes"/>
+    <classEntry path="swfguarder.SwfGuarderOperation"/>
+    <classEntry path="swfguarder.ForDelay"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -80,7 +80,17 @@ package format.swf.utils
 			{
 				var mnInfo:Multiname_info = Multiname_info(multiNameArr[j]);
 				var nsInfo:Namespace_info = Namespace_info(namespaceArr[mnInfo.ns]);
-				var qname:String = stringsArr[nsInfo.name].utf8str + stringsArr[mnInfo.name].utf8str;
+				var className:String = stringsArr[mnInfo.name].utf8str;
+				var pkgName:String = stringsArr[nsInfo.name].utf8str;
+				var qname:String;
+				if((pkgName)&&(pkgName.length > 0))
+				{
+					qname = pkgName + "." + className;
+				}else
+				{
+					qname = className;
+				}
+				
 				if(qname == documentName)
 				{
 					documentMultiNameInfoIndex = j;

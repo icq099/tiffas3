@@ -38,6 +38,9 @@ package format.swf
 		public var code_offset:uint;
 		public var code_length_offset:uint;
 		public var max_stack_offset:uint;
+		public var local_count_offset:uint;
+		public var max_scope_depth_offset:uint;
+		public var init_scope_depth_offset:uint;
 
 		
 		public function Method_body_info(byte:ByteArray)
@@ -49,8 +52,11 @@ package format.swf
 			method=readUnsigned30();
 			max_stack_offset = byte.position;
 			max_stack=readUnsigned30();
+			local_count_offset = byte.position;
 			local_count=readUnsigned30();
+			init_scope_depth_offset = byte.position;
 			init_scope_depth=readUnsigned30();
+			max_scope_depth_offset = byte.position;
 			max_scope_depth=readUnsigned30();
 			code_length_offset = byte.position;
 			code_length=readUnsigned30();

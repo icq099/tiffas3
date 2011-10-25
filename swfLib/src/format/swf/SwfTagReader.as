@@ -77,9 +77,6 @@ package format.swf
 			tag.offset=byte.position;
 			var t:uint=byte.readUnsignedShort();
 			
-//			tag.data=new ByteArray();
-//			tag.data.endian=Endian.LITTLE_ENDIAN;
-			
 			tag.type=BitReader.getBytesBits(t,16,0,10);
 			shortTagLength=BitReader.getBytesBits(t,16,10,16);
 			if(shortTagLength>=0x3f)
@@ -89,9 +86,6 @@ package format.swf
 			}
 			var l:uint=isLongLength?longTagLength:shortTagLength;
 			
-			//byte.position+=l;
-//			if(l>0)
-//				byte.readBytes(tag.data,0,l);
 			byte.position+=l;
 			
 			tag.length=l;

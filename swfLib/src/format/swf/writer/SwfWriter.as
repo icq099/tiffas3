@@ -3,11 +3,9 @@ package format.swf.writer
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
 	
-	import flashx.textLayout.formats.WhiteSpaceCollapse;
-	
 	import format.swf.BytesUtils;
-	import format.swf.Script_info;
-	import format.swf.String_info;
+	import format.swf.SwfFile;
+	import format.swf.SwfTag;
 	
 	public class SwfWriter
 	{
@@ -61,10 +59,8 @@ package format.swf.writer
 			var oldLength:uint = src.length;
 			var tailByte:ByteArray = new ByteArray;
 			tailByte.endian = src.endian;
-//			trace(BytesUtils.ToHexDump("src",src,position,20));
 			src.position = position + length;
-			src.readBytes(tailByte,0,src.length - position - length);
-//			trace(BytesUtils.ToHexDump("tailByte",tailByte,0,tailByte.length));
+			src.readBytes(tailByte);
 			src.position = position;
 			src.writeBytes(byte);
 			src.writeBytes(tailByte);
@@ -139,10 +135,20 @@ package format.swf.writer
 			writeVU32(byte,flags);
 		}
 		
-//		public static function writeTrait(byte:ByteArray):void
-//		{
-//			
-//		}
+		public static function copyTag(swfFile:SwfFile,type:uint):ByteArray
+		{
+			var tag_arr:Array = swfFile.tagReader.tagMap[type];
+			if((tag_arr == null)||(tag_arr.length<=0)) return new ByteArray;
+			
+			var byte:ByteArray = new ByteArray;
+			byte.endian = Endian.LITTLE_ENDIAN;
+			for each (var i:SwfTag in tag_arr) 
+			{
+				byte.writeBytes(i.data);
+			}
+			return byte;
+		}
+		
 		public static function readS24(byte:ByteArray):int
 		{
 			var b:int = byte.readUnsignedByte()

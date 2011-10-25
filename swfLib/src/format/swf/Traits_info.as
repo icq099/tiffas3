@@ -46,8 +46,6 @@ package format.swf
 				break;
 				case 1:
 				case 2:
-					data=new Trait_method(byte);
-				break;
 				case 3:
 					data=new Trait_method(byte);
 				break;
